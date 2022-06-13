@@ -1,30 +1,17 @@
 package tech.jhipster.lite.generator.server.springboot.common.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.common.domain.WordUtils.LF;
-import static tech.jhipster.lite.generator.project.domain.Constants.CONFIG;
-import static tech.jhipster.lite.generator.project.domain.Constants.INTEGRATION_TEST;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_PATH;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_LOCAL_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_CONFIGURATION;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_TEST_CONFIGURATION;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_APPLICATION_LOCAL_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_APPLICATION_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_APPLICATION_TEST_LOGGING_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_APPLICATION_TEST_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_LOGBACK_LOGGER;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
 
 import java.util.Optional;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringBootCommonDomainService implements SpringBootCommonService {
@@ -43,7 +30,12 @@ public class SpringBootCommonDomainService implements SpringBootCommonService {
     project.addDefaultConfig(PACKAGE_NAME);
     project.addDefaultConfig(BASE_NAME);
     String packageNamePath = project.getPackageNamePath().orElse(getPath("com/mycompany/myapp"));
-    projectRepository.template(project, getPath(SOURCE, "test"), "LogbackRecorder.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "test"), "LogbackRecorder.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   @Override
@@ -221,8 +213,8 @@ public class SpringBootCommonDomainService implements SpringBootCommonService {
 
     String oldAnnotation = "public @interface";
     String newAnnotation = String.format("""
-      @ExtendWith(%s.class)
-      public @interface""", className);
+        @ExtendWith(%s.class)
+        public @interface""", className);
     projectRepository.replaceText(project, integrationTestPath, INTEGRATION_TEST, oldAnnotation, newAnnotation);
   }
 

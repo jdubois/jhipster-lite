@@ -23,6 +23,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -68,7 +69,7 @@ class PostgresqlDomainServiceTest {
 
     verify(buildToolService).addDependency(any(Project.class), any(Dependency.class));
 
-    verify(projectRepository, times(2)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
 
     verify(springBootCommonService).addLogger(any(Project.class), anyString(), any(Level.class));
     verify(springBootCommonService, times(4)).addLoggerTest(any(Project.class), anyString(), any(Level.class));

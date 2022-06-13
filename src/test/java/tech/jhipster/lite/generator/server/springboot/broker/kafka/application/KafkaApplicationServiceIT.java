@@ -55,7 +55,8 @@ class KafkaApplicationServiceIT {
     assertFileContent(project, POM_XML, "</testcontainers.version>");
     assertFileContent(project, POM_XML, testcontainers());
 
-    String configKafkaPath = getPath("com/mycompany/myapp/technical/infrastructure/config/kafka");
+    String packagePath = getPath("com/mycompany/myapp");
+    String configKafkaPath = getPath(packagePath, "technical/infrastructure/config/kafka");
     assertFileExist(project, getPath(MAIN_JAVA, configKafkaPath, "KafkaProperties.java"));
     assertFileContent(project, getPath(MAIN_JAVA, configKafkaPath, "KafkaProperties.java"), "public class KafkaProperties");
 
@@ -65,6 +66,13 @@ class KafkaApplicationServiceIT {
 
     assertFileExist(project, getPath(MAIN_JAVA, configKafkaPath, "KafkaConfiguration.java"));
     assertFileContent(project, getPath(MAIN_JAVA, configKafkaPath, "KafkaConfiguration.java"), "public class KafkaConfiguration");
+
+    assertFileExist(project, getPath(TEST_JAVA, packagePath, "KafkaTestContainerExtension.java"));
+    assertFileContent(
+      project,
+      getPath(TEST_JAVA, packagePath, "KafkaTestContainerExtension.java"),
+      "public class KafkaTestContainerExtension"
+    );
   }
 
   @Test

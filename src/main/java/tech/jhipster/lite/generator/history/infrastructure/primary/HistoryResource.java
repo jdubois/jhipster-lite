@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.lite.generator.history.application.GeneratorHistoryApplicationService;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
 import tech.jhipster.lite.generator.history.infrastructure.primary.dto.HistoryDTO;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 
 @RestController
 @RequestMapping("/api/project-histories")
@@ -32,8 +32,7 @@ class HistoryResource {
   public ResponseEntity<HistoryDTO> serviceIds(
     @Parameter(description = "Project path to get history") @RequestParam(value = "folder") String folder
   ) {
-    Project project = Project.builder().folder(folder).build();
-    return ResponseEntity.ok(HistoryDTO.from(generatorHistoryApplicationService.getValues(project)));
+    return ResponseEntity.ok(HistoryDTO.from(generatorHistoryApplicationService.getValues(new JHipsterProjectFolder(folder))));
   }
 
   @Operation(summary = "Get project history")
@@ -42,7 +41,6 @@ class HistoryResource {
   public ResponseEntity<List<GeneratorHistoryValue>> history(
     @Parameter(description = "Project path to get history") @RequestParam(value = "folder") String folder
   ) {
-    Project project = Project.builder().folder(folder).build();
-    return ResponseEntity.ok(generatorHistoryApplicationService.getValues(project));
+    return ResponseEntity.ok(generatorHistoryApplicationService.getValues(new JHipsterProjectFolder(folder)));
   }
 }

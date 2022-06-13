@@ -20,8 +20,4 @@ public class VueApplicationService {
   public void addPinia(Project project) {
     vueService.addPinia(project);
   }
-
-  public void addStyledVue(Project project) {
-    vueService.addStyledVue(project);
-  }
 }

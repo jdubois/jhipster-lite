@@ -4,28 +4,22 @@ import { createProjectToUpdate } from '../../ProjectToUpdate.fixture';
 import { SvelteGeneratorVue } from '@/springboot/primary/generator/svelte-generator';
 import { stubSvelteService } from '../../../domain/client/SvelteService.fixture';
 import { SvelteService } from '../../../../../../../main/webapp/app/springboot/domain/client/SvelteService';
-import { stubVueService } from '../../../domain/client/VueService.fixture';
-import { stubLogger } from '../../../../common/domain/Logger.fixture';
-import { Logger } from '../../../../../../../main/webapp/app/common/domain/Logger';
-import { stubToastService } from '../../../../common/secondary/ToastService.fixture';
-import ToastService from '../../../../../../../main/webapp/app/common/secondary/ToastService';
+import { AlertBusFixture, stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
 
 interface WrapperOptions {
+  alertBus: AlertBusFixture;
   project: ProjectToUpdate;
   svelteService: SvelteService;
-  logger: Logger;
-  toastService: ToastService;
 }
 
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { project, svelteService, logger, toastService }: WrapperOptions = {
+  const { alertBus, project, svelteService }: WrapperOptions = {
+    alertBus: stubAlertBus(),
     project: createProjectToUpdate(),
     svelteService: stubSvelteService(),
-    logger: stubLogger(),
-    toastService: stubToastService(),
     ...wrapperOptions,
   };
   wrapper = shallowMount(SvelteGeneratorVue, {
@@ -34,9 +28,8 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
     },
     global: {
       provide: {
+        alertBus,
         svelteService,
-        logger,
-        toastService,
       },
     },
   });
@@ -88,30 +81,25 @@ describe('SvelteGenerator', () => {
   });
 
   it('should handle error on adding Svelte failure', async () => {
-    const logger = stubLogger();
-    const toastService = stubToastService();
+    const alertBus = stubAlertBus();
     const svelteService = stubSvelteService();
-    svelteService.add.rejects({});
-    await wrap({ svelteService, toastService, logger });
+    svelteService.add.rejects('error');
+    await wrap({ alertBus, svelteService });
 
     await component.addSvelte();
 
-    const [loggerMessage] = logger.error.getCall(0).args;
-    const [toastMessage] = toastService.error.getCall(0).args;
-
-    expect(toastMessage).toBe('Adding Svelte to project failed');
-    expect(loggerMessage).toBe('Adding Svelte to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Svelte to project failed error');
   });
 
-  it('should handle success on adding Svelte', async function () {
-    const toastService = stubToastService();
+  it('should handle success on adding Svelte', async () => {
+    const alertBus = stubAlertBus();
     const svelteService = stubSvelteService();
-    await wrap({ svelteService, toastService });
+    await wrap({ alertBus, svelteService });
 
     await component.addSvelte();
 
-    const [toastMessage] = toastService.success.getCall(0).args;
-
-    expect(toastMessage).toBe('Svelte successfully added');
+    const [message] = alertBus.success.getCall(0).args;
+    expect(message).toBe('Svelte successfully added');
   });
 });

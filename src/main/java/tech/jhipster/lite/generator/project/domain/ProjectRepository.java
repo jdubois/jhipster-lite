@@ -9,17 +9,17 @@ public interface ProjectRepository {
 
   void add(Collection<ProjectFile> files);
 
-  void template(Project project, String source, String sourceFilename);
-  void template(Project project, String source, String sourceFilename, String destination);
-  void template(Project project, String source, String sourceFilename, String destination, String destinationFilename);
+  void template(Collection<ProjectFile> files);
 
   void rename(Project project, String source, String sourceFilename, String destinationFilename);
 
   String getComputedTemplate(Project project, String source, String sourceFilename);
 
   boolean containsRegexp(Project project, String source, String sourceFilename, String regexp);
+
   void replaceText(Project project, String source, String sourceFilename, String oldText, String newText);
   void replaceRegexp(Project project, String source, String sourceFilename, String regexpText, String newText);
+
   void write(Project project, String text, String destination, String destinationFilename);
 
   void setExecutable(Project project, String source, String sourceFilename);
@@ -29,6 +29,7 @@ public interface ProjectRepository {
   void gitApplyPatch(Project project, String patchFilename);
 
   String zip(Project project);
+
   byte[] download(Project project);
 
   boolean isJHipsterLiteProject(String path);
@@ -37,5 +38,11 @@ public interface ProjectRepository {
     Assert.notNull("file", file);
 
     add(List.of(file));
+  }
+
+  default void template(ProjectFile file) {
+    Assert.notNull("file", file);
+
+    template(List.of(file));
   }
 }

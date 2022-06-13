@@ -18,6 +18,8 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
+import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -46,23 +48,8 @@ class PlaywrightDomainServiceTest {
     verify(npmService).addScript(project, "e2e", "npx playwright test --headed");
     verify(npmService).addScript(project, "e2e:headless", "npx playwright test");
 
-    verify(projectRepository).template(project, "client/common/playwright", "playwright.config.ts");
-
-    verify(projectRepository)
-      .template(
-        project,
-        "client/common/playwright/src/test/javascript/integration/common/primary/app",
-        "Home.spec.ts",
-        "src/test/javascript/integration/common/primary/app"
-      );
-
-    verify(projectRepository)
-      .template(
-        project,
-        "client/common/playwright/src/test/javascript/integration/common/primary/app",
-        "Home-Page.ts",
-        "src/test/javascript/integration/common/primary/app"
-      );
+    verify(projectRepository).template(any(ProjectFile.class));
+    verify(projectRepository, times(2)).template(ProjectFilesAsserter.filesCountArgument(1));
   }
 
   @Test

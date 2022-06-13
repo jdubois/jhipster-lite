@@ -22,11 +22,13 @@ import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.domain.OAuth2Security.springBootStarterSecurityDependency;
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.domain.OAuth2Security.springSecurityTestDependency;
 
+import java.util.List;
 import tech.jhipster.lite.common.domain.WordUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.CommonSecurityService;
@@ -93,9 +95,21 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
 
     String dockerSourcePath = getPath(SOURCE, "docker");
     String dockerPathRealm = getPath(MAIN_DOCKER, "keycloak-realm-config");
-    projectRepository.template(project, dockerSourcePath, "keycloak.yml", MAIN_DOCKER, "keycloak.yml");
-    projectRepository.template(project, dockerSourcePath, "jhipster-realm.json", dockerPathRealm, "jhipster-realm.json");
-    projectRepository.template(project, dockerSourcePath, "jhipster-users-0.json", dockerPathRealm, "jhipster-users-0.json");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(dockerSourcePath, "keycloak.yml").withDestination(MAIN_DOCKER, "keycloak.yml")
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(dockerSourcePath, "jhipster-realm.json")
+        .withDestination(dockerPathRealm, "jhipster-realm.json")
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(dockerSourcePath, "jhipster-users-0.json")
+        .withDestination(dockerPathRealm, "jhipster-users-0.json")
+    );
   }
 
   private void addJavaFiles(Project project) {
@@ -104,17 +118,32 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
 
     String sourceSrc = getPath(SOURCE, "src");
     String destinationSrc = getPath(MAIN_JAVA, packageNamePath);
-    oauth2SecurityFiles()
-      .forEach((javaFile, folder) ->
-        projectRepository.template(project, getPath(sourceSrc, folder), javaFile, getPath(destinationSrc, folder))
-      );
+
+    List<ProjectFile> soureFiles = oauth2SecurityFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(sourceSrc, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(destinationSrc, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(soureFiles);
 
     String sourceTest = getPath(SOURCE, "test");
     String destinationTest = getPath(TEST_JAVA, packageNamePath);
-    oauth2TestSecurityFiles()
-      .forEach((javaFile, folder) ->
-        projectRepository.template(project, getPath(sourceTest, folder), javaFile, getPath(destinationTest, folder))
-      );
+    List<ProjectFile> testFiles = oauth2TestSecurityFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(sourceTest, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(destinationTest, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(testFiles);
   }
 
   @Override
@@ -124,13 +153,33 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
 
     String sourceSrc = getPath(SOURCE, "src");
     String destinationSrc = getPath(MAIN_JAVA, packageNamePath);
-    oauth2AccountContextFiles()
-      .forEach((file, folder) -> projectRepository.template(project, getPath(sourceSrc, folder), file, getPath(destinationSrc, folder)));
+
+    List<ProjectFile> sourceFiles = oauth2AccountContextFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(sourceSrc, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(destinationSrc, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(sourceFiles);
 
     String sourceTest = getPath(SOURCE, "test");
     String destinationTest = getPath(TEST_JAVA, packageNamePath);
-    oauth2AccountContextTestFiles()
-      .forEach((file, folder) -> projectRepository.template(project, getPath(sourceTest, folder), file, getPath(destinationTest, folder)));
+
+    List<ProjectFile> testFiles = oauth2AccountContextTestFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(sourceTest, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(destinationTest, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(testFiles);
   }
 
   private void addSpringBootProperties(Project project) {
@@ -160,8 +209,8 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
     String oldImport = "import org.zalando.problem.violations.ConstraintViolationProblem;";
     String newImport = String.format(
       """
-      import org.zalando.problem.violations.ConstraintViolationProblem;
-      import %s.error.domain.AccountException;""",
+        import org.zalando.problem.violations.ConstraintViolationProblem;
+        import %s.error.domain.AccountException;""",
       packageName
     );
     projectRepository.replaceText(project, exceptionTranslatorPath, exceptionTranslatorFile, oldImport, newImport);
@@ -169,13 +218,13 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
     String oldNeedle = "// jhipster-needle-exception-translator";
     String newNeedle =
       """
-      @ExceptionHandler
-        public ResponseEntity<Problem> handleAccountException(AccountException ex, NativeWebRequest request) {
-          Problem problem = Problem.builder().withStatus(Status.UNAUTHORIZED).withTitle(ex.getMessage()).build();
-          return create(ex, problem, request);
-        }
+        @ExceptionHandler
+          public ResponseEntity<Problem> handleAccountException(AccountException ex, NativeWebRequest request) {
+            Problem problem = Problem.builder().withStatus(Status.UNAUTHORIZED).withTitle(ex.getMessage()).build();
+            return create(ex, problem, request);
+          }
 
-        // jhipster-needle-exception-translator""";
+          // jhipster-needle-exception-translator""";
     projectRepository.replaceText(project, exceptionTranslatorPath, exceptionTranslatorFile, oldNeedle, newNeedle);
   }
 
@@ -188,8 +237,8 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
     String oldImport = "import org.springframework.http.converter.HttpMessageConversionException;";
     String newImport = String.format(
       """
-      import org.springframework.http.converter.HttpMessageConversionException;
-      import %s.error.domain.AccountException;""",
+        import org.springframework.http.converter.HttpMessageConversionException;
+        import %s.error.domain.AccountException;""",
       packageName
     );
     projectRepository.replaceText(project, exceptionTranslatorPath, fileToReplace, oldImport, newImport);
@@ -197,12 +246,12 @@ public class OAuth2SecurityDomainService implements OAuth2SecurityService {
     String oldNeedle = "// jhipster-needle-exception-translator-test-controller";
     String newNeedle =
       """
-      @GetMapping("/account-exception")
-        public void accountException() {
-          throw new AccountException("beer");
-        }
+        @GetMapping("/account-exception")
+          public void accountException() {
+            throw new AccountException("beer");
+          }
 
-        // jhipster-needle-exception-translator-test-controller""";
+          // jhipster-needle-exception-translator-test-controller""";
     projectRepository.replaceText(project, exceptionTranslatorPath, fileToReplace, oldNeedle, newNeedle);
   }
 

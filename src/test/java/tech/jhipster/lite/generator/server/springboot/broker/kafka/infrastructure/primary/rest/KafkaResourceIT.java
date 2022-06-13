@@ -70,6 +70,7 @@ class KafkaResourceIT {
     assertFileExist(projectPath, "src/main/java/tech/jhipster/chips/technical/infrastructure/config/kafka/KafkaProperties.java");
     assertFileExist(projectPath, "src/test/java/tech/jhipster/chips/technical/infrastructure/config/kafka/KafkaPropertiesTest.java");
     assertFileExist(projectPath, "src/main/java/tech/jhipster/chips/technical/infrastructure/config/kafka/KafkaConfiguration.java");
+    assertFileExist(projectPath, "src/test/java/tech/jhipster/chips/KafkaTestContainerExtension.java");
   }
 
   @Test

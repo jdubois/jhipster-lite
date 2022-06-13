@@ -43,8 +43,8 @@ class VueResourceIT {
     VueAssert.assertViteConfigFiles(project);
     VueAssert.assertRootFiles(project);
     VueAssert.assertAppFiles(project);
-    VueAssert.assertAppWithoutCss(project);
-    VueAssert.assertAxiosFile(project);
+    VueAssert.assertHomepageFiles(project);
+    VueAssert.assertCss(project);
 
     VueAssert.assertJestSonar(project);
   }
@@ -67,28 +67,5 @@ class VueResourceIT {
       )
       .andExpect(status().isOk());
     VueAssert.assertPiniaDependency(project);
-  }
-
-  @Test
-  void shouldAddStyledVue() throws Exception {
-    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
-    Project project = ProjectDTO.toProject(projectDTO);
-    initApplicationService.init(project);
-
-    mockMvc
-      .perform(
-        post("/api/clients/vue/styles").contentType(MediaType.APPLICATION_JSON).content(TestUtils.convertObjectToJsonBytes(projectDTO))
-      )
-      .andExpect(status().isOk());
-
-    VueAssert.assertDependency(project);
-    VueAssert.assertScripts(project);
-
-    VueAssert.assertViteConfigFiles(project);
-    VueAssert.assertRootFiles(project);
-    VueAssert.assertAppFiles(project);
-    VueAssert.assertAppWithCss(project);
-
-    VueAssert.assertJestSonar(project);
   }
 }

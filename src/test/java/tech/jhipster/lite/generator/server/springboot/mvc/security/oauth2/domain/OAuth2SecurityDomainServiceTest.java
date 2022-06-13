@@ -1,12 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +18,8 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
+import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.CommonSecurityService;
@@ -62,11 +61,12 @@ class OAuth2SecurityDomainServiceTest {
     verify(buildToolService, times(4)).addDependency(any(Project.class), any(Dependency.class));
 
     // 3 files related to docker-compose (docker-compose, realm, users)
-    verify(projectRepository, times(3)).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
 
     // 10 files for Java
     // 11 files for Java Test
-    verify(projectRepository, times(21)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(10));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(11));
 
     // 5 properties, with 1 comment and 1 new line
     verify(springBootCommonService).addPropertiesComment(any(Project.class), anyString());
@@ -100,6 +100,7 @@ class OAuth2SecurityDomainServiceTest {
     oAuth2SecurityDomainService.addAccountContext(project);
 
     // 3 java files and 4 for tests
-    verify(projectRepository, times(7)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(3));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(4));
   }
 }

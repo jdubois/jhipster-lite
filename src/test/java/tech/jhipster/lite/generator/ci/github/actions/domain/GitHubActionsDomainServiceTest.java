@@ -1,11 +1,9 @@
 package tech.jhipster.lite.generator.ci.github.actions.domain;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithBuildGradle;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -32,21 +31,7 @@ class GitHubActionsDomainServiceTest {
 
     assertThatCode(() -> gitHubActionsDomainService.addGitHubActions(project)).doesNotThrowAnyException();
 
-    verify(projectRepository)
-      .template(
-        any(Project.class),
-        eq("ci/github/actions/.github/actions/setup/"),
-        eq("action.yml.mustache"),
-        eq(".github/actions/setup/")
-      );
-    verify(projectRepository)
-      .template(
-        any(Project.class),
-        eq("ci/github/actions/.github/workflows/"),
-        eq("github-actions-gradle.yml.mustache"),
-        eq(".github/workflows/"),
-        eq("github-actions.yml")
-      );
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 
   @Test
@@ -55,20 +40,6 @@ class GitHubActionsDomainServiceTest {
 
     assertThatCode(() -> gitHubActionsDomainService.addGitHubActions(project)).doesNotThrowAnyException();
 
-    verify(projectRepository)
-      .template(
-        any(Project.class),
-        eq("ci/github/actions/.github/actions/setup/"),
-        eq("action.yml.mustache"),
-        eq(".github/actions/setup/")
-      );
-    verify(projectRepository)
-      .template(
-        any(Project.class),
-        eq("ci/github/actions/.github/workflows/"),
-        eq("github-actions-maven.yml.mustache"),
-        eq(".github/workflows/"),
-        eq("github-actions.yml")
-      );
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 }

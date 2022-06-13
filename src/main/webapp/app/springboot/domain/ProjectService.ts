@@ -12,4 +12,5 @@ export interface ProjectService {
   download(project: Project): Promise<DocumentFile>;
   addCodespacesSetup(project: Project): Promise<void>;
   addGitpodSetup(project: Project): Promise<void>;
+  getProjectDetails(folder: string): Promise<void>;
 }

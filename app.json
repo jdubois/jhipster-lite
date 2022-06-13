@@ -9,7 +9,7 @@
     },
     "JHIPSTER_LITE_VERSION": {
       "description": "Version of the JHipster Lite to deploy.",
-      "value": "0.4.0"
+      "value": "0.7.0"
     }
   },
   "buildpacks": [{ "url": "heroku/jvm" }, { "url": "https://github.com/jhipster/jhipster-lite-heroku-buildpack" }]

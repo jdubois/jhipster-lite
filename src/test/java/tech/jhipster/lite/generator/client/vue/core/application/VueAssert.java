@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.client.vue.core.application;
 
 import static tech.jhipster.lite.TestUtils.assertFileContent;
 import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.TestUtils.assertFileNoContent;
 import static tech.jhipster.lite.common.domain.WordUtils.DQ;
 import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_WEBAPP;
 import static tech.jhipster.lite.generator.project.domain.Constants.PACKAGE_JSON;
@@ -64,12 +63,16 @@ public class VueAssert {
     assertFileExist(project, "src/test/javascript/spec/common/primary/app/App.spec.ts");
   }
 
-  public static void assertAppWithoutCss(Project project) {
-    assertFileNoContent(project, "src/main/webapp/app/common/primary/app/App.vue", "<style>");
+  public static void assertHomepageFiles(Project project) {
+    assertFileExist(project, "src/main/webapp/app/common/primary/homepage/Homepage.component.ts");
+    assertFileExist(project, "src/main/webapp/app/common/primary/homepage/Homepage.html");
+    assertFileExist(project, "src/main/webapp/app/common/primary/homepage/Homepage.vue");
+    assertFileExist(project, "src/main/webapp/app/common/primary/homepage/index.ts");
+    assertFileExist(project, "src/test/javascript/spec/common/primary/homepage/Homepage.spec.ts");
   }
 
-  public static void assertAppWithCss(Project project) {
-    assertFileContent(project, "src/main/webapp/app/common/primary/app/App.vue", "<style>");
+  public static void assertCss(Project project) {
+    assertFileContent(project, "src/main/webapp/app/common/primary/homepage/Homepage.vue", "<style>");
   }
 
   public static void assertLogos(Project project) {
@@ -90,5 +93,13 @@ public class VueAssert {
     assertFileExist(project, "src/test/javascript/spec/http/AxiosHttp.spec.ts");
     assertFileExist(project, "src/test/javascript/spec/http/AxiosHttpStub.ts");
     assertFileExist(project, "src/test/javascript/spec/http/AxiosStub.ts");
+  }
+
+  public static void assertLogger(Project project) {
+    assertFileExist(project, "src/main/webapp/app/common/domain/Logger.ts");
+    assertFileExist(project, "src/main/webapp/app/common/domain/Message.ts");
+    assertFileExist(project, "src/main/webapp/app/common/secondary/ConsoleLogger.ts");
+    assertFileExist(project, "src/test/javascript/spec/common/domain/Logger.fixture.ts");
+    assertFileExist(project, "src/test/javascript/spec/common/secondary/ConsoleLogger.spec.ts");
   }
 }

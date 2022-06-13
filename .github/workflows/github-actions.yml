@@ -146,7 +146,9 @@ jobs:
           - vueapp
           - svelteapp
           - kafkaapp
+          - pulsarapp
           - reactiveapp
+          - angularoauth2app
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3

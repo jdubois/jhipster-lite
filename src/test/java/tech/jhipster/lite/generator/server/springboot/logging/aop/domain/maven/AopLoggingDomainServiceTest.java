@@ -15,6 +15,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 import tech.jhipster.lite.generator.server.springboot.logging.aop.domain.AopLoggingDomainService;
@@ -41,7 +42,7 @@ class AopLoggingDomainServiceTest {
 
     aopLoggingDomainService.init(project);
     // Java files
-    verify(projectRepository, times(3)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
     // Properties modifications
     verify(springBootCommonService).addProperties(any(Project.class), anyString(), anyString());
     verify(springBootCommonService).addPropertiesLocal(any(Project.class), anyString(), anyString());
@@ -55,7 +56,7 @@ class AopLoggingDomainServiceTest {
     Project project = tmpProjectWithPomXml();
 
     aopLoggingDomainService.addJavaFiles(project);
-    verify(projectRepository, times(3)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
   }
 
   @Test

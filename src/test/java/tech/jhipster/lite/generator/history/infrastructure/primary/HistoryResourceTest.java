@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.history.infrastructure.primary;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.generator.history.infrastructure.primary.dto.HistoryDTOTest.values;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.generator.history.infrastructure.primary.dto.HistoryDTOTest.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.generator.history.application.GeneratorHistoryApplicationService;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
 import tech.jhipster.lite.generator.history.infrastructure.primary.dto.HistoryDTO;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
 @ExtendWith(SpringExtension.class)
@@ -31,8 +31,8 @@ class HistoryResourceTest {
 
   @Test
   void shouldGetHistoryServiceIdFromService() {
-    final List<GeneratorHistoryValue> values = values();
-    when(service.getValues(any(Project.class))).thenReturn(values);
+    List<GeneratorHistoryValue> values = values();
+    when(service.getValues(any(JHipsterProjectFolder.class))).thenReturn(values);
 
     ResponseEntity<HistoryDTO> result = resource.serviceIds("/tmp/chips");
 
@@ -42,8 +42,8 @@ class HistoryResourceTest {
 
   @Test
   void shouldGetHistoryFromService() {
-    final List<GeneratorHistoryValue> values = values();
-    when(service.getValues(any(Project.class))).thenReturn(values);
+    List<GeneratorHistoryValue> values = values();
+    when(service.getValues(any(JHipsterProjectFolder.class))).thenReturn(values);
 
     ResponseEntity<List<GeneratorHistoryValue>> result = resource.history("/tmp/chips");
 

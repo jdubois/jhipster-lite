@@ -42,6 +42,40 @@ describe('SpringBootRepository', () => {
     expect(projectFolder).toBe(PROJECT_FOLDER);
   });
 
+  it('should add SpringBoot MVC with Undertow', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await springBootRepository.addSpringBootMvcUndertow(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('api/servers/spring-boot/web-servers/undertow');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
+  it('should add SpringBoot dummy feature', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await springBootRepository.addSpringBootDummyFeature(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('api/servers/spring-boot/features/dummy');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
   it('should add SpringBoot Webflux with Netty', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
@@ -425,11 +459,28 @@ describe('SpringBootRepository', () => {
     const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
-    await springBootRepository.addOauth2(project);
+    await springBootRepository.addOAuth2(project);
 
     const expectedRestProject: RestProject = toRestProject(project);
     const [uri, payload] = axiosHttpStub.post.getCall(0).args;
     expect(uri).toBe('/api/servers/spring-boot/security-systems/oauth2');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
+  it('should add a Spring Security OAuth Account Context', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await springBootRepository.addOAuth2Account(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('/api/servers/spring-boot/security-systems/oauth2/account');
     expect(payload).toEqual<RestProject>(expectedRestProject);
     const [projectFolder] = projectHistoryService.get.getCall(0).args;
     expect(projectFolder).toBe(PROJECT_FOLDER);
@@ -617,6 +668,40 @@ describe('SpringBootRepository', () => {
     const expectedRestProject: RestProject = toRestProject(project);
     const [uri, payload] = axiosHttpStub.post.getCall(0).args;
     expect(uri).toBe('/api/servers/spring-boot/caches/simple');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
+  it('should add Pulsar', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await springBootRepository.addPulsar(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('/api/servers/spring-boot/brokers/pulsar');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
+  it('should add Cucumber', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const springBootRepository = new SpringBootRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await springBootRepository.addCucumber(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('/api/servers/spring-boot/component-tests/cucumber');
     expect(payload).toEqual<RestProject>(expectedRestProject);
     const [projectFolder] = projectHistoryService.get.getCall(0).args;
     expect(projectFolder).toBe(PROJECT_FOLDER);

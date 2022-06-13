@@ -18,17 +18,6 @@ public class SQLCommon {
     return Dependency.builder().groupId("com.zaxxer").artifactId("HikariCP").build();
   }
 
-  public static Dependency testContainersDependency(String database) {
-    Assert.notBlank(DATABASE, database);
-    return Dependency
-      .builder()
-      .groupId("org.testcontainers")
-      .artifactId(database)
-      .version("\\${testcontainers.version}")
-      .scope("test")
-      .build();
-  }
-
   public static Dependency springDataJpa() {
     return Dependency.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter-data-jpa").build();
   }

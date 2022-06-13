@@ -1,14 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.webflux.web.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +22,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -36,17 +31,17 @@ import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCo
 class SpringBootWebfluxDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  SpringBootCommonService springBootCommonService;
+  private SpringBootCommonService springBootCommonService;
 
-  @InjectMocks
   @Spy
-  SpringBootWebfluxDomainService springBootWebfluxDomainService;
+  @InjectMocks
+  private SpringBootWebfluxDomainService springBootWebfluxDomainService;
 
   @Test
   void shouldInit() {
@@ -120,37 +115,7 @@ class SpringBootWebfluxDomainServiceTest {
       verify(springBootCommonService, times(1)).addPropertiesTest(any(Project.class), anyString(), anyString());
       verify(springBootCommonService).addPropertiesTest(project, "application.exception.package", "org.,java.");
 
-      verify(projectRepository, times(12)).template(any(Project.class), anyString(), anyString(), anyString());
-
-      String expectedSourcePath = "server/springboot/webflux/web/src";
-      String expectedDestinationSourcePath = "src/main/java/beer/technical/infrastructure/primary/exception";
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("ProblemConfiguration.java"), eq(expectedDestinationSourcePath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("HeaderUtil.java"), eq(expectedDestinationSourcePath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("BadRequestAlertException.java"), eq(expectedDestinationSourcePath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("ErrorConstants.java"), eq(expectedDestinationSourcePath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("ExceptionTranslator.java"), eq(expectedDestinationSourcePath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedSourcePath), eq("FieldErrorDTO.java"), eq(expectedDestinationSourcePath));
-
-      String expectedTestPath = "server/springboot/webflux/web/test";
-      String expectedDestinationTestPath = "src/test/java/beer/technical/infrastructure/primary/exception";
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedTestPath), eq("HeaderUtilTest.java"), eq(expectedDestinationTestPath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedTestPath), eq("BadRequestAlertExceptionTest.java"), eq(expectedDestinationTestPath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedTestPath), eq("ExceptionTranslatorIT.java"), eq(expectedDestinationTestPath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedTestPath), eq("ExceptionTranslatorTestController.java"), eq(expectedDestinationTestPath));
-      verify(projectRepository)
-        .template(any(Project.class), eq(expectedTestPath), eq("FieldErrorDTOTest.java"), eq(expectedDestinationTestPath));
-
-      verify(projectRepository).template(any(Project.class), eq(expectedTestPath), eq("TestUtil.java"), eq("src/test/java/beer"));
+      verify(projectRepository, times(12)).template(any(ProjectFile.class));
     }
 
     @Test

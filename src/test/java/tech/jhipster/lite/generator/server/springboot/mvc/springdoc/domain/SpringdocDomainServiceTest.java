@@ -1,29 +1,11 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_DESCRIPTION_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_EXT_DOC_DESCRIPTION_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_EXT_DOC_URL_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_LICENSE_NAME_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_LICENSE_URL_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.API_TITLE_CONFIG_KEY;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_API_DESCRIPTION;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_API_TITLE;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_EXT_DOC_DESCRIPTION;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_EXT_DOC_URL;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_LICENSE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_LICENSE_URL;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_SWAGGER_UI_SORT_VALUE;
-import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.DEFAULT_TRY_OUT_ENABLED;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.springdoc.domain.SpringdocConstants.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +21,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -75,13 +58,7 @@ class SpringdocDomainServiceTest {
     verify(buildToolService).addDependency(eq(project), dependencyArgCaptor.capture());
     assertThat(dependencyArgCaptor.getValue()).usingRecursiveComparison().isEqualTo(getExpectedDependency());
 
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/mvc/springdoc/src",
-        "SpringdocConfiguration.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/primary/springdoc"
-      );
+    verify(projectRepository).template(any(ProjectFile.class));
 
     verify(springBootCommonService, times(3)).addProperties(any(), anyString(), any());
     verify(springBootCommonService).addProperties(project, "springdoc.swagger-ui.operationsSorter", DEFAULT_SWAGGER_UI_SORT_VALUE);
@@ -122,13 +99,7 @@ class SpringdocDomainServiceTest {
     verify(buildToolService).addDependency(eq(project), dependencyArgCaptor.capture());
     assertThat(dependencyArgCaptor.getValue()).usingRecursiveComparison().isEqualTo(getExpectedDependency());
 
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/mvc/springdoc/src",
-        "SpringdocConfiguration.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/primary/springdoc"
-      );
+    verify(projectRepository).template(any(ProjectFile.class));
 
     verify(springBootCommonService, times(3)).addProperties(any(), anyString(), any());
     verify(springBootCommonService).addProperties(project, "springdoc.swagger-ui.operationsSorter", DEFAULT_SWAGGER_UI_SORT_VALUE);

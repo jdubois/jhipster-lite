@@ -1,12 +1,8 @@
 package tech.jhipster.lite.generator.server.sonar.domain;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
@@ -21,6 +17,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -51,8 +48,7 @@ class SonarDomainServiceTest {
     verify(buildToolService).addPlugin(any(Project.class), any(Plugin.class));
     verify(buildToolService).addPluginManagement(any(Project.class), any(Plugin.class));
 
-    verify(projectRepository).template(any(Project.class), anyString(), anyString());
-    verify(projectRepository).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 
   @Test
@@ -83,7 +79,7 @@ class SonarDomainServiceTest {
     verify(buildToolService).addPlugin(any(Project.class), any(Plugin.class));
     verify(buildToolService).addPluginManagement(any(Project.class), any(Plugin.class));
 
-    verify(projectRepository, times(2)).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 
   @Test

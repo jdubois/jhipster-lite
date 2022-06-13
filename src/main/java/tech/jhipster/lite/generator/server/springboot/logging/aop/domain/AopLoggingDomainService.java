@@ -9,6 +9,7 @@ import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -67,8 +68,23 @@ public class AopLoggingDomainService implements AopLoggingService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath("com/mycompany/myapp"));
     String aopLoggingPath = "technical/infrastructure/secondary/aop/logging";
 
-    projectRepository.template(project, SOURCE, "LoggingAspectConfiguration.java", getPath(MAIN_JAVA, packageNamePath, aopLoggingPath));
-    projectRepository.template(project, SOURCE, "LoggingAspect.java", getPath(MAIN_JAVA, packageNamePath, aopLoggingPath));
-    projectRepository.template(project, SOURCE, "LoggingAspectTest.java", getPath(TEST_JAVA, packageNamePath, aopLoggingPath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "LoggingAspectConfiguration.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, aopLoggingPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "LoggingAspect.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, aopLoggingPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "LoggingAspectTest.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, aopLoggingPath))
+    );
   }
 }

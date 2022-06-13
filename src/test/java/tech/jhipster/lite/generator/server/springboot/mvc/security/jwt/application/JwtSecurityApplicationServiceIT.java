@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.secondary.GitUtils;
 import tech.jhipster.lite.generator.server.javatool.base.application.JavaBaseApplicationService;
@@ -46,7 +47,7 @@ class JwtSecurityApplicationServiceIT {
     Project project = tmpProject();
     GitUtils.init(project.getFolder());
     mavenService.addJavaPomXml(project);
-    javaBaseApplicationService.addJavaBase(project);
+    javaBaseApplicationService.build(JHipsterModuleProperties.defaultProperties(project.getFolder()));
     springBootService.init(project);
     springBootMvcService.init(project);
 
@@ -75,7 +76,7 @@ class JwtSecurityApplicationServiceIT {
     Project project = tmpProject();
     GitUtils.init(project.getFolder());
     mavenService.addJavaPomXml(project);
-    javaBaseApplicationService.addJavaBase(project);
+    javaBaseApplicationService.build(JHipsterModuleProperties.defaultProperties(project.getFolder()));
     springBootService.init(project);
     springBootMvcService.init(project);
     jwtSecurityApplicationService.init(project);

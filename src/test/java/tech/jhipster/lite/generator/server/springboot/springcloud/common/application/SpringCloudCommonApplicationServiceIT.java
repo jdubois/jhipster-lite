@@ -61,7 +61,9 @@ class SpringCloudCommonApplicationServiceIT {
       eureka.client.enabled=true
 
       spring.application.name=foo
-      """.lines().toList();
+      spring.cloud.compatibility-verifier.enabled=false
+      """.lines()
+        .toList();
     assertThat(Files.readAllLines(existingBootstrapFilePath)).containsExactlyElementsOf(expectedContentLines);
   }
 }

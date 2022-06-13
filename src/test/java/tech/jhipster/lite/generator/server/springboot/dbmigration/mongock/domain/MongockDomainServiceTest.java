@@ -23,6 +23,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -72,31 +73,9 @@ class MongockDomainServiceTest {
     expectedDependency = Dependency.builder().groupId("io.mongock").artifactId("mongodb-springdata-v3-driver").build();
     assertThat(dependencyList.get(2)).usingRecursiveComparison().isEqualTo(expectedDependency);
 
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/database/mongock",
-        "MongockDatabaseConfiguration.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/secondary/mongock"
-      );
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
 
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/database/mongock",
-        "InitialMigrationSetup.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/secondary/mongock/dbmigration"
-      );
-
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/database/mongock",
-        "InitialMigrationSetupTest.java",
-        "src/test/java/com/mycompany/myapp/technical/infrastructure/secondary/mongock/dbmigration"
-      );
-
-    verify(springBootCommonService, times(1)).addProperties(any(), anyString(), any());
+    verify(springBootCommonService).addProperties(any(), anyString(), any());
     verify(springBootCommonService)
       .addProperties(
         project,

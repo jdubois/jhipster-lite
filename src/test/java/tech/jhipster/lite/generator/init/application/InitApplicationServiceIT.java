@@ -13,6 +13,7 @@ import static tech.jhipster.lite.generator.init.application.InitAssertFiles.asse
 import static tech.jhipster.lite.generator.init.application.InitAssertFiles.assertFilesPrettier;
 import static tech.jhipster.lite.generator.init.application.InitAssertFiles.assertFilesReadme;
 import static tech.jhipster.lite.generator.project.domain.Constants.PACKAGE_JSON;
+import static tech.jhipster.lite.generator.project.domain.Constants.README_MD;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PRETTIER_DEFAULT_INDENT;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PROJECT_NAME;
@@ -47,7 +48,7 @@ class InitApplicationServiceIT {
     initApplicationService.init(project);
 
     assertFilesInit(project);
-    assertFileContent(project, "README.md", "JHipster Lite");
+    assertFileContent(project, README_MD, "JHipster Lite");
     assertFileContent(project, PACKAGE_JSON, "jhipster-lite");
     assertFileContent(project, ".editorconfig", "end_of_line = crlf");
     assertFileContent(project, ".prettierrc", "endOfLine: \"crlf\"");
@@ -79,7 +80,7 @@ class InitApplicationServiceIT {
     initApplicationService.initMinimal(project);
 
     assertFilesInitMinimal(project);
-    assertFileContent(project, "README.md", "JHipster Lite");
+    assertFileContent(project, README_MD, "JHipster Lite");
     assertFileContent(project, ".editorconfig", "end_of_line = crlf");
     assertFileGitInit(project);
   }
@@ -91,7 +92,7 @@ class InitApplicationServiceIT {
     initApplicationService.init(project);
 
     assertFilesInit(project);
-    assertFileContent(project, "README.md", "JHipster Project");
+    assertFileContent(project, README_MD, "JHipster Project");
     assertFileContent(project, PACKAGE_JSON, "jhipster");
     assertFileContent(project, ".editorconfig", "end_of_line = lf");
     assertFileContent(project, ".prettierrc", "endOfLine: \"lf\"");
@@ -114,7 +115,7 @@ class InitApplicationServiceIT {
     initApplicationService.initMinimal(project);
 
     assertFilesInitMinimal(project);
-    assertFileContent(project, "README.md", "JHipster Project");
+    assertFileContent(project, README_MD, "JHipster Project");
     assertFileContent(project, ".editorconfig", "end_of_line = lf");
   }
 

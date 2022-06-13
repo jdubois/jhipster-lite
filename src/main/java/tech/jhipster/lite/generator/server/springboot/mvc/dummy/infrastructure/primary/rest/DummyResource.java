@@ -27,7 +27,7 @@ class DummyResource {
   @Operation(summary = "Add Dummy context with some APIs")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding Dummy context")
   @PostMapping
-  @GeneratorStep(id = GeneratorAction.DUMMY_CONTEXT)
+  @GeneratorStep(id = GeneratorAction.DUMMY_FEATURE)
   public void addDummyContext(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     dummyApplicationService.applyDummyGitPatch(project);

@@ -1,13 +1,13 @@
 package tech.jhipster.lite.generator.server.springboot.async.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import java.util.Map;
 import java.util.TreeMap;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -63,6 +63,11 @@ public class SpringBootAsyncDomainService implements SpringBootAsyncService {
   }
 
   private void templateToAsync(Project project, String source, String type, String sourceFilename, String destination) {
-    projectRepository.template(project, getPath(SOURCE, type), sourceFilename, getPath(destination, source, ASYNC_PATH));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, type), sourceFilename)
+        .withDestinationFolder(getPath(destination, source, ASYNC_PATH))
+    );
   }
 }

@@ -1,20 +1,17 @@
 package tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommon.getDatabasePath;
-import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommon.getSource;
-import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommon.testContainersDependency;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.testContainersDependency;
+import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommon.*;
 
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -22,6 +19,7 @@ import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCo
 public class SQLCommonDomainService implements SQLCommonService {
 
   public static final String PROJECT = "project";
+  public static final String DATABASE = "database";
   private final BuildToolService buildToolService;
   private final SpringBootCommonService springBootCommonService;
   private final ProjectRepository projectRepository;
@@ -39,22 +37,12 @@ public class SQLCommonDomainService implements SQLCommonService {
   @Override
   public void addTestcontainers(Project project, String database, Map<String, Object> properties) {
     Assert.notNull(PROJECT, project);
+    Assert.notBlank(DATABASE, database);
 
-    this.buildToolService.getVersion(project, "testcontainers")
-      .ifPresentOrElse(
-        version -> {
-          Dependency dependency = testContainersDependency(database);
-          buildToolService.addProperty(project, "testcontainers.version", version);
-          buildToolService.addDependency(project, dependency);
-
-          springBootCommonService.addPropertiesTestComment(project, "Database Configuration");
-          properties.forEach((k, v) -> springBootCommonService.addPropertiesTest(project, k, v));
-          springBootCommonService.addPropertiesTestNewLine(project);
-        },
-        () -> {
-          throw new GeneratorException("Testcontainers version not found");
-        }
-      );
+    buildToolService.addVersionPropertyAndDependency(project, "testcontainers", testContainersDependency(database));
+    springBootCommonService.addPropertiesTestComment(project, "Database Configuration");
+    properties.forEach((k, v) -> springBootCommonService.addPropertiesTest(project, k, v));
+    springBootCommonService.addPropertiesTestNewLine(project);
   }
 
   @Override
@@ -81,10 +69,12 @@ public class SQLCommonDomainService implements SQLCommonService {
   @Override
   public void addDockerComposeTemplate(Project project, String database) {
     Assert.notNull(PROJECT, project);
-    Assert.notBlank("database", database);
+    Assert.notBlank(DATABASE, database);
 
     final String ymlFileName = database + ".yml";
-    projectRepository.template(project, getSource(database), ymlFileName, "src/main/docker", ymlFileName);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getSource(database), ymlFileName).withDestination("src/main/docker", ymlFileName)
+    );
   }
 
   @Override
@@ -97,10 +87,10 @@ public class SQLCommonDomainService implements SQLCommonService {
     String databasePath = getDatabasePath(database);
 
     projectRepository.template(
-      project,
-      getSource(database),
-      "DatabaseConfiguration.java",
-      getPath(MAIN_JAVA, packageNamePath, databasePath)
+      ProjectFile
+        .forProject(project)
+        .withSource(getSource(database), "DatabaseConfiguration.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, databasePath))
     );
   }
 

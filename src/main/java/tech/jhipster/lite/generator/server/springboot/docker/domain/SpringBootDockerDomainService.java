@@ -9,6 +9,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringBootDockerDomainService implements SpringBootDockerService {
@@ -36,7 +37,9 @@ public class SpringBootDockerDomainService implements SpringBootDockerService {
     String packageName = project.getPackageName().orElse(DefaultConfig.DEFAULT_PACKAGE_NAME);
     String className = WordUtils.upperFirst(baseName);
     project.addConfig("mainClass", packageName + "." + className + "App");
-    projectRepository.template(project, getPath(JIB_SOURCE), "entrypoint.sh", getPath("src/main/docker/jib"));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(JIB_SOURCE), "entrypoint.sh").withDestinationFolder(getPath("src/main/docker/jib"))
+    );
   }
 
   @Override
@@ -108,6 +111,6 @@ public class SpringBootDockerDomainService implements SpringBootDockerService {
   @Override
   public void addDockerfile(Project project) {
     project.addConfig("serverPort", 8080);
-    projectRepository.template(project, DOCKER_SOURCE, DOCKERFILE);
+    projectRepository.template(ProjectFile.forProject(project).withSource(DOCKER_SOURCE, DOCKERFILE).withSameDestination());
   }
 }

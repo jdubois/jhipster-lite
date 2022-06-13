@@ -13,37 +13,46 @@ import ProjectHistoryRepository from '@/common/secondary/ProjectHistoryRepositor
 import ConsoleLogger from '@/common/secondary/ConsoleLogger';
 import { FileDownloader } from '@/common/primary/FileDownloader';
 import { useHistoryStore } from '@/common/primary/HistoryStore';
+import { useProjectStore } from '@/springboot/primary/ProjectStore';
 import { createPinia } from 'pinia';
 import piniaPersist from 'pinia-plugin-persist';
-import ToastService from './common/secondary/ToastService';
+import { MittAlertBus } from '@/common/secondary/alert/MittAlertBus';
+import mitt from 'mitt';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap';
 import '../content/css/custom.css';
+import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 
 const app = createApp(App);
 const pinia = createPinia();
 pinia.use(piniaPersist);
 app.use(pinia);
 
+const emitter = mitt();
+const alertBus = new MittAlertBus(emitter);
+const alertListener = new MittAlertListener(emitter);
 const axiosHttp = new AxiosHttp(axios.create({ baseURL: '' }));
 const fileDownloader = new FileDownloader(window);
 const consoleLogger = new ConsoleLogger(console);
 const historyStore = useHistoryStore();
+const projectStore = useProjectStore();
 const projectHistoryRepository = new ProjectHistoryRepository(axiosHttp, historyStore);
-const projectRepository = new ProjectRepository(axiosHttp, projectHistoryRepository);
+const projectRepository = new ProjectRepository(axiosHttp, projectHistoryRepository, projectStore);
 const angularRepository = new AngularRepository(axiosHttp, projectHistoryRepository);
 const reactRepository = new ReactRepository(axiosHttp, projectHistoryRepository);
-const vueRepository = new VueRepository(axiosHttp, projectHistoryRepository);
-const svelteRepository = new SvelteRepository(axiosHttp, projectHistoryRepository);
 const springBootRepository = new SpringBootRepository(axiosHttp, projectHistoryRepository);
-const toastService = new ToastService();
+const svelteRepository = new SvelteRepository(axiosHttp, projectHistoryRepository);
+const vueRepository = new VueRepository(axiosHttp, projectHistoryRepository);
 
+app.provide('alertBus', alertBus);
+app.provide('alertListener', alertListener);
 app.provide('angularService', angularRepository);
 app.provide('fileDownloader', fileDownloader);
 app.provide('globalWindow', window);
 app.provide('historyStore', historyStore);
+app.provide('projectStore', projectStore);
 app.provide('logger', consoleLogger);
 app.provide('projectService', projectRepository);
 app.provide('projectHistoryService', projectHistoryRepository);
@@ -51,7 +60,6 @@ app.provide('reactService', reactRepository);
 app.provide('springBootService', springBootRepository);
 app.provide('vueService', vueRepository);
 app.provide('svelteService', svelteRepository);
-app.provide('toastService', toastService);
 app.use(router);
 
 app.mount('#app');

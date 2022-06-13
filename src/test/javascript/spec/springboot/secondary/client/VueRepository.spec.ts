@@ -24,21 +24,4 @@ describe('VueRepository', () => {
     const [projectFolder] = projectHistoryService.get.getCall(0).args;
     expect(projectFolder).toBe(PROJECT_FOLDER);
   });
-
-  it('should add Vue with minimal style', async () => {
-    const projectHistoryService = stubProjectHistoryService();
-    const axiosHttpStub = stubAxiosHttp();
-    axiosHttpStub.post.resolves();
-    const vueRepository = new VueRepository(axiosHttpStub, projectHistoryService);
-    const project: Project = createProject({ folder: PROJECT_FOLDER });
-
-    await vueRepository.addWithStyle(project);
-
-    const expectedRestProject: RestProject = toRestProject(project);
-    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
-    expect(uri).toBe('/api/clients/vue/styles');
-    expect(payload).toEqual<RestProject>(expectedRestProject);
-    const [projectFolder] = projectHistoryService.get.getCall(0).args;
-    expect(projectFolder).toBe(PROJECT_FOLDER);
-  });
 });

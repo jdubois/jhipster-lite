@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static tech.jhipster.lite.TestUtils.assertFileExist;
 import static tech.jhipster.lite.common.domain.FileUtils.getPathOf;
 import static tech.jhipster.lite.generator.project.domain.Constants.PACKAGE_JSON;
+import static tech.jhipster.lite.generator.project.domain.Constants.README_MD;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,7 +20,7 @@ public class InitAssertFiles {
   }
 
   public static void assertFilesReadme(Project project) {
-    assertFileExist(project, "README.md");
+    assertFileExist(project, README_MD);
   }
 
   public static void assertFilesGitConfiguration(Project project) {

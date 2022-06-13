@@ -1,6 +1,5 @@
 <template>
   <HeaderVue />
-  <ToastVue ref="toast" />
   <main class="container-fluid py-4">
     <div class="row">
       <div class="col-12 col-md-4 p-4 shadow-primary bg-light">
@@ -10,29 +9,30 @@
             <label for="path" class="form-label">Path (required) : </label>
             <input
               id="path"
+              placeholder="/tmp/myapp"
               v-model="project.folder"
               type="text"
               class="form-control"
               required
               autofocus
-              @input="debounceGetProjectHistory"
+              @input="debounceGetProjectDetails"
             />
           </div>
           <div class="col-12">
             <label for="basename" class="form-label">Basename : </label>
-            <input id="basename" v-model="project.baseName" type="text" class="form-control" />
+            <input id="basename" placeholder="myapp" v-model="project.baseName" type="text" class="form-control" />
           </div>
           <div class="col-12">
             <label for="projectname" class="form-label">Project name : </label>
-            <input id="projectname" v-model="project.projectName" type="text" class="form-control" />
+            <input id="projectname" placeholder="My App" v-model="project.projectName" type="text" class="form-control" />
           </div>
           <div class="col-12">
             <label for="packagename" class="form-label">Package name : </label>
-            <input id="packagename" v-model="project.packageName" type="text" class="form-control" />
+            <input id="packagename" placeholder="com.mycompany.myapp" v-model="project.packageName" type="text" class="form-control" />
           </div>
           <div class="col-12">
             <label for="serverport" class="form-label">Server port : </label>
-            <input id="serverport" v-model="project.serverPort" type="number" class="form-control" min="0" />
+            <input id="serverport" placeholder="8080" v-model="project.serverPort" type="number" class="form-control" min="0" />
           </div>
         </div>
       </div>
@@ -102,6 +102,55 @@
           </div>
 
           <div class="col">
+            <div class="card h-100 text-white bg-secondary bg-gradient shadow">
+              <h3 class="card-header h5 d-flex gap-3">
+                <IconVue :name="'gear'" :aria-hidden="true" />
+                Server
+              </h3>
+              <div class="card-body">
+                <ul class="list-group--inline">
+                  <li class="list-group-item align-items-center gap-3 py-2" aria-current="true">
+                    <div class="w-100 justify-content-between">
+                      <input
+                        id="option-no-server"
+                        v-model="server"
+                        class="form-check-input flex-shrink-0"
+                        type="radio"
+                        name="server"
+                        value="none"
+                        checked
+                      />
+                      <label for="option-no-server" role="button"> None </label>
+                    </div>
+                    <img
+                      src="../../../content/JHipster-Lite-neon-blue_40x.png"
+                      alt=""
+                      width="32"
+                      height="32"
+                      class="rounded-circle flex-shrink-0"
+                    />
+                  </li>
+                  <li class="list-group-item align-items-center gap-3 py-2" aria-current="true">
+                    <div class="w-100 justify-content-between">
+                      <input
+                        id="option-springboot"
+                        v-model="server"
+                        :data-selector="selectorPrefix + '.option-springboot'"
+                        class="form-check-input flex-shrink-0"
+                        type="radio"
+                        name="server"
+                        value="springboot"
+                      />
+                      <label for="option-springboot" role="button"> Spring Boot </label>
+                    </div>
+                    <img src="../../../content/SpringLogo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0" />
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
             <div class="card h-100 text-white bg-primary bg-gradient shadow">
               <h3 class="card-header h5 d-flex gap-3">
                 <IconVue :name="'body-text'" :aria-hidden="true" />
@@ -159,55 +208,6 @@
                       <label for="setup-tool-gitpod" role="button"> Gitpod </label>
                     </div>
                     <img src="../../../content/GitpodLogo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0" />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col">
-            <div class="card h-100 text-white bg-secondary bg-gradient shadow">
-              <h3 class="card-header h5 d-flex gap-3">
-                <IconVue :name="'gear'" :aria-hidden="true" />
-                Server
-              </h3>
-              <div class="card-body">
-                <ul class="list-group--inline">
-                  <li class="list-group-item align-items-center gap-3 py-2" aria-current="true">
-                    <div class="w-100 justify-content-between">
-                      <input
-                        id="option-no-server"
-                        v-model="server"
-                        class="form-check-input flex-shrink-0"
-                        type="radio"
-                        name="server"
-                        value="none"
-                        checked
-                      />
-                      <label for="option-no-server" role="button"> None </label>
-                    </div>
-                    <img
-                      src="../../../content/JHipster-Lite-neon-blue_40x.png"
-                      alt=""
-                      width="32"
-                      height="32"
-                      class="rounded-circle flex-shrink-0"
-                    />
-                  </li>
-                  <li class="list-group-item align-items-center gap-3 py-2" aria-current="true">
-                    <div class="w-100 justify-content-between">
-                      <input
-                        id="option-springboot"
-                        v-model="server"
-                        :data-selector="selectorPrefix + '.option-springboot'"
-                        class="form-check-input flex-shrink-0"
-                        type="radio"
-                        name="server"
-                        value="springboot"
-                      />
-                      <label for="option-springboot" role="button"> Spring Boot </label>
-                    </div>
-                    <img src="../../../content/SpringLogo.png" alt="" width="32" height="32" class="rounded-circle flex-shrink-0" />
                   </li>
                 </ul>
               </div>

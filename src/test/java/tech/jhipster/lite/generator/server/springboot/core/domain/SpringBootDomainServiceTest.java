@@ -1,12 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.core.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -27,13 +25,13 @@ import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 class SpringBootDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @InjectMocks
-  SpringBootDomainService springBootDomainService;
+  private SpringBootDomainService springBootDomainService;
 
   @Test
   void shouldInit() {
@@ -46,10 +44,7 @@ class SpringBootDomainServiceTest {
     verify(buildToolService, times(4)).addDependency(any(Project.class), any(Dependency.class));
     verify(buildToolService).addPlugin(any(Project.class), any(Plugin.class));
 
-    // for application.properties, application-local.properties, Integration Test annotation, Logging config and logging test config
-    verify(projectRepository, times(5)).template(any(Project.class), anyString(), anyString(), anyString());
-    // for main class + test + application.properties in test
-    verify(projectRepository, times(3)).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
+    verify(projectRepository, times(8)).template(any(ProjectFile.class));
   }
 
   @Test

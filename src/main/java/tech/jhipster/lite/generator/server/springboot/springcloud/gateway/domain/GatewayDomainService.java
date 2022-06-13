@@ -13,6 +13,7 @@ import static tech.jhipster.lite.generator.server.springboot.springcloud.gateway
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonService;
 
@@ -84,13 +85,24 @@ public class GatewayDomainService implements GatewayService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath("com/mycompany/myapp"));
     String resourcePath = "technical/infrastructure/primary/rest";
 
-    projectRepository.template(project, getPath(SOURCE, "java"), "GatewayResource.java", getPath(MAIN_JAVA, packageNamePath, resourcePath));
-    projectRepository.template(project, getPath(SOURCE, "java"), "RouteVM.java", getPath(MAIN_JAVA, packageNamePath, resourcePath + "/vm"));
     projectRepository.template(
-      project,
-      getPath(SOURCE, "java/test"),
-      "GatewayResourceIT.java",
-      getPath(TEST_JAVA, packageNamePath, resourcePath)
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "java"), "GatewayResource.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, resourcePath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "java"), "RouteVM.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, resourcePath + "/vm"))
+    );
+
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "java/test"), "GatewayResourceIT.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, resourcePath))
     );
   }
 }

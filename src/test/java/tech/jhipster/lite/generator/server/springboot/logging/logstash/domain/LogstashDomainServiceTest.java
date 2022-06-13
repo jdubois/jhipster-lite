@@ -19,6 +19,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -48,11 +49,8 @@ class LogstashDomainServiceTest {
 
     verify(buildToolService).addProperty(any(Project.class), anyString(), anyString());
     verify(buildToolService).addDependency(any(Project.class), any(Dependency.class));
-
-    verify(projectRepository, times(7)).template(any(Project.class), anyString(), anyString(), anyString());
-
+    verify(projectRepository, times(7)).template(any(ProjectFile.class));
     verify(springBootCommonService, times(5)).addProperties(any(Project.class), anyString(), any());
-
     verify(springBootCommonService, times(2)).addLoggerTest(any(Project.class), anyString(), any(Level.class));
   }
 
@@ -80,7 +78,7 @@ class LogstashDomainServiceTest {
 
     logstashDomainService.addJavaFiles(project);
 
-    verify(projectRepository, times(7)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(7)).template(any(ProjectFile.class));
   }
 
   @Test

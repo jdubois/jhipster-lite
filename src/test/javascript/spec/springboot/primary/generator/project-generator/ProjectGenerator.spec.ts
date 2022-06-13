@@ -1,35 +1,30 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { ProjectToUpdate } from '@/springboot/primary/ProjectToUpdate';
 import { createProjectToUpdate } from '../../ProjectToUpdate.fixture';
-import { stubLogger } from '../../../../common/domain/Logger.fixture';
-import { Logger } from '@/common/domain/Logger';
 import { ProjectService } from '@/springboot/domain/ProjectService';
 import { stubProjectService } from '../../../domain/ProjectService.fixture';
 import { ProjectGeneratorVue } from '@/springboot/primary/generator/project-generator';
 import { FileDownloader } from '@/common/primary/FileDownloader';
 import { stubFileDownloader } from '../../../../common/primary/FileDownloader.fixture';
-import { NotificationService } from '@/common/domain/NotificationService';
-import { stubNotificationService } from '../../../../common/domain/NotificationService.fixture';
-import { stubToastService } from '../../../../common/secondary/ToastService.fixture';
+import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
 
 let wrapper: VueWrapper;
 let component: any;
 
 interface WrapperOptions {
+  alertBus: AlertBus;
   projectService: ProjectService;
   fileDownloader: FileDownloader;
-  logger: Logger;
   project: ProjectToUpdate;
-  toastService: NotificationService;
 }
 
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { projectService, fileDownloader, logger, project, toastService }: WrapperOptions = {
+  const { alertBus, projectService, fileDownloader, project }: WrapperOptions = {
+    alertBus: stubAlertBus(),
     projectService: stubProjectService(),
     fileDownloader: stubFileDownloader(),
-    logger: stubLogger(),
     project: createProjectToUpdate(),
-    toastService: stubNotificationService(),
     ...wrapperOptions,
   };
   wrapper = shallowMount(ProjectGeneratorVue, {
@@ -40,10 +35,9 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
     },
     global: {
       provide: {
+        alertBus,
         projectService,
         fileDownloader,
-        logger,
-        toastService,
       },
     },
   });
@@ -70,7 +64,7 @@ describe('ProjectGenerator', () => {
   it('should init project when project path is filled', async () => {
     const projectService = stubProjectService();
     projectService.init.resolves({});
-    const toastService = stubToastService();
+    const alertBus = stubAlertBus();
     const projectToUpdate: ProjectToUpdate = createProjectToUpdate({
       folder: 'project/path',
       baseName: 'beer',
@@ -78,7 +72,7 @@ describe('ProjectGenerator', () => {
       packageName: 'tech.jhipster.beer',
       serverPort: '8080',
     });
-    await wrap({ projectService, project: projectToUpdate, toastService });
+    await wrap({ alertBus, projectService, project: projectToUpdate });
 
     await component.initProject();
 
@@ -90,20 +84,20 @@ describe('ProjectGenerator', () => {
       packageName: 'tech.jhipster.beer',
       serverPort: 8080,
     });
-    const toastMessage = toastService.success.getCall(0).args[0];
-    expect(toastMessage).toBe('Project successfully initialized');
+    const alertMessage = alertBus.success.getCall(0).args[0];
+    expect(alertMessage).toBe('Project successfully initialized');
   });
 
   it('should handle error on init failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.init.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.init.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.initProject();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Project initialization failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Project initialization failed error');
   });
 
   it('should not add Maven when project path is not filled', async () => {
@@ -141,15 +135,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding maven failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addMaven.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addMaven.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addMaven();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Maven to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Maven to project failed error');
   });
 
   it('should not add Codespaces setup when project path is not filled', async () => {
@@ -188,15 +182,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding Codespaces failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addCodespacesSetup.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addCodespacesSetup.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addCodespacesSetup();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Codespaces setup to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Codespaces setup to project failed error');
   });
 
   it('should not add Gitpod setup when project path is not filled', async () => {
@@ -235,15 +229,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding Codespaces failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addGitpodSetup.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addGitpodSetup.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addGitpodSetup();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Gitpod setup to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Gitpod setup to project failed error');
   });
 
   it('should not add JaCoCo when project path is not filled', async () => {
@@ -281,15 +275,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding JaCoCo failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addJaCoCo.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addJaCoCo.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addJaCoCo();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding JaCoCo to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding JaCoCo to project failed error');
   });
 
   it('should not add Sonar Backend when project path is not filled', async () => {
@@ -327,15 +321,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding Sonar Backend failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addSonarBackend.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addSonarBackend.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addSonarBackend();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Sonar Backend to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Sonar Backend to project failed error');
   });
 
   it('should not add Sonar Backend+Frontend when project path is not filled', async () => {
@@ -373,15 +367,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding Sonar Backend+Frontend failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addSonarBackendFrontend.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addSonarBackendFrontend.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addSonarBackendFrontend();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Sonar Backend+Frontend to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Sonar Backend+Frontend to project failed error');
   });
 
   it('should not add JavaBase when project path is not filled', async () => {
@@ -419,15 +413,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding java base failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addJavaBase.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addJavaBase.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addJavaBase();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Java Base to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Java Base to project failed error');
   });
 
   it('should not add Frontend Maven Plugin when project path is not filled', async () => {
@@ -465,15 +459,15 @@ describe('ProjectGenerator', () => {
   });
 
   it('should handle error on adding Frontend Maven Plugin failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.addFrontendMavenPlugin.rejects({});
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.addFrontendMavenPlugin.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addFrontendMavenPlugin();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding Frontend Maven Plugin to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding Frontend Maven Plugin to project failed error');
   });
 
   it('should download initialized project with basename', async () => {
@@ -525,15 +519,14 @@ describe('ProjectGenerator', () => {
   });
 
   it('should not download an non existing project', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const projectService = stubProjectService();
-    projectService.download.rejects(new Error('foo'));
-    await wrap({ projectService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    projectService.download.rejects('error');
+    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.download();
 
-    const [message, error] = logger.error.getCall(0).args;
-    expect(message).toBe('Downloading project failed');
-    expect(error).toStrictEqual(new Error('foo'));
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Downloading project failed error');
   });
 });

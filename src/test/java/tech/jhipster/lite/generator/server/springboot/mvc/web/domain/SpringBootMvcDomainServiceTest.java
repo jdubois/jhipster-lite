@@ -1,12 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.web.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -19,6 +16,8 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
+import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -28,16 +27,16 @@ import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCo
 class SpringBootMvcDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  SpringBootCommonService springBootCommonService;
+  private SpringBootCommonService springBootCommonService;
 
   @InjectMocks
-  SpringBootMvcDomainService springBootMvcDomainService;
+  private SpringBootMvcDomainService springBootMvcDomainService;
 
   @Test
   void shouldInit() {
@@ -55,7 +54,8 @@ class SpringBootMvcDomainServiceTest {
     verify(springBootCommonService).addLogger(any(Project.class), anyString(), any(Level.class));
     verify(springBootCommonService).addLoggerTest(any(Project.class), anyString(), any(Level.class));
 
-    verify(projectRepository, times(15)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(13)).template(any(ProjectFile.class));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(2));
   }
 
   @Test
@@ -74,20 +74,8 @@ class SpringBootMvcDomainServiceTest {
     verify(springBootCommonService).addLogger(any(Project.class), anyString(), any(Level.class));
     verify(springBootCommonService).addLoggerTest(any(Project.class), anyString(), any(Level.class));
 
-    verify(projectRepository, times(15)).template(any(Project.class), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddSpringBootActuator() {
-    Project project = tmpProjectWithPomXml();
-
-    springBootMvcDomainService.addSpringBootActuator(project);
-
-    verify(buildToolService).addDependency(any(Project.class), any(Dependency.class));
-
-    verify(springBootCommonService).addPropertiesComment(any(Project.class), anyString());
-    verify(springBootCommonService, times(5)).addProperties(any(Project.class), anyString(), any());
-    verify(springBootCommonService).addPropertiesNewLine(any(Project.class));
+    verify(projectRepository, times(13)).template(any(ProjectFile.class));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(2));
   }
 
   @Test

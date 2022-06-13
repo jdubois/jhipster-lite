@@ -103,33 +103,45 @@ public class SvelteDomainService implements SvelteService {
   public void addRootFiles(Project project) {
     String pathWebapp = "src/main/webapp";
 
-    projectRepository.template(project, getPath(SOURCE, pathWebapp), "app.html", pathWebapp);
-    projectRepository.template(project, getPath(SOURCE, pathWebapp), "app.d.ts", pathWebapp);
-    projectRepository.template(project, getPath(SOURCE, pathWebapp), "jest-setup.ts", pathWebapp);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, pathWebapp), "app.html").withDestinationFolder(pathWebapp)
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, pathWebapp), "app.d.ts").withDestinationFolder(pathWebapp)
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, pathWebapp), "jest-setup.ts").withDestinationFolder(pathWebapp)
+    );
   }
 
   public void addAppFiles(Project project) {
     String sourceRoutes = getPath(SOURCE, "src/main/webapp/routes");
     String destinationRoutes = "src/main/webapp/routes";
 
-    projectRepository.template(project, sourceRoutes, "index.svelte", destinationRoutes);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceRoutes, "index.svelte").withDestinationFolder(destinationRoutes)
+    );
 
     projectRepository.template(
-      project,
-      getPath(SOURCE, "src/test/spec/common/primary/app"),
-      "App.spec.ts",
-      "src/test/javascript/spec/common/primary/app"
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "src/test/spec/common/primary/app"), "App.spec.ts")
+        .withDestinationFolder("src/test/javascript/spec/common/primary/app")
     );
   }
 
   public void addUnstyledHomeFiles(Project project) {
-    projectRepository.template(project, SOURCE_PRIMARY, "App.svelte", DESTINATION_PRIMARY);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE_PRIMARY, "App.svelte").withDestinationFolder(DESTINATION_PRIMARY)
+    );
   }
 
   public void addStyledHomeFiles(Project project) {
     String assets = "src/main/webapp/assets";
 
-    projectRepository.template(project, SOURCE_PRIMARY, "StyledApp.svelte", DESTINATION_PRIMARY, "App.svelte");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE_PRIMARY, "StyledApp.svelte").withDestination(DESTINATION_PRIMARY, "App.svelte")
+    );
 
     projectRepository.add(
       ProjectFile.forProject(project).withSource(getPath(SOURCE, assets), "JHipster-Lite-neon-orange.png").withDestinationFolder(assets)

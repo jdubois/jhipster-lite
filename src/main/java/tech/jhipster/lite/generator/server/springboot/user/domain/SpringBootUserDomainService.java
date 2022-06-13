@@ -1,15 +1,12 @@
 package tech.jhipster.lite.generator.server.springboot.user.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.DOMAIN;
-import static tech.jhipster.lite.generator.project.domain.Constants.INFRASTRUCTURE_SECONDARY;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_PATH;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringBootUserDomainService implements SpringBootUserService {
@@ -40,20 +37,41 @@ public class SpringBootUserDomainService implements SpringBootUserService {
 
     if (isDatabaseWhichNoNeedsSequenceStrategy(sqlDatabase)) {
       projectRepository.template(
-        project,
-        SOURCE,
-        "UserEntity_without_sequence.java",
-        getSqlJavaPath(packageNamePath, sqlDatabase),
-        "UserEntity.java"
+        ProjectFile
+          .forProject(project)
+          .withSource(SOURCE, "UserEntity_without_sequence.java")
+          .withDestination(getSqlJavaPath(packageNamePath, sqlDatabase), "UserEntity.java")
       );
     } else {
-      projectRepository.template(project, SOURCE, "UserEntity.java", getSqlJavaPath(packageNamePath, sqlDatabase));
+      projectRepository.template(
+        ProjectFile
+          .forProject(project)
+          .withSource(SOURCE, "UserEntity.java")
+          .withDestinationFolder(getSqlJavaPath(packageNamePath, sqlDatabase))
+      );
     }
-    projectRepository.template(project, SOURCE, "UserJpaRepository.java", getSqlJavaPath(packageNamePath, sqlDatabase));
-    projectRepository.template(project, SOURCE, "UserConstants.java", getSqlDomainJavaPath(packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "UserJpaRepository.java")
+        .withDestinationFolder(getSqlJavaPath(packageNamePath, sqlDatabase))
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "UserConstants.java").withDestinationFolder(getSqlDomainJavaPath(packageNamePath))
+    );
 
-    projectRepository.template(project, SOURCE, "UserEntityTest.java", getSqlJavaTestPath(packageNamePath, sqlDatabase));
-    projectRepository.template(project, SOURCE, "UserJpaRepositoryIT.java", getSqlJavaTestPath(packageNamePath, sqlDatabase));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "UserEntityTest.java")
+        .withDestinationFolder(getSqlJavaTestPath(packageNamePath, sqlDatabase))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "UserJpaRepositoryIT.java")
+        .withDestinationFolder(getSqlJavaTestPath(packageNamePath, sqlDatabase))
+    );
   }
 
   private void addAuthorityEntity(Project project, DatabaseType sqlDatabase) {
@@ -61,10 +79,25 @@ public class SpringBootUserDomainService implements SpringBootUserService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath(PACKAGE_PATH));
     project.addConfig(USER_DATABASE_KEY, sqlDatabase.id());
 
-    projectRepository.template(project, SOURCE, "AuthorityEntity.java", getSqlJavaPath(packageNamePath, sqlDatabase));
-    projectRepository.template(project, SOURCE, "AuthorityJpaRepository.java", getSqlJavaPath(packageNamePath, sqlDatabase));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "AuthorityEntity.java")
+        .withDestinationFolder(getSqlJavaPath(packageNamePath, sqlDatabase))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "AuthorityJpaRepository.java")
+        .withDestinationFolder(getSqlJavaPath(packageNamePath, sqlDatabase))
+    );
 
-    projectRepository.template(project, SOURCE, "AuthorityEntityTest.java", getSqlJavaTestPath(packageNamePath, sqlDatabase));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "AuthorityEntityTest.java")
+        .withDestinationFolder(getSqlJavaTestPath(packageNamePath, sqlDatabase))
+    );
   }
 
   private void addAbstractAuditingEntity(Project project, DatabaseType sqlDatabase) {
@@ -72,7 +105,12 @@ public class SpringBootUserDomainService implements SpringBootUserService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath(PACKAGE_PATH));
     project.addConfig(USER_DATABASE_KEY, sqlDatabase.id());
 
-    projectRepository.template(project, SOURCE, "AbstractAuditingEntity.java", getSqlJavaPath(packageNamePath, sqlDatabase));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "AbstractAuditingEntity.java")
+        .withDestinationFolder(getSqlJavaPath(packageNamePath, sqlDatabase))
+    );
   }
 
   private String getSqlJavaPath(String packageNamePath, DatabaseType sqlDatabase) {

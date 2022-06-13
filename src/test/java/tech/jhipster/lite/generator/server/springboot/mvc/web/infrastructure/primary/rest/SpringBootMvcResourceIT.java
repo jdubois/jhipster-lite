@@ -1,15 +1,11 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.web.infrastructure.primary.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.common.domain.FileUtils.tmpDirForTest;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterActuatorDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterUndertowDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterWebDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterWebWithoutTomcat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -91,44 +87,5 @@ class SpringBootMvcResourceIT {
     assertFileContent(project, POM_XML, springBootStarterUndertowDependency());
 
     assertFileContent(projectPath, "src/main/resources/config/application.properties", "server.port=8080");
-  }
-
-  @Test
-  void shouldAddSpringBootActuator() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
-    Project project = ProjectDTO.toProject(projectDTO);
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
-    springBootApplicationService.init(project);
-
-    mockMvc
-      .perform(
-        post("/api/servers/spring-boot/technical-tools/actuator")
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(TestUtils.convertObjectToJsonBytes(projectDTO))
-      )
-      .andExpect(status().isOk());
-
-    String projectPath = projectDTO.getFolder();
-    assertFileExist(projectPath, POM_XML);
-    assertFileContent(project, POM_XML, springBootStarterActuatorDependency());
-
-    assertFileContent(projectPath, "src/main/resources/config/application.properties", "management.endpoints.web.base-path=/management");
-    assertFileContent(
-      projectPath,
-      "src/main/resources/config/application.properties",
-      "management.endpoints.web.exposure.include=configprops, env, health, info, logfile, loggers, threaddump"
-    );
-    assertFileContent(projectPath, "src/main/resources/config/application.properties", "management.endpoint.health.probes.enabled=true");
-    assertFileContent(
-      projectPath,
-      "src/main/resources/config/application.properties",
-      "management.endpoint.health.group.liveness.include=livenessState"
-    );
-    assertFileContent(
-      projectPath,
-      "src/main/resources/config/application.properties",
-      "management.endpoint.health.group.readiness.include=readinessState"
-    );
   }
 }

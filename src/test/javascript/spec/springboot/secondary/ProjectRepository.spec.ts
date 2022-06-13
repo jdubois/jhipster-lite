@@ -4,6 +4,7 @@ import { stubAxiosHttp } from '../../http/AxiosHttpStub';
 import { RestProject, toRestProject } from '@/springboot/secondary/RestProject';
 import { createProject } from '../domain/Project.fixture';
 import { stubProjectHistoryService } from '../../common/domain/ProjectHistoryService.fixture';
+import { stubProjectStore } from '../primary/ProjectStore.fixture';
 
 const PROJECT_FOLDER = 'folder/path';
 
@@ -11,8 +12,9 @@ describe('ProjectRepository', () => {
   it('should init project', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.init(project);
@@ -28,8 +30,9 @@ describe('ProjectRepository', () => {
   it('should add Maven', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addMaven(project);
@@ -45,8 +48,9 @@ describe('ProjectRepository', () => {
   it('should add Codespaces setup', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addCodespacesSetup(project);
@@ -62,8 +66,9 @@ describe('ProjectRepository', () => {
   it('should add Gitpod setup', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addGitpodSetup(project);
@@ -79,8 +84,9 @@ describe('ProjectRepository', () => {
   it('should add JaCoCo', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addJaCoCo(project);
@@ -96,8 +102,9 @@ describe('ProjectRepository', () => {
   it('should add Sonar Backend', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addSonarBackend(project);
@@ -113,8 +120,9 @@ describe('ProjectRepository', () => {
   it('should add Sonar Backend+Frontend', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addSonarBackendFrontend(project);
@@ -130,8 +138,9 @@ describe('ProjectRepository', () => {
   it('should add JavaBase', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addJavaBase(project);
@@ -147,8 +156,9 @@ describe('ProjectRepository', () => {
   it('should add Frontend Maven Plugin', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves();
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     await projectRepository.addFrontendMavenPlugin(project);
@@ -164,8 +174,9 @@ describe('ProjectRepository', () => {
   it('should download the project', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
     axiosHttpStub.post.resolves({ headers: [], data: [1, 2, 3] });
-    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService);
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
     const project: Project = createProject({ folder: PROJECT_FOLDER });
 
     const data = await projectRepository.download(project);
@@ -177,5 +188,39 @@ describe('ProjectRepository', () => {
     expect(payload).toEqual<RestProject>(expectedRestProject);
     const [projectFolder] = projectHistoryService.get.getCall(0).args;
     expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
+
+  it('should get project details', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+    axiosHttpStub.get.resolves({ data: toRestProject(project) });
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
+
+    await projectRepository.getProjectDetails(PROJECT_FOLDER);
+
+    const [uri, params] = axiosHttpStub.get.getCall(0).args;
+    expect(uri).toBe('api/projects/details');
+    expect(params).toEqual({ params: { folder: PROJECT_FOLDER } });
+    const [projectDetails] = projectStoreStub.setProject.getCall(0).args;
+    expect(projectDetails).toEqual(project);
+  });
+
+  it('should set empty project details on api failure', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    const projectStoreStub = stubProjectStore();
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+    axiosHttpStub.get.rejects();
+    const projectRepository = new ProjectRepository(axiosHttpStub, projectHistoryService, projectStoreStub);
+
+    await projectRepository.getProjectDetails(PROJECT_FOLDER);
+
+    const [uri, params] = axiosHttpStub.get.getCall(0).args;
+    expect(uri).toBe('api/projects/details');
+    expect(params).toEqual({ params: { folder: PROJECT_FOLDER } });
+    const [projectDetails] = projectStoreStub.setProject.getCall(0).args;
+    expect(projectDetails).toEqual({ folder: PROJECT_FOLDER });
   });
 });

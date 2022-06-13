@@ -22,6 +22,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -59,7 +60,7 @@ class MongodbDomainServiceTest {
 
     verify(buildToolService, times(2)).addDependency(any(Project.class), any(Dependency.class));
 
-    verify(projectRepository, times(6)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(6)).template(any(ProjectFile.class));
 
     verify(springBootCommonService).addPropertiesComment(any(Project.class), anyString());
     verify(springBootCommonService, times(2)).addProperties(any(Project.class), anyString(), any());

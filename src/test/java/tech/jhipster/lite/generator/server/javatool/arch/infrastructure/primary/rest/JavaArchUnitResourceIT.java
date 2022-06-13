@@ -4,7 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tech.jhipster.lite.common.domain.FileUtils.tmpDirForTest;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertArchUnitMavenPlugin;
-import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertFilesAnnotations;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertFilesHexaArchTest;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertLoggerInConfiguration;
 
@@ -46,7 +45,6 @@ class JavaArchUnitResourceIT {
       )
       .andExpect(status().isOk());
 
-    assertFilesAnnotations(project);
     assertFilesHexaArchTest(project);
     assertArchUnitMavenPlugin(project);
     assertLoggerInConfiguration(project);

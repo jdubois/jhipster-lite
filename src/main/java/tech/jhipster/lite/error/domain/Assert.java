@@ -1072,49 +1072,16 @@ public class Assert {
     }
 
     /**
-     * Ensure that the given instant is in the past or at current Instant (considering this method invocation time)
-     *
-     * @return The current asserter
-     * @throws MissingMandatoryValueException
-     *           if the input value is null
-     * @throws NotPastTimeException
-     *           if the date is not in the past
-     */
-    public InstantAsserter inPast() {
-      notNull();
-
-      if (isInFuture()) {
-        throw new NotPastTimeException(field);
-      }
-
-      return this;
-    }
-
-    private boolean isInFuture() {
-      return value.compareTo(Instant.now()) >= 0;
-    }
-
-    /**
      * Ensure that the given instant is in the future or at current Instant (considering this method invocation time)
      *
      * @return The current asserter
      * @throws MissingMandatoryValueException
      *           if the input value is null
-     * @throws NotFutureTimeException
-     *           if the date is not in the future
+     * @throws NotAfterTimeException
+     *           if the input instant is in past
      */
     public InstantAsserter inFuture() {
-      notNull();
-
-      if (isInPast()) {
-        throw new NotFutureTimeException(field);
-      }
-
-      return this;
-    }
-
-    private boolean isInPast() {
-      return value.compareTo(Instant.now()) <= 0;
+      return afterOrAt(Instant.now());
     }
 
     /**
@@ -1159,6 +1126,19 @@ public class Assert {
       }
 
       return this;
+    }
+
+    /**
+     * Ensure that the given instant is in the past or at current Instant (considering this method invocation time)
+     *
+     * @return The current asserter
+     * @throws MissingMandatoryValueException
+     *           if the input value is null
+     * @throws NotBeforeTimeException
+     *           if the input instant is in future
+     */
+    public InstantAsserter inPast() {
+      return beforeOrAt(Instant.now());
     }
 
     /**

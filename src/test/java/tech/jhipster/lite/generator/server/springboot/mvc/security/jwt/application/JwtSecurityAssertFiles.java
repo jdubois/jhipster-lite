@@ -70,7 +70,7 @@ public class JwtSecurityAssertFiles {
 
   public static void assertJwtSecurityProperties(Project project) {
     List<String> properties = List.of(
-      "application.security.authentication.jwt.base64-secret=bXktc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtY2hhbmdlZC1pbi1wcm9kdWN0aW9uLWFuZC1iZS1iYXNlNjQtZW5jb2RlZAo=",
+      "application.security.authentication.jwt.base64-secret=",
       "application.security.authentication.jwt.token-validity-in-seconds=86400",
       "application.security.authentication.jwt.token-validity-in-seconds-for-remember-me=2592000"
     );
@@ -132,6 +132,7 @@ public class JwtSecurityAssertFiles {
   public static void assertBasicAuthProperties(Project project) {
     List<String> properties = List.of(
       "spring.security.user.name=admin",
+      "# Be sure to change it with any Bcrypt tool like https://bcrypt-generator.com before going to production",
       "spring.security.user.password=$2a$12$cRKS9ZURbdJIaRsKDTDUmOrH4.B.2rokv8rrkrQXr2IR2Hkna484O",
       "spring.security.user.roles=ADMIN"
     );

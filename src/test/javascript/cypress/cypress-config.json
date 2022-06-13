@@ -1,9 +1,0 @@
-{
-  "baseUrl": "http://localhost:7471",
-  "integrationFolder": "src/test/javascript/cypress/integration",
-  "fixturesFolder": false,
-  "pluginsFile": false,
-  "supportFile": false,
-  "testFiles": "**/*.spec.ts",
-  "video": false
-}

@@ -11,7 +11,6 @@ import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.Spri
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.corsFiles;
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.corsProperties;
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.problemSpringDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.springBootActuatorDependency;
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.springBootStarterValidation;
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.springBootStarterWebDependency;
 import static tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvc.tomcatDependency;
@@ -22,6 +21,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -75,23 +75,6 @@ public class SpringBootMvcDomainService implements SpringBootMvcService {
   }
 
   @Override
-  public void addSpringBootActuator(Project project) {
-    buildToolService.addDependency(project, springBootActuatorDependency());
-
-    springBootCommonService.addPropertiesComment(project, "Spring Boot Actuator");
-    springBootCommonService.addProperties(project, "management.endpoints.web.base-path", "/management");
-    springBootCommonService.addProperties(
-      project,
-      "management.endpoints.web.exposure.include",
-      "configprops, env, health, info, logfile, loggers, threaddump"
-    );
-    springBootCommonService.addProperties(project, "management.endpoint.health.probes.enabled", "true");
-    springBootCommonService.addProperties(project, "management.endpoint.health.group.liveness.include", "livenessState");
-    springBootCommonService.addProperties(project, "management.endpoint.health.group.readiness.include", "readinessState");
-    springBootCommonService.addPropertiesNewLine(project);
-  }
-
-  @Override
   public void addExceptionHandler(Project project) {
     project.addDefaultConfig(PACKAGE_NAME);
 
@@ -128,15 +111,20 @@ public class SpringBootMvcDomainService implements SpringBootMvcService {
     templateToExceptionHandler(project, packageNamePath, "test", "FieldErrorDTOTest.java", TEST_JAVA);
     templateToExceptionHandler(project, packageNamePath, "test", "HeaderUtilTest.java", TEST_JAVA);
 
-    projectRepository.template(project, getPath(SOURCE, "test"), "TestUtil.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "test"), "TestUtil.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   private void templateToExceptionHandler(Project project, String source, String type, String sourceFilename, String destination) {
     projectRepository.template(
-      project,
-      getPath(SOURCE, type),
-      sourceFilename,
-      getPath(destination, source, TECHNICAL_INFRASTRUCTURE_PRIMARY_EXCEPTION)
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, type), sourceFilename)
+        .withDestinationFolder(getPath(destination, source, TECHNICAL_INFRASTRUCTURE_PRIMARY_EXCEPTION))
     );
   }
 
@@ -156,21 +144,24 @@ public class SpringBootMvcDomainService implements SpringBootMvcService {
 
   private void addCorsFiles(Project project) {
     String packageNamePath = project.getPackageNamePath().orElse(getPath(PACKAGE_PATH));
-    corsFiles()
-      .forEach((javaFile, destination) ->
-        projectRepository.template(
-          project,
-          getPath(SOURCE, "src", CORS),
-          javaFile,
-          getPath(MAIN_JAVA, packageNamePath, TECHNICAL_INFRASTRUCTURE_PRIMARY_CORS)
-        )
-      );
+
+    List<ProjectFile> files = corsFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, "src", CORS), entry.getKey())
+          .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, TECHNICAL_INFRASTRUCTURE_PRIMARY_CORS))
+      )
+      .toList();
+    projectRepository.template(files);
 
     projectRepository.template(
-      project,
-      getPath(SOURCE, "test", CORS),
-      "CorsFilterConfigurationIT.java",
-      getPath(TEST_JAVA, packageNamePath, TECHNICAL_INFRASTRUCTURE_PRIMARY_CORS)
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "test", CORS), "CorsFilterConfigurationIT.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, TECHNICAL_INFRASTRUCTURE_PRIMARY_CORS))
     );
   }
 

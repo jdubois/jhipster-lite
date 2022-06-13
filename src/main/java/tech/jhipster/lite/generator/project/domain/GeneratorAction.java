@@ -19,22 +19,12 @@ public class GeneratorAction {
   public static final String GRADLE_JAVA_BUILD_GRADLE_KTS = "gradle-java-build-gradle-kts";
   public static final String GRADLE_WRAPPER = "gradle-wrapper";
 
-  // Javatool: base
-  public static final String JAVA_BASE = "java-base";
-
   public static final String NPM_INSTALL = "npm-install";
   public static final String NPM_PRETTIFY = "npm-prettify";
 
   public static final String SPRING_CLOUD = "spring-cloud";
 
   public static final String DEV_TOOLS = "dev-tools";
-
-  public static final String BANNER_JHIPSTER_V7 = "banner-jhipster-v7";
-  public static final String BANNER_IPPON = "banner-ippon";
-  public static final String BANNER_JHIPSTER_V7_REACT = "banner-jhipster-v7-react";
-  public static final String BANNER_JHIPSTER_V7_VUE = "banner-jhipster-v7-vue";
-  public static final String BANNER_JHIPSTER_V2 = "banner-jhipster-v2";
-  public static final String BANNER_JHIPSTER_V3 = "banner-jhipster-v3";
 
   public static final String SVELTE = "svelte";
   public static final String SVEKTEKIT_STYLE = "svektekit-styled";
@@ -47,8 +37,8 @@ public class GeneratorAction {
   public static final String POSTGRESQL = "postgresql";
 
   public static final String ANGULAR = "angular";
-  public static final String ANGULAR_STYLED = "angular-styled";
   public static final String ANGULAR_JWT = "angular-jwt";
+  public static final String ANGULAR_OAUTH2 = "angular-oauth2";
 
   public static final String LIQUIBASE = "liquibase";
   public static final String LIQUIBASE_USER_AND_AUTHORITY_CHANGELOGS = "liquibase-user-and-authority-changelogs";
@@ -91,7 +81,7 @@ public class GeneratorAction {
 
   public static final String AOP_LOGGING = "aop-logging";
 
-  public static final String DUMMY_CONTEXT = "dummy-context";
+  public static final String DUMMY_FEATURE = "dummy-feature";
 
   public static final String USER_AND_AUTHORITY_ENTITIES_POSTGRESQL = "user-and-authority-entities-postgresql";
   public static final String USER_AND_AUTHORITY_ENTITIES_MYSQL = "user-and-authority-entities-mysql";
@@ -119,8 +109,9 @@ public class GeneratorAction {
   public static final String SPRINGBOOT_KAFKA_DUMMY_PRODUCER_CONSUMER = "springboot-kafka-dummy-producer-consumer";
   public static final String SPRINGBOOT_KAFKA_AKHQ = "springboot-kafka-akhq";
 
+  public static final String SPRINGBOOT_PULSAR = "springboot-pulsar";
+
   public static final String VUE = "vue";
-  public static final String VUE_STYLED = "vue-styled";
   public static final String VUE_PINIA = "vue-pinia";
 
   public static final String JIB = "jib";

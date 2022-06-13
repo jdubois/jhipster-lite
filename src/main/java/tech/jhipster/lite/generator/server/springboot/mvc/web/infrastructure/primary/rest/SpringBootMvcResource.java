@@ -41,13 +41,4 @@ class SpringBootMvcResource {
     Project project = ProjectDTO.toProject(projectDTO);
     springBootMvcApplicationService.addSpringBootUndertow(project);
   }
-
-  @Operation(summary = "Add Spring Boot Actuator")
-  @ApiResponse(responseCode = "500", description = "An error occurred while adding Spring Boot Actuator")
-  @PostMapping("/technical-tools/actuator")
-  @GeneratorStep(id = GeneratorAction.SPRINGBOOT_ACTUATOR)
-  public void addSpringBootActuator(@RequestBody ProjectDTO projectDTO) {
-    Project project = ProjectDTO.toProject(projectDTO);
-    springBootMvcApplicationService.addSpringBootActuator(project);
-  }
 }

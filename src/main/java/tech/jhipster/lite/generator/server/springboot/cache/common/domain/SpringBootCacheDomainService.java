@@ -1,12 +1,12 @@
 package tech.jhipster.lite.generator.server.springboot.cache.common.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringBootCacheDomainService implements SpringBootCacheService {
@@ -37,6 +37,11 @@ public class SpringBootCacheDomainService implements SpringBootCacheService {
   }
 
   private void templateToCache(Project project, String source, String type, String sourceFilename, String destination) {
-    projectRepository.template(project, getPath(SOURCE, type), sourceFilename, getPath(destination, source, DESTINATION));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, type), sourceFilename)
+        .withDestinationFolder(getPath(destination, source, DESTINATION))
+    );
   }
 }

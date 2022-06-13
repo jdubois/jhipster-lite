@@ -2,10 +2,12 @@ package tech.jhipster.lite.generator.client.tools.playwright.domain;
 
 import static tech.jhipster.lite.common.domain.FileUtils.getPath;
 
+import java.util.List;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class PlaywrightDomainService implements PlaywrightService {
@@ -50,14 +52,40 @@ public class PlaywrightDomainService implements PlaywrightService {
 
   public void addPlaywrightFiles(Project project) {
     project.addConfig("serverPort", 8080);
-    projectRepository.template(project, FileUtils.getPath(SOURCE), "playwright.config.ts");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(FileUtils.getPath(SOURCE), "playwright.config.ts").withSameDestination()
+    );
   }
 
   public void addPlaywrightTestFiles(Project project) {
-    Playwright.playwrightTestFiles().forEach((file, path) -> projectRepository.template(project, getPath(SOURCE, path), file, path));
+    List<ProjectFile> files = Playwright
+      .playwrightTestFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
+          .withDestinationFolder(entry.getValue())
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 
   public void addPlaywrightPageObjectFiles(Project project) {
-    Playwright.playwrightPageObjectFiles().forEach((file, path) -> projectRepository.template(project, getPath(SOURCE, path), file, path));
+    List<ProjectFile> files = Playwright
+      .playwrightPageObjectFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
+          .withDestinationFolder(entry.getValue())
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 }

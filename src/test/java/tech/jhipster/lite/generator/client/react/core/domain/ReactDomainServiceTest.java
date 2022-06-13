@@ -16,6 +16,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -39,11 +40,12 @@ class ReactDomainServiceTest {
     reactDomainService.addReact(project);
 
     verify(npmService, times(2)).addDependency(any(Project.class), anyString(), anyString());
-    verify(npmService, times(16)).addDevDependency(any(Project.class), anyString(), anyString());
+    verify(npmService, times(17)).addDevDependency(any(Project.class), anyString(), anyString());
     verify(npmService, times(6)).addScript(any(Project.class), anyString(), anyString());
 
     verify(projectRepository).add(filesCountArgument(3));
-    verify(projectRepository, times(8)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
+    verify(projectRepository).template(filesCountArgument(7));
   }
 
   @Test
@@ -54,11 +56,11 @@ class ReactDomainServiceTest {
     reactDomainService.addStyledReact(project);
 
     verify(npmService, times(2)).addDependency(any(Project.class), anyString(), anyString());
-    verify(npmService, times(16)).addDevDependency(any(Project.class), anyString(), anyString());
+    verify(npmService, times(17)).addDevDependency(any(Project.class), anyString(), anyString());
     verify(npmService, times(6)).addScript(any(Project.class), anyString(), anyString());
 
     verify(projectRepository).add(filesCountArgument(3));
-    verify(projectRepository, times(8)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(filesCountArgument(7));
   }
 
   @Test

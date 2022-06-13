@@ -6,6 +6,7 @@ describe('ServiceProjection', () => {
     expect(toServiceProjection(Service.AOP_LOGGING)).toEqual<ServiceProjection>('aop-logging');
     expect(toServiceProjection(Service.ANGULAR)).toEqual<ServiceProjection>('angular');
     expect(toServiceProjection(Service.ANGULAR_WITH_JWT)).toEqual<ServiceProjection>('angular-with-jwt');
+    expect(toServiceProjection(Service.ANGULAR_OAUTH2)).toEqual<ServiceProjection>('angular-oauth2');
     expect(toServiceProjection(Service.DOWNLOAD)).toEqual<ServiceProjection>('download');
     expect(toServiceProjection(Service.FLYWAY)).toEqual<ServiceProjection>('flyway');
     expect(toServiceProjection(Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS)).toEqual<ServiceProjection>(
@@ -34,15 +35,23 @@ describe('ServiceProjection', () => {
     expect(toServiceProjection(Service.SPRINGBOOT_ACTUATOR)).toEqual<ServiceProjection>('spring-boot-actuator');
     expect(toServiceProjection(Service.SPRING_DOC)).toEqual<ServiceProjection>('spring-doc');
     expect(toServiceProjection(Service.SPRINGBOOT_JWT)).toEqual<ServiceProjection>('spring-boot-jwt');
+    expect(toServiceProjection(Service.SPRINGDOC_OPENAPI_WITH_SECURIITY_JWT)).toEqual<ServiceProjection>(
+      'springdoc-openapi-with-security-jwt'
+    );
     expect(toServiceProjection(Service.SPRINGBOOT_JWT_WITH_BASIC_AUTHENTICATION)).toEqual<ServiceProjection>(
       'spring-boot-jwt-with-basic-authentication'
     );
+    expect(toServiceProjection(Service.SPRINGBOOT_OAUTH2)).toEqual<ServiceProjection>('spring-boot-oauth2');
+    expect(toServiceProjection(Service.SPRINGBOOT_OAUTH2_ACCOUNT)).toEqual<ServiceProjection>('spring-boot-oauth2-account');
     expect(toServiceProjection(Service.SPRINGBOOT_MVC_WITH_TOMCAT)).toEqual<ServiceProjection>('spring-boot-mvc-with-tomcat');
+    expect(toServiceProjection(Service.SPRINGBOOT_MVC_WITH_UNDERTOW)).toEqual<ServiceProjection>('spring-boot-mvc-with-undertow');
+    expect(toServiceProjection(Service.SPRINGBOOT_DUMMY_FEATURE)).toEqual<ServiceProjection>('spring-boot-dummy-feature');
     expect(toServiceProjection(Service.SPRINGBOOT_WEBFLUX_NETTY)).toEqual<ServiceProjection>('spring-boot-webflux-netty');
+    expect(toServiceProjection(Service.SPRINGBOOT_CUCUMBER)).toEqual<ServiceProjection>('spring-boot-cucumber');
+    expect(toServiceProjection(Service.SPRINGBOOT_PULSAR)).toEqual<ServiceProjection>('spring-boot-pulsar');
     expect(toServiceProjection(Service.REACT)).toEqual<ServiceProjection>('react');
     expect(toServiceProjection(Service.REACT_STYLED)).toEqual<ServiceProjection>('react-styled');
     expect(toServiceProjection(Service.VUE)).toEqual<ServiceProjection>('vue');
-    expect(toServiceProjection(Service.VUE_STYLED)).toEqual<ServiceProjection>('vue-styled');
     expect(toServiceProjection(Service.UNKNOWN)).toEqual<ServiceProjection>('unknown');
   });
 
@@ -50,6 +59,7 @@ describe('ServiceProjection', () => {
     expect(fromServiceProjection('aop-logging')).toEqual<Service>(Service.AOP_LOGGING);
     expect(fromServiceProjection('angular')).toEqual<Service>(Service.ANGULAR);
     expect(fromServiceProjection('angular-with-jwt')).toEqual<Service>(Service.ANGULAR_WITH_JWT);
+    expect(fromServiceProjection('angular-oauth2')).toEqual<Service>(Service.ANGULAR_OAUTH2);
     expect(fromServiceProjection('download')).toEqual<Service>(Service.DOWNLOAD);
     expect(fromServiceProjection('flyway')).toEqual<Service>(Service.FLYWAY);
     expect(fromServiceProjection('flyway-with-users-and-authority-changelogs')).toEqual<Service>(
@@ -81,12 +91,16 @@ describe('ServiceProjection', () => {
     expect(fromServiceProjection('spring-boot-jwt-with-basic-authentication')).toEqual<Service>(
       Service.SPRINGBOOT_JWT_WITH_BASIC_AUTHENTICATION
     );
+    expect(fromServiceProjection('springdoc-openapi-with-security-jwt')).toEqual<Service>(Service.SPRINGDOC_OPENAPI_WITH_SECURIITY_JWT);
     expect(fromServiceProjection('spring-boot-mvc-with-tomcat')).toEqual<Service>(Service.SPRINGBOOT_MVC_WITH_TOMCAT);
+    expect(fromServiceProjection('spring-boot-mvc-with-undertow')).toEqual<Service>(Service.SPRINGBOOT_MVC_WITH_UNDERTOW);
+    expect(fromServiceProjection('spring-boot-dummy-feature')).toEqual<Service>(Service.SPRINGBOOT_DUMMY_FEATURE);
     expect(fromServiceProjection('spring-boot-webflux-netty')).toEqual<Service>(Service.SPRINGBOOT_WEBFLUX_NETTY);
+    expect(fromServiceProjection('spring-boot-pulsar')).toEqual<Service>(Service.SPRINGBOOT_PULSAR);
+    expect(fromServiceProjection('spring-boot-cucumber')).toEqual<Service>(Service.SPRINGBOOT_CUCUMBER);
     expect(fromServiceProjection('react')).toEqual<Service>(Service.REACT);
     expect(fromServiceProjection('react-styled')).toEqual<Service>(Service.REACT_STYLED);
     expect(fromServiceProjection('vue')).toEqual<Service>(Service.VUE);
-    expect(fromServiceProjection('vue-styled')).toEqual<Service>(Service.VUE_STYLED);
     expect(fromServiceProjection('unknown')).toEqual<Service>(Service.UNKNOWN);
   });
 });

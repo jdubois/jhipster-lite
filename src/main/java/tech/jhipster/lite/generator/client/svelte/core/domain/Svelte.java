@@ -26,6 +26,7 @@ public class Svelte {
       "eslint-config-prettier",
       "eslint-plugin-svelte3",
       "jest",
+      "jest-environment-jsdom",
       "jest-transform-stub",
       "jest-sonar-reporter",
       "prettier",

@@ -16,6 +16,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringCloudCommonDomainService implements SpringCloudCommonService {
@@ -63,18 +64,16 @@ public class SpringCloudCommonDomainService implements SpringCloudCommonService 
     project.addConfig("base64JwtSecret", Base64Utils.getBase64Secret());
 
     projectRepository.template(
-      project,
-      SPRING_CLOUD_SOURCE,
-      JHIPSTER_REGISTRY_YML_FILE_NAME,
-      "src/main/docker",
-      JHIPSTER_REGISTRY_YML_FILE_NAME
+      ProjectFile
+        .forProject(project)
+        .withSource(SPRING_CLOUD_SOURCE, JHIPSTER_REGISTRY_YML_FILE_NAME)
+        .withDestination("src/main/docker", JHIPSTER_REGISTRY_YML_FILE_NAME)
     );
     projectRepository.template(
-      project,
-      SPRING_CLOUD_SOURCE,
-      "application.config.properties",
-      "src/main/docker/central-server-config/localhost-config",
-      "application.properties"
+      ProjectFile
+        .forProject(project)
+        .withSource(SPRING_CLOUD_SOURCE, "application.config.properties")
+        .withDestination("src/main/docker/central-server-config/localhost-config", "application.properties")
     );
   }
 
@@ -89,7 +88,9 @@ public class SpringCloudCommonDomainService implements SpringCloudCommonService 
   }
 
   private void createFile(Project project, String sourceFolderPath, String sourceFileName, String destinationFileFolder) {
-    projectRepository.template(project, sourceFolderPath, sourceFileName, destinationFileFolder);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceFolderPath, sourceFileName).withDestinationFolder(destinationFileFolder)
+    );
   }
 
   private void mergeContentFile(Project project, String sourceFolderPath, String sourceFileName, String destinationFilePath) {

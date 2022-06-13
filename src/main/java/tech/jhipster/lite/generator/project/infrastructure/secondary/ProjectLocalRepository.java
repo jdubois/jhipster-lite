@@ -14,9 +14,8 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.zeroturnaround.zip.ZipException;
 import org.zeroturnaround.zip.ZipUtil;
@@ -33,8 +32,6 @@ public class ProjectLocalRepository implements ProjectRepository {
 
   private static final String FILE_SEPARATOR = "/";
 
-  private final Logger log = LoggerFactory.getLogger(ProjectLocalRepository.class);
-
   @Override
   public void create(Project project) {
     try {
@@ -46,7 +43,7 @@ public class ProjectLocalRepository implements ProjectRepository {
 
   @Override
   public void add(Collection<ProjectFile> files) {
-    Assert.notEmpty("files", files);
+    Assert.field("files", files).notEmpty().noNullElement();
 
     files.forEach(file -> {
       try (InputStream in = getInputStream(file.source())) {
@@ -74,26 +71,32 @@ public class ProjectLocalRepository implements ProjectRepository {
   }
 
   @Override
-  public void template(Project project, String source, String sourceFilename) {
-    template(project, source, sourceFilename, ".");
+  public void template(Collection<ProjectFile> files) {
+    Assert.field("files", files).notEmpty().noNullElement();
+
+    files.forEach(templatizeFile());
   }
 
-  @Override
-  public void template(Project project, String source, String sourceFilename, String destination) {
-    template(project, source, sourceFilename, destination, MustacheUtils.withoutExt(sourceFilename));
+  private Consumer<ProjectFile> templatizeFile() {
+    return file -> {
+      try {
+        String result = templatizeContent(file);
+
+        writeTemplatizedContent(file, result);
+      } catch (IOException ex) {
+        throw new GeneratorException("The file '" + file.destination().file() + "' can't be added");
+      }
+    };
   }
 
-  @Override
-  public void template(Project project, String source, String sourceFilename, String destination, String destinationFilename) {
-    try {
-      log.info("Adding file '{}'", destinationFilename);
-      String filename = MustacheUtils.withExt(sourceFilename);
-      String result = MustacheUtils.template(FileUtils.getPath(TEMPLATE_FOLDER, source, filename), project.getConfig());
+  private String templatizeContent(ProjectFile file) throws IOException {
+    String sourcePath = FileUtils.getPath(TEMPLATE_FOLDER, file.source().folder(), MustacheUtils.withExt(file.source().file()));
 
-      write(project, result, destination, destinationFilename);
-    } catch (IOException ex) {
-      throw new GeneratorException("The file '" + destinationFilename + "' can't be added");
-    }
+    return MustacheUtils.template(sourcePath, file.project().getConfig());
+  }
+
+  private void writeTemplatizedContent(ProjectFile file, String result) {
+    write(file.project(), result, file.destination().folder(), MustacheUtils.withoutExt(file.destination().file()));
   }
 
   @Override

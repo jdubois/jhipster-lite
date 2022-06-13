@@ -1,12 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.infrastructure.primary.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertBasicAuthJavaFiles;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertBasicAuthProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertJwtSecurityFilesExists;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertJwtSecurityProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertPomXmlProperties;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +55,7 @@ class JwtSecurityResourceIT {
     GitUtils.init(project.getFolder());
     initApplicationService.init(project);
     mavenApplicationService.init(project);
-    javaBaseApplicationService.addJavaBase(project);
+    javaBaseApplicationService.build(projectDTO.toModuleProperties());
     springBootApplicationService.init(project);
     springBootMvcApplicationService.init(project);
 
@@ -84,7 +80,7 @@ class JwtSecurityResourceIT {
     GitUtils.init(project.getFolder());
     initApplicationService.init(project);
     mavenApplicationService.init(project);
-    javaBaseApplicationService.addJavaBase(project);
+    javaBaseApplicationService.build(projectDTO.toModuleProperties());
     springBootApplicationService.init(project);
     springBootMvcApplicationService.init(project);
     jwtSecurityApplicationService.init(project);

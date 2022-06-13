@@ -14,6 +14,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -75,7 +76,12 @@ public class SpringBootWebfluxDomainService implements SpringBootWebfluxService 
       .testJavaFiles()
       .forEach(fileName -> templateToExceptionHandler(project, packageNamePath, "test", fileName, TEST_JAVA));
 
-    projectRepository.template(project, getPath(SOURCE, "test"), "TestUtil.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "test"), "TestUtil.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   private void addProperties(Project project) {
@@ -94,10 +100,10 @@ public class SpringBootWebfluxDomainService implements SpringBootWebfluxService 
 
   private void templateToExceptionHandler(Project project, String source, String type, String sourceFilename, String destination) {
     projectRepository.template(
-      project,
-      getPath(SOURCE, type),
-      sourceFilename,
-      getPath(destination, source, TECHNICAL_INFRASTRUCTURE_PRIMARY_EXCEPTION)
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, type), sourceFilename)
+        .withDestinationFolder(getPath(destination, source, TECHNICAL_INFRASTRUCTURE_PRIMARY_EXCEPTION))
     );
   }
 }

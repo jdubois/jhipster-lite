@@ -1,12 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -20,6 +17,8 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
+import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.project.infrastructure.secondary.GitUtils;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -55,8 +54,8 @@ class JwtSecurityDomainServiceTest {
     verify(buildToolService).addProperty(any(Project.class), anyString(), anyString());
     verify(buildToolService, times(5)).addDependency(any(Project.class), any(Dependency.class));
 
-    // 9 classes + 3 tests
-    verify(projectRepository, times(12)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(8));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(4));
 
     verify(springBootCommonService, times(3)).addProperties(any(Project.class), anyString(), any());
     verify(springBootCommonService, times(3)).addPropertiesTest(any(Project.class), anyString(), any());
@@ -83,7 +82,7 @@ class JwtSecurityDomainServiceTest {
 
     jwtSecurityDomainService.addBasicAuth(project);
 
-    verify(projectRepository, times(6)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(6)).template(any(ProjectFile.class));
     verify(springBootCommonService, times(3)).addProperties(any(Project.class), anyString(), any());
     verify(springBootCommonService, times(3)).addPropertiesTest(any(Project.class), anyString(), any());
   }

@@ -24,6 +24,7 @@ public class Angular {
       "@types/node",
       "@types/jest",
       "jest",
+      "jest-environment-jsdom",
       "ts-jest",
       "jest-preset-angular",
       "jest-sonar-reporter",

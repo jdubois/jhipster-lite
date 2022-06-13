@@ -1,15 +1,10 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.common.domain.WordUtils.LF;
-import static tech.jhipster.lite.common.domain.WordUtils.indent;
-import static tech.jhipster.lite.generator.project.domain.Constants.LIQUIBASE_MASTER_XML;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PRETTIER_DEFAULT_INDENT;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.domain.Liquibase.NEEDLE_LIQUIBASE;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.domain.Liquibase.*;
 
 import java.time.Clock;
 import tech.jhipster.lite.common.domain.TimeUtils;
@@ -123,7 +118,12 @@ public class LiquibaseDomainService implements LiquibaseService {
   }
 
   private void templateToLiquibase(Project project, String source, String type, String sourceFilename, String destination) {
-    projectRepository.template(project, getPath(SOURCE, type), sourceFilename, getPath(destination, source, LIQUIBASE_PATH));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, type), sourceFilename)
+        .withDestinationFolder(getPath(destination, source, LIQUIBASE_PATH))
+    );
   }
 
   @Override
@@ -138,11 +138,10 @@ public class LiquibaseDomainService implements LiquibaseService {
       String sequenceUserChangelog = TimeUtils.getDateString(clock) + "_added_sequence_User.xml";
       addChangelogXml(project, "", sequenceUserChangelog);
       projectRepository.template(
-        project,
-        getUserResourcePath(),
-        "sequence_user.xml",
-        getPath(MAIN_RESOURCES, CHANGELOG),
-        sequenceUserChangelog
+        ProjectFile
+          .forProject(project)
+          .withSource(getUserResourcePath(), "sequence_user.xml")
+          .withDestination(getPath(MAIN_RESOURCES, CHANGELOG), sequenceUserChangelog)
       );
     }
   }
@@ -154,7 +153,12 @@ public class LiquibaseDomainService implements LiquibaseService {
     if (springBootCommonService.isSetWithMySQLOrMariaDBDatabase(project)) {
       userXmlFile = "user_with_autoincrement.xml";
     }
-    projectRepository.template(project, getUserResourcePath(), userXmlFile, getPath(MAIN_RESOURCES, CHANGELOG), userChangelog);
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getUserResourcePath(), userXmlFile)
+        .withDestination(getPath(MAIN_RESOURCES, CHANGELOG), userChangelog)
+    );
 
     projectRepository.add(
       ProjectFile.forProject(project).withSource(getUserResourcePath(), "user.csv").withDestinationFolder(getPath(MAIN_RESOURCES, DATA))
@@ -167,7 +171,12 @@ public class LiquibaseDomainService implements LiquibaseService {
     addChangelogXml(project, "", authorityChangelog);
 
     // Copy liquibase files
-    projectRepository.template(project, getUserResourcePath(), "authority.xml", getPath(MAIN_RESOURCES, CHANGELOG), authorityChangelog);
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getUserResourcePath(), "authority.xml")
+        .withDestination(getPath(MAIN_RESOURCES, CHANGELOG), authorityChangelog)
+    );
     projectRepository.add(
       ProjectFile
         .forProject(project)

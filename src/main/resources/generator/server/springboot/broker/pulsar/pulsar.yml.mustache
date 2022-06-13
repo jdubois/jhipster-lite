@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  pulsar:
+    image: {{pulsarDockerImage}}
+    ports:
+      # Pulsar Web-Service port is mapped to 18080 to prevent conflict with the Spring Boot app.
+      - 18080:8080
+      - 6650:6650
+    environment:
+      PULSAR_MEM: "-Xms512m -Xmx512m -XX:MaxDirectMemorySize=1g"
+    command: >
+      /bin/bash -c "bin/apply-config-from-env.py conf/standalone.conf && bin/pulsar standalone"

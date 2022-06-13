@@ -20,9 +20,9 @@ public class Cypress {
       "e2e:headless",
       "npm run test:component:headless",
       "test:component",
-      "cypress open --config-file src/test/javascript/integration/cypress-config.json",
+      "cypress open --config-file src/test/javascript/integration/cypress-config.ts",
       "test:component:headless",
-      "cypress run --headless --config-file src/test/javascript/integration/cypress-config.json"
+      "cypress run --headless --config-file src/test/javascript/integration/cypress-config.ts"
     );
   }
 
@@ -37,6 +37,6 @@ public class Cypress {
   }
 
   public static List<String> tsconfigPatternsToExclude() {
-    return List.of("src/test/javascript/integration/**/*spec.ts");
+    return List.of("src/test/javascript/integration/**/*.ts");
   }
 }

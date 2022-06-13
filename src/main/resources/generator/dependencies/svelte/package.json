@@ -3,33 +3,34 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "svelte-navigator": "3.1.5"
+    "svelte-navigator": "3.1.6"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.17.12",
-    "@sveltejs/adapter-static": "1.0.0-next.31",
+    "@babel/preset-env": "7.18.2",
+    "@sveltejs/adapter-static": "1.0.0-next.34",
     "@sveltejs/kit": "next",
     "@testing-library/jest-dom": "5.16.4",
-    "@testing-library/svelte": "3.1.1",
-    "@types/jest": "27.5.1",
-    "@typescript-eslint/eslint-plugin": "5.24.0",
-    "@typescript-eslint/parser": "5.24.0",
-    "babel-jest": "27.5.1",
+    "@testing-library/svelte": "3.1.3",
+    "@types/jest": "28.1.1",
+    "@typescript-eslint/eslint-plugin": "5.27.1",
+    "@typescript-eslint/parser": "5.27.1",
+    "babel-jest": "28.1.1",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
-    "eslint": "8.15.0",
+    "eslint": "8.17.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-svelte3": "4.0.0",
-    "jest": "27.5.1",
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "28.1.1",
     "jest-sonar-reporter": "2.0.0",
     "jest-transform-stub": "2.0.0",
     "prettier": "2.6.2",
     "prettier-plugin-svelte": "2.7.0",
     "svelte": "3.48.0",
-    "svelte-check": "2.7.1",
+    "svelte-check": "2.7.2",
     "svelte-jester": "2.3.2",
-    "svelte-preprocess": "4.10.6",
-    "ts-jest": "27.1.4",
+    "svelte-preprocess": "4.10.7",
+    "ts-jest": "28.0.4",
     "tslib": "2.4.0",
-    "typescript": "4.6.4"
+    "typescript": "4.7.3"
   }
 }

@@ -14,6 +14,10 @@ public class WordUtils {
   public static final String OB = "\\{";
   public static final String CB = "\\}";
 
+  public static final String COMA = ",";
+  public static final String O_BRACKET = "[";
+  public static final String C_BRACKET = "]";
+
   private static final String VALUE_FIELD = "value";
 
   private WordUtils() {}

@@ -3,8 +3,7 @@ package tech.jhipster.lite.generator.project.domain;
 import static tech.jhipster.lite.common.domain.FileUtils.detectEndOfLine;
 import static tech.jhipster.lite.common.domain.FileUtils.getPath;
 import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,6 +24,7 @@ public class Project {
   private final String folder;
   private final String endOfLine;
   private final Map<String, Object> config;
+  private final Optional<String> remoteUrl;
   private final Optional<LanguageType> language;
   private final Optional<BuildToolType> buildTool;
   private final Optional<ServerFrameworkType> server;
@@ -41,6 +41,7 @@ public class Project {
     this.folder = builder.folder;
     this.endOfLine = Optional.ofNullable(builder.endOfLine).orElseGet(this::detectEndOfLineOrDefault);
     this.config = builder.config;
+    this.remoteUrl = Optional.ofNullable(builder.remoteUrl);
     this.language = Optional.ofNullable(builder.language);
     this.buildTool = Optional.ofNullable(builder.buildTool);
     this.server = Optional.ofNullable(builder.server);
@@ -67,6 +68,10 @@ public class Project {
 
   public Map<String, Object> getConfig() {
     return config;
+  }
+
+  public Optional<String> getRemoteUrl() {
+    return remoteUrl;
   }
 
   public Optional<LanguageType> getLanguage() {
@@ -213,6 +218,7 @@ public class Project {
     private String folder;
     private String endOfLine;
     private Map<String, Object> config = new HashMap<>();
+    private String remoteUrl;
     private LanguageType language;
     private BuildToolType buildTool;
     private ServerFrameworkType server;
@@ -240,6 +246,11 @@ public class Project {
       if (config != null) {
         this.config = config;
       }
+      return this;
+    }
+
+    public ProjectBuilder remoteUrl(String remoteUrl) {
+      this.remoteUrl = remoteUrl;
       return this;
     }
 

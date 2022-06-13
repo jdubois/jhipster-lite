@@ -18,4 +18,8 @@ export default class AngularRepository implements AngularService {
   async addWithJWT(project: Project): Promise<void> {
     await this.postAndGetHistory('/api/clients/angular/jwt', toRestProject(project));
   }
+
+  async addOauth2(project: Project): Promise<void> {
+    await this.postAndGetHistory('/api/clients/angular/oauth2', toRestProject(project));
+  }
 }

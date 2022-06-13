@@ -1,12 +1,14 @@
 package tech.jhipster.lite.generator.buildtool.generic.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithBuildGradle;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.mockito.Mockito.when;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
+import tech.jhipster.lite.generator.buildtool.gradle.domain.GradleService;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
 import tech.jhipster.lite.generator.project.domain.BuildToolType;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -25,6 +28,9 @@ class BuildToolDomainServiceTest {
 
   @Mock
   MavenService mavenService;
+
+  @Mock
+  GradleService gradleService;
 
   @InjectMocks
   BuildToolDomainService buildToolDomainService;
@@ -53,6 +59,16 @@ class BuildToolDomainServiceTest {
     }
 
     @Test
+    void shouldDeleteDependency() {
+      Project project = tmpProjectWithPomXml();
+      Dependency dependency = getDependency();
+
+      buildToolDomainService.deleteDependency(project, dependency);
+
+      verify(mavenService).deleteDependency(project, dependency);
+    }
+
+    @Test
     void shouldAddDependencyWithExclusion() {
       Project project = tmpProjectWithPomXml();
       Dependency dependency = getDependency();
@@ -61,6 +77,15 @@ class BuildToolDomainServiceTest {
       buildToolDomainService.addDependency(project, dependency, exclusions);
 
       verify(mavenService).addDependency(project, dependency, exclusions);
+    }
+
+    @Test
+    void shouldAddDependencyWithVersionProperty() {
+      when(mavenService.getVersion("spring-boot")).thenReturn(Optional.of("0.0.0"));
+      Project project = tmpProjectWithPomXml();
+      Dependency dependency = getDependency();
+      buildToolDomainService.addVersionPropertyAndDependency(project, "spring-boot", dependency);
+      verify(mavenService).addDependency(eq(project), any(Dependency.class));
     }
 
     @Test
@@ -148,6 +173,24 @@ class BuildToolDomainServiceTest {
 
       verify(mavenService).getVersion("spring-boot");
     }
+
+    @Test
+    void shouldGetGroup() {
+      Project project = tmpProjectWithPomXml();
+
+      buildToolDomainService.getGroup(project);
+
+      verify(mavenService).getGroupId(project.getFolder());
+    }
+
+    @Test
+    void shouldGetName() {
+      Project project = tmpProjectWithPomXml();
+
+      buildToolDomainService.getName(project);
+
+      verify(mavenService).getName(project.getFolder());
+    }
   }
 
   @Nested
@@ -165,6 +208,45 @@ class BuildToolDomainServiceTest {
       Project project = tmpProjectWithBuildGradle();
 
       assertThatThrownBy(() -> buildToolDomainService.init(project, BuildToolType.GRADLE)).isExactlyInstanceOf(GeneratorException.class);
+    }
+
+    @Test
+    void shouldGetGroup() {
+      Project project = tmpProjectWithBuildGradle();
+
+      buildToolDomainService.getGroup(project);
+
+      verify(gradleService).getGroup(project.getFolder());
+    }
+
+    @Test
+    void shouldAddDependency() {
+      Project project = tmpProjectWithBuildGradle();
+      Dependency dependency = getDependency();
+
+      buildToolDomainService.addDependency(project, dependency);
+
+      verify(gradleService).addDependency(project, dependency);
+    }
+
+    @Test
+    void shouldDeleteDependency() {
+      Project project = tmpProjectWithBuildGradle();
+      Dependency dependency = getDependency();
+
+      buildToolDomainService.deleteDependency(project, dependency);
+
+      verify(gradleService).deleteDependency(project, dependency);
+    }
+
+    @Test
+    void shouldAddRepository() {
+      Project project = tmpProjectWithBuildGradle();
+      Repository repository = getRepository();
+
+      buildToolDomainService.addRepository(project, repository);
+
+      verify(gradleService).addRepository(project, repository);
     }
   }
 
@@ -257,6 +339,37 @@ class BuildToolDomainServiceTest {
       Project project = tmpProject();
 
       assertThatThrownBy(() -> buildToolDomainService.getVersion(project, "spring-boot")).isExactlyInstanceOf(GeneratorException.class);
+    }
+
+    @Test
+    void shouldNotGetGroup() {
+      Project project = tmpProject();
+
+      assertThatThrownBy(() -> buildToolDomainService.getGroup(project)).isExactlyInstanceOf(GeneratorException.class);
+    }
+
+    @Test
+    void shouldNotGetName() {
+      Project project = tmpProject();
+
+      assertThatThrownBy(() -> buildToolDomainService.getName(project)).isExactlyInstanceOf(GeneratorException.class);
+    }
+
+    @Test
+    void shouldNotDeleteDependency() {
+      Project project = tmpProject();
+      Dependency dependency = Dependency.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter").build();
+
+      assertThatThrownBy(() -> buildToolDomainService.deleteDependency(project, dependency)).isExactlyInstanceOf(GeneratorException.class);
+    }
+
+    @Test
+    void shouldNotAddDependencyWithoutVersionProperty() {
+      when(mavenService.getVersion("spring-boot")).thenReturn(Optional.empty());
+      Project project = tmpProjectWithPomXml();
+      Dependency dependency = getDependency();
+      assertThatThrownBy(() -> buildToolDomainService.addVersionPropertyAndDependency(project, "spring-boot", dependency))
+        .isExactlyInstanceOf(GeneratorException.class);
     }
   }
 

@@ -3,7 +3,7 @@ package tech.jhipster.lite.generator.history.infrastructure.secondary;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.generator.history.domain.HistoryProjectsFixture.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +27,7 @@ import tech.jhipster.lite.common.domain.JsonUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryData;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
-import tech.jhipster.lite.generator.project.domain.FilePath;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
+import tech.jhipster.lite.generator.history.domain.HistoryProject;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -37,23 +35,23 @@ import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 class GeneratorHistoryLocalRepositoryTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @InjectMocks
-  GeneratorHistoryLocalRepository generatorHistoryLocalRepository;
+  private GeneratorHistoryLocalRepository generatorHistoryLocalRepository;
 
   @Test
   void shouldGetHistoryData() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       String historyFilePath = "/path/history.json";
-      fileUtils.when(() -> FileUtils.getPath(project.getFolder(), ".jhipster", "history.json")).thenReturn(historyFilePath);
+      fileUtils.when(() -> FileUtils.getPath(project.folder().get(), ".jhipster/history", "history.json")).thenReturn(historyFilePath);
       fileUtils.when(() -> FileUtils.read(historyFilePath)).thenReturn(getFileContent());
 
       // When
-      GeneratorHistoryData generatorHistoryData = generatorHistoryLocalRepository.getHistoryData(project);
+      GeneratorHistoryData generatorHistoryData = generatorHistoryLocalRepository.getHistoryData(project.folder());
 
       // Then
       List<GeneratorHistoryValue> values = new ArrayList<>();
@@ -67,39 +65,41 @@ class GeneratorHistoryLocalRepositoryTest {
   @Test
   void shouldNotGetHistoryDataWhenFileDoesNotExist() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       fileUtils.when(() -> FileUtils.getPath(any())).thenReturn("/path/history.json");
       fileUtils.when(() -> FileUtils.read(anyString())).thenThrow(new IOException());
 
       // When + Then
-      assertThatThrownBy(() -> generatorHistoryLocalRepository.getHistoryData(project)).isExactlyInstanceOf(GeneratorException.class);
+      assertThatThrownBy(() -> generatorHistoryLocalRepository.getHistoryData(project.folder()))
+        .isExactlyInstanceOf(GeneratorException.class);
     }
   }
 
   @Test
   void shouldNotGetHistoryDataWhenJsonIsNotDeserializable() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       fileUtils.when(() -> FileUtils.getPath(any())).thenReturn("/path/history.json");
       fileUtils.when(() -> FileUtils.read(anyString())).thenReturn("invalidJsonContent");
 
       // When + Then
-      assertThatThrownBy(() -> generatorHistoryLocalRepository.getHistoryData(project)).isExactlyInstanceOf(GeneratorException.class);
+      assertThatThrownBy(() -> generatorHistoryLocalRepository.getHistoryData(project.folder()))
+        .isExactlyInstanceOf(GeneratorException.class);
     }
   }
 
   @Test
   void shouldAddHistoryValueInExistingFile() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       String historyFilePath = "/path/history.json";
-      fileUtils.when(() -> FileUtils.getPath(project.getFolder(), ".jhipster", "history.json")).thenReturn(historyFilePath);
+      fileUtils.when(() -> FileUtils.getPath(project.folder().get(), ".jhipster/history", "history.json")).thenReturn(historyFilePath);
       fileUtils.when(() -> FileUtils.read(historyFilePath)).thenReturn(getFileContent());
 
       // When
@@ -111,7 +111,7 @@ class GeneratorHistoryLocalRepositoryTest {
       fileUtils.verify(() -> {
         ArgumentCaptor<String> fileContentArgCaptor = ArgumentCaptor.forClass(String.class);
         try {
-          FileUtils.write(eq(historyFilePath), fileContentArgCaptor.capture(), eq(project.getEndOfLine()));
+          FileUtils.write(eq(historyFilePath), fileContentArgCaptor.capture(), eq(project.lineEnd()));
         } catch (IOException e) {
           fail("Unexpected IOException");
         }
@@ -126,11 +126,11 @@ class GeneratorHistoryLocalRepositoryTest {
   @Test
   void shouldAddHistoryValueInNewFile() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       String historyFilePath = "/path/history.json";
-      fileUtils.when(() -> FileUtils.getPath(project.getFolder(), ".jhipster", "history.json")).thenReturn(historyFilePath);
+      fileUtils.when(() -> FileUtils.getPath(project.folder().get(), ".jhipster/history", "history.json")).thenReturn(historyFilePath);
       fileUtils.when(() -> FileUtils.read(historyFilePath)).thenThrow(new IOException()).thenReturn(getFileContent());
 
       // When
@@ -138,20 +138,11 @@ class GeneratorHistoryLocalRepositoryTest {
       generatorHistoryLocalRepository.addHistoryValue(project, generatorHistoryValue);
 
       // Then
-      verify(projectRepository)
-        .add(
-          ProjectFilesAsserter.projectFileArgument(
-            project,
-            new FilePath("history", "history.json"),
-            new FilePath(".jhipster", "history.json")
-          )
-        );
-
       fileUtils.verify(() -> FileUtils.read(anyString()), times(2));
       fileUtils.verify(() -> {
         ArgumentCaptor<String> fileContentArgCaptor = ArgumentCaptor.forClass(String.class);
         try {
-          FileUtils.write(eq(historyFilePath), fileContentArgCaptor.capture(), eq(project.getEndOfLine()));
+          FileUtils.write(eq(historyFilePath), fileContentArgCaptor.capture(), eq(project.lineEnd()));
         } catch (IOException e) {
           fail("Unexpected IOException");
         }
@@ -164,7 +155,7 @@ class GeneratorHistoryLocalRepositoryTest {
   @Test
   void shouldNotAddHistoryValueWhenJsonSerializationError() throws JsonProcessingException {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     ObjectMapper spiedObjectMapper = spy(JsonUtils.getObjectMapper());
     ObjectWriter spiedObjectWriter = spy(spiedObjectMapper.writer());
@@ -176,7 +167,7 @@ class GeneratorHistoryLocalRepositoryTest {
 
       try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
         String historyFilePath = "/path/history.json";
-        fileUtils.when(() -> FileUtils.getPath(project.getFolder(), ".jhipster", "history.json")).thenReturn(historyFilePath);
+        fileUtils.when(() -> FileUtils.getPath(project.folder().get(), ".jhipster/history", "history.json")).thenReturn(historyFilePath);
         fileUtils.when(() -> FileUtils.read(historyFilePath)).thenReturn(getFileContent());
 
         GeneratorHistoryValue generatorHistoryValue = new GeneratorHistoryValue("tomcat", Instant.parse("2022-01-24T10:11:12.000Z"));
@@ -204,11 +195,11 @@ class GeneratorHistoryLocalRepositoryTest {
   @Test
   void shouldNotAddHistoryValueWheIoExceptionDuringWriting() {
     // Given
-    Project project = tmpProject();
+    HistoryProject project = tmpProject();
 
     try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
       String historyFilePath = "/path/history.json";
-      fileUtils.when(() -> FileUtils.getPath(project.getFolder(), ".jhipster", "history.json")).thenReturn(historyFilePath);
+      fileUtils.when(() -> FileUtils.getPath(project.folder().get(), ".jhipster/history", "history.json")).thenReturn(historyFilePath);
       fileUtils.when(() -> FileUtils.read(historyFilePath)).thenReturn(getFileContent());
       fileUtils.when(() -> FileUtils.write(anyString(), anyString(), anyString())).thenThrow(new IOException());
 

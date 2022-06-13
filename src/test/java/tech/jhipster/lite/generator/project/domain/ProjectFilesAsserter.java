@@ -9,7 +9,9 @@ public final class ProjectFilesAsserter {
   private ProjectFilesAsserter() {}
 
   public static Collection<ProjectFile> filesCountArgument(int count) {
-    return argThat(files -> files.size() == count);
+    return argThat(files -> {
+      return files.size() == count;
+    });
   }
 
   public static ProjectFile projectFileArgument(Project project, FilePath source, FilePath destination) {

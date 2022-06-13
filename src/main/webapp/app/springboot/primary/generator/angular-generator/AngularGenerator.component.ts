@@ -1,9 +1,8 @@
 import { defineComponent, inject } from 'vue';
 import { AngularService } from '@/springboot/domain/client/AngularService';
 import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
-import { Logger } from '@/common/domain/Logger';
 import { GeneratorButtonVue } from '@/springboot/primary/generator/generator-button';
-import ToastService from '@/common/secondary/ToastService';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
 
 export default defineComponent({
   name: 'AngularGeneratorComponent',
@@ -20,9 +19,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    const logger = inject('logger') as Logger;
+    const alertBus = inject('alertBus') as AlertBus;
     const angularService = inject('angularService') as AngularService;
-    const toastService = inject('toastService') as ToastService;
 
     const selectorPrefix = 'angular-generator';
 
@@ -30,11 +28,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await angularService
           .add(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Angular successfully added'))
-          .catch(error => {
-            logger.error('Adding Angular to project failed', error);
-            toastService.error('Adding Angular to project failed ' + error);
-          });
+          .then(() => alertBus.success('Angular successfully added'))
+          .catch(error => alertBus.error(`Adding Angular to project failed ${error}`));
       }
     };
 
@@ -42,11 +37,17 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await angularService
           .addWithJWT(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Angular with authentication JWT successfully added'))
-          .catch(error => {
-            logger.error('Adding Angular with authentication JWT to project failed', error);
-            toastService.error('Adding Angular with authentication JWT to project failed ' + error);
-          });
+          .then(() => alertBus.success('Angular with authentication JWT successfully added'))
+          .catch(error => alertBus.error(`Adding Angular with authentication JWT to project failed ${error}`));
+      }
+    };
+
+    const addOauth2 = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await angularService
+          .addOauth2(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('OAuth2 successfully added'))
+          .catch(error => alertBus.error(`Adding Oauth2 to project failed ${error}`));
       }
     };
 
@@ -54,6 +55,7 @@ export default defineComponent({
       selectorPrefix,
       addAngular,
       addAngularWithJWT,
+      addOauth2,
       props,
     };
   },

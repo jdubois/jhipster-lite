@@ -1,15 +1,15 @@
-import { AppVue } from '@/common/primary/app';
+import { HomepageVue } from '@/common/primary/homepage';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
     path: '/',
-    redirect: { name: 'App' },
+    redirect: { name: 'Homepage' },
   },
   {
-    path: '/app',
-    name: 'App',
-    component: AppVue,
+    path: '/home',
+    name: 'Homepage',
+    component: HomepageVue,
   },
 ];
 

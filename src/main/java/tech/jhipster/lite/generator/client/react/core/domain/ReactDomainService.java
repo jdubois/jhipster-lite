@@ -3,6 +3,7 @@ package tech.jhipster.lite.generator.client.react.core.domain;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
+import java.util.List;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -84,17 +85,35 @@ public class ReactDomainService implements ReactService {
   }
 
   public void addReactCommonFiles(Project project) {
-    React.reactCommonFiles().forEach((file, path) -> projectRepository.template(project, getPath(SOURCE, path), file, path));
+    List<ProjectFile> files = React
+      .reactCommonFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
+          .withDestinationFolder(entry.getValue())
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 
   public void addReactUnstyledFiles(Project project) {
-    projectRepository.template(project, getPath(SOURCE, SOURCE_APP), "App.tsx", SOURCE_APP);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, SOURCE_APP), "App.tsx").withDestinationFolder(SOURCE_APP)
+    );
   }
 
   public void addReactStyledFiles(Project project) {
     String imagesPath = "src/main/webapp/content/images";
-    projectRepository.template(project, getPath(SOURCE, SOURCE_APP), "StyledApp.tsx", SOURCE_APP, "App.tsx");
-    projectRepository.template(project, getPath(SOURCE, SOURCE_APP), "App.css", SOURCE_APP);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, SOURCE_APP), "StyledApp.tsx").withDestination(SOURCE_APP, "App.tsx")
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, SOURCE_APP), "App.css").withDestinationFolder(SOURCE_APP)
+    );
 
     projectRepository.add(
       ProjectFile.forProject(project).withSource(getPath(SOURCE, imagesPath), "ReactLogo.png").withDestinationFolder(imagesPath)

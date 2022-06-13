@@ -92,56 +92,59 @@ class ProjectLocalRepositoryTest {
   }
 
   @Test
-  void shouldTemplate() {
-    Project project = tmpProject();
-
-    repository.template(project, "mustache", "README.md");
-
-    assertFileExist(project, "README.md");
-  }
-
-  @Test
-  void shouldNotTemplate() {
+  void shouldHandleTemplatingError() {
     Project project = Project.builder().folder(FileUtils.tmpDirForTest()).build();
 
     try (MockedStatic<MustacheUtils> mustacheUtils = Mockito.mockStatic(MustacheUtils.class)) {
       mustacheUtils.when(() -> MustacheUtils.template(anyString(), any())).thenThrow(new IOException());
 
-      assertThatThrownBy(() -> repository.template(project, "mustache", "README.md")).isExactlyInstanceOf(GeneratorException.class);
+      List<ProjectFile> files = List.of(ProjectFile.forProject(project).withSource("mustache", README_MD).withSameDestination());
+      assertThatThrownBy(() -> repository.template(files)).isExactlyInstanceOf(GeneratorException.class);
     }
   }
 
   @Test
-  void shouldNotTemplateWithNonExistingFile() {
+  void shouldNotTemplateForUnknownFile() {
     Project project = tmpProject();
+    List<ProjectFile> files = List.of(
+      ProjectFile.forProject(project).withSource("mustache", "README.md.wrong.mustache").withSameDestination()
+    );
 
-    assertThatThrownBy(() -> repository.template(project, "mustache", "README.md.wrong.mustache"))
-      .isInstanceOf(MustacheNotFoundException.class);
+    assertThatThrownBy(() -> repository.template(files)).isInstanceOf(MustacheNotFoundException.class);
   }
 
   @Test
-  void shouldTemplateWithExtension() {
+  void shouldTemplatizeFile() {
     Project project = tmpProject();
+    List<ProjectFile> files = List.of(ProjectFile.forProject(project).withSource("mustache", README_MD).withSameDestination());
 
-    repository.template(project, "mustache", "README.md.mustache");
+    repository.template(files);
 
-    assertFileExist(project, "README.md");
+    assertFileExist(project, README_MD);
   }
 
   @Test
-  void shouldTemplateWithDestination() {
+  void shouldTemplatizeFileWithMustacheExtension() {
     Project project = tmpProject();
+    List<ProjectFile> files = List.of(ProjectFile.forProject(project).withSource("mustache", "README.md.mustache").withSameDestination());
 
-    repository.template(project, "mustache", "README.md.mustache", getPath(MAIN_RESOURCES));
+    repository.template(files);
 
-    assertFileExist(project, "src/main/resources/README.md");
+    assertFileExist(project, README_MD);
   }
 
   @Test
   void shouldTemplateWithDestinationAndDestinationFilename() {
     Project project = tmpProject();
 
-    repository.template(project, "mustache", "README.md.mustache", getPath(MAIN_RESOURCES), "FINAL-README.md");
+    repository.template(
+      List.of(
+        ProjectFile
+          .forProject(project)
+          .withSource("mustache", "README.md.mustache")
+          .withDestination(getPath(MAIN_RESOURCES), "FINAL-README.md")
+      )
+    );
 
     assertFileExist(project, MAIN_RESOURCES, "FINAL-README.md");
   }
@@ -162,7 +165,7 @@ class ProjectLocalRepositoryTest {
     try (MockedStatic<MustacheUtils> mustacheUtils = Mockito.mockStatic(MustacheUtils.class)) {
       mustacheUtils.when(() -> MustacheUtils.template(anyString(), any())).thenThrow(new IOException());
 
-      assertThatThrownBy(() -> repository.getComputedTemplate(project, "mustache", "README.md"))
+      assertThatThrownBy(() -> repository.getComputedTemplate(project, "mustache", README_MD))
         .isExactlyInstanceOf(GeneratorException.class);
     }
   }

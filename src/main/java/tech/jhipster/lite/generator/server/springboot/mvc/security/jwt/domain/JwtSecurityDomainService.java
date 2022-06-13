@@ -14,10 +14,13 @@ import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.do
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.domain.JwtSecurity.springSecurityTestDependency;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -27,6 +30,10 @@ public class JwtSecurityDomainService implements JwtSecurityService {
 
   public static final String SOURCE = "server/springboot/mvc/security/jwt";
   public static final String SECURITY_JWT_PATH = "security/jwt";
+
+  @SuppressWarnings("java:S2068")
+  public static final String ADMIN_PASSWORD_COMMENT =
+    "Be sure to change it with any Bcrypt tool like https://bcrypt-generator.com before going to production";
 
   private final ProjectRepository projectRepository;
   private final BuildToolService buildToolService;
@@ -100,32 +107,66 @@ public class JwtSecurityDomainService implements JwtSecurityService {
     String destinationSrc = getPath(MAIN_JAVA, packageNamePath, SECURITY_JWT_PATH);
     String destinationTest = getPath(TEST_JAVA, packageNamePath, SECURITY_JWT_PATH);
 
-    jwtSecurityFiles()
-      .forEach((javaFile, destination) -> projectRepository.template(project, sourceSrc, javaFile, getPath(destinationSrc, destination)));
+    List<ProjectFile> sourceFiles = jwtSecurityFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(sourceSrc, entry.getKey())
+          .withDestinationFolder(getPath(destinationSrc, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(sourceFiles);
 
-    jwtTestSecurityFiles()
-      .forEach((javaFile, destination) -> projectRepository.template(project, sourceTest, javaFile, getPath(destinationTest, destination)));
+    List<ProjectFile> testFiles = jwtTestSecurityFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(sourceTest, entry.getKey())
+          .withDestinationFolder(getPath(destinationTest, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(testFiles);
   }
 
   private void addBasicAuthJavaFiles(Project project) {
     project.addDefaultConfig(PACKAGE_NAME);
     String sourceSrc = getPath(SOURCE, "src/account");
-    String sourceTest = getPath(SOURCE, "test/account");
-
     String packageNamePath = project.getPackageNamePath().orElse(getPath(PACKAGE_PATH));
     String destinationSrc = getPath(MAIN_JAVA, packageNamePath, "account/infrastructure/primary/rest");
-    String destinationTest = getPath(TEST_JAVA, packageNamePath, "account/infrastructure/primary/rest");
 
-    projectRepository.template(project, sourceSrc, "AuthenticationResource.java", getPath(destinationSrc));
-    projectRepository.template(project, sourceSrc, "AccountResource.java", getPath(destinationSrc));
-    projectRepository.template(project, sourceSrc, "LoginDTO.java", getPath(destinationSrc));
-    projectRepository.template(project, sourceTest, "AuthenticationResourceIT.java", getPath(destinationTest));
-    projectRepository.template(project, sourceTest, "AccountResourceIT.java", getPath(destinationTest));
-    projectRepository.template(project, sourceTest, "LoginDTOTest.java", getPath(destinationTest));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceSrc, "AuthenticationResource.java").withDestinationFolder(destinationSrc)
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceSrc, "AccountResource.java").withDestinationFolder(destinationSrc)
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceSrc, "LoginDTO.java").withDestinationFolder(destinationSrc)
+    );
+
+    String sourceTest = getPath(SOURCE, "test/account");
+    String destinationTest = getPath(TEST_JAVA, packageNamePath, "account/infrastructure/primary/rest");
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(sourceTest, "AuthenticationResourceIT.java")
+        .withDestinationFolder(getPath(destinationTest))
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceTest, "AccountResourceIT.java").withDestinationFolder(getPath(destinationTest))
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(sourceTest, "LoginDTOTest.java").withDestinationFolder(getPath(destinationTest))
+    );
   }
 
   private void addBasicAuthProperties(Project project) {
     springBootCommonService.addProperties(project, "spring.security.user.name", "admin");
+    springBootCommonService.addPropertiesComment(project, ADMIN_PASSWORD_COMMENT);
     springBootCommonService.addProperties(
       project,
       "spring.security.user.password",
@@ -135,6 +176,7 @@ public class JwtSecurityDomainService implements JwtSecurityService {
     springBootCommonService.addPropertiesNewLine(project);
 
     springBootCommonService.addPropertiesTest(project, "spring.security.user.name", "admin");
+    springBootCommonService.addPropertiesTestComment(project, ADMIN_PASSWORD_COMMENT);
     springBootCommonService.addPropertiesTest(
       project,
       "spring.security.user.password",
@@ -161,10 +203,7 @@ public class JwtSecurityDomainService implements JwtSecurityService {
 
   private Map<String, Object> jwtProperties() {
     Map<String, Object> result = new LinkedHashMap<>();
-    result.put(
-      "application.security.authentication.jwt.base64-secret",
-      "bXktc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtY2hhbmdlZC1pbi1wcm9kdWN0aW9uLWFuZC1iZS1iYXNlNjQtZW5jb2RlZAo="
-    );
+    result.put("application.security.authentication.jwt.base64-secret", Base64Utils.getBase64Secret());
     result.put("application.security.authentication.jwt.token-validity-in-seconds", "86400");
     result.put("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me", "2592000");
     return result;

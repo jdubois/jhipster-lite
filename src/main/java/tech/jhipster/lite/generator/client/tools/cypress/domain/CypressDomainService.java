@@ -55,7 +55,12 @@ public class CypressDomainService implements CypressService {
 
   public void addCypressFiles(Project project) {
     project.addConfig("serverPort", 8080);
-    projectRepository.template(project, getPath(SOURCE, JAVASCRIPT_INTEGRATION), "cypress-config.json", getPath(JAVASCRIPT_INTEGRATION));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, JAVASCRIPT_INTEGRATION), "cypress-config.ts")
+        .withDestinationFolder(getPath(JAVASCRIPT_INTEGRATION))
+    );
 
     List<ProjectFile> files = Cypress
       .cypressFiles()
@@ -73,7 +78,19 @@ public class CypressDomainService implements CypressService {
   }
 
   public void addCypressTestFiles(Project project) {
-    Cypress.cypressTestFiles().forEach((file, path) -> projectRepository.template(project, getPath(SOURCE, path), file, path));
+    List<ProjectFile> files = Cypress
+      .cypressTestFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
+          .withDestinationFolder(entry.getValue())
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 
   private void excludeIntegrationFilesTsConfig(Project project) {

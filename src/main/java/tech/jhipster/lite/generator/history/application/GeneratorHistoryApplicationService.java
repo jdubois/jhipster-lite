@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryRepository;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.history.domain.HistoryProject;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 
 @Service
 public class GeneratorHistoryApplicationService {
@@ -16,12 +17,13 @@ public class GeneratorHistoryApplicationService {
     this.generatorHistoryRepository = generatorHistoryRepository;
   }
 
-  public void addHistoryValue(Project project, GeneratorHistoryValue generatorHistoryValue) {
+  public void addHistoryValue(HistoryProject project, GeneratorHistoryValue generatorHistoryValue) {
     generatorHistoryRepository.addHistoryValue(project, generatorHistoryValue);
   }
 
-  public List<GeneratorHistoryValue> getValues(Project project) {
+  public List<GeneratorHistoryValue> getValues(JHipsterProjectFolder project) {
     Assert.notNull("project", project);
+
     return generatorHistoryRepository.getHistoryData(project).values();
   }
 }

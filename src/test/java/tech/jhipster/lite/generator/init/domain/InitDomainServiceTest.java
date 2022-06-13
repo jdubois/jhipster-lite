@@ -58,7 +58,7 @@ class InitDomainServiceTest {
 
     assertThatCode(() -> initDomainService.addPackageJson(project)).doesNotThrowAnyException();
 
-    verify(projectRepository).template(any(Project.class), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
     verify(npmService, times(6)).addDevDependency(any(Project.class), anyString(), anyString());
     verify(npmService, times(3)).addScript(any(Project.class), anyString(), anyString());
   }
@@ -76,7 +76,7 @@ class InitDomainServiceTest {
 
     assertThatCode(() -> initDomainService.addReadme(project)).doesNotThrowAnyException();
 
-    verify(projectRepository).template(any(Project.class), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
   }
 
   @Test
@@ -94,7 +94,7 @@ class InitDomainServiceTest {
 
     assertThatCode(() -> initDomainService.addEditorConfiguration(project)).doesNotThrowAnyException();
 
-    verify(projectRepository).template(any(Project.class), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
     verify(projectRepository).add(any(ProjectFile.class));
   }
 
@@ -105,7 +105,7 @@ class InitDomainServiceTest {
     assertThatCode(() -> initDomainService.addPrettier(project)).doesNotThrowAnyException();
 
     verify(projectRepository, times(3)).add(any(ProjectFile.class));
-    verify(projectRepository).template(any(Project.class), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
     verify(projectRepository).setExecutable(any(Project.class), anyString(), anyString());
   }
 

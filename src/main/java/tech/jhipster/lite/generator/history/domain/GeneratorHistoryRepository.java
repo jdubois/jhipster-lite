@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.history.domain;
 
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 
 public interface GeneratorHistoryRepository {
-  GeneratorHistoryData getHistoryData(Project project);
+  GeneratorHistoryData getHistoryData(JHipsterProjectFolder folder);
 
-  void addHistoryValue(Project project, GeneratorHistoryValue generatorHistoryValue);
+  void addHistoryValue(HistoryProject project, GeneratorHistoryValue generatorHistoryValue);
 }

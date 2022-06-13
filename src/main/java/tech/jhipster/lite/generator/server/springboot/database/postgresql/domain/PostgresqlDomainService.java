@@ -16,6 +16,7 @@ import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -100,8 +101,18 @@ public class PostgresqlDomainService implements PostgresqlService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath(DefaultConfig.PACKAGE_PATH));
     String databasePath = "technical/infrastructure/secondary/postgresql";
 
-    projectRepository.template(project, SOURCE, "FixedPostgreSQL10Dialect.java", getPath(MAIN_JAVA, packageNamePath, databasePath));
-    projectRepository.template(project, SOURCE, "FixedPostgreSQL10DialectTest.java", getPath(TEST_JAVA, packageNamePath, databasePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "FixedPostgreSQL10Dialect.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, databasePath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "FixedPostgreSQL10DialectTest.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, databasePath))
+    );
   }
 
   @Override

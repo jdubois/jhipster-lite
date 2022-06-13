@@ -28,13 +28,9 @@ JHipster is a development platform to quickly generate, develop & deploy modern 
 
 ## Deploy to Heroku
 
-Click this button to deploy your own instance of JHipster Lite:
+Click on this button to deploy your own instance of JHipster Lite:
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-Complementary information:
-
-- You will have the latest release behaviour on that server
 
 ## Prerequisites
 
@@ -126,7 +122,7 @@ Then, run:
 java -jar target/*.jar
 ```
 
-Then navigate to http://localhost:7471/swagger-ui.html in your browser.
+So you can navigate to http://localhost:7471 in your browser.
 
 ## e2e tests
 

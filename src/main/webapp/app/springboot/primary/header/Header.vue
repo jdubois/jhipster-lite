@@ -30,7 +30,7 @@
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="./swagger-ui.html" target="_blank" rel="noopener">
-              <IconVue :name="'book-half'" :aria-label="'API'" />
+              <IconVue :name="'book-half'" :aria-label="'API'" :title="'The Swagger-ui'" />
               <small class="d-md-none ms-2">API</small>
             </a>
           </li>
@@ -48,6 +48,7 @@
                 role="img"
                 aria-label="JHipster"
               >
+                <title>The official JHipster website</title>
                 <g id="a" />
                 <g id="b">
                   <g id="c">
@@ -72,13 +73,13 @@
           </li>
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="https://github.com/jhipster/jhipster-lite" target="_blank" rel="noopener">
-              <IconVue :name="'github'" :aria-label="'GitHub'" />
+              <IconVue :name="'github'" :aria-label="'GitHub'" :title="'GitHub project'" />
               <small class="d-md-none ms-2">GitHub</small>
             </a>
           </li>
           <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="https://twitter.com/jhipster" target="_blank" rel="noopener">
-              <IconVue :name="'twitter'" :aria-label="'Twitter'" />
+              <IconVue :name="'twitter'" :aria-label="'Twitter'" :title="'The Twitter account'" />
               <small class="d-md-none ms-2">Twitter</small>
             </a>
           </li>

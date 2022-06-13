@@ -1,9 +1,7 @@
 package tech.jhipster.lite.generator.history.application;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
@@ -15,17 +13,18 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryData;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryRepository;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.history.domain.HistoryProject;
+import tech.jhipster.lite.generator.history.domain.HistoryProjectsFixture;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)
 class GeneratorHistoryApplicationServiceTest {
 
   @InjectMocks
-  GeneratorHistoryApplicationService generatorHistoryApplicationService;
+  private GeneratorHistoryApplicationService generatorHistoryApplicationService;
 
   @Mock
-  GeneratorHistoryRepository generatorHistoryRepository;
+  private GeneratorHistoryRepository generatorHistoryRepository;
 
   @Test
   void shouldNotGetHistoryWithoutProject() {
@@ -36,10 +35,11 @@ class GeneratorHistoryApplicationServiceTest {
 
   @Test
   void shouldGetHistory() {
-    final Project project = tmpProject();
-    final GeneratorHistoryData historyData = new GeneratorHistoryData(new ArrayList<>());
-    when(generatorHistoryRepository.getHistoryData(project)).thenReturn(historyData);
+    HistoryProject project = HistoryProjectsFixture.tmpProject();
 
-    assertThat(generatorHistoryApplicationService.getValues(project)).isEqualTo(historyData.values());
+    GeneratorHistoryData historyData = new GeneratorHistoryData(new ArrayList<>());
+    when(generatorHistoryRepository.getHistoryData(project.folder())).thenReturn(historyData);
+
+    assertThat(generatorHistoryApplicationService.getValues(project.folder())).isEqualTo(historyData.values());
   }
 }

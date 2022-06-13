@@ -1,8 +1,7 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { GeneratorButtonVue } from '@/springboot/primary/generator/generator-button';
-import { setActivePinia, StoreGeneric } from 'pinia';
+import { createPinia, setActivePinia, StoreGeneric } from 'pinia';
 import { useHistoryStore } from '@/common/primary/HistoryStore';
-import { createTestingPinia } from '@pinia/testing';
 import { createHistory } from '../../../../common/domain/History.fixture';
 import { Service } from '@/common/domain/Service';
 import { ServiceProjection } from '@/springboot/primary/generator/ServiceProjection';
@@ -38,7 +37,7 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
 
 describe('GeneratorButton', () => {
   beforeEach(() => {
-    const pinia = createTestingPinia();
+    const pinia = createPinia();
     setActivePinia(pinia);
   });
 

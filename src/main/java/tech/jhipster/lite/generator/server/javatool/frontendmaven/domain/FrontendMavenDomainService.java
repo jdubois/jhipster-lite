@@ -13,6 +13,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class FrontendMavenDomainService implements FrontendMavenService {
@@ -47,8 +48,18 @@ public class FrontendMavenDomainService implements FrontendMavenService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath(PACKAGE_PATH));
     String redirectionPath = getPath(TECHNICAL_INFRASTRUCTURE_PRIMARY, "redirection");
 
-    projectRepository.template(project, SOURCE, "RedirectionResource.java", getPath(MAIN_JAVA, packageNamePath, redirectionPath));
-    projectRepository.template(project, TEST, "RedirectionResourceIT.java", getPath(TEST_JAVA, packageNamePath, redirectionPath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "RedirectionResource.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, redirectionPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(TEST, "RedirectionResourceIT.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, redirectionPath))
+    );
   }
 
   private Plugin frontendMavenPlugin() {

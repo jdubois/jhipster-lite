@@ -1,17 +1,15 @@
 package tech.jhipster.lite.generator.server.javatool.arch.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_PATH;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -48,11 +46,15 @@ public class JavaArchUnitDomainService implements JavaArchUnitService {
     String packageWalkPath = Arrays.stream(packageNamePath.split("/")).map(s -> "\"" + s + "\"").collect(Collectors.joining(", "));
     project.addConfig("packageWalkPath", packageWalkPath);
 
-    projectRepository.template(project, SOURCE, "BusinessContext.java", getPath(MAIN_JAVA, packageNamePath));
-    projectRepository.template(project, SOURCE, "SharedKernel.java", getPath(MAIN_JAVA, packageNamePath));
-
-    projectRepository.template(project, SOURCE, "archunit.properties", getPath(TEST_RESOURCES));
-    projectRepository.template(project, SOURCE, "HexagonalArchTest.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "archunit.properties").withDestinationFolder(getPath(TEST_RESOURCES))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "HexagonalArchTest.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   private void addArchUnitMavenPlugin(Project project) {

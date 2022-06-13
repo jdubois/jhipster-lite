@@ -31,7 +31,8 @@
               }
             ],
             "styles": ["src/main/webapp/styles.css"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": []
           },
           "configurations": {
             "production": {

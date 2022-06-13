@@ -44,7 +44,7 @@ class GeneratorHistoryInterceptorIT {
       .perform(post("/api/inits/full").contentType(MediaType.APPLICATION_JSON).content(convertObjectToJsonBytes(projectDTO)))
       .andExpect(status().isOk());
     // Then
-    String content = FileUtils.read(getPath(projectDTO.getFolder(), ".jhipster", "history.json"));
+    String content = FileUtils.read(getPath(projectDTO.getFolder(), ".jhipster/history", "history.json"));
     assertThat(content).isEqualTo(getExpectedHistoryFileContent());
   }
 
@@ -61,7 +61,7 @@ class GeneratorHistoryInterceptorIT {
       .andExpect(status().isBadRequest());
 
     // Then
-    assertThat(FileUtils.exists(getPath(projectDTO.getFolder(), ".jhipster", "history.json"))).isFalse();
+    assertThat(FileUtils.exists(getPath(projectDTO.getFolder(), ".jhipster/history", "history.json"))).isFalse();
   }
 
   private String getExpectedHistoryFileContent() {

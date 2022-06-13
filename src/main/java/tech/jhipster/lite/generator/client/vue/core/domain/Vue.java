@@ -2,6 +2,7 @@ package tech.jhipster.lite.generator.client.vue.core.domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class Vue {
 
@@ -61,5 +62,20 @@ public class Vue {
 
   public static List<String> axiosDependency() {
     return List.of("axios");
+  }
+
+  public static Map<String, String> scripts() {
+    // @formatter:off
+    return Map
+      .of(
+        "build", "vue-tsc --noEmit && vite build --emptyOutDir",
+        "dev", "vite",
+        "jest", "jest src/test/javascript/spec --logHeapUsage --maxWorkers=2 --no-cache",
+        "preview", "vite preview",
+        "start", "vite",
+        "test", "npm run jest --",
+        "test:watch", "npm run jest -- --watch"
+      );
+    // @formatter:on
   }
 }

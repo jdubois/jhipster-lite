@@ -25,6 +25,7 @@ public class React {
       "jest",
       "jest-sonar-reporter",
       "jest-css-modules",
+      "jest-environment-jsdom",
       "typescript",
       "ts-jest",
       "ts-node",

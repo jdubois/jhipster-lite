@@ -11,10 +11,6 @@ export default class VueRepository implements VueService {
     await this.axiosHttp.post(url, restProject).then(() => this.projectHistoryService.get(restProject.folder));
   }
 
-  async addWithStyle(project: Project): Promise<void> {
-    await this.postAndGetHistory('/api/clients/vue/styles', toRestProject(project));
-  }
-
   async add(project: Project): Promise<void> {
     await this.postAndGetHistory('/api/clients/vue', toRestProject(project));
   }

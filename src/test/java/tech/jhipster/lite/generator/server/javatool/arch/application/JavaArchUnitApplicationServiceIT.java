@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.javatool.arch.application;
 import static tech.jhipster.lite.TestUtils.tmpProject;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertArchUnitMavenPlugin;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertArchunitProperties;
-import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertFilesAnnotations;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertFilesHexaArchTest;
 import static tech.jhipster.lite.generator.server.javatool.arch.application.JavaArchUnitAssertFiles.assertLoggerInConfiguration;
 
@@ -35,7 +34,6 @@ class JavaArchUnitApplicationServiceIT {
     javaArchUnitApplicationService.init(project);
 
     assertArchUnitMavenPlugin(project);
-    assertFilesAnnotations(project);
     assertFilesHexaArchTest(project);
     assertArchunitProperties(project);
     assertLoggerInConfiguration(project);

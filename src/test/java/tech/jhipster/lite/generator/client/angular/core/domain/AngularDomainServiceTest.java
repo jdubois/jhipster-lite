@@ -1,13 +1,9 @@
 package tech.jhipster.lite.generator.client.angular.core.domain;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJson;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter.*;
 
 import java.util.Optional;
@@ -20,7 +16,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.project.domain.ProjectFile;
+import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -75,7 +71,7 @@ class AngularDomainServiceTest {
 
     angularDomainService.addDevDependencies(project);
 
-    verify(npmService, times(11)).addDevDependency(any(Project.class), anyString(), anyString());
+    verify(npmService, times(12)).addDevDependency(any(Project.class), anyString(), anyString());
   }
 
   @Test
@@ -109,6 +105,6 @@ class AngularDomainServiceTest {
 
     angularDomainService.addAngularFiles(project);
 
-    verify(projectRepository, times(15)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(15));
   }
 }

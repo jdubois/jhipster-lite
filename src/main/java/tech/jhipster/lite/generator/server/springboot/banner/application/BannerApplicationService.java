@@ -1,39 +1,40 @@
 package tech.jhipster.lite.generator.server.springboot.banner.application;
 
-import org.springframework.stereotype.Component;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.banner.domain.BannerService;
+import org.springframework.stereotype.Service;
+import tech.jhipster.lite.generator.module.domain.JHipsterModule;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.generator.server.springboot.banner.domain.BannerModuleFactory;
 
-@Component
+@Service
 public class BannerApplicationService {
 
-  private final BannerService bannerService;
+  private final BannerModuleFactory factory;
 
-  public BannerApplicationService(BannerService bannerService) {
-    this.bannerService = bannerService;
+  public BannerApplicationService() {
+    this.factory = new BannerModuleFactory();
   }
 
-  public void addBannerJHipsterV7(Project project) {
-    bannerService.addBannerJHipsterV7(project);
+  public JHipsterModule buildJHipsterV7Banner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerJHipsterV7(properties);
   }
 
-  public void addBannerIppon(Project project) {
-    bannerService.addBannerIppon(project);
+  public JHipsterModule buildJHipsterV7ReactBanner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerJHipsterV7React(properties);
   }
 
-  public void addBannerJHipsterV7React(Project project) {
-    bannerService.addBannerJHipsterV7React(project);
+  public JHipsterModule buildJHipsterV7VueBanner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerJHipsterV7Vue(properties);
   }
 
-  public void addBannerJHipsterV7Vue(Project project) {
-    bannerService.addBannerJHipsterV7Vue(project);
+  public JHipsterModule buildJHipsterV2Banner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerJHipsterV2(properties);
   }
 
-  public void addBannerJHipsterV2(Project project) {
-    bannerService.addBannerJHipsterV2(project);
+  public JHipsterModule buildJHipsterV3Banner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerJHipsterV3(properties);
   }
 
-  public void addBannerJHipsterV3(Project project) {
-    bannerService.addBannerJHipsterV3(project);
+  public JHipsterModule buildIpponBanner(JHipsterModuleProperties properties) {
+    return factory.buildModuleBannerIppon(properties);
   }
 }

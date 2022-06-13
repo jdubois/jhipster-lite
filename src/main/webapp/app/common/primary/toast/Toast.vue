@@ -1,8 +1,8 @@
 <template>
   <div
-    ref="el"
-    :class="{ 'bg-success': toastType === 'SUCCESS', 'bg-danger': toastType === 'ERROR' }"
-    class="overlay-toast toast align-items-center text-white border-0 position-fixed me-4 end-0 p-3 shadow"
+    ref="toast"
+    :class="{ 'bg-success': type === 'SUCCESS', 'bg-danger': type === 'ERROR' }"
+    class="overlay-toast toast align-items-center text-white border-0 position-fixed me-4 mt-4 end-0 p-3 shadow"
     role="alert"
     aria-live="assertive"
     aria-atomic="true"

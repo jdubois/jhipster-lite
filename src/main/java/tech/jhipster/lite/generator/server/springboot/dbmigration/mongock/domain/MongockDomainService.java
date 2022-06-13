@@ -12,6 +12,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
 
@@ -79,10 +80,10 @@ public class MongockDomainService implements MongockService {
     String packageNamePath = project.getPackageNamePath().orElse(PACKAGE_PATH);
     String mongockConfigPath = TECHNICAL_INFRASTRUCTURE_SECONDARY + "/mongock";
     projectRepository.template(
-      project,
-      SOURCE,
-      "MongockDatabaseConfiguration.java",
-      getPath(MAIN_JAVA, packageNamePath, mongockConfigPath)
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "MongockDatabaseConfiguration.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, mongockConfigPath))
     );
   }
 
@@ -92,12 +93,17 @@ public class MongockDomainService implements MongockService {
     String packageNamePath = project.getPackageNamePath().orElse(PACKAGE_PATH);
     String mongockDBMigrationPath = TECHNICAL_INFRASTRUCTURE_SECONDARY + "/mongock/dbmigration";
 
-    projectRepository.template(project, SOURCE, "InitialMigrationSetup.java", getPath(MAIN_JAVA, packageNamePath, mongockDBMigrationPath));
     projectRepository.template(
-      project,
-      SOURCE,
-      "InitialMigrationSetupTest.java",
-      getPath(TEST_JAVA, packageNamePath, mongockDBMigrationPath)
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "InitialMigrationSetup.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, mongockDBMigrationPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "InitialMigrationSetupTest.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, mongockDBMigrationPath))
     );
   }
 

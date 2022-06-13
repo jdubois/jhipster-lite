@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -31,7 +32,7 @@ class DummyDomainServiceTest {
     dummyDomainService.applyDummyGitPatch(project);
 
     verify(projectRepository).gitInit(any(Project.class));
-    verify(projectRepository).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
     verify(projectRepository).gitApplyPatch(any(Project.class), anyString());
   }
 }

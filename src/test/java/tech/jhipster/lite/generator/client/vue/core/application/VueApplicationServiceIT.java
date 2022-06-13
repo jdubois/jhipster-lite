@@ -24,9 +24,12 @@ class VueApplicationServiceIT {
 
     VueAssert.assertViteConfigFiles(project);
     VueAssert.assertRootFiles(project);
-    VueAssert.assertAppFiles(project);
     VueAssert.assertRouterFiles(project);
-    VueAssert.assertAppWithoutCss(project);
+    VueAssert.assertAppFiles(project);
+    VueAssert.assertHomepageFiles(project);
+    VueAssert.assertCss(project);
+    VueAssert.assertLogos(project);
+    VueAssert.assertLogger(project);
     VueAssert.assertAxiosFile(project);
 
     VueAssert.assertJestSonar(project);
@@ -40,24 +43,5 @@ class VueApplicationServiceIT {
     vueApplicationService.addPinia(project);
 
     VueAssert.assertPiniaDependency(project);
-  }
-
-  @Test
-  void shouldAddStyledVue() {
-    Project project = tmpProjectWithPackageJson();
-
-    vueApplicationService.addStyledVue(project);
-
-    VueAssert.assertDependency(project);
-    VueAssert.assertScripts(project);
-
-    VueAssert.assertViteConfigFiles(project);
-    VueAssert.assertRootFiles(project);
-    VueAssert.assertRouterFiles(project);
-    VueAssert.assertAppFiles(project);
-    VueAssert.assertAppWithCss(project);
-    VueAssert.assertLogos(project);
-
-    VueAssert.assertJestSonar(project);
   }
 }

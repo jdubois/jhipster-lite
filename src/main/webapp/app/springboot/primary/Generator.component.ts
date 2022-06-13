@@ -1,4 +1,4 @@
-import { defineComponent, inject, ref, onMounted } from 'vue';
+import { defineComponent, inject, ref } from 'vue';
 import { ProjectToUpdate } from '@/springboot/primary/ProjectToUpdate';
 import { AngularGeneratorVue } from '@/springboot/primary/generator/angular-generator';
 import { ReactGeneratorVue } from '@/springboot/primary/generator/react-generator';
@@ -11,8 +11,8 @@ import { IconVue } from '@/common/primary/icon';
 import { ProjectGeneratorVue } from '@/springboot/primary/generator/project-generator';
 import { ProjectHistoryService } from '@/common/domain/ProjectHistoryService';
 import { History } from '@/common/domain/History';
-import { ToastVue } from '@/common/primary/toast';
-import { NotificationService } from '@/common/domain/NotificationService';
+import { ProjectService } from '../domain/ProjectService';
+import { StoreGeneric } from 'pinia';
 
 export default defineComponent({
   name: 'GeneratorComponent',
@@ -26,13 +26,12 @@ export default defineComponent({
     ReactGeneratorVue,
     SvelteGeneratorVue,
     VueGeneratorVue,
-    ToastVue,
   },
   setup() {
     const projectHistoryService = inject('projectHistoryService') as ProjectHistoryService;
+    const projectService = inject('projectService') as ProjectService;
     const globalWindow = inject('globalWindow') as Window;
-    const toastService = inject('toastService') as NotificationService;
-
+    const projectStore = inject('projectStore') as StoreGeneric;
     const selectorPrefix = 'generator';
 
     const project = ref<ProjectToUpdate>({
@@ -43,17 +42,23 @@ export default defineComponent({
     const setupTool = ref<string>();
     const server = ref<string>();
     const client = ref<string>();
-    const toast = ref<typeof ToastVue | undefined>(undefined);
 
-    onMounted(() => {
-      toastService.register(toast.value);
+    projectStore.$subscribe((_mutation, state) => {
+      project.value.baseName = state.project.baseName ?? project.value.baseName;
+      project.value.packageName = state.project.packageName ?? project.value.packageName;
+      project.value.projectName = state.project.projectName ?? project.value.projectName;
+      project.value.serverPort = state.project.serverPort ?? project.value.serverPort;
     });
 
     let timeoutId: number | undefined = undefined;
     const getCurrentProjectHistory = (): Promise<History> => projectHistoryService.get(project.value.folder);
-    const debounceGetProjectHistory = (): void => {
+    const getProjectDetails = (): Promise<void> => projectService.getProjectDetails(project.value.folder);
+    const debounceGetProjectDetails = (): void => {
       if (timeoutId) globalWindow.clearTimeout(timeoutId);
-      timeoutId = globalWindow.setTimeout(() => getCurrentProjectHistory(), 400);
+      timeoutId = globalWindow.setTimeout(() => {
+        getCurrentProjectHistory();
+        getProjectDetails();
+      }, 400);
     };
 
     return {
@@ -65,8 +70,8 @@ export default defineComponent({
       client,
       selectorPrefix,
       getCurrentProjectHistory,
-      debounceGetProjectHistory,
-      toast,
+      getProjectDetails,
+      debounceGetProjectDetails,
     };
   },
 });

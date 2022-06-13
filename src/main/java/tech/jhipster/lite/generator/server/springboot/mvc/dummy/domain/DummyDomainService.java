@@ -4,6 +4,7 @@ import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_
 
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class DummyDomainService implements DummyService {
@@ -24,7 +25,7 @@ public class DummyDomainService implements DummyService {
     project.addConfig("packagePath", packagePath);
 
     projectRepository.gitInit(project);
-    projectRepository.template(project, SOURCE, PATCH, ".jhipster");
+    projectRepository.template(ProjectFile.forProject(project).withSource(SOURCE, PATCH).withDestinationFolder(".jhipster"));
     projectRepository.gitApplyPatch(project, FileUtils.getPath(project.getFolder(), ".jhipster", PATCH));
   }
 }

@@ -16,6 +16,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -93,19 +94,45 @@ public class MongodbDomainService implements MongodbService {
     String packageNamePath = project.getPackageNamePath().orElse(getPath("com/mycompany/myapp"));
     String mongodbPath = "technical/infrastructure/secondary/mongodb";
 
-    projectRepository.template(project, SOURCE, "MongodbDatabaseConfiguration.java", getPath(MAIN_JAVA, packageNamePath, mongodbPath));
-    projectRepository.template(project, SOURCE, "JSR310DateConverters.java", getPath(MAIN_JAVA, packageNamePath, mongodbPath));
-
-    projectRepository.template(project, SOURCE, "JSR310DateConvertersTest.java", getPath(TEST_JAVA, packageNamePath, mongodbPath));
-    projectRepository.template(project, SOURCE, "MongodbTestContainerExtension.java", getPath(TEST_JAVA, packageNamePath));
-    projectRepository.template(project, SOURCE, "TestContainersSpringContextCustomizerFactory.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "MongodbDatabaseConfiguration.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, mongodbPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "JSR310DateConverters.java")
+        .withDestinationFolder(getPath(MAIN_JAVA, packageNamePath, mongodbPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "JSR310DateConvertersTest.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath, mongodbPath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "MongodbTestContainerExtension.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "TestContainersSpringContextCustomizerFactory.java")
+        .withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   @Override
   public void addConfigurationFiles(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    projectRepository.template(project, SOURCE, "spring.factories", getPath(TEST_RESOURCES, "META-INF"));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "spring.factories").withDestinationFolder(getPath(TEST_RESOURCES, "META-INF"))
+    );
   }
 
   @Override

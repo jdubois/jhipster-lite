@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
+import tech.jhipster.lite.generator.readme.domain.ReadMeService;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.KafkaDomainService;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.KafkaService;
 import tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommonService;
@@ -20,20 +21,24 @@ public class KafkaBeanConfiguration {
 
   private final DockerService dockerService;
 
+  private final ReadMeService readMeService;
+
   public KafkaBeanConfiguration(
     final BuildToolService buildToolService,
     final ProjectRepository projectRepository,
     final SpringBootCommonService springBootCommonService,
-    final DockerService dockerService
+    final DockerService dockerService,
+    final ReadMeService readMeService
   ) {
     this.buildToolService = buildToolService;
     this.projectRepository = projectRepository;
     this.springBootCommonService = springBootCommonService;
     this.dockerService = dockerService;
+    this.readMeService = readMeService;
   }
 
   @Bean
   public KafkaService kafkaService() {
-    return new KafkaDomainService(buildToolService, projectRepository, springBootCommonService, dockerService);
+    return new KafkaDomainService(buildToolService, projectRepository, springBootCommonService, dockerService, readMeService);
   }
 }

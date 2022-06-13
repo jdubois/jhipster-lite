@@ -16,6 +16,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -63,7 +64,7 @@ class SvelteDomainServiceTest {
 
     svelteDomainService.addDevDependencies(project);
 
-    verify(npmService, times(25)).addDevDependency(any(Project.class), anyString(), anyString());
+    verify(npmService, times(26)).addDevDependency(any(Project.class), anyString(), anyString());
   }
 
   @Test
@@ -97,7 +98,7 @@ class SvelteDomainServiceTest {
 
     svelteDomainService.addRootFiles(project);
 
-    verify(projectRepository, times(3)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
   }
 
   @Test
@@ -106,7 +107,7 @@ class SvelteDomainServiceTest {
 
     svelteDomainService.addAppFiles(project);
 
-    verify(projectRepository, times(2)).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 
   @Test

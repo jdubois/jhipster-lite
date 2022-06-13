@@ -11,9 +11,10 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryData;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryRepository;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
+import tech.jhipster.lite.generator.history.domain.HistoryProject;
 import tech.jhipster.lite.generator.history.infrastructure.secondary.dto.GeneratorHistoryDataDTO;
 import tech.jhipster.lite.generator.history.infrastructure.secondary.dto.GeneratorHistoryValueDTO;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
@@ -22,7 +23,7 @@ public class GeneratorHistoryLocalRepository implements GeneratorHistoryReposito
 
   private static final String HISTORY_FILE_NAME = "history.json";
   private static final String HISTORY_FILE_FOLDER_SOURCE = "history";
-  private static final String HISTORY_FOLDER_PATH_DEST = ".jhipster";
+  private static final String HISTORY_FOLDER_PATH_DEST = ".jhipster/history";
 
   private final ProjectRepository projectRepository;
 
@@ -31,8 +32,8 @@ public class GeneratorHistoryLocalRepository implements GeneratorHistoryReposito
   }
 
   @Override
-  public GeneratorHistoryData getHistoryData(Project project) {
-    String filePath = getHistoryFilePath(project);
+  public GeneratorHistoryData getHistoryData(JHipsterProjectFolder folder) {
+    String filePath = getHistoryFilePath(folder);
     String historyFileContent;
     try {
       historyFileContent = FileUtils.read(filePath);
@@ -43,8 +44,8 @@ public class GeneratorHistoryLocalRepository implements GeneratorHistoryReposito
   }
 
   @Override
-  public void addHistoryValue(Project project, GeneratorHistoryValue generatorHistoryValue) {
-    String filePath = getHistoryFilePath(project);
+  public void addHistoryValue(HistoryProject project, GeneratorHistoryValue generatorHistoryValue) {
+    String filePath = getHistoryFilePath(project.folder());
     List<GeneratorHistoryValueDTO> generatorHistoryValueDTOs = new ArrayList<>();
     try {
       String historyFileContent = FileUtils.read(filePath);
@@ -52,7 +53,7 @@ public class GeneratorHistoryLocalRepository implements GeneratorHistoryReposito
     } catch (IOException e) {
       // The file does not exist
       createHistoryFile(project);
-      GeneratorHistoryData data = getHistoryData(project);
+      GeneratorHistoryData data = getHistoryData(project.folder());
       generatorHistoryValueDTOs.addAll(GeneratorHistoryDataDTO.from(data.values()).values());
     }
 
@@ -65,23 +66,23 @@ public class GeneratorHistoryLocalRepository implements GeneratorHistoryReposito
       throw new GeneratorException("Cannot serialize the history data " + generatorHistoryDataDTO + " : " + e.getMessage());
     }
     try {
-      FileUtils.write(filePath, newHistoryFileContent, project.getEndOfLine());
+      FileUtils.write(filePath, newHistoryFileContent, project.lineEnd());
     } catch (IOException e) {
       throw new GeneratorException("Cannot write JSON content in file " + filePath + " : " + e.getMessage());
     }
   }
 
-  private void createHistoryFile(Project project) {
+  private void createHistoryFile(HistoryProject project) {
     projectRepository.add(
       ProjectFile
-        .forProject(project)
+        .forProject(project.toProject())
         .withSource(HISTORY_FILE_FOLDER_SOURCE, HISTORY_FILE_NAME)
         .withDestination(HISTORY_FOLDER_PATH_DEST, HISTORY_FILE_NAME)
     );
   }
 
-  private String getHistoryFilePath(Project project) {
-    return FileUtils.getPath(project.getFolder(), HISTORY_FOLDER_PATH_DEST, HISTORY_FILE_NAME);
+  private String getHistoryFilePath(JHipsterProjectFolder folder) {
+    return FileUtils.getPath(folder.get(), HISTORY_FOLDER_PATH_DEST, HISTORY_FILE_NAME);
   }
 
   private List<GeneratorHistoryValueDTO> deserializeHistoryFile(String filePath, String historyFileContent) {

@@ -4,7 +4,7 @@ import tech.jhipster.lite.error.domain.Assert;
 
 public record FilePath(String folder, String file) {
   public FilePath {
-    Assert.notBlank("folder", folder);
+    Assert.notNull("folder", folder);
     Assert.notBlank("file", file);
   }
 

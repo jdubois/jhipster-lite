@@ -1,11 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.gateway.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -18,6 +16,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonService;
 
@@ -51,27 +50,7 @@ class GatewayDomainServiceTest {
     verify(springCloudCommonService).addSpringCloudCommonDependencies(project);
     verify(buildToolService).addDependency(any(Project.class), any(Dependency.class));
 
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/springcloud/gateway/java",
-        "GatewayResource.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/primary/rest"
-      );
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/springcloud/gateway/java",
-        "RouteVM.java",
-        "src/main/java/com/mycompany/myapp/technical/infrastructure/primary/rest/vm"
-      );
-    verify(projectRepository)
-      .template(
-        project,
-        "server/springboot/springcloud/gateway/java/test",
-        "GatewayResourceIT.java",
-        "src/test/java/com/mycompany/myapp/technical/infrastructure/primary/rest"
-      );
+    verify(projectRepository, times(3)).template(any(ProjectFile.class));
     verify(springCloudCommonService)
       .addOrMergeBootstrapProperties(
         project,

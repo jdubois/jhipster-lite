@@ -25,10 +25,6 @@ public class SpringBootMvcApplicationService {
     springBootMvcService.addSpringBootUndertow(project);
   }
 
-  public void addSpringBootActuator(Project project) {
-    springBootMvcService.addSpringBootActuator(project);
-  }
-
   public void addExceptionHandler(Project project) {
     springBootMvcService.addExceptionHandler(project);
   }

@@ -1,22 +1,16 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.CONFIG;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.BOOTSTRAP_LOCAL_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.BOOTSTRAP_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.getDockerConsulConfigLoaderImageName;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.getDockerConsulImageName;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.springCloudConsulConfigDependency;
-import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.springCloudConsulDiscoveryDependency;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain.Consul.*;
 
 import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonService;
 
@@ -102,15 +96,16 @@ public class ConsulDomainService implements ConsulService {
     project.addConfig("dockerConsulImage", consulImage);
     project.addConfig("dockerConsulConfigLoaderImage", consulConfigLoaderImage);
 
-    projectRepository.template(project, getPath(SOURCE, "src"), "consul.yml", "src/main/docker", "consul.yml");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(getPath(SOURCE, "src"), "consul.yml").withDestination("src/main/docker", "consul.yml")
+    );
 
     project.addConfig("base64JwtSecret", Base64Utils.getBase64Secret());
     projectRepository.template(
-      project,
-      getPath(SOURCE, "docker"),
-      "application.config.yml",
-      "src/main/docker/central-server-config/",
-      "application.yml"
+      ProjectFile
+        .forProject(project)
+        .withSource(getPath(SOURCE, "docker"), "application.config.yml")
+        .withDestination("src/main/docker/central-server-config/", "application.yml")
     );
   }
 }

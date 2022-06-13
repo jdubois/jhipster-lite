@@ -1,14 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.infrastructure.primary.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertAccountFiles;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertDockerKeycloak;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertExceptionTranslatorWithSecurity;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertIntegrationTestWithSecurity;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertJavaFiles;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.assertSecurityDependencies;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityAssert.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,7 +55,7 @@ class OAuth2SecurityResourceIT {
 
     initApplicationService.init(project);
     mavenApplicationService.init(project);
-    javaBaseApplicationService.addJavaBase(project);
+    javaBaseApplicationService.build(projectDTO.toModuleProperties());
     springBootApplicationService.init(project);
     springBootMvcApplicationService.init(project);
 

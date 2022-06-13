@@ -8,7 +8,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.4.1-SNAPSHOT</version>
+  <version>0.7.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.7</version>
+    <version>2.7.0</version>
     <relativePath />
   </parent>
 
@@ -38,23 +38,29 @@
     <maven.version>3.8.5</maven.version>
     <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
 
-    <spring-boot.version>2.6.7</spring-boot.version>
+    <spring-boot.version>2.7.0</spring-boot.version>
     <junit-jupiter.version>5.8.2</junit-jupiter.version>
-    <assertj.version>3.22.0</assertj.version>
-    <mockito.version>4.4.0</mockito.version>
+    <assertj.version>3.23.1</assertj.version>
+    <mockito.version>4.6.1</mockito.version>
+    <byte-buddy.version>1.12.10</byte-buddy.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M6</surefire-plugin.version>
+    <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
     <mustache.version>0.9.10</mustache.version>
     <guava.version>31.1-jre</guava.version>
     <jgit.version>6.1.0.202203080745-r</jgit.version>
     <archunit-junit5.version>0.23.1</archunit-junit5.version>
-    <springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
+    <springdoc-openapi-ui.version>1.6.9</springdoc-openapi-ui.version>
     <problem-spring.version>0.27.0</problem-spring.version>
     <problem-spring-web.version>${problem-spring.version}</problem-spring-web.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <zt-zip.version>1.15</zt-zip.version>
+    <apache-commons-io.version>2.11.0</apache-commons-io.version>
+    <cucumber.version>7.3.4</cucumber.version>
+    <testng.version>7.6.0</testng.version>
+    <maven-model.version>3.8.5</maven-model.version>
+    <joox.version>1.6.2</joox.version>
 
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
     <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
@@ -75,6 +81,11 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${apache-commons-io.version}</version>
     </dependency>
     <dependency>
       <groupId>org.zeroturnaround</groupId>
@@ -118,6 +129,17 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>${maven-model.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>joox</artifactId>
+      <version>${joox.version}</version>
+    </dependency>
+
     <!-- jhipster-needle-maven-add-dependency -->
 
     <dependency>
@@ -145,6 +167,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <!--Explicitly added for the latest versions of Mockito (> 4.5.0) to be working-->
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>${byte-buddy.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -155,6 +184,47 @@
       <version>${archunit-junit5.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-spring</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.vintage</groupId>
+      <artifactId>junit-vintage-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <scope>test</scope>
+    </dependency>
+
     <!-- jhipster-needle-maven-add-dependency-test -->
   </dependencies>
 

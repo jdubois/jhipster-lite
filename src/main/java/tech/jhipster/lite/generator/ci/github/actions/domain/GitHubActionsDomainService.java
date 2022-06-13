@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.ci.github.actions.domain;
 
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class GitHubActionsDomainService implements GitHubActionsService {
@@ -26,30 +27,28 @@ public class GitHubActionsDomainService implements GitHubActionsService {
     addSetupYamls(project);
     if (project.isMavenProject()) {
       projectRepository.template(
-        project,
-        GITHUB_ACTIONS_CI_SOURCE_FOLDER,
-        GITHUB_ACTIONS_MAVEN_CI_YML,
-        GITHUB_ACTIONS_CI_DESTINATION_FOLDER,
-        GITHUB_ACTIONS_CI_YML
+        ProjectFile
+          .forProject(project)
+          .withSource(GITHUB_ACTIONS_CI_SOURCE_FOLDER, GITHUB_ACTIONS_MAVEN_CI_YML)
+          .withDestination(GITHUB_ACTIONS_CI_DESTINATION_FOLDER, GITHUB_ACTIONS_CI_YML)
       );
     }
     if (project.isGradleProject()) {
       projectRepository.template(
-        project,
-        GITHUB_ACTIONS_CI_SOURCE_FOLDER,
-        GITHUB_ACTIONS_GRADLE_CI_YML,
-        GITHUB_ACTIONS_CI_DESTINATION_FOLDER,
-        GITHUB_ACTIONS_CI_YML
+        ProjectFile
+          .forProject(project)
+          .withSource(GITHUB_ACTIONS_CI_SOURCE_FOLDER, GITHUB_ACTIONS_GRADLE_CI_YML)
+          .withDestination(GITHUB_ACTIONS_CI_DESTINATION_FOLDER, GITHUB_ACTIONS_CI_YML)
       );
     }
   }
 
   private void addSetupYamls(Project project) {
     projectRepository.template(
-      project,
-      GITHUB_ACTIONS_SETUP_SOURCE_FOLDER,
-      GITHUB_ACTIONS_SETUP_YML,
-      GITHUB_ACTIONS_SETUP_DESTINATION_FOLDER
+      ProjectFile
+        .forProject(project)
+        .withSource(GITHUB_ACTIONS_SETUP_SOURCE_FOLDER, GITHUB_ACTIONS_SETUP_YML)
+        .withDestinationFolder(GITHUB_ACTIONS_SETUP_DESTINATION_FOLDER)
     );
   }
 }

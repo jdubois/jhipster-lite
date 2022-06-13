@@ -1,12 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonService;
 
@@ -28,19 +26,19 @@ import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.
 class ConsulDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  SpringCloudCommonService springCloudCommonService;
+  private SpringCloudCommonService springCloudCommonService;
 
   @Mock
-  DockerService dockerService;
+  private DockerService dockerService;
 
   @InjectMocks
-  ConsulDomainService consulDomainService;
+  private ConsulDomainService consulDomainService;
 
   @Test
   void shouldInit() {
@@ -55,7 +53,7 @@ class ConsulDomainServiceTest {
     verify(buildToolService, times(2)).addDependency(any(Project.class), any(Dependency.class));
 
     verify(springCloudCommonService, times(3)).addOrMergeBootstrapProperties(any(Project.class), anyString(), anyString(), anyString());
-    verify(projectRepository, times(2)).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
+    verify(projectRepository, times(2)).template(any(ProjectFile.class));
   }
 
   @Test

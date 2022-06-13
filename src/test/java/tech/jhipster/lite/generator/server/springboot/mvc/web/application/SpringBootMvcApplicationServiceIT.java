@@ -1,24 +1,10 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.web.application;
 
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.project.domain.Constants.TECHNICAL_INFRASTRUCTURE_PRIMARY;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.assertCorsFiles;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.assertCorsProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterActuatorDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterUndertowDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterValidationDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterWebDependency;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.springBootStarterWebWithoutTomcat;
-import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.zalandoProblemDependency;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcAssertFiles.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -166,36 +152,6 @@ class SpringBootMvcApplicationServiceIT {
     assertTestUtil(project);
     assertExceptionHandler(project);
     assertCors(project);
-  }
-
-  @Test
-  void shouldAddSpringBootActuator() {
-    Project project = tmpProject();
-    initApplicationService.init(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
-
-    springBootMvcApplicationService.addSpringBootActuator(project);
-
-    assertFileContent(project, POM_XML, springBootStarterActuatorDependency());
-
-    assertFileContent(project, getPath(MAIN_RESOURCES, "config", APPLICATION_PROPERTIES), "management.endpoints.web.base-path=/management");
-    assertFileContent(
-      project,
-      getPath(MAIN_RESOURCES, "config", APPLICATION_PROPERTIES),
-      "management.endpoints.web.exposure.include=configprops, env, health, info, logfile, loggers, threaddump"
-    );
-    assertFileContent(project, getPath(MAIN_RESOURCES, "config", APPLICATION_PROPERTIES), "management.endpoint.health.probes.enabled=true");
-    assertFileContent(
-      project,
-      getPath(MAIN_RESOURCES, "config", APPLICATION_PROPERTIES),
-      "management.endpoint.health.group.liveness.include=livenessState"
-    );
-    assertFileContent(
-      project,
-      getPath(MAIN_RESOURCES, "config", APPLICATION_PROPERTIES),
-      "management.endpoint.health.group.readiness.include=readinessState"
-    );
   }
 
   @Test

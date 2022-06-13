@@ -128,6 +128,7 @@ class SpringCloudConfigApplicationServiceIT {
   private List<String> bootstrapProperties(String baseName) {
     List<String> properties = new ArrayList<>();
     properties.add("jhipster.registry.password=admin");
+    properties.add("spring.cloud.compatibility-verifier.enabled=false");
     properties.add("spring.cloud.config.label=main");
     properties.add("spring.cloud.config.name=" + baseName);
     properties.add("spring.cloud.config.retry.initial-interval=1000");

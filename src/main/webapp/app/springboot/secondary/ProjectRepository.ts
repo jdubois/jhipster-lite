@@ -1,14 +1,14 @@
 import { Project } from '@/springboot/domain/Project';
 import { ProjectService } from '@/springboot/domain/ProjectService';
 import { AxiosHttp } from '@/http/AxiosHttp';
-import { RestProject, toRestProject } from '@/springboot/secondary/RestProject';
+import { RestProject, toProject, toRestProject } from '@/springboot/secondary/RestProject';
 import { DocumentFile } from '@/common/domain/DocumentFile';
 import { toDocumentFile } from '@/common/secondary/ResponseDocumentFile';
 import { AxiosRequestConfig } from 'axios';
 import { ProjectHistoryService } from '@/common/domain/ProjectHistoryService';
 
 export default class ProjectRepository implements ProjectService {
-  constructor(private axiosHttp: AxiosHttp, private projectHistoryService: ProjectHistoryService) {}
+  constructor(private axiosHttp: AxiosHttp, private projectHistoryService: ProjectHistoryService, private projectStore: any) {}
 
   private async postAndGetHistory(url: string, restProject: RestProject): Promise<void> {
     await this.axiosHttp.post(url, restProject).then(() => this.projectHistoryService.get(restProject.folder));
@@ -62,5 +62,12 @@ export default class ProjectRepository implements ProjectService {
       await this.projectHistoryService.get(project.folder);
       return toDocumentFile('export.xls')(response);
     });
+  }
+
+  async getProjectDetails(folder: string): Promise<void> {
+    return this.axiosHttp
+      .get<RestProject>('api/projects/details', { params: { folder } })
+      .then(response => this.projectStore.setProject(toProject(response.data)))
+      .catch(() => this.projectStore.setProject({ folder }));
   }
 }

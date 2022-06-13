@@ -1,9 +1,8 @@
 import { defineComponent, inject, ref } from 'vue';
 import { DefaultButtonVue } from '@/common/primary/default-button';
 import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
-import { VueService } from '@/springboot/domain/client/VueService';
-import { Logger } from '@/common/domain/Logger';
-import ToastService from '@/common/secondary/ToastService';
+import { SvelteService } from '@/springboot/domain/client/SvelteService';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
 
 export default defineComponent({
   name: 'SvelteGeneratorComponent',
@@ -20,9 +19,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    const logger = inject('logger') as Logger;
-    const toastService = inject('toastService') as ToastService;
-    const svelteService = inject('svelteService') as VueService;
+    const alertBus = inject('alertBus') as AlertBus;
+    const svelteService = inject('svelteService') as SvelteService;
 
     const selectorPrefix = 'svelte-generator';
     const isSvelteWithStyle = ref<boolean>(false);
@@ -30,10 +28,9 @@ export default defineComponent({
     const addSvelte = async (): Promise<void> => {
       try {
         await tryAddSvelte();
-        toastService.success('Svelte successfully added');
-      } catch (e) {
-        logger.error('Adding Svelte to project failed', e as Error);
-        toastService.error('Adding Svelte to project failed');
+        alertBus.success('Svelte successfully added');
+      } catch (error) {
+        alertBus.error(`Adding Svelte to project failed ${error}`);
       }
     };
 

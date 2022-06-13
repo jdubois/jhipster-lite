@@ -1,15 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.core.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.CONFIG;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_CONFIGURATION;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_TEST_CONFIGURATION;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
 
 import tech.jhipster.lite.common.domain.WordUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
@@ -17,6 +11,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SpringBootDomainService implements SpringBootService {
@@ -118,17 +113,17 @@ public class SpringBootDomainService implements SpringBootService {
 
   private String springBootAdditionalElements() {
     return """
-      <executions>
-        <execution>
-          <goals>
-            <goal>repackage</goal>
-          </goals>
-        </execution>
-      </executions>
-      <configuration>
-        <mainClass>\\${start-class}</mainClass>
-      </configuration>
-      """;
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>\\${start-class}</mainClass>
+        </configuration>
+        """;
   }
 
   @Override
@@ -148,43 +143,71 @@ public class SpringBootDomainService implements SpringBootService {
 
     String packageNamePath = project.getPackageNamePath().orElse("com/mycompany/myapp");
 
-    projectRepository.template(project, SOURCE, "MainApp.java", getPath(MAIN_JAVA, packageNamePath), className + "App.java");
-    projectRepository.template(project, SOURCE, "MainAppTest.java", getPath(TEST_JAVA, packageNamePath), className + "AppTest.java");
-    projectRepository.template(project, SOURCE, "IntegrationTest.java", getPath(TEST_JAVA, packageNamePath));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "MainApp.java")
+        .withDestination(getPath(MAIN_JAVA, packageNamePath), className + "App.java")
+    );
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "MainAppTest.java")
+        .withDestination(getPath(TEST_JAVA, packageNamePath), className + "AppTest.java")
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "IntegrationTest.java").withDestinationFolder(getPath(TEST_JAVA, packageNamePath))
+    );
   }
 
   @Override
   public void addApplicationProperties(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    projectRepository.template(project, SOURCE, "application.properties", getPath(MAIN_RESOURCES, CONFIG));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "application.properties").withDestinationFolder(getPath(MAIN_RESOURCES, CONFIG))
+    );
   }
 
   @Override
   public void addApplicationLocalProperties(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    projectRepository.template(project, SOURCE, "application-local.properties", getPath(MAIN_RESOURCES, CONFIG));
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "application-local.properties")
+        .withDestinationFolder(getPath(MAIN_RESOURCES, CONFIG))
+    );
   }
 
   @Override
   public void addApplicationTestProperties(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    projectRepository.template(project, SOURCE, "application-test.properties", getPath(TEST_RESOURCES, CONFIG), "application.properties");
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "application-test.properties")
+        .withDestination(getPath(TEST_RESOURCES, CONFIG), "application.properties")
+    );
   }
 
   @Override
   public void addLoggingConfiguration(Project project) {
     project.addDefaultConfig(PACKAGE_NAME);
 
-    projectRepository.template(project, SOURCE, LOGGING_CONFIGURATION, getPath(MAIN_RESOURCES));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, LOGGING_CONFIGURATION).withDestinationFolder(getPath(MAIN_RESOURCES))
+    );
   }
 
   @Override
   public void addLoggingTestConfiguration(Project project) {
     project.addDefaultConfig(PACKAGE_NAME);
 
-    projectRepository.template(project, SOURCE, LOGGING_TEST_CONFIGURATION, getPath(TEST_RESOURCES));
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, LOGGING_TEST_CONFIGURATION).withDestinationFolder(getPath(TEST_RESOURCES))
+    );
   }
 }

@@ -1,10 +1,9 @@
 import { defineComponent, inject } from 'vue';
 import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
-import { Logger } from '@/common/domain/Logger';
 import { ProjectService } from '@/springboot/domain/ProjectService';
 import { FileDownloader } from '@/common/primary/FileDownloader';
 import { GeneratorButtonVue } from '@/springboot/primary/generator/generator-button';
-import ToastService from '@/common/secondary/ToastService';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
 
 export default defineComponent({
   name: 'ProjectGeneratorComponent',
@@ -29,10 +28,9 @@ export default defineComponent({
   },
 
   setup(props) {
-    const logger = inject('logger') as Logger;
+    const alertBus = inject('alertBus') as AlertBus;
     const projectService = inject('projectService') as ProjectService;
     const fileDownloader = inject('fileDownloader') as FileDownloader;
-    const toastService = inject('toastService') as ToastService;
 
     const selectorPrefix = 'project-generator';
 
@@ -40,11 +38,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .init(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Project successfully initialized'))
-          .catch(error => {
-            logger.error('Project initialization failed', error.message);
-            toastService.error('Project initialization failed ' + error.message);
-          });
+          .then(() => alertBus.success('Project successfully initialized'))
+          .catch(error => alertBus.error(`Project initialization failed ${error}`));
       }
     };
 
@@ -52,11 +47,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addMaven(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Maven successfully added'))
-          .catch(error => {
-            logger.error('Adding Maven to project failed', error);
-            toastService.error('Adding Maven to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('Maven successfully added'))
+          .catch(error => alertBus.error(`Adding Maven to project failed ${error}`));
       }
     };
 
@@ -64,10 +56,9 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addCodespacesSetup(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Codespaces setup successfully added'))
+          .then(() => alertBus.success('Codespaces setup successfully added'))
           .catch(error => {
-            logger.error('Adding Codespaces setup to project failed', error);
-            toastService.error('Adding Codespaces setup to project failed ' + error.message);
+            alertBus.error(`Adding Codespaces setup to project failed ${error}`);
           });
       }
     };
@@ -76,10 +67,9 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addGitpodSetup(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Gitpod setup successfully added'))
+          .then(() => alertBus.success('Gitpod setup successfully added'))
           .catch(error => {
-            logger.error('Adding Gitpod setup to project failed', error);
-            toastService.error('Adding Gitpod setup to project failed ' + error.message);
+            alertBus.error(`Adding Gitpod setup to project failed ${error}`);
           });
       }
     };
@@ -88,11 +78,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addJaCoCo(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('JaCoCo successfully added'))
-          .catch(error => {
-            logger.error('Adding JaCoCo to project failed', error);
-            toastService.error('Adding JaCoCo to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('JaCoCo successfully added'))
+          .catch(error => alertBus.error(`Adding JaCoCo to project failed ${error}`));
       }
     };
 
@@ -100,11 +87,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addSonarBackend(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Sonar Backend successfully added'))
-          .catch(error => {
-            logger.error('Adding Sonar Backend to project failed', error);
-            toastService.error('Adding Sonar Backend to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('Sonar Backend successfully added'))
+          .catch(error => alertBus.error(`Adding Sonar Backend to project failed ${error}`));
       }
     };
 
@@ -112,11 +96,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addSonarBackendFrontend(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Sonar Backend+Frontend successfully added'))
-          .catch(error => {
-            logger.error('Adding Sonar Backend+Frontend to project failed', error);
-            toastService.error('Adding Sonar Backend+Frontend to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('Sonar Backend+Frontend successfully added'))
+          .catch(error => alertBus.error(`Adding Sonar Backend+Frontend to project failed ${error}`));
       }
     };
 
@@ -124,11 +105,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addJavaBase(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Java Base successfully added'))
-          .catch(error => {
-            logger.error('Adding Java Base to project failed', error);
-            toastService.error('Adding Java Base to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('Java Base successfully added'))
+          .catch(error => alertBus.error(`Adding Java Base to project failed ${error}`));
       }
     };
 
@@ -136,11 +114,8 @@ export default defineComponent({
       if (props.project.folder !== '') {
         await projectService
           .addFrontendMavenPlugin(toProject(props.project as ProjectToUpdate))
-          .then(() => toastService.success('Frontend Maven Plugin successfully added'))
-          .catch(error => {
-            logger.error('Adding Frontend Maven Plugin to project failed', error);
-            toastService.error('Adding Frontend Maven Plugin to project failed ' + error.message);
-          });
+          .then(() => alertBus.success('Frontend Maven Plugin successfully added'))
+          .catch(error => alertBus.error(`Adding Frontend Maven Plugin to project failed ${error}`));
       }
     };
 
@@ -148,13 +123,10 @@ export default defineComponent({
       await projectService
         .download(toProject(props.project as ProjectToUpdate))
         .then(file => {
-          toastService.success('File ready for download');
+          alertBus.success('File ready for download');
           fileDownloader.download(file);
         })
-        .catch(error => {
-          logger.error('Downloading project failed', error);
-          toastService.error('Downlaod failed ' + error.message);
-        });
+        .catch(error => alertBus.error(`Downloading project failed ${error}`));
     };
 
     return {

@@ -1,35 +1,72 @@
-import { shallowMount } from '@vue/test-utils';
-import { ToastVue, ToastType } from '@/common/primary/toast';
-import { nextTick } from '@vue/runtime-core';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { ToastVue } from '@/common/primary/toast';
+import sinon from 'sinon';
+import { ToastType } from '@/common/primary/toast/ToastType';
+import { AlertListener } from '@/common/domain/alert/AlertListener';
+import { stubAlertListener } from '../../domain/AlertListener.fixure';
+
+let wrapper: VueWrapper;
+let component: any;
+
+interface WrapperOptions {
+  alertListener: AlertListener;
+}
+
+const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
+  const { alertListener }: WrapperOptions = {
+    alertListener: stubAlertListener(),
+    ...wrapperOptions,
+  };
+  wrapper = shallowMount(ToastVue, {
+    global: {
+      provide: {
+        alertListener,
+      },
+    },
+  });
+  component = wrapper.vm;
+};
 
 describe('Toast', () => {
   it('should exist', () => {
-    const wrapper = shallowMount(ToastVue, {});
+    wrap();
 
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('should show success toast', () => {
-    const wrapper = shallowMount(ToastVue, {});
+  it('should display toast on success', () => {
+    const alertListener = stubAlertListener();
+    wrap({ alertListener });
 
-    wrapper.vm.success('Test message');
+    const [callback] = alertListener.onSuccess.getCall(0).args;
+    callback('message');
 
-    expect(wrapper.vm.message).toBe('Test message');
-    expect(wrapper.vm.toastType).toBe(ToastType.SUCCESS);
-    nextTick(() => {
-      expect(wrapper.classes()).toContain('fade');
-    });
+    expect(component.message).toBe('message');
+    expect(component.type).toBe(ToastType.SUCCESS);
   });
 
-  it('should show error toast', () => {
-    const wrapper = shallowMount(ToastVue, {});
+  it('should display toast on error', () => {
+    const alertListener = stubAlertListener();
+    wrap({ alertListener });
 
-    wrapper.vm.error('Test error message');
+    const [callback] = alertListener.onError.getCall(0).args;
+    callback('message');
 
-    expect(wrapper.vm.message).toBe('Test error message');
-    expect(wrapper.vm.toastType).toBe(ToastType.ERROR);
-    nextTick(() => {
-      expect(wrapper.classes()).toContain('fade');
-    });
+    expect(component.message).toBe('message');
+    expect(component.type).toBe(ToastType.ERROR);
+  });
+
+  it('should unsubscribe on before unmount', () => {
+    const alertListener = stubAlertListener();
+    const unsubscribeSuccess = sinon.stub();
+    alertListener.onSuccess.returns(unsubscribeSuccess);
+    const unsubscribeError = sinon.stub();
+    alertListener.onError.returns(unsubscribeError);
+    wrap({ alertListener });
+
+    wrapper.unmount();
+
+    expect(unsubscribeSuccess.calledOnce).toBe(true);
+    expect(unsubscribeError.calledOnce).toBe(true);
   });
 });

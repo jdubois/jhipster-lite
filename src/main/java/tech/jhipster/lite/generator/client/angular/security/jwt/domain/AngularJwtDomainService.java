@@ -5,9 +5,11 @@ import static tech.jhipster.lite.generator.client.angular.core.domain.Angular.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_WEBAPP;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
 
+import java.util.List;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class AngularJwtDomainService implements AngularJwtService {
@@ -46,34 +48,34 @@ public class AngularJwtDomainService implements AngularJwtService {
     String oldHtml = "// jhipster-needle-angular-jwt-login-form";
     String newHtml =
       """
-      {
-        path: '',
-        loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-      }""";
+        {
+          path: '',
+          loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+        }""";
     projectRepository.replaceText(project, APP, APP_ROUTING_MODULE, oldHtml, newHtml);
 
     oldHtml = "import \\{ AppRoutingModule \\} from './app-routing.module';";
     newHtml =
       """
-      import { TestBed } from '@angular/core/testing';
-      import { Router } from '@angular/router';
-      import { RouterTestingModule } from '@angular/router/testing';
-      import { AppRoutingModule, routes } from './app-routing.module';""";
+        import { TestBed } from '@angular/core/testing';
+        import { Router } from '@angular/router';
+        import { RouterTestingModule } from '@angular/router/testing';
+        import { AppRoutingModule, routes } from './app-routing.module';""";
     projectRepository.replaceText(project, APP, APP_ROUTING_MODULE_SPEC, oldHtml, newHtml);
 
     oldHtml = "// jhipster-needle-angular-jwt-login-form";
     newHtml =
       """
-      let router: Router;
+        let router: Router;
 
-      beforeEach(() => {
-        TestBed.configureTestingModule({
-          imports: [RouterTestingModule.withRoutes(routes)]
-        }).compileComponents();
-        router = TestBed.get(Router);
-        router.initialNavigation();
-      });
-      """;
+        beforeEach(() => {
+          TestBed.configureTestingModule({
+            imports: [RouterTestingModule.withRoutes(routes)]
+          }).compileComponents();
+          router = TestBed.get(Router);
+          router.initialNavigation();
+        });
+        """;
     projectRepository.replaceText(project, APP, APP_ROUTING_MODULE_SPEC, oldHtml, newHtml);
 
     oldHtml = "import \\{ NgModule \\} from '@angular/core';";
@@ -121,14 +123,37 @@ public class AngularJwtDomainService implements AngularJwtService {
 
   public void addJwtFiles(Project project) {
     project.addConfig("serverPort", 8080);
-    AngularJwt.jwtFiles().forEach((file, path) -> projectRepository.template(project, getPath(SOURCE, path), file, getPath("", path)));
+
+    List<ProjectFile> files = AngularJwt
+      .jwtFiles()
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath("", entry.getValue()))
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 
   public void addAngularJwtFiles(Project project) {
     project.addDefaultConfig(BASE_NAME);
-    AngularJwt
+
+    List<ProjectFile> files = AngularJwt
       .angularJwtFiles()
-      .forEach((file, path) -> projectRepository.template(project, getPath(SOURCE_WEBAPP, path), file, getPath(MAIN_WEBAPP, path)));
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE_WEBAPP, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(MAIN_WEBAPP, entry.getValue()))
+      )
+      .toList();
+    projectRepository.template(files);
   }
 
   private void addDependency(Project project, String dependency) {

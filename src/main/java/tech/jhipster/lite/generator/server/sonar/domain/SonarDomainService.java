@@ -1,13 +1,13 @@
 package tech.jhipster.lite.generator.server.sonar.domain;
 
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PROJECT_NAME;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 public class SonarDomainService implements SonarService {
@@ -95,13 +95,18 @@ public class SonarDomainService implements SonarService {
   private void addPropertiesFile(Project project) {
     project.addDefaultConfig(BASE_NAME);
     project.addDefaultConfig(PROJECT_NAME);
-    projectRepository.template(project, SOURCE, "sonar-project.properties");
+    projectRepository.template(ProjectFile.forProject(project).withSource(SOURCE, "sonar-project.properties").withSameDestination());
   }
 
   private void addFullstackPropertiesFile(Project project) {
     project.addDefaultConfig(BASE_NAME);
     project.addDefaultConfig(PROJECT_NAME);
-    projectRepository.template(project, SOURCE, "sonar-fullstack-project.properties", "", "sonar-project.properties");
+    projectRepository.template(
+      ProjectFile
+        .forProject(project)
+        .withSource(SOURCE, "sonar-fullstack-project.properties")
+        .withDestination("", "sonar-project.properties")
+    );
   }
 
   private void addDockerCompose(Project project) {
@@ -114,6 +119,8 @@ public class SonarDomainService implements SonarService {
           throw new GeneratorException("Version not found for docker image: " + Sonar.getSonarqubeDockerImageName());
         }
       );
-    projectRepository.template(project, SOURCE, "sonar.yml", "src/main/docker", "sonar.yml");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "sonar.yml").withDestination("src/main/docker", "sonar.yml")
+    );
   }
 }

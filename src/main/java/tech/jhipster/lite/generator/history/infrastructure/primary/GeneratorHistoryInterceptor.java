@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.history.application.GeneratorHistoryApplicationService;
 import tech.jhipster.lite.generator.history.domain.GeneratorHistoryValue;
+import tech.jhipster.lite.generator.history.domain.HistoryProject;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.technical.infrastructure.primary.annotation.GeneratorStep;
@@ -29,6 +30,6 @@ public class GeneratorHistoryInterceptor {
     ProjectDTO projectDTO = (ProjectDTO) joinPoint.getArgs()[0];
     Project project = ProjectDTO.toProject(projectDTO);
     GeneratorHistoryValue generatorHistoryValue = new GeneratorHistoryValue(serviceId, clock.instant());
-    generatorHistoryApplicationService.addHistoryValue(project, generatorHistoryValue);
+    generatorHistoryApplicationService.addHistoryValue(HistoryProject.from(project), generatorHistoryValue);
   }
 }

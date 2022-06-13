@@ -1023,7 +1023,7 @@ class AssertTest {
     @Test
     void shouldNotValidateFutureInstantAsPast() {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, future()).inPast())
-        .isExactlyInstanceOf(NotPastTimeException.class)
+        .isExactlyInstanceOf(NotBeforeTimeException.class)
         .hasMessageContaining(FIELD_NAME);
     }
 
@@ -1042,7 +1042,7 @@ class AssertTest {
     @Test
     void shouldNotValidatePastInstantAsFuture() {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, past()).inFuture())
-        .isExactlyInstanceOf(NotFutureTimeException.class)
+        .isExactlyInstanceOf(NotAfterTimeException.class)
         .hasMessageContaining(FIELD_NAME);
     }
 

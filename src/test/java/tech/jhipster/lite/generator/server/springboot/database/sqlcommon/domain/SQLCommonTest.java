@@ -64,30 +64,6 @@ class SQLCommonTest {
   }
 
   @Test
-  void shouldNotGetTestContainersDependencyWithoutDatabase() {
-    assertThatThrownBy(() -> SQLCommon.testContainersDependency(null))
-      .isExactlyInstanceOf(MissingMandatoryValueException.class)
-      .hasMessageContaining("database");
-  }
-
-  @Test
-  void shouldNotGetTestContainersDependencyWithEmptyDatabase() {
-    assertThatThrownBy(() -> SQLCommon.testContainersDependency(""))
-      .isExactlyInstanceOf(MissingMandatoryValueException.class)
-      .hasMessageContaining("database");
-  }
-
-  @Test
-  void shouldGetTestContainersDependencyDependency() {
-    Dependency dependency = SQLCommon.testContainersDependency("anyDB");
-
-    assertThat(dependency.getArtifactId()).isEqualTo("anyDB");
-    assertThat(dependency.getGroupId()).isEqualTo("org.testcontainers");
-    assertThat(dependency.getScope()).contains("test");
-    assertThat(dependency.getVersion()).contains("\\${testcontainers.version}");
-  }
-
-  @Test
   void shouldBuildSource() {
     assertThat(SQLCommon.getSource("anyDB")).isEqualTo("server/springboot/database/anyDB");
   }

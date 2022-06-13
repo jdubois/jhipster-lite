@@ -36,6 +36,7 @@ describe('Generator', () => {
 
     cy.get(springBootGeneratorSelector('add-spring-boot-button')).contains('Spring Boot');
     cy.get(springBootGeneratorSelector('add-spring-boot-mvc-with-tomcat-button')).contains('Spring MVC Tomcat');
+    cy.get(springBootGeneratorSelector('add-spring-boot-mvc-with-undertow-button')).contains('Spring MVC Undertow');
     cy.get(springBootGeneratorSelector('add-spring-boot-webflux-netty-button')).contains('Spring Webflux Netty');
     cy.get(springBootGeneratorSelector('add-spring-boot-actuator-button')).contains('Spring Boot Actuator');
     cy.get(springBootGeneratorSelector('add-spring-doc-button')).contains('Spring Doc');
@@ -45,6 +46,9 @@ describe('Generator', () => {
 
     cy.get(springBootGeneratorSelector('add-spring-boot-jwt-button')).contains('Security JWT');
     cy.get(springBootGeneratorSelector('add-spring-boot-jwt-with-basic-authentication-button')).contains('Security JWT Basic Auth');
+    cy.get(springBootGeneratorSelector('add-springdoc-openapi-with-security-jwt-button')).contains('SpringDoc OpenApi with Security JWT');
+    cy.get(springBootGeneratorSelector('add-spring-boot-oauth2-button')).contains('Security OAuth2');
+    cy.get(springBootGeneratorSelector('add-spring-boot-oauth2-account-button')).contains('OAuth2 Account Context');
 
     cy.get(springBootGeneratorSelector('add-postgresql-button')).contains('PostgreSQL');
     cy.get(springBootGeneratorSelector('add-mysql-button')).contains('MySQL');
@@ -55,12 +59,18 @@ describe('Generator', () => {
     cy.get(springBootGeneratorSelector('add-liquibase-button')).contains('Liquibase');
     cy.get(springBootGeneratorSelector('add-liquibase-with-users-and-authority-changelogs-button')).contains('Liquibase with users');
     cy.get(springBootGeneratorSelector('add-mongock-button')).contains('Mongock');
+
+    cy.get(springBootGeneratorSelector('add-spring-boot-pulsar-button')).contains('Pulsar');
+    cy.get(springBootGeneratorSelector('add-spring-boot-cucumber-button')).contains('Cucumber');
+
+    cy.get(springBootGeneratorSelector('add-spring-boot-dummy-feature-button')).contains('Dummy feature');
   });
 
   it('should display angular', () => {
     cy.get(generatorSelector('option-angular')).check();
     cy.get(angularGeneratorSelector('add-angular-button')).contains('Angular');
-    cy.get(angularGeneratorSelector('add-angular-with-jwt-button')).contains('Angular with JWT');
+    cy.get(angularGeneratorSelector('add-angular-with-jwt-button')).contains('Add JWT');
+    cy.get(angularGeneratorSelector('add-angular-oauth2-button')).contains('Add OAuth2');
   });
 
   it('should display react', () => {

@@ -1,30 +1,26 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { ProjectToUpdate } from '@/springboot/primary/ProjectToUpdate';
 import { createProjectToUpdate } from '../../ProjectToUpdate.fixture';
-import { stubLogger } from '../../../../common/domain/Logger.fixture';
-import { Logger } from '@/common/domain/Logger';
 import { ReactService } from '@/springboot/domain/client/ReactService';
 import { stubReactService } from '../../../domain/client/ReactService.fixture';
 import { ReactGeneratorVue } from '@/springboot/primary/generator/react-generator';
-import { NotificationService } from '@/common/domain/NotificationService';
-import { stubNotificationService } from '../../../../common/domain/NotificationService.fixture';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
+import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
 
 interface WrapperOptions {
+  alertBus: AlertBus;
   reactService: ReactService;
-  logger: Logger;
   project: ProjectToUpdate;
-  toastService: NotificationService;
 }
 
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { reactService, logger, project, toastService }: WrapperOptions = {
+  const { alertBus, reactService, project }: WrapperOptions = {
+    alertBus: stubAlertBus(),
     reactService: stubReactService(),
-    logger: stubLogger(),
     project: createProjectToUpdate(),
-    toastService: stubNotificationService(),
     ...wrapperOptions,
   };
   wrapper = shallowMount(ReactGeneratorVue, {
@@ -33,9 +29,8 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
     },
     global: {
       provide: {
+        alertBus,
         reactService,
-        logger,
-        toastService,
       },
     },
   });
@@ -96,28 +91,28 @@ describe('ReactGenerator', () => {
   });
 
   it('should handle error on adding React failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const reactService = stubReactService();
-    reactService.add.rejects({});
-    await wrap({ reactService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    reactService.add.rejects('error');
+    await wrap({ alertBus, reactService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addReact();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding React to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding React to project failed error');
   });
 
   it('should handle error on adding React with style failure', async () => {
-    const logger = stubLogger();
+    const alertBus = stubAlertBus();
     const reactService = stubReactService();
-    reactService.addWithStyle.rejects({});
-    await wrap({ reactService, logger, project: createProjectToUpdate({ folder: 'project/path' }) });
+    reactService.addWithStyle.rejects('error');
+    await wrap({ alertBus, reactService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     const checkbox = wrapper.find('#react-with-style');
     await checkbox.setValue(true);
     await component.addReact();
 
-    const [message] = logger.error.getCall(0).args;
-    expect(message).toBe('Adding React with style to project failed');
+    const [message] = alertBus.error.getCall(0).args;
+    expect(message).toBe('Adding React with style to project failed error');
   });
 });

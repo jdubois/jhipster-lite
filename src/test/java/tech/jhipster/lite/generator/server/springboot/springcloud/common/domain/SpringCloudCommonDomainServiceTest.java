@@ -32,6 +32,7 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -43,16 +44,16 @@ class SpringCloudCommonDomainServiceTest {
   public static final String DESTINATION_FILE_FOLDER = "src/main/resources/config";
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  DockerService dockerService;
+  private DockerService dockerService;
 
   @InjectMocks
-  SpringCloudCommonDomainService springCloudCommonDomainService;
+  private SpringCloudCommonDomainService springCloudCommonDomainService;
 
   private Dependency getExpectedManagementDependency() {
     return Dependency
@@ -127,24 +128,7 @@ class SpringCloudCommonDomainServiceTest {
         assertThat(project.getConfig("jhipsterRegistryDockerImage")).contains("jhipster/jhipster-registry:1.1.1");
         assertThat(project.getConfig("base64JwtSecret")).contains(expectedBase64Secret);
 
-        verify(projectRepository, times(2)).template(any(Project.class), anyString(), anyString(), anyString(), anyString());
-        verify(projectRepository)
-          .template(
-            project,
-            "server/springboot/springcloud/configclient",
-            "jhipster-registry.yml",
-            "src/main/docker",
-            "jhipster-registry.yml"
-          );
-
-        verify(projectRepository)
-          .template(
-            project,
-            "server/springboot/springcloud/configclient",
-            "application.config.properties",
-            "src/main/docker/central-server-config/localhost-config",
-            "application.properties"
-          );
+        verify(projectRepository, times(2)).template(any(ProjectFile.class));
       }
     }
 
@@ -183,7 +167,7 @@ class SpringCloudCommonDomainServiceTest {
         // Then
         fileUtils.verify(() -> FileUtils.exists(destinationFilePath));
         fileUtils.verify(() -> FileUtils.getPath(folderPath, DESTINATION_FILE_FOLDER, SOURCE_FILE_NAME));
-        verify(projectRepository).template(project, SOURCE_FOLDER_PATH, SOURCE_FILE_NAME, DESTINATION_FILE_FOLDER);
+        verify(projectRepository).template(any(ProjectFile.class));
       }
     }
 

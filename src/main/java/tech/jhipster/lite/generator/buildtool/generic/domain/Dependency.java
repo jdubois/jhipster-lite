@@ -53,6 +53,19 @@ public class Dependency {
     return type;
   }
 
+  public Dependency.DependencyBuilder toBuilder() {
+    DependencyBuilder builder = builder().groupId(groupId).artifactId(artifactId);
+
+    if (optional) {
+      builder.optional();
+    }
+    version.ifPresent(builder::version);
+    scope.ifPresent(builder::scope);
+    type.ifPresent(builder::type);
+
+    return builder;
+  }
+
   public static class DependencyBuilder {
 
     private String groupId;

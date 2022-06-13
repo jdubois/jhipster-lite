@@ -63,6 +63,7 @@ public class EurekaAssert {
       getPath(MAIN_RESOURCES, "config/bootstrap.properties"),
       List.of(
         "spring.application.name=" + baseName,
+        "spring.cloud.compatibility-verifier.enabled=false",
         "eureka.client.service-url.defaultZone=http://admin:admin@localhost:8761/eureka",
         "eureka.client.enabled=true",
         "eureka.client.healthcheck.enabled=true",

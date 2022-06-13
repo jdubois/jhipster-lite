@@ -7,6 +7,5 @@ public interface SpringBootMvcService {
 
   void addSpringBootMvc(Project project);
   void addSpringBootUndertow(Project project);
-  void addSpringBootActuator(Project project);
   void addExceptionHandler(Project project);
 }

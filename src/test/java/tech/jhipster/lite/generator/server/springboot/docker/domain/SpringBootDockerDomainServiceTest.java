@@ -19,6 +19,7 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -44,7 +45,7 @@ class SpringBootDockerDomainServiceTest {
     verify(buildToolService, times(3)).addProperty(any(Project.class), anyString(), anyString());
     verify(buildToolService).addPlugin(any(Project.class), any(Plugin.class));
 
-    verify(projectRepository).template(any(Project.class), anyString(), anyString(), anyString());
+    verify(projectRepository).template(any(ProjectFile.class));
   }
 
   @Test

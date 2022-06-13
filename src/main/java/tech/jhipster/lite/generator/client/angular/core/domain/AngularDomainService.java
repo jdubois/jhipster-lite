@@ -5,6 +5,7 @@ import static tech.jhipster.lite.generator.client.angular.core.domain.Angular.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
+import java.util.List;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -45,8 +46,12 @@ public class AngularDomainService implements AngularService {
   public void addAppFiles(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    projectRepository.template(project, SOURCE_PRIMARY, APP_COMPONENT_HTML, DESTINATION_PRIMARY);
-    projectRepository.template(project, SOURCE_PRIMARY, APP_COMPONENT, DESTINATION_PRIMARY);
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE_PRIMARY, APP_COMPONENT_HTML).withDestinationFolder(DESTINATION_PRIMARY)
+    );
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE_PRIMARY, APP_COMPONENT).withDestinationFolder(DESTINATION_PRIMARY)
+    );
 
     addImages(project);
   }
@@ -91,9 +96,20 @@ public class AngularDomainService implements AngularService {
 
   public void addAngularFiles(Project project) {
     project.addDefaultConfig(BASE_NAME);
-    Angular
+
+    List<ProjectFile> files = Angular
       .angularFiles()
-      .forEach((file, path) -> projectRepository.template(project, getPath(SOURCE_WEBAPP, path), file, getPath(MAIN_WEBAPP, path)));
+      .entrySet()
+      .stream()
+      .map(entry ->
+        ProjectFile
+          .forProject(project)
+          .withSource(getPath(SOURCE_WEBAPP, entry.getValue()), entry.getKey())
+          .withDestinationFolder(getPath(MAIN_WEBAPP, entry.getValue()))
+      )
+      .toList();
+
+    projectRepository.template(files);
   }
 
   public void addImages(Project project) {

@@ -23,7 +23,9 @@ public class CodespacesDomainService implements CodespacesService {
 
   private void addConfig(Project project) {
     project.addConfig("serverPort", 8080);
-    projectRepository.template(project, SOURCE, "devcontainer.json", DEVCONTAINER_DEST, "devcontainer.json");
+    projectRepository.template(
+      ProjectFile.forProject(project).withSource(SOURCE, "devcontainer.json").withDestination(DEVCONTAINER_DEST, "devcontainer.json")
+    );
   }
 
   private void addDockerfile(Project project) {

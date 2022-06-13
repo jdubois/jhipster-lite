@@ -33,15 +33,6 @@ class VueResource {
     vueApplicationService.addVue(project);
   }
 
-  @Operation(summary = "Add Vue+Vite with minimal CSS", description = "Add Vue+Vite with Minimal CSS")
-  @ApiResponse(responseCode = "500", description = "An error occurred while adding Vue+Vite with minimal CSS")
-  @PostMapping("/styles")
-  @GeneratorStep(id = GeneratorAction.VUE_STYLED)
-  public void addStyledVue(@RequestBody ProjectDTO projectDTO) {
-    Project project = ProjectDTO.toProject(projectDTO);
-    vueApplicationService.addStyledVue(project);
-  }
-
   @Operation(summary = "Add Pinia", description = "Add pinia for state management")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding Pinia")
   @PostMapping("/stores/pinia")

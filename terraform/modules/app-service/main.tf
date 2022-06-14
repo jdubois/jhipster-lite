@@ -70,4 +70,13 @@ resource "azurerm_linux_web_app" "application" {
     "AZURE_STORAGE_BLOB_ENDPOINT" = var.azure_storage_blob_endpoint
     "AZURE_STORAGE_ACCOUNT_KEY"   = var.azure_storage_account_key
   }
+
+  storage_account {
+    access_key = var.azure_storage_account_key
+    account_name = var.azure_storage_account_name
+    name = "jhipster-lite"
+    share_name = "user-projects"
+    type = "AzureFiles"
+    mount_path = "/jhipster"
+  }
 }

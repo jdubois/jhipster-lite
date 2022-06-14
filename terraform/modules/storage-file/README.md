@@ -1,3 +1,3 @@
-# Terraform module for Blob storage configuration
+# Terraform module for File storage configuration
 
-This module configures a Blob storage with Terraform.
+This module configures a File storage with Terraform.

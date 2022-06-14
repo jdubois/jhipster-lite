@@ -65,5 +65,9 @@ resource "azurerm_linux_web_app" "application" {
 
     # These are app specific environment variables
     "SPRING_PROFILES_ACTIVE" = "prod,azure"
+
+    "AZURE_STORAGE_ACCOUNT_NAME"  = var.azure_storage_account_name
+    "AZURE_STORAGE_BLOB_ENDPOINT" = var.azure_storage_blob_endpoint
+    "AZURE_STORAGE_ACCOUNT_KEY"   = var.azure_storage_account_key
   }
 }

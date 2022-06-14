@@ -51,9 +51,9 @@ module "application" {
 
   azure_application_insights_instrumentation_key = module.application-insights.azure_application_insights_instrumentation_key
 
-  azure_storage_account_name  = module.storage-blob.azurerm_storage_account_name
-  azure_storage_blob_endpoint = module.storage-blob.azurerm_storage_blob_endpoint
-  azure_storage_account_key   = module.storage-blob.azurerm_storage_account_key
+  azure_storage_account_name  = module.storage-file.azurerm_storage_account_name
+  azure_storage_blob_endpoint = module.storage-file.azurerm_storage_blob_endpoint
+  azure_storage_account_key   = module.storage-file.azurerm_storage_account_key
 }
 
 module "application-insights" {
@@ -64,8 +64,8 @@ module "application-insights" {
   location         = var.location
 }
 
-module "storage-blob" {
-  source           = "./modules/storage-blob"
+module "storage-file" {
+  source           = "modules/storage-file"
   resource_group   = azurerm_resource_group.main.name
   application_name = var.application_name
   environment      = local.environment

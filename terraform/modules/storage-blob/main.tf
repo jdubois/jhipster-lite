@@ -13,7 +13,7 @@ resource "azurecaf_name" "storage_account" {
   suffixes      = [var.environment]
 }
 
-resource "azurerm_storage_account" "storage-blob" {
+resource "azurerm_storage_account" "storage-file" {
   name                     = azurecaf_name.storage_account.result
   resource_group_name      = var.resource_group
   location                 = var.location
@@ -26,14 +26,14 @@ resource "azurerm_storage_account" "storage-blob" {
   }
 }
 
-resource "azurecaf_name" "storage_container" {
-  name          = var.application_name
-  resource_type = "azurerm_storage_container"
-  suffixes      = [var.environment]
+resource "azurerm_storage_share" "storage-file" {
+  name                 = "user-projects"
+  storage_account_name = azurerm_storage_account.storage-file.name
+  quota                = 50
 }
 
-resource "azurerm_storage_container" "storage-blob" {
-  name                  = azurecaf_name.storage_container.result
-  storage_account_name  = azurerm_storage_account.storage-blob.name
-  container_access_type = "private"
+resource "azurerm_storage_share_directory" "storage-file" {
+  name                 = "jhipster-lite"
+  share_name           = azurerm_storage_share.storage-file.name
+  storage_account_name = azurerm_storage_account.storage-file.name
 }

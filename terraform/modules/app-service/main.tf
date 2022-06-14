@@ -72,11 +72,11 @@ resource "azurerm_linux_web_app" "application" {
   }
 
   storage_account {
-    access_key = var.azure_storage_account_key
+    access_key   = var.azure_storage_account_key
     account_name = var.azure_storage_account_name
-    name = "jhipster-lite"
-    share_name = "user-projects"
-    type = "AzureFiles"
-    mount_path = "/jhipster"
+    name         = "jhipster-lite"
+    share_name   = "user-projects"
+    type         = "AzureFiles"
+    mount_path   = "/jhipster"
   }
 }

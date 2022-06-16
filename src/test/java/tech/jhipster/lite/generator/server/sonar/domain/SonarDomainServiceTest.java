@@ -15,7 +15,8 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImage;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -25,22 +26,22 @@ import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 class SonarDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  DockerService dockerService;
+  private DockerImages dockerImages;
 
   @InjectMocks
-  SonarDomainService sonarDomainService;
+  private SonarDomainService sonarDomainService;
 
   @Test
   void shouldAddSonarJavaBackend() {
     Project project = tmpProjectWithPomXml();
     when(buildToolService.getVersion(any(Project.class), anyString())).thenReturn(Optional.of("0.0.0"));
-    when(dockerService.getImageNameWithVersion("sonarqube")).thenReturn(Optional.of("1.1.1"));
+    when(dockerImages.get("sonarqube")).thenReturn(new DockerImage("sonarqube", "1.1.1"));
 
     sonarDomainService.addSonarJavaBackend(project);
 
@@ -59,19 +60,10 @@ class SonarDomainServiceTest {
   }
 
   @Test
-  void shouldNotAddSonarJavaBackendWhenVersionNotFoundDockerImage() {
-    Project project = tmpProjectWithPomXml();
-
-    when(buildToolService.getVersion(any(Project.class), anyString())).thenReturn(Optional.of("0.0.0"));
-
-    Assertions.assertThatThrownBy(() -> sonarDomainService.addSonarJavaBackend(project)).isExactlyInstanceOf(GeneratorException.class);
-  }
-
-  @Test
   void shouldAddSonarJavaBackendAndFrontend() {
     Project project = tmpProjectWithPomXml();
     when(buildToolService.getVersion(any(Project.class), anyString())).thenReturn(Optional.of("0.0.0"));
-    when(dockerService.getImageNameWithVersion("sonarqube")).thenReturn(Optional.of("1.1.1"));
+    when(dockerImages.get("sonarqube")).thenReturn(new DockerImage("sonarqube", "1.1.1"));
 
     sonarDomainService.addSonarJavaBackendAndFrontend(project);
 

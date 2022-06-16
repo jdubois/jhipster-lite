@@ -1,18 +1,10 @@
 package tech.jhipster.lite.generator.server.springboot.database.mysql.application;
 
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_CONFIGURATION;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_TEST_CONFIGURATION;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -75,7 +67,7 @@ class MySQLApplicationServiceIT {
     assertFileContent(
       project,
       getPath(TEST_RESOURCES, "config/application.properties"),
-      List.of("spring.datasource.url=jdbc:tc:mysql:8.0.28:///jhipster", "spring.datasource.username=jhipster")
+      List.of("spring.datasource.url=jdbc:tc:mysql:", "spring.datasource.username=jhipster")
     );
   }
 
@@ -131,7 +123,7 @@ class MySQLApplicationServiceIT {
     mysqlApplicationService.addDockerCompose(project);
 
     assertFileExist(project, "src/main/docker/mysql.yml");
-    assertFileContent(project, "src/main/docker/mysql.yml", "mysql:8.0.28");
+    assertFileContent(project, "src/main/docker/mysql.yml", "mysql:");
     assertFileContent(project, "src/main/docker/mysql.yml", "MYSQL_DATABASE=jhipster");
   }
 

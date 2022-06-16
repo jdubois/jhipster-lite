@@ -1,11 +1,11 @@
 package tech.jhipster.lite.generator.server.springboot.broker.pulsar.infrastructure.primary.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.common.domain.FileUtils.tmpDirForTest;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_DOCKER;
-import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.PULSAR_DOCKER_COMPOSE_FILE;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,9 @@ import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.broker.pulsar.application.PulsarApplicationService;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 
 @IntegrationTest
@@ -28,22 +26,16 @@ import tech.jhipster.lite.generator.server.springboot.core.application.SpringBoo
 class PulsarResourceIT {
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private InitApplicationService initApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
+  private MavenApplicationService mavenApplicationService;
 
   @Autowired
-  SpringBootApplicationService springBootApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
-  PulsarApplicationService pulsarApplicationService;
-
-  @Autowired
-  DockerService dockerService;
-
-  @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @Test
   void shouldInitPulsar() throws Exception {

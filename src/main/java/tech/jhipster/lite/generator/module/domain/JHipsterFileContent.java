@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.module.domain;
 
 import java.nio.file.Path;
+import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.error.domain.Assert;
 
 class JHipsterFileContent {
@@ -13,10 +14,11 @@ class JHipsterFileContent {
     this.source = source;
   }
 
-  public String read(JHipsterModuleContext context) {
+  public String read(ProjectFilesReader files, JHipsterModuleContext context) {
+    Assert.notNull("files", files);
     Assert.notNull("context", context);
 
-    String rawContent = FilesReader.readContent(source.toString());
+    String rawContent = files.read(source.toString());
     return ArgumentsReplacer.replaceArguments(rawContent, context.get());
   }
 }

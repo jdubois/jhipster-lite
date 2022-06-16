@@ -1,0 +1,28 @@
+package {{packageName}}.authentication.domain;
+
+import {{packageName}}.common.domain.{{applicationName}}Collections;
+import {{packageName}}.error.domain.Assert;
+import java.util.Set;
+
+public record Roles(Set<Role> roles) {
+
+  public static final Roles EMPTY = new Roles(null);
+  
+  public Roles(Set<Role> roles) {
+    this.roles = {{applicationName}}Collections.immutable(roles);
+  }
+
+  public boolean hasRole() {
+    return !roles.isEmpty();
+  }
+
+  public boolean hasRole(Role role) {
+    Assert.notNull("role", role);
+
+    return roles.contains(role);
+  }
+
+  public Set<Role> get() {
+    return roles();
+  }
+}

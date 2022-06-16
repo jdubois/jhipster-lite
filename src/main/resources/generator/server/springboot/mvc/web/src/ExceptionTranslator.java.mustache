@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ import org.zalando.problem.violations.ConstraintViolationProblem;
  * The error response follows RFC7807 - Problem Details for HTTP APIs (https://tools.ietf.org/html/rfc7807).
  */
 @ControllerAdvice
+@Order(Ordered.LOWEST_PRECEDENCE - 1_000)
 public class ExceptionTranslator implements ProblemHandling {
 
   private static final String FIELD_ERRORS_KEY = "fieldErrors";

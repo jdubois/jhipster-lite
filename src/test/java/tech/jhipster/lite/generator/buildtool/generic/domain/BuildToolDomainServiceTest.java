@@ -5,7 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.TestUtils.tmpProject;
+import static tech.jhipster.lite.TestUtils.tmpProjectWithBuildGradle;
+import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
 
 import java.util.List;
 import java.util.Optional;

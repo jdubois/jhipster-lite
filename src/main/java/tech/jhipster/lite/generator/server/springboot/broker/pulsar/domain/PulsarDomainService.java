@@ -1,17 +1,14 @@
 package tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
-import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.PULSAR_DOCKER_COMPOSE_FILE;
-import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.PULSAR_DOCKER_IMAGE;
-import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.PULSAR_PROPERTY_VERSION;
-import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.testContainersDependency;
+import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.*;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.*;
 
-import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
@@ -28,18 +25,18 @@ public class PulsarDomainService implements PulsarService {
 
   private final SpringBootCommonService springBootCommonService;
 
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   public PulsarDomainService(
     final BuildToolService buildToolService,
     final ProjectRepository projectRepository,
     final SpringBootCommonService springBootCommonService,
-    DockerService dockerService
+    DockerImages dockerImages
   ) {
     this.buildToolService = buildToolService;
     this.projectRepository = projectRepository;
     this.springBootCommonService = springBootCommonService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Override
@@ -81,9 +78,7 @@ public class PulsarDomainService implements PulsarService {
   }
 
   private void addDockerCompose(final Project project) {
-    final String pulsarDockerImage = dockerService
-      .getImageNameWithVersion(PULSAR_DOCKER_IMAGE)
-      .orElseThrow(() -> new GeneratorException("Pulsar docker image version not found"));
+    String pulsarDockerImage = dockerImages.get(PULSAR_DOCKER_IMAGE).fullName();
 
     project.addDefaultConfig(BASE_NAME);
     project.addConfig("pulsarDockerImage", pulsarDockerImage);

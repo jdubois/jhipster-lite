@@ -5,7 +5,7 @@ import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -16,12 +16,12 @@ public class SonarDomainService implements SonarService {
 
   private final ProjectRepository projectRepository;
   private final BuildToolService buildToolService;
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
-  public SonarDomainService(ProjectRepository projectRepository, BuildToolService buildToolService, DockerService dockerService) {
+  public SonarDomainService(ProjectRepository projectRepository, BuildToolService buildToolService, DockerImages dockerImages) {
     this.projectRepository = projectRepository;
     this.buildToolService = buildToolService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Override
@@ -48,19 +48,19 @@ public class SonarDomainService implements SonarService {
       .version("\\${properties-maven-plugin.version}")
       .additionalElements(
         """
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>read-project-properties</goal>
-            </goals>
-            <configuration>
-              <files>
-                <file>sonar-project.properties</file>
-              </files>
-            </configuration>
-          </execution>
-        </executions>"""
+            <executions>
+              <execution>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>read-project-properties</goal>
+                </goals>
+                <configuration>
+                  <files>
+                    <file>sonar-project.properties</file>
+                  </files>
+                </configuration>
+              </execution>
+            </executions>"""
       )
       .build();
     buildToolService
@@ -111,14 +111,9 @@ public class SonarDomainService implements SonarService {
 
   private void addDockerCompose(Project project) {
     project.addDefaultConfig(BASE_NAME);
-    dockerService
-      .getImageNameWithVersion(Sonar.getSonarqubeDockerImageName())
-      .ifPresentOrElse(
-        imageName -> project.addConfig("sonarqubeDockerImage", imageName),
-        () -> {
-          throw new GeneratorException("Version not found for docker image: " + Sonar.getSonarqubeDockerImageName());
-        }
-      );
+    String dockerImage = dockerImages.get(Sonar.getSonarqubeDockerImageName()).fullName();
+    project.addConfig("sonarqubeDockerImage", dockerImage);
+
     projectRepository.template(
       ProjectFile.forProject(project).withSource(SOURCE, "sonar.yml").withDestination("src/main/docker", "sonar.yml")
     );

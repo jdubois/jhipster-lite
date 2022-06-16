@@ -174,4 +174,16 @@ export default class SpringBootRepository implements SpringBootService {
   async addPulsar(project: Project): Promise<void> {
     await this.postAndGetHistory('/api/servers/spring-boot/brokers/pulsar', toRestProject(project));
   }
+
+  async addKafka(project: Project): Promise<void> {
+    await this.postAndGetHistory('/api/servers/spring-boot/brokers/kafka', toRestProject(project));
+  }
+
+  async addKafkaDummyProducerConsumer(project: Project): Promise<void> {
+    await this.postAndGetHistory('/api/servers/spring-boot/brokers/kafka/dummy-producer-consumer', toRestProject(project));
+  }
+
+  async addKafkaAkhq(project: Project): Promise<void> {
+    await this.postAndGetHistory('/api/servers/spring-boot/brokers/kafka/akhq', toRestProject(project));
+  }
 }

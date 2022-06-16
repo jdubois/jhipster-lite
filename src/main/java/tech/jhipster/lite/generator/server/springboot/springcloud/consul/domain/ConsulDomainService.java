@@ -8,7 +8,7 @@ import static tech.jhipster.lite.generator.server.springboot.springcloud.consul.
 import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -21,18 +21,18 @@ public class ConsulDomainService implements ConsulService {
   private final BuildToolService buildToolService;
   private final ProjectRepository projectRepository;
   private final SpringCloudCommonService springCloudCommonService;
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   public ConsulDomainService(
     BuildToolService buildToolService,
     ProjectRepository projectRepository,
     SpringCloudCommonService springCloudCommonService,
-    DockerService dockerService
+    DockerImages dockerImages
   ) {
     this.buildToolService = buildToolService;
     this.projectRepository = projectRepository;
     this.springCloudCommonService = springCloudCommonService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Override
@@ -85,13 +85,9 @@ public class ConsulDomainService implements ConsulService {
 
   @Override
   public void addDockerConsul(Project project) {
-    String consulImage = dockerService
-      .getImageNameWithVersion(getDockerConsulImageName())
-      .orElseThrow(() -> new GeneratorException("Version not found for docker image: " + getDockerConsulImageName()));
+    String consulImage = dockerImages.get(getDockerConsulImageName()).fullName();
 
-    String consulConfigLoaderImage = dockerService
-      .getImageNameWithVersion(getDockerConsulConfigLoaderImageName())
-      .orElseThrow(() -> new GeneratorException("Version not found for docker image: " + getDockerConsulConfigLoaderImageName()));
+    String consulConfigLoaderImage = dockerImages.get(getDockerConsulConfigLoaderImageName()).fullName();
 
     project.addConfig("dockerConsulImage", consulImage);
     project.addConfig("dockerConsulConfigLoaderImage", consulConfigLoaderImage);

@@ -6,7 +6,7 @@ import tech.jhipster.lite.error.domain.Assert;
 
 public record JHipsterPropertyDescription(String description) {
   public JHipsterPropertyDescription {
-    Assert.notBlank("description", description);
+    Assert.field("description", description).notBlank().maxLength(100);
   }
 
   public static Optional<JHipsterPropertyDescription> of(String description) {

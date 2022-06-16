@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.module.infrastructure.primary;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.function.Function;
 
 @Schema(name = "JHipsterModuleCategory", description = "Information for a module category")
 class RestJHipsterModuleCategory {
@@ -19,11 +18,7 @@ class RestJHipsterModuleCategory {
   }
 
   static RestJHipsterModuleCategory from(String category, Collection<JHipsterModuleResource> modules) {
-    return new RestJHipsterModuleCategory(category, modules.stream().map(toCategory()).sorted(MODULE_COMPARATOR).toList());
-  }
-
-  private static Function<JHipsterModuleResource, RestJHipsterModule> toCategory() {
-    return module -> RestJHipsterModule.from(module.slug(), module.apiDoc().operation());
+    return new RestJHipsterModuleCategory(category, modules.stream().map(RestJHipsterModule::from).sorted(MODULE_COMPARATOR).toList());
   }
 
   @Schema(description = "Name of this category", required = true)

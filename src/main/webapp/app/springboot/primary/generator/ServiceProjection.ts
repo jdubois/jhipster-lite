@@ -5,13 +5,19 @@ export type ServiceProjection =
   | 'angular'
   | 'angular-with-jwt'
   | 'angular-oauth2'
+  | 'angular-health'
+  | 'consul'
+  | 'dev-tools'
+  | 'dockerfile'
   | 'download'
+  | 'eureka-client'
   | 'initialization'
   | 'flyway'
   | 'flyway-with-users-and-authority-changelogs'
   | 'frontend-maven-plugin'
   | 'jacoco-check-minimal-coverage'
   | 'java-base'
+  | 'jib'
   | 'liquibase'
   | 'liquibase-with-users-and-authority-changelogs'
   | 'logstash'
@@ -39,6 +45,11 @@ export type ServiceProjection =
   | 'spring-boot-dummy-feature'
   | 'spring-boot-cucumber'
   | 'spring-boot-pulsar'
+  | 'spring-boot-kafka'
+  | 'spring-boot-kafka-dummy-producer-consumer'
+  | 'spring-boot-kafka-akhq'
+  | 'spring-boot-async'
+  | 'spring-cloud'
   | 'react'
   | 'react-styled'
   | 'vue'
@@ -49,13 +60,19 @@ const SERVICES_PROJECTION: Record<Service, ServiceProjection> = {
   [Service.ANGULAR]: 'angular',
   [Service.ANGULAR_WITH_JWT]: 'angular-with-jwt',
   [Service.ANGULAR_OAUTH2]: 'angular-oauth2',
+  [Service.ANGULAR_HEALTH]: 'angular-health',
+  [Service.CONSUL]: 'consul',
+  [Service.DEV_TOOLS]: 'dev-tools',
+  [Service.DOCKERFILE]: 'dockerfile',
   [Service.DOWNLOAD]: 'download',
+  [Service.EUREKA_CLIENT]: 'eureka-client',
   [Service.FLYWAY]: 'flyway',
   [Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS]: 'flyway-with-users-and-authority-changelogs',
   [Service.FRONTEND_MAVEN_PLUGIN]: 'frontend-maven-plugin',
   [Service.INITIALIZATION]: 'initialization',
   [Service.JACOCO_CHECK_MINIMAL_COVERAGE]: 'jacoco-check-minimal-coverage',
   [Service.JAVA_BASE]: 'java-base',
+  [Service.JIB]: 'jib',
   [Service.LIQUIBASE]: 'liquibase',
   [Service.LIQUIBASE_WITH_USERS_AND_AUTHORITY_CHANGELOGS]: 'liquibase-with-users-and-authority-changelogs',
   [Service.LOGSTASH]: 'logstash',
@@ -83,6 +100,11 @@ const SERVICES_PROJECTION: Record<Service, ServiceProjection> = {
   [Service.SPRINGBOOT_WEBFLUX_NETTY]: 'spring-boot-webflux-netty',
   [Service.SPRINGBOOT_CUCUMBER]: 'spring-boot-cucumber',
   [Service.SPRINGBOOT_PULSAR]: 'spring-boot-pulsar',
+  [Service.SPRINGBOOT_KAFKA]: 'spring-boot-kafka',
+  [Service.SPRINGBOOT_KAFKA_DUMMY_PRODUCER_CONSUMER]: 'spring-boot-kafka-dummy-producer-consumer',
+  [Service.SPRINGBOOT_KAFKA_AKHQ]: 'spring-boot-kafka-akhq',
+  [Service.SPRINGBOOT_ASYNC]: 'spring-boot-async',
+  [Service.SPRING_CLOUD]: 'spring-cloud',
   [Service.REACT]: 'react',
   [Service.REACT_STYLED]: 'react-styled',
   [Service.VUE]: 'vue',
@@ -96,13 +118,19 @@ const SERVICES: Record<ServiceProjection, Service> = {
   angular: Service.ANGULAR,
   'angular-with-jwt': Service.ANGULAR_WITH_JWT,
   'angular-oauth2': Service.ANGULAR_OAUTH2,
+  'angular-health': Service.ANGULAR_HEALTH,
+  consul: Service.CONSUL,
+  'dev-tools': Service.DEV_TOOLS,
+  dockerfile: Service.DOCKERFILE,
   download: Service.DOWNLOAD,
+  'eureka-client': Service.EUREKA_CLIENT,
   flyway: Service.FLYWAY,
   'flyway-with-users-and-authority-changelogs': Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS,
   'frontend-maven-plugin': Service.FRONTEND_MAVEN_PLUGIN,
   initialization: Service.INITIALIZATION,
   'jacoco-check-minimal-coverage': Service.JACOCO_CHECK_MINIMAL_COVERAGE,
   'java-base': Service.JAVA_BASE,
+  jib: Service.JIB,
   liquibase: Service.LIQUIBASE,
   'liquibase-with-users-and-authority-changelogs': Service.LIQUIBASE_WITH_USERS_AND_AUTHORITY_CHANGELOGS,
   logstash: Service.LOGSTASH,
@@ -130,6 +158,11 @@ const SERVICES: Record<ServiceProjection, Service> = {
   'spring-boot-webflux-netty': Service.SPRINGBOOT_WEBFLUX_NETTY,
   'spring-boot-cucumber': Service.SPRINGBOOT_CUCUMBER,
   'spring-boot-pulsar': Service.SPRINGBOOT_PULSAR,
+  'spring-boot-kafka': Service.SPRINGBOOT_KAFKA,
+  'spring-boot-kafka-dummy-producer-consumer': Service.SPRINGBOOT_KAFKA_DUMMY_PRODUCER_CONSUMER,
+  'spring-boot-kafka-akhq': Service.SPRINGBOOT_KAFKA_AKHQ,
+  'spring-boot-async': Service.SPRINGBOOT_ASYNC,
+  'spring-cloud': Service.SPRING_CLOUD,
   react: Service.REACT,
   'react-styled': Service.REACT_STYLED,
   vue: Service.VUE,

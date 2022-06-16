@@ -8,6 +8,7 @@ import { FileDownloader } from '@/common/primary/FileDownloader';
 import { stubFileDownloader } from '../../../../common/primary/FileDownloader.fixture';
 import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
+import { projectJson } from '../RestProject.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -77,13 +78,7 @@ describe('ProjectGenerator', () => {
     await component.initProject();
 
     const args = projectService.init.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
     const alertMessage = alertBus.success.getCall(0).args[0];
     expect(alertMessage).toBe('Project successfully initialized');
   });
@@ -125,13 +120,7 @@ describe('ProjectGenerator', () => {
     await component.addMaven();
 
     const args = projectService.addMaven.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding maven failure', async () => {
@@ -172,13 +161,7 @@ describe('ProjectGenerator', () => {
     await component.addCodespacesSetup();
 
     const args = projectService.addCodespacesSetup.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Codespaces failure', async () => {
@@ -219,13 +202,7 @@ describe('ProjectGenerator', () => {
     await component.addGitpodSetup();
 
     const args = projectService.addGitpodSetup.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Codespaces failure', async () => {
@@ -265,13 +242,7 @@ describe('ProjectGenerator', () => {
     await component.addJaCoCo();
 
     const args = projectService.addJaCoCo.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding JaCoCo failure', async () => {
@@ -311,13 +282,7 @@ describe('ProjectGenerator', () => {
     await component.addSonarBackend();
 
     const args = projectService.addSonarBackend.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Sonar Backend failure', async () => {
@@ -357,13 +322,7 @@ describe('ProjectGenerator', () => {
     await component.addSonarBackendFrontend();
 
     const args = projectService.addSonarBackendFrontend.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Sonar Backend+Frontend failure', async () => {
@@ -403,13 +362,7 @@ describe('ProjectGenerator', () => {
     await component.addJavaBase();
 
     const args = projectService.addJavaBase.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding java base failure', async () => {
@@ -449,13 +402,7 @@ describe('ProjectGenerator', () => {
     await component.addFrontendMavenPlugin();
 
     const args = projectService.addFrontendMavenPlugin.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Frontend Maven Plugin failure', async () => {
@@ -485,13 +432,7 @@ describe('ProjectGenerator', () => {
     await component.download();
 
     const args = projectService.download.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should download initialized project without basename', async () => {
@@ -509,13 +450,7 @@ describe('ProjectGenerator', () => {
     await component.download();
 
     const args = projectService.download.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should not download an non existing project', async () => {

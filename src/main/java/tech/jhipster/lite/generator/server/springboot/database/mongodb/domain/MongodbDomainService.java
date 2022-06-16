@@ -1,19 +1,15 @@
 package tech.jhipster.lite.generator.server.springboot.database.mongodb.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.database.mongodb.domain.Mongodb.mongodbDriver;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.database.mongodb.domain.Mongodb.*;
 
 import java.util.Map;
 import java.util.TreeMap;
-import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
@@ -30,20 +26,20 @@ public class MongodbDomainService implements MongodbService {
   private final BuildToolService buildToolService;
   private final SpringBootCommonService springBootCommonService;
   private final SQLCommonService sqlCommonService;
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   public MongodbDomainService(
     ProjectRepository projectRepository,
     BuildToolService buildToolService,
     SpringBootCommonService springBootCommonService,
     SQLCommonService sqlCommonService,
-    DockerService dockerService
+    DockerImages dockerImages
   ) {
     this.projectRepository = projectRepository;
     this.buildToolService = buildToolService;
     this.springBootCommonService = springBootCommonService;
     this.sqlCommonService = sqlCommonService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Override
@@ -76,14 +72,9 @@ public class MongodbDomainService implements MongodbService {
   public void addDockerCompose(Project project) {
     project.addDefaultConfig(BASE_NAME);
 
-    dockerService
-      .getImageNameWithVersion(Mongodb.getMongodbDockerImageName())
-      .ifPresentOrElse(
-        imageName -> project.addConfig("mongodbDockerImage", imageName),
-        () -> {
-          throw new GeneratorException("Version not found for docker image: " + Mongodb.getMongodbDockerImageName());
-        }
-      );
+    String dockerImage = dockerImages.get(Mongodb.getMongodbDockerImageName()).fullName();
+    project.addConfig("mongodbDockerImage", dockerImage);
+
     sqlCommonService.addDockerComposeTemplate(project, "mongodb");
   }
 

@@ -1,24 +1,16 @@
 package tech.jhipster.lite.generator.server.springboot.broker.pulsar.application;
 
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_DOCKER;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.PULSAR_DOCKER_COMPOSE_FILE;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_PROPERTIES;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
 import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
@@ -27,19 +19,16 @@ import tech.jhipster.lite.generator.server.springboot.core.application.SpringBoo
 class PulsarApplicationServiceIT {
 
   @Autowired
-  PulsarApplicationService pulsarApplicationService;
+  private PulsarApplicationService pulsarApplicationService;
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private InitApplicationService initApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
+  private MavenApplicationService mavenApplicationService;
 
   @Autowired
-  SpringBootApplicationService springBootApplicationService;
-
-  @Autowired
-  DockerService dockerService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Test
   void shouldInit() {

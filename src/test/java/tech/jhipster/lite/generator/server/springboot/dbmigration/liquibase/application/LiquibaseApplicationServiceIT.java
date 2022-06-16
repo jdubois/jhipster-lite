@@ -30,15 +30,18 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import tech.jhipster.lite.IntegrationTest;
+import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
+import tech.jhipster.lite.generator.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.generator.project.domain.BuildToolType;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.core.domain.SpringBootService;
 import tech.jhipster.lite.generator.server.springboot.database.mariadb.domain.MariaDBService;
 import tech.jhipster.lite.generator.server.springboot.database.mysql.domain.MySQLService;
-import tech.jhipster.lite.generator.server.springboot.database.postgresql.domain.PostgresqlService;
+import tech.jhipster.lite.generator.server.springboot.database.postgresql.application.PostgresqlApplicationService;
 
 @IntegrationTest
 class LiquibaseApplicationServiceIT {
@@ -50,7 +53,7 @@ class LiquibaseApplicationServiceIT {
   SpringBootService springBootService;
 
   @Autowired
-  PostgresqlService postgresqlService;
+  PostgresqlApplicationService postgresqlApplicationService;
 
   @Autowired
   MySQLService mySQLService;
@@ -72,9 +75,16 @@ class LiquibaseApplicationServiceIT {
   @Test
   void shouldInit() {
     Project project = tmpProjectBuilder().build();
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(project.getFolder())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myapp")
+      .build();
+
     buildToolService.init(project, BuildToolType.MAVEN);
     springBootService.init(project);
-    postgresqlService.init(project);
+
+    postgresqlApplicationService.build(properties);
 
     liquibaseApplicationService.init(project);
 
@@ -171,9 +181,14 @@ class LiquibaseApplicationServiceIT {
   @Test
   void shouldAddLoggingConfiguration() {
     Project project = tmpProject();
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(project.getFolder())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myapp")
+      .build();
     buildToolService.init(project, BuildToolType.MAVEN);
     springBootService.init(project);
-    postgresqlService.init(project);
+    postgresqlApplicationService.build(properties);
 
     liquibaseApplicationService.addLoggerInConfiguration(project);
 

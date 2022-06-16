@@ -22,7 +22,7 @@ public class CucumberModuleFactory {
     JHipsterSource source = from("server/springboot/cucumber");
 
     //@formatter:off
-    return moduleForProject(properties)
+    return moduleBuilder(properties)
       .context()
         .packageName(properties.basePackage())
         .put("applicationName", applicationName)

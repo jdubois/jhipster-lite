@@ -3,7 +3,7 @@ package tech.jhipster.lite.generator.server.springboot.broker.pulsar.infrastruct
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.PulsarDomainService;
 import tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.PulsarService;
@@ -18,22 +18,22 @@ public class PulsarBeanConfiguration {
 
   private final SpringBootCommonService springBootCommonService;
 
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   public PulsarBeanConfiguration(
     final BuildToolService buildToolService,
     final ProjectRepository projectRepository,
     final SpringBootCommonService springBootCommonService,
-    final DockerService dockerService
+    final DockerImages dockerImages
   ) {
     this.buildToolService = buildToolService;
     this.projectRepository = projectRepository;
     this.springBootCommonService = springBootCommonService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Bean
   public PulsarService pulsarService() {
-    return new PulsarDomainService(buildToolService, projectRepository, springBootCommonService, dockerService);
+    return new PulsarDomainService(buildToolService, projectRepository, springBootCommonService, dockerImages);
   }
 }

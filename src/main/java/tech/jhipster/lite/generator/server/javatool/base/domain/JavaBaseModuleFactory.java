@@ -39,7 +39,7 @@ public class JavaBaseModuleFactory {
     JHipsterDestination mainDestination = toSrcMainJava().append(packagePath);
 
     //@formatter:off
-    return moduleForProject(properties)
+    return moduleBuilder(properties)
       .context()
         .packageName(properties.basePackage())
         .put("collectionClass", baseClassName)

@@ -58,4 +58,21 @@ describe('AngularRepository', () => {
     const [projectFolder] = projectHistoryService.get.getCall(0).args;
     expect(projectFolder).toBe(PROJECT_FOLDER);
   });
+
+  it('should add Health', async () => {
+    const projectHistoryService = stubProjectHistoryService();
+    const axiosHttpStub = stubAxiosHttp();
+    axiosHttpStub.post.resolves();
+    const angularRepository = new AngularRepository(axiosHttpStub, projectHistoryService);
+    const project: Project = createProject({ folder: PROJECT_FOLDER });
+
+    await angularRepository.addHealth(project);
+
+    const expectedRestProject: RestProject = toRestProject(project);
+    const [uri, payload] = axiosHttpStub.post.getCall(0).args;
+    expect(uri).toBe('/api/clients/angular/admin-pages/health');
+    expect(payload).toEqual<RestProject>(expectedRestProject);
+    const [projectFolder] = projectHistoryService.get.getCall(0).args;
+    expect(projectFolder).toBe(PROJECT_FOLDER);
+  });
 });

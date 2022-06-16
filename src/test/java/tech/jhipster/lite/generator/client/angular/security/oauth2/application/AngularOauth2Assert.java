@@ -45,7 +45,7 @@ public class AngularOauth2Assert {
       """
         import { NgModule, APP_INITIALIZER} from '@angular/core';
         import { MatButtonToggleModule } from '@angular/material/button-toggle';
-        import { HTTP_INTERCEPTORS } from '@angular/common/http';
+        import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
         import { LoginComponent } from './login/login.component';
         import { Oauth2AuthService } from './auth/oauth2-auth.service';
         import { HttpAuthInterceptor } from './auth/http-auth.interceptor';
@@ -134,7 +134,7 @@ public class AngularOauth2Assert {
           beforeEach(
             waitForAsync(() => {
               TestBed.configureTestingModule({
-                imports: [RouterTestingModule.withRoutes([]), MatToolbarModule, MatIconModule],
+                imports: [RouterTestingModule.withRoutes([]), MatToolbarModule, MatIconModule, MatMenuModule],
                 declarations: [AppComponent,
                   LoginComponent,
                 ],

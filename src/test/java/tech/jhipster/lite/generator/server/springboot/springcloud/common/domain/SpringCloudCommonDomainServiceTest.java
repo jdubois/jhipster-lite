@@ -1,16 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.common.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +23,8 @@ import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImage;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -50,7 +44,7 @@ class SpringCloudCommonDomainServiceTest {
   private BuildToolService buildToolService;
 
   @Mock
-  private DockerService dockerService;
+  private DockerImages dockerImages;
 
   @InjectMocks
   private SpringCloudCommonDomainService springCloudCommonDomainService;
@@ -114,7 +108,7 @@ class SpringCloudCommonDomainServiceTest {
       // Given
       Project project = tmpProject();
 
-      when(dockerService.getImageNameWithVersion("jhipster/jhipster-registry")).thenReturn(Optional.of("jhipster/jhipster-registry:1.1.1"));
+      when(dockerImages.get("jhipster/jhipster-registry")).thenReturn(new DockerImage("jhipster/jhipster-registry", "1.1.1"));
 
       String expectedBase64Secret = "encodedSecret";
 
@@ -130,15 +124,6 @@ class SpringCloudCommonDomainServiceTest {
 
         verify(projectRepository, times(2)).template(any(ProjectFile.class));
       }
-    }
-
-    @Test
-    void shouldThrowExceptionWhenImageVersionNotFound() {
-      Project project = tmpProject();
-
-      assertThatThrownBy(() -> springCloudCommonDomainService.addJhipsterRegistryDockerCompose(project))
-        .isInstanceOf(GeneratorException.class)
-        .hasMessageContaining("jhipster/jhipster-registry");
     }
   }
 
@@ -187,24 +172,24 @@ class SpringCloudCommonDomainServiceTest {
         when(projectRepository.getComputedTemplate(project, SOURCE_FOLDER_PATH, SOURCE_FILE_NAME))
           .thenReturn(
             """
-              # a comment
-              prop1=valueFromGenerator1
+            # a comment
+            prop1=valueFromGenerator1
 
-              prop2=valueFromGenerator2
-              prop3=valueFromGenerator3
-              """
+            prop2=valueFromGenerator2
+            prop3=valueFromGenerator3
+            """
           );
 
         fileUtils
           .when(() -> FileUtils.read(destinationFilePath))
           .thenReturn(
             """
-              # another comment
-              prop1=existingValueEditedByUser
-              prop2=value2
-              prop4=valueAddedByUser
+                # another comment
+                prop1=existingValueEditedByUser
+                prop2=value2
+                prop4=valueAddedByUser
 
-              """
+                """
           );
 
         // When
@@ -242,9 +227,9 @@ class SpringCloudCommonDomainServiceTest {
         fileUtils
           .when(() -> FileUtils.read(destinationFilePath))
           .thenReturn("""
-            # a comment
-            prop1=valueFromGenerator1
-            """);
+                # a comment
+                prop1=valueFromGenerator1
+                """);
 
         // When
         springCloudCommonDomainService.addOrMergeBootstrapProperties(

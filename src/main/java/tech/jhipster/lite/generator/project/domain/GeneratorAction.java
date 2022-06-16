@@ -39,6 +39,7 @@ public class GeneratorAction {
   public static final String ANGULAR = "angular";
   public static final String ANGULAR_JWT = "angular-jwt";
   public static final String ANGULAR_OAUTH2 = "angular-oauth2";
+  public static final String ANGULAR_HEALTH = "angular-health";
 
   public static final String LIQUIBASE = "liquibase";
   public static final String LIQUIBASE_USER_AND_AUTHORITY_CHANGELOGS = "liquibase-user-and-authority-changelogs";
@@ -52,8 +53,6 @@ public class GeneratorAction {
   public static final String SPRINGBOOT_JWT = "springboot-jwt";
   public static final String SPRINGBOOT_JWT_BASIC_AUTH = "springboot-jwt-basic-auth";
 
-  public static final String SPRINGBOOT_ASYNC = "springboot-async";
-
   public static final String SPRINGDOC_OPENAPI = "springdoc-openapi";
   public static final String SPRINGDOC_OPENAPI_WITH_SECURIITY_JWT = "springdoc-openapi-with-security-jwt";
 
@@ -63,6 +62,8 @@ public class GeneratorAction {
   public static final String GITHUB_ACTIONS = "github-actions";
 
   public static final String MYSQL = "mysql";
+
+  public static final String MSSQL = "mssql";
 
   public static final String FLYWAY = "flyway";
   public static final String FLYWAY_USER_AND_AUTHORITY_CHANGELOGS = "flyway-user-and-authority-changelogs";
@@ -86,9 +87,6 @@ public class GeneratorAction {
   public static final String USER_AND_AUTHORITY_ENTITIES_POSTGRESQL = "user-and-authority-entities-postgresql";
   public static final String USER_AND_AUTHORITY_ENTITIES_MYSQL = "user-and-authority-entities-mysql";
   public static final String USER_AND_AUTHORITY_ENTITIES_MARIADB = "user-and-authority-entities-mariadb";
-
-  public static final String SPRINGBOOT_OAUTH2 = "springboot-oauth2";
-  public static final String SPRINGBOOT_OAUTH2_ACCOUNT = "springboot-oauth2-account";
 
   public static final String SONAR_JAVA_BACKEND = "sonar-java-backend";
   public static final String SONAR_JAVA_BACKEND_AND_FRONTEND = "sonar-java-backend-and-frontend";

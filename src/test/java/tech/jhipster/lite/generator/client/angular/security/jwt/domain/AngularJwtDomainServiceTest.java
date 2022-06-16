@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
+import tech.jhipster.lite.generator.client.angular.common.domain.AngularCommonService;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter;
@@ -27,6 +28,9 @@ class AngularJwtDomainServiceTest {
 
   @Mock
   NpmService npmService;
+
+  @Mock
+  AngularCommonService angularCommonService;
 
   @Mock
   ProjectRepository projectRepository;
@@ -61,15 +65,6 @@ class AngularJwtDomainServiceTest {
     Project project = tmpProjectWithPackageJson();
 
     assertThatThrownBy(() -> angularJwtDomainService.addJwtDependencies(project)).isExactlyInstanceOf(GeneratorException.class);
-  }
-
-  @Test
-  void shouldAddJwtFiles() {
-    Project project = tmpProjectWithPackageJson();
-
-    angularJwtDomainService.addJwtFiles(project);
-
-    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(1));
   }
 
   @Test

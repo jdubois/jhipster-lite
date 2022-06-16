@@ -47,7 +47,7 @@ public class BannerModuleFactory {
   private JHipsterModule buildModuleBanner(JHipsterModuleProperties properties, String file) {
     // @formatter:off
     return JHipsterModule
-      .moduleForProject(properties)
+      .moduleBuilder(properties)
       .files()
         .add(source().file(file), destination())
         .and()

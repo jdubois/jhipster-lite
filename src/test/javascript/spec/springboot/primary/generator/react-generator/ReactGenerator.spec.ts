@@ -6,6 +6,7 @@ import { stubReactService } from '../../../domain/client/ReactService.fixture';
 import { ReactGeneratorVue } from '@/springboot/primary/generator/react-generator';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
+import { projectJson } from '../RestProject.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -62,13 +63,7 @@ describe('ReactGenerator', () => {
     await component.addReact();
 
     const args = reactService.add.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should add React with Style when checkbox is checked', async () => {
@@ -81,13 +76,7 @@ describe('ReactGenerator', () => {
     await component.addReact();
 
     const args = reactService.addWithStyle.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding React failure', async () => {

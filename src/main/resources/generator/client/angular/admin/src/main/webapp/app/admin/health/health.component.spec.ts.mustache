@@ -1,0 +1,100 @@
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { of } from 'rxjs';
+
+import { HealthComponent } from './health.component';
+import { HealthService } from './health.service';
+import { Health } from './health.model';
+
+class MatDialogMock {
+  open() {
+    return {
+      afterClosed: () => of(true)
+    }
+  }
+}
+
+describe('HealthComponent', () => {
+  let comp: HealthComponent;
+  let fixture: ComponentFixture<HealthComponent>;
+  let service: HealthService;
+  let dialog: MatDialog;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      declarations: [HealthComponent],
+      providers: [
+        { provide: MatDialog, useClass: MatDialogMock },
+        { provide: MAT_DIALOG_DATA, useValue: MatDialogMock }
+      ]
+    })
+      .overrideTemplate(HealthComponent, '')
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HealthComponent);
+    comp = fixture.componentInstance;
+    service = TestBed.inject(HealthService);
+    dialog = TestBed.inject(MatDialog);
+  });
+
+  describe('refresh', () => {
+    it('should call refresh on init', () => {
+      // GIVEN
+      const health: Health = { status: 'UP', components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } } };
+      jest.spyOn(service, 'checkHealth').mockReturnValue(of(health));
+
+      // WHEN
+      comp.ngOnInit();
+
+      // THEN
+      expect(service.checkHealth).toHaveBeenCalled();
+      expect(service.checkHealth().subscribe({
+        next: health => expect(comp.datasource).toEqual([{"details": {"mailDetail": "mail"}, "key": "mail", "status": "UP"}]),
+      }));
+    });
+
+    it('should call checkHealth on refresh', (done) => {
+      // GIVEN
+      const health: Health = { status: 'UP', components: { mail: { status: 'UP', details: { mailDetail: 'mail' } } } };
+      jest.spyOn(service, 'checkHealth').mockImplementation(() => of(health));
+
+      // WHEN
+      comp.refresh();
+      done();
+
+      // THEN
+      expect(service.checkHealth).toHaveBeenCalled();
+    });
+  });
+
+  describe('showHealth', () => {
+    it('should open dialog', () => {
+      // GIVEN
+      const health: Health = {
+        status: 'UP',
+        components: null
+      }
+      jest.spyOn(dialog, 'open');
+
+      // WHEN
+      comp.showHealth(health);
+
+      // THEN
+      expect(dialog.open).toHaveBeenCalled();
+    });
+  });
+
+  describe('getBadgeClass', () => {
+    it('should get badge class', () => {
+      const upBadgeClass = comp.getBadgeClass('UP');
+      const downBadgeClass = comp.getBadgeClass('DOWN');
+      expect(upBadgeClass).toEqual('bg-success');
+      expect(downBadgeClass).toEqual('bg-danger');
+    });
+  });
+
+});

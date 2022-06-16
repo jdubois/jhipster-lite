@@ -25,6 +25,8 @@ import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
 import tech.jhipster.lite.generator.init.application.InitApplicationService;
+import tech.jhipster.lite.generator.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
@@ -69,10 +71,16 @@ class LiquibaseResourceIT {
     }
     projectDTO.folder(FileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(project.getFolder())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myapp")
+      .build();
+
     initApplicationService.init(project);
     mavenApplicationService.init(project);
     springBootApplicationService.init(project);
-    postgresqlApplicationService.init(project);
+    postgresqlApplicationService.build(properties);
 
     mockMvc
       .perform(
@@ -103,11 +111,18 @@ class LiquibaseResourceIT {
       throw new GeneratorException("Error when reading file");
     }
     projectDTO.folder(FileUtils.tmpDirForTest());
+
     Project project = ProjectDTO.toProject(projectDTO);
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(project.getFolder())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myapp")
+      .build();
+
     initApplicationService.init(project);
     mavenApplicationService.init(project);
     springBootApplicationService.init(project);
-    postgresqlApplicationService.init(project);
+    postgresqlApplicationService.build(properties);
     liquibaseApplicationService.init(project);
 
     mockMvc

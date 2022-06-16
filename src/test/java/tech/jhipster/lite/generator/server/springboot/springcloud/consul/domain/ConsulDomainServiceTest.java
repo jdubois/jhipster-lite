@@ -15,7 +15,8 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImage;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -35,7 +36,7 @@ class ConsulDomainServiceTest {
   private SpringCloudCommonService springCloudCommonService;
 
   @Mock
-  private DockerService dockerService;
+  private DockerImages dockerImages;
 
   @InjectMocks
   private ConsulDomainService consulDomainService;
@@ -44,8 +45,8 @@ class ConsulDomainServiceTest {
   void shouldInit() {
     Project project = tmpProjectWithPomXml();
     when(buildToolService.getVersion(project, "spring-cloud")).thenReturn(Optional.of("0.0.0"));
-    when(dockerService.getImageNameWithVersion("consul")).thenReturn(Optional.of("1.1.1"));
-    when(dockerService.getImageNameWithVersion("jhipster/consul-config-loader")).thenReturn(Optional.of("2.2.2"));
+    when(dockerImages.get("consul")).thenReturn(new DockerImage("consul", "1.1.1"));
+    when(dockerImages.get("jhipster/consul-config-loader")).thenReturn(new DockerImage("jhipster/consul-config-loader", "2.2.2"));
 
     consulDomainService.init(project);
 
@@ -61,14 +62,5 @@ class ConsulDomainServiceTest {
     Project project = tmpProjectWithPomXml();
 
     assertThatThrownBy(() -> consulDomainService.addDependencies(project)).isExactlyInstanceOf(GeneratorException.class);
-  }
-
-  @Test
-  void shouldNotAddDockerComposeFile() {
-    Project project = tmpProjectWithPomXml();
-
-    assertThatThrownBy(() -> consulDomainService.addDockerConsul(project))
-      .isExactlyInstanceOf(GeneratorException.class)
-      .hasMessageContaining("consul");
   }
 }

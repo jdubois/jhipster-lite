@@ -1,16 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.database.mongodb;
 
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.APPLICATION_PROPERTIES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_CONFIGURATION;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_TEST_CONFIGURATION;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
 
 import java.util.List;
 import tech.jhipster.lite.common.domain.FileUtils;
@@ -57,7 +50,7 @@ public final class MongodbAssert {
 
   public static void assertDockerMongodb(Project project) {
     assertFileExist(project, "src/main/docker/mongodb.yml");
-    assertFileContent(project, "src/main/docker/mongodb.yml", "mongo:5.0.6");
+    assertFileContent(project, "src/main/docker/mongodb.yml", "mongo:");
     assertFileContent(project, "src/main/docker/mongodb.yml", "- 127.0.0.1:27017:27017");
   }
 

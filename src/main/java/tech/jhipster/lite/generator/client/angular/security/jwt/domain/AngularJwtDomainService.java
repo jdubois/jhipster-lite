@@ -6,7 +6,9 @@ import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_WEBAPP;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import tech.jhipster.lite.error.domain.GeneratorException;
+import tech.jhipster.lite.generator.client.angular.common.domain.AngularCommonService;
 import tech.jhipster.lite.generator.packagemanager.npm.domain.NpmService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
@@ -20,10 +22,12 @@ public class AngularJwtDomainService implements AngularJwtService {
 
   private final ProjectRepository projectRepository;
   private final NpmService npmService;
+  private final AngularCommonService angularCommonService;
 
-  public AngularJwtDomainService(ProjectRepository projectRepository, NpmService npmService) {
+  public AngularJwtDomainService(ProjectRepository projectRepository, NpmService npmService, AngularCommonService angularCommonService) {
     this.projectRepository = projectRepository;
     this.npmService = npmService;
+    this.angularCommonService = angularCommonService;
   }
 
   @Override
@@ -36,7 +40,6 @@ public class AngularJwtDomainService implements AngularJwtService {
 
     addJwtDependencies(project);
     addAngularJwtFiles(project);
-    addJwtFiles(project);
     updateAngularFilesForJwt(project);
   }
 
@@ -45,43 +48,19 @@ public class AngularJwtDomainService implements AngularJwtService {
   }
 
   public void updateAngularFilesForJwt(Project project) {
-    String oldHtml = "// jhipster-needle-angular-jwt-login-form";
+    String oldHtml = "// jhipster-needle-angular-route";
     String newHtml =
       """
+        // jhipster-needle-angular-route
         {
           path: '',
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
-        }""";
+        },""";
     projectRepository.replaceText(project, APP, APP_ROUTING_MODULE, oldHtml, newHtml);
-
-    oldHtml = "import \\{ AppRoutingModule \\} from './app-routing.module';";
-    newHtml =
-      """
-        import { TestBed } from '@angular/core/testing';
-        import { Router } from '@angular/router';
-        import { RouterTestingModule } from '@angular/router/testing';
-        import { AppRoutingModule, routes } from './app-routing.module';""";
-    projectRepository.replaceText(project, APP, APP_ROUTING_MODULE_SPEC, oldHtml, newHtml);
-
-    oldHtml = "// jhipster-needle-angular-jwt-login-form";
-    newHtml =
-      """
-        let router: Router;
-
-        beforeEach(() => {
-          TestBed.configureTestingModule({
-            imports: [RouterTestingModule.withRoutes(routes)]
-          }).compileComponents();
-          router = TestBed.get(Router);
-          router.initialNavigation();
-        });
-        """;
-    projectRepository.replaceText(project, APP, APP_ROUTING_MODULE_SPEC, oldHtml, newHtml);
 
     oldHtml = "import \\{ NgModule \\} from '@angular/core';";
     newHtml =
       """
-        import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
         import { NgModule } from '@angular/core';
         import { ReactiveFormsModule } from '@angular/forms';
         import { NgxWebstorageModule } from 'ngx-webstorage';""";
@@ -95,10 +74,11 @@ public class AngularJwtDomainService implements AngularJwtService {
         """;
     projectRepository.replaceText(project, APP, APP_MODULE, oldHtml, newHtml);
 
-    oldHtml =
-      "imports: \\[BrowserAnimationsModule, MatToolbarModule, MatIconModule, MatButtonModule, MatButtonToggleModule, BrowserModule, AppRoutingModule\\],";
+    oldHtml = "imports: \\[" + angularCommonService.getAngularModules().stream().collect(Collectors.joining(", ")) + "\\],";
     newHtml =
-      "imports: [BrowserAnimationsModule, MatToolbarModule, MatIconModule, MatButtonModule, MatButtonToggleModule, BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule, NgxWebstorageModule.forRoot()],";
+      "imports: \\[" +
+      angularCommonService.getAngularModules().stream().collect(Collectors.joining(", ")) +
+      ", ReactiveFormsModule, NgxWebstorageModule.forRoot()\\],";
     projectRepository.replaceText(project, APP, APP_MODULE, oldHtml, newHtml);
 
     oldHtml = "bootstrap: \\[AppComponent\\],";
@@ -113,30 +93,6 @@ public class AngularJwtDomainService implements AngularJwtService {
             },
           ],""";
     projectRepository.replaceText(project, APP, APP_MODULE, oldHtml, newHtml);
-
-    oldHtml = "9000";
-    newHtml = """
-        9000,
-                    "proxyConfig": "proxy.conf.json" """;
-    projectRepository.replaceText(project, "", "angular.json", oldHtml, newHtml);
-  }
-
-  public void addJwtFiles(Project project) {
-    project.addConfig("serverPort", 8080);
-
-    List<ProjectFile> files = AngularJwt
-      .jwtFiles()
-      .entrySet()
-      .stream()
-      .map(entry ->
-        ProjectFile
-          .forProject(project)
-          .withSource(getPath(SOURCE, entry.getValue()), entry.getKey())
-          .withDestinationFolder(getPath("", entry.getValue()))
-      )
-      .toList();
-
-    projectRepository.template(files);
   }
 
   public void addAngularJwtFiles(Project project) {

@@ -3,8 +3,7 @@ package tech.jhipster.lite.generator.module.infrastructure.secondary;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.common.domain.Generated;
-import tech.jhipster.lite.generator.module.domain.FilesReader;
+import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.generator.module.domain.javadependency.CurrentJavaDependenciesVersions;
 import tech.jhipster.lite.generator.module.domain.javadependency.JavaDependenciesCurrentVersionsRepository;
 import tech.jhipster.lite.generator.module.domain.javadependency.JavaDependencyVersion;
@@ -15,15 +14,17 @@ class FileSystemCurrentJavaDependenciesVersionsRepository implements JavaDepende
   private static final String CURRENT_VERSIONS_FILE = "/generator/dependencies/pom.xml";
   private static final Pattern VERSIONS_PATTERN = Pattern.compile("<([^>]+)\\.version>([^>]+)<\\/");
 
+  private final ProjectFilesReader files;
   private final CurrentJavaDependenciesVersions versions;
 
-  public FileSystemCurrentJavaDependenciesVersionsRepository() {
+  public FileSystemCurrentJavaDependenciesVersionsRepository(ProjectFilesReader files) {
+    this.files = files;
+
     versions = readVersions();
   }
 
-  @Generated
   private CurrentJavaDependenciesVersions readVersions() {
-    List<JavaDependencyVersion> readVersions = extractVersions(FilesReader.readContent(CURRENT_VERSIONS_FILE));
+    List<JavaDependencyVersion> readVersions = extractVersions(files.read(CURRENT_VERSIONS_FILE));
 
     return new CurrentJavaDependenciesVersions(readVersions);
   }

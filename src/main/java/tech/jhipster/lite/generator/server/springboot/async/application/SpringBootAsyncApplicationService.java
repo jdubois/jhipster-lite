@@ -1,27 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.async.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.async.domain.SpringBootAsyncService;
+import tech.jhipster.lite.generator.module.domain.JHipsterModule;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.generator.server.springboot.async.domain.SpringBootAsyncModuleFactory;
 
 @Service
 public class SpringBootAsyncApplicationService {
 
-  private final SpringBootAsyncService springBootAsyncService;
+  private final SpringBootAsyncModuleFactory factory;
 
-  public SpringBootAsyncApplicationService(SpringBootAsyncService springBootAsyncService) {
-    this.springBootAsyncService = springBootAsyncService;
+  public SpringBootAsyncApplicationService() {
+    factory = new SpringBootAsyncModuleFactory();
   }
 
-  public void init(Project project) {
-    springBootAsyncService.init(project);
-  }
-
-  public void addJavaFiles(Project project) {
-    springBootAsyncService.addJavaFiles(project);
-  }
-
-  public void addProperties(Project project) {
-    springBootAsyncService.addProperties(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

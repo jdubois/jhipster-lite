@@ -86,6 +86,7 @@ elif [[ $application == 'fullapp' ]]; then
   springboot_mvc
   sonar_back_front
 
+  callApi "/api/infinitest-filters"
   callApi "/api/servers/spring-boot/async"
   callApi "/api/servers/spring-boot/technical-tools/devtools"
   callApi "/api/servers/spring-boot/log-tools/aop"
@@ -117,6 +118,7 @@ elif [[ $application == 'oauth2app' ]]; then
   springboot_mvc
   sonar_back
 
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
   callApi "/api/servers/spring-boot/security-systems/oauth2"
   callApi "/api/servers/spring-boot/security-systems/oauth2/account"
 
@@ -147,6 +149,15 @@ elif [[ $application == 'mariadbapp' ]]; then
   callApi "/api/servers/spring-boot/database-migration-tools/liquibase/user"
 
   callApi "/api/servers/spring-boot/caches/ehcache/xml-configuration"
+
+elif [[ $application == 'mssqlapp' ]]; then
+  springboot_mvc
+  sonar_back
+
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
+  callApi "/api/servers/spring-boot/features/dummy"
+
+  callApi "/api/servers/spring-boot/databases/mssql"
 
 elif [[ $application == 'flywayapp' ]]; then
   springboot_mvc
@@ -212,6 +223,7 @@ elif [[ $application == 'angularapp' ]]; then
   callApi "/api/servers/spring-boot/security-systems/jwt"
   callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
   callApi "/api/clients/angular/jwt"
+  callApi "/api/clients/angular/admin-pages/health"
 
 elif [[ $application == 'angularoauth2app' ]]; then
   springboot_mvc
@@ -219,6 +231,7 @@ elif [[ $application == 'angularoauth2app' ]]; then
 
   callApi "/api/developer-tools/frontend-maven-plugin"
   callApi "/api/clients/angular"
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
   callApi "/api/clients/angular/oauth2"
   callApi "/api/servers/spring-boot/security-systems/oauth2"
   callApi "/api/servers/spring-boot/security-systems/oauth2/account"
@@ -267,6 +280,7 @@ elif [[ $application == 'reactiveapp' ]]; then
 
   callApi "/api/servers/spring-boot/reactive-servers/netty"
   callApi "/api/servers/spring-boot/technical-tools/actuator"
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
 
 else
   echo "*** Unknown configuration..."

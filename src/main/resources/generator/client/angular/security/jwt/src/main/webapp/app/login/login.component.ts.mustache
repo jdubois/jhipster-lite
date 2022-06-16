@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   account: Account | null = null;
 
   loginForm = this.fb.group({
-    username: [null, [Validators.required]],
-    password: [null, [Validators.required]],
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   constructor(private accountService: AccountService, private loginService: LoginService, private fb: FormBuilder) {}

@@ -110,10 +110,59 @@
       </div>
       <div>
         <GeneratorButtonVue
+          :label="'SpringCloud Eureka client'"
+          :service="'eureka-client'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addEurekaClient"
+        />
+        <GeneratorButtonVue
+          :label="'SpringCloud Consul'"
+          :service="'consul'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addConsul"
+        />
+        <GeneratorButtonVue
+          :label="'SpringCloud Config client'"
+          :service="'spring-cloud'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addSpringCloudConfigClient"
+        />
+      </div>
+      <div>
+        <GeneratorButtonVue :label="'Dev tools'" :service="'dev-tools'" :selector-prefix="selectorPrefix" @click.prevent="addDevTools" />
+        <GeneratorButtonVue
+          :label="'Docker file'"
+          :service="'dockerfile'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addDockerFile"
+        />
+        <GeneratorButtonVue :label="'Docker Jib'" :service="'jib'" :selector-prefix="selectorPrefix" @click.prevent="addJib" />
+        <GeneratorButtonVue
+          :label="'Async config'"
+          :service="'spring-boot-async'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addSpringBootAsync"
+        />
+      </div>
+      <div>
+        <GeneratorButtonVue
           :label="'Pulsar'"
           :service="'spring-boot-pulsar'"
           :selector-prefix="selectorPrefix"
           @click.prevent="addPulsar"
+        />
+        <GeneratorButtonVue :label="'Kafka'" :service="'spring-boot-kafka'" :selector-prefix="selectorPrefix" @click.prevent="addKafka" />
+        <GeneratorButtonVue
+          :label="'Dummy Producer and Consumer for Kafka'"
+          :service="'spring-boot-kafka-dummy-producer-consumer'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addKafkaDummyProducerConsumer"
+        />
+        <GeneratorButtonVue
+          :label="'AKHQ for Kafka'"
+          :service="'spring-boot-kafka-akhq'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addKafkaAkhq"
         />
       </div>
       <div>

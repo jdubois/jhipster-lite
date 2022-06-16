@@ -5,13 +5,13 @@ import static tech.jhipster.lite.generator.project.domain.Constants.*;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 import static tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.Akhq.*;
 import static tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.Kafka.*;
-import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.testContainersDependency;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.*;
 
 import java.util.TreeMap;
 import tech.jhipster.lite.common.domain.WordUtils;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
@@ -32,7 +32,7 @@ public class KafkaDomainService implements KafkaService {
 
   private final SpringBootCommonService springBootCommonService;
 
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   private final ReadMeService readMeService;
 
@@ -40,13 +40,13 @@ public class KafkaDomainService implements KafkaService {
     final BuildToolService buildToolService,
     final ProjectRepository projectRepository,
     final SpringBootCommonService springBootCommonService,
-    final DockerService dockerService,
+    final DockerImages dockerImages,
     final ReadMeService readMeService
   ) {
     this.buildToolService = buildToolService;
     this.projectRepository = projectRepository;
     this.springBootCommonService = springBootCommonService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
     this.readMeService = readMeService;
   }
 
@@ -145,7 +145,7 @@ public class KafkaDomainService implements KafkaService {
 
   @Override
   public void addAkhq(final Project project) {
-    final String akhqDockerImage = dockerService.getImageNameWithVersion(AKHQ_DOCKER_IMAGE).orElseThrow();
+    final String akhqDockerImage = dockerImages.get(AKHQ_DOCKER_IMAGE).fullName();
     project.addConfig("akhqDockerImage", akhqDockerImage);
     projectRepository.template(
       ProjectFile.forProject(project).withSource(SOURCE, AKHQ_DOCKER_COMPOSE_FILE).withDestination(MAIN_DOCKER, AKHQ_DOCKER_COMPOSE_FILE)
@@ -158,8 +158,8 @@ public class KafkaDomainService implements KafkaService {
   }
 
   private void addDockerCompose(final Project project) {
-    final String zookeeperDockerImage = dockerService.getImageNameWithVersion(Zookeeper.ZOOKEEPER_DOCKER_IMAGE).orElseThrow();
-    final String kafkaDockerImage = dockerService.getImageNameWithVersion(KAFKA_DOCKER_IMAGE).orElseThrow();
+    final String zookeeperDockerImage = dockerImages.get(Zookeeper.ZOOKEEPER_DOCKER_IMAGE).fullName();
+    final String kafkaDockerImage = dockerImages.get(KAFKA_DOCKER_IMAGE).fullName();
 
     project.addDefaultConfig(BASE_NAME);
     project.addConfig("zookeeperDockerImage", zookeeperDockerImage);

@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.module.domain;
 
 import java.nio.file.Path;
+import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 
@@ -33,8 +34,8 @@ public class TemplatedFile {
     return file.destination().pathInProject(projectFolder);
   }
 
-  public String content() {
-    return file.content().read(context);
+  public String content(ProjectFilesReader files) {
+    return file.content().read(files, context);
   }
 
   static class TemplatedFileBuilder {

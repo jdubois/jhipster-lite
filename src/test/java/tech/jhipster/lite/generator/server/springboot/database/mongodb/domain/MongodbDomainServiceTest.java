@@ -1,26 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.database.mongodb.domain;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.Map;
-import java.util.Optional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImage;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -33,28 +27,28 @@ import tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.
 class MongodbDomainServiceTest {
 
   @Mock
-  ProjectRepository projectRepository;
+  private ProjectRepository projectRepository;
 
   @Mock
-  BuildToolService buildToolService;
+  private BuildToolService buildToolService;
 
   @Mock
-  SpringBootCommonService springBootCommonService;
+  private SpringBootCommonService springBootCommonService;
 
   @Mock
-  SQLCommonService sqlCommonService;
+  private SQLCommonService sqlCommonService;
 
   @Mock
-  DockerService dockerService;
+  private DockerImages dockerImages;
 
   @InjectMocks
-  MongodbDomainService mongodbDomainService;
+  private MongodbDomainService mongodbDomainService;
 
   @Test
   void shouldInit() {
     Project project = tmpProjectWithPomXml();
 
-    when(dockerService.getImageNameWithVersion("mongo")).thenReturn(Optional.of("mongo:0.0.0"));
+    when(dockerImages.get("mongo")).thenReturn(new DockerImage("mongo", "0.0.0"));
 
     mongodbDomainService.init(project);
 
@@ -71,15 +65,5 @@ class MongodbDomainServiceTest {
 
     verify(sqlCommonService).addDockerComposeTemplate(project, "mongodb");
     verify(sqlCommonService).addTestcontainers(project, "mongodb", Map.of());
-  }
-
-  @Test
-  void shouldThrowExceptionWhenImageVersionNotFound() {
-    Project project = tmpProject();
-
-    Assertions
-      .assertThatThrownBy(() -> mongodbDomainService.init(project))
-      .isInstanceOf(GeneratorException.class)
-      .hasMessageContaining("mongo");
   }
 }

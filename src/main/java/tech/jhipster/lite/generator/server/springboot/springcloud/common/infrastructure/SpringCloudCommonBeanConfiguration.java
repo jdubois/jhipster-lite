@@ -3,7 +3,7 @@ package tech.jhipster.lite.generator.server.springboot.springcloud.common.infras
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.docker.domain.DockerService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonDomainService;
 import tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudCommonService;
@@ -13,20 +13,20 @@ public class SpringCloudCommonBeanConfiguration {
 
   private final ProjectRepository projectRepository;
   private final BuildToolService buildToolService;
-  private final DockerService dockerService;
+  private final DockerImages dockerImages;
 
   public SpringCloudCommonBeanConfiguration(
     ProjectRepository projectRepository,
     BuildToolService buildToolService,
-    DockerService dockerService
+    DockerImages dockerImages
   ) {
     this.projectRepository = projectRepository;
     this.buildToolService = buildToolService;
-    this.dockerService = dockerService;
+    this.dockerImages = dockerImages;
   }
 
   @Bean
   public SpringCloudCommonService springCloudCommonService() {
-    return new SpringCloudCommonDomainService(projectRepository, buildToolService, dockerService);
+    return new SpringCloudCommonDomainService(projectRepository, buildToolService, dockerImages);
   }
 }

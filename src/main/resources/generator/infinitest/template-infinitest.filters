@@ -1,0 +1,1 @@
+exclude .*IT, .*IT.*, .*IntegrationTest, .*IntTest, .*CucumberTest, .*TS, .*EndToEndTest, .*ArchTest

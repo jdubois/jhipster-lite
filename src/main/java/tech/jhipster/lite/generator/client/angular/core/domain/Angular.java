@@ -12,6 +12,7 @@ public class Angular {
   public static final String APP_COMPONENT_SPEC = "app.component.spec.ts";
   public static final String APP_COMPONENT_HTML = "app.component.html";
   public static final String APP_COMPONENT_CSS = "app.component.css";
+  public static final String ADMIN_ROUTING_MODULE_SPEC = "admin/admin-routing.module.spec.ts";
 
   private Angular() {}
 
@@ -63,7 +64,7 @@ public class Angular {
   }
 
   public static List<String> files() {
-    return List.of("angular.json", "jest.conf.js", "tsconfig.app.json", "tsconfig.json", "tsconfig.spec.json");
+    return List.of("angular.json", "jest.conf.js", "proxy.conf.json", "tsconfig.app.json", "tsconfig.json", "tsconfig.spec.json");
   }
 
   public static Map<String, String> angularFiles() {

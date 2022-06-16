@@ -24,7 +24,7 @@ class JHipsterModuleMandatoryReplacementsTest {
 
   private static void replaceIn(String file) {
     JHipsterProjectFolder folder = new JHipsterProjectFolder("src/test/resources/projects");
-    JHipsterModuleBuilder module = moduleForProject(JHipsterModuleProperties.defaultProperties(folder));
+    JHipsterModuleBuilder module = moduleBuilder(JHipsterModuleProperties.defaultProperties(folder));
 
     JHipsterModuleMandatoryReplacements.builder(module).in(file).add(new TextMatcher("old"), "new").and().build().apply(folder);
   }

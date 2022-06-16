@@ -1,5 +1,6 @@
 package tech.jhipster.lite.generator.client.angular.common.domain;
 
+import java.util.List;
 import tech.jhipster.lite.generator.project.domain.Project;
 
 public interface AngularCommonService {
@@ -20,4 +21,6 @@ public interface AngularCommonService {
   void addTest(Project project, String specTsFilePath, String testToAdd, String afterTestName);
 
   void addAllowedCommonJsDependenciesAngularJson(Project project, String libToAdd);
+
+  List<String> getAngularModules();
 }

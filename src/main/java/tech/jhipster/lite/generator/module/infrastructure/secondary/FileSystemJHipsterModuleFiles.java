@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.module.domain.TemplatedFile;
 import tech.jhipster.lite.generator.module.domain.TemplatedFiles;
@@ -16,6 +17,12 @@ import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFold
 class FileSystemJHipsterModuleFiles {
 
   private static final Logger log = LoggerFactory.getLogger(FileSystemJHipsterModuleFiles.class);
+
+  private final ProjectFilesReader files;
+
+  public FileSystemJHipsterModuleFiles(ProjectFilesReader files) {
+    this.files = files;
+  }
 
   void create(JHipsterProjectFolder projectFolder, TemplatedFiles files) {
     files.get().forEach(writeFile(projectFolder));
@@ -27,7 +34,7 @@ class FileSystemJHipsterModuleFiles {
 
       try {
         Files.createDirectories(file.folder(projectFolder));
-        Files.writeString(filePath, file.content());
+        Files.writeString(filePath, file.content(files));
 
         log.debug("{} added", filePath);
       } catch (IOException e) {

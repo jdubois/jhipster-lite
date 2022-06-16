@@ -49,10 +49,11 @@ class SpringBootActuatorDomainServiceTest {
       .extracting(Dependency::getGroupId, Dependency::getArtifactId)
       .containsExactly("org.springframework.boot", "spring-boot-starter-actuator");
 
-    verify(springBootCommonService, times(3)).addProperties(any(Project.class), anyString(), anyString());
+    verify(springBootCommonService, times(4)).addProperties(any(Project.class), anyString(), anyString());
     verify(springBootCommonService).addProperties(project, "management.endpoints.web.base-path", "/management");
     verify(springBootCommonService)
       .addProperties(project, "management.endpoints.web.exposure.include", "configprops, env, health, info, logfile, loggers, threaddump");
     verify(springBootCommonService).addProperties(project, "management.endpoint.health.probes.enabled", "true");
+    verify(springBootCommonService).addProperties(project, "management.endpoint.health.show-details", "always");
   }
 }

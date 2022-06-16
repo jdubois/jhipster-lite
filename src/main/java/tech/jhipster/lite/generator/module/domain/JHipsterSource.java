@@ -30,6 +30,10 @@ public class JHipsterSource {
     return file(file + MUSTACHE_EXTENSION);
   }
 
+  public JHipsterSource append(String element) {
+    return file(element);
+  }
+
   public JHipsterSource file(String file) {
     return new JHipsterSource(source.resolve(file));
   }

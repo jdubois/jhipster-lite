@@ -83,7 +83,6 @@ public class AngularOauth2DomainService implements AngularOauth2Service {
       project,
       APP_MODULE_TS_FILE_PATH,
       """
-        import { HTTP_INTERCEPTORS } from '@angular/common/http';
         import { LoginComponent } from './login/login.component';
         import { Oauth2AuthService } from './auth/oauth2-auth.service';
         import { HttpAuthInterceptor } from './auth/http-auth.interceptor';

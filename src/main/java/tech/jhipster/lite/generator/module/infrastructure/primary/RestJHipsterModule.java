@@ -1,21 +1,26 @@
 package tech.jhipster.lite.generator.module.infrastructure.primary;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import tech.jhipster.lite.generator.module.domain.JHipsterModuleSlug;
 
 @Schema(name = "JHipsterModule", description = "Information for a JHipster module")
 class RestJHipsterModule {
 
   private final String slug;
   private final String description;
+  private final RestJHipsterModulePropertiesDefinition properties;
 
-  private RestJHipsterModule(String slug, String description) {
-    this.slug = slug;
-    this.description = description;
+  private RestJHipsterModule(RestJHipsterModuleBuilder builder) {
+    slug = builder.slug;
+    description = builder.description;
+    properties = builder.properties;
   }
 
-  static RestJHipsterModule from(JHipsterModuleSlug slug, String description) {
-    return new RestJHipsterModule(slug.get(), description);
+  static RestJHipsterModule from(JHipsterModuleResource moduleResource) {
+    return new RestJHipsterModuleBuilder()
+      .slug(moduleResource.slug().get())
+      .description(moduleResource.apiDoc().operation())
+      .properties(RestJHipsterModulePropertiesDefinition.from(moduleResource.propertiesDefinition()))
+      .build();
   }
 
   @Schema(description = "Module slug", required = true)
@@ -26,5 +31,39 @@ class RestJHipsterModule {
   @Schema(description = "Module description", required = true)
   public String getDescription() {
     return description;
+  }
+
+  @Schema(description = "Properties for this module", required = true)
+  public RestJHipsterModulePropertiesDefinition getProperties() {
+    return properties;
+  }
+
+  private static class RestJHipsterModuleBuilder {
+
+    private String slug;
+    private String description;
+    private RestJHipsterModulePropertiesDefinition properties;
+
+    public RestJHipsterModuleBuilder slug(String slug) {
+      this.slug = slug;
+
+      return this;
+    }
+
+    public RestJHipsterModuleBuilder description(String description) {
+      this.description = description;
+
+      return this;
+    }
+
+    public RestJHipsterModuleBuilder properties(RestJHipsterModulePropertiesDefinition properties) {
+      this.properties = properties;
+
+      return this;
+    }
+
+    public RestJHipsterModule build() {
+      return new RestJHipsterModule(this);
+    }
   }
 }

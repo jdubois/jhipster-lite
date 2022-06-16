@@ -51,11 +51,21 @@ export default defineComponent({
       }
     };
 
+    const addHealth = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await angularService
+          .addHealth(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Health successfully added'))
+          .catch(error => alertBus.error(`Adding Health to project failed ${error}`));
+      }
+    };
+
     return {
       selectorPrefix,
       addAngular,
       addAngularWithJWT,
       addOauth2,
+      addHealth,
       props,
     };
   },

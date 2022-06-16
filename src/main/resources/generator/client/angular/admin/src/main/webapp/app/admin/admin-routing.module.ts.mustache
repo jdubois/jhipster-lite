@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+export const routes: Routes = [
+  {
+    path: 'health',
+    loadChildren: () => import('./health/health.module').then(m => m.HealthModule),
+  },
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(routes),
+  ],
+})
+export class AdminRoutingModule {}

@@ -1,51 +1,21 @@
 package tech.jhipster.lite.generator.server.springboot.database.postgresql.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.database.postgresql.domain.PostgresqlService;
+import tech.jhipster.lite.generator.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.module.domain.JHipsterModule;
+import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.generator.server.springboot.database.postgresql.domain.PostgresqlModuleFactory;
 
 @Service
 public class PostgresqlApplicationService {
 
-  private final PostgresqlService postgresqlService;
+  private final PostgresqlModuleFactory factory;
 
-  public PostgresqlApplicationService(PostgresqlService postgresqlService) {
-    this.postgresqlService = postgresqlService;
+  public PostgresqlApplicationService(DockerImages dockerImages) {
+    factory = new PostgresqlModuleFactory(dockerImages);
   }
 
-  public void init(Project project) {
-    postgresqlService.init(project);
-  }
-
-  public void addSpringDataJpa(Project project) {
-    postgresqlService.addSpringDataJpa(project);
-  }
-
-  public void addPostgreSQLDriver(Project project) {
-    postgresqlService.addPostgreSQLDriver(project);
-  }
-
-  public void addHikari(Project project) {
-    postgresqlService.addHikari(project);
-  }
-
-  public void addHibernateCore(Project project) {
-    postgresqlService.addHibernateCore(project);
-  }
-
-  public void addDockerCompose(Project project) {
-    postgresqlService.addDockerCompose(project);
-  }
-
-  public void addDialectJava(Project project) {
-    postgresqlService.addJavaFiles(project);
-  }
-
-  public void addProperties(Project project) {
-    postgresqlService.addProperties(project);
-  }
-
-  public void addLogger(Project project) {
-    postgresqlService.addLoggerInConfiguration(project);
+  public JHipsterModule build(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

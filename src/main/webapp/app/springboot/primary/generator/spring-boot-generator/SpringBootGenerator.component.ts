@@ -251,6 +251,95 @@ export default defineComponent({
       }
     };
 
+    const addDockerFile = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringBootDockerfile(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringBoot Docker file successfully added'))
+          .catch(error => alertBus.error(`Adding SpringBoot Docker file to project failed ${error}`));
+      }
+    };
+
+    const addDevTools = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringBootDevtoolsDependencies(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringBoot dev tools dependencies successfully added'))
+          .catch(error => alertBus.error(`Adding SpringBoot dev tools dependencies to project failed ${error}`));
+      }
+    };
+
+    const addEurekaClient = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringCloudEureka(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringCloud Eureka client successfully added'))
+          .catch(error => alertBus.error(`Adding SpringCloud Eureka client to project failed ${error}`));
+      }
+    };
+
+    const addConsul = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringCloudConsul(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringCloud Consul successfully added'))
+          .catch(error => alertBus.error(`Adding SpringCloud Consul to project failed ${error}`));
+      }
+    };
+
+    const addSpringCloudConfigClient = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringCloudConfigClient(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringCloud Config client successfully added'))
+          .catch(error => alertBus.error(`Adding SpringCloud Config client to project failed ${error}`));
+      }
+    };
+
+    const addJib = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringBootDockerJib(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringBoot Docker Jib successfully added'))
+          .catch(error => alertBus.error(`Adding SpringBoot Docker Jib to project failed ${error}`));
+      }
+    };
+    const addSpringBootAsync = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addSpringBootAsync(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringBoot async configuration successfully added'))
+          .catch(error => alertBus.error(`Adding SpringBoot async configuration to project failed ${error}`));
+      }
+    };
+
+    const addKafka = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addKafka(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Kafka successfully added'))
+          .catch(error => alertBus.error(`Adding Kafka to project failed ${error}`));
+      }
+    };
+
+    const addKafkaDummyProducerConsumer = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addKafkaDummyProducerConsumer(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Kafka dummy producer and consumer successfully added'))
+          .catch(error => alertBus.error(`Adding Kafka dummy producer and consumer to project failed ${error}`));
+      }
+    };
+
+    const addKafkaAkhq = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addKafkaAkhq(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('AKHQ successfully added'))
+          .catch(error => alertBus.error(`Adding AKHQ to project failed ${error}`));
+      }
+    };
+
     return {
       selectorPrefix,
       addSpringBoot,
@@ -278,6 +367,16 @@ export default defineComponent({
       addMongock,
       addCucumber,
       addPulsar,
+      addDockerFile,
+      addDevTools,
+      addEurekaClient,
+      addConsul,
+      addSpringCloudConfigClient,
+      addJib,
+      addSpringBootAsync,
+      addKafka,
+      addKafkaDummyProducerConsumer,
+      addKafkaAkhq,
     };
   },
 });

@@ -7,13 +7,18 @@ describe('RestServiceId', () => {
     expect(toService('angular')).toEqual<Service>(Service.ANGULAR);
     expect(toService('angular-jwt')).toEqual<Service>(Service.ANGULAR_WITH_JWT);
     expect(toService('angular-oauth2')).toEqual<Service>(Service.ANGULAR_OAUTH2);
+    expect(toService('consul')).toEqual<Service>(Service.CONSUL);
+    expect(toService('dev-tools')).toEqual<Service>(Service.DEV_TOOLS);
+    expect(toService('dockerfile')).toEqual<Service>(Service.DOCKERFILE);
     expect(toService('download')).toEqual<Service>(Service.DOWNLOAD);
+    expect(toService('eureka-client')).toEqual<Service>(Service.EUREKA_CLIENT);
     expect(toService('flyway')).toEqual<Service>(Service.FLYWAY);
     expect(toService('flyway-user-and-authority-changelogs')).toEqual<Service>(Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS);
     expect(toService('frontend-maven-plugin')).toEqual<Service>(Service.FRONTEND_MAVEN_PLUGIN);
     expect(toService('init')).toEqual<Service>(Service.INITIALIZATION);
     expect(toService('jacoco-check-min-coverage')).toEqual<Service>(Service.JACOCO_CHECK_MINIMAL_COVERAGE);
     expect(toService('java-base')).toEqual<Service>(Service.JAVA_BASE);
+    expect(toService('jib')).toEqual<Service>(Service.JIB);
     expect(toService('liquibase')).toEqual<Service>(Service.LIQUIBASE);
     expect(toService('liquibase-user-and-authority-changelogs')).toEqual<Service>(Service.LIQUIBASE_WITH_USERS_AND_AUTHORITY_CHANGELOGS);
     expect(toService('logstash')).toEqual<Service>(Service.LOGSTASH);
@@ -41,6 +46,8 @@ describe('RestServiceId', () => {
     expect(toService('springboot-webflux-netty')).toEqual<Service>(Service.SPRINGBOOT_WEBFLUX_NETTY);
     expect(toService('springboot-cucumber')).toEqual<Service>(Service.SPRINGBOOT_CUCUMBER);
     expect(toService('springboot-pulsar')).toEqual<Service>(Service.SPRINGBOOT_PULSAR);
+    expect(toService('springboot-async')).toEqual<Service>(Service.SPRINGBOOT_ASYNC);
+    expect(toService('spring-cloud')).toEqual<Service>(Service.SPRING_CLOUD);
     expect(toService('react')).toEqual<Service>(Service.REACT);
     expect(toService('react-styled')).toEqual<Service>(Service.REACT_STYLED);
     expect(toService('vue')).toEqual<Service>(Service.VUE);

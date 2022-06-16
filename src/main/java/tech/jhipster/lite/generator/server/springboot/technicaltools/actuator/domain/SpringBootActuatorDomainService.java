@@ -28,6 +28,7 @@ public class SpringBootActuatorDomainService implements SpringBootActuatorServic
       "configprops, env, health, info, logfile, loggers, threaddump"
     );
     springBootCommonService.addProperties(project, "management.endpoint.health.probes.enabled", "true");
+    springBootCommonService.addProperties(project, "management.endpoint.health.show-details", "always");
     springBootCommonService.addPropertiesNewLine(project);
   }
 }

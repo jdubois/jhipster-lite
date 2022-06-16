@@ -24,6 +24,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap';
 import '../content/css/custom.css';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
+import { RestModulesRepository } from './module/secondary/RestModulesRepository';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -45,6 +46,7 @@ const reactRepository = new ReactRepository(axiosHttp, projectHistoryRepository)
 const springBootRepository = new SpringBootRepository(axiosHttp, projectHistoryRepository);
 const svelteRepository = new SvelteRepository(axiosHttp, projectHistoryRepository);
 const vueRepository = new VueRepository(axiosHttp, projectHistoryRepository);
+const modulesRepository = new RestModulesRepository(axiosHttp);
 
 app.provide('alertBus', alertBus);
 app.provide('alertListener', alertListener);
@@ -60,6 +62,7 @@ app.provide('reactService', reactRepository);
 app.provide('springBootService', springBootRepository);
 app.provide('vueService', vueRepository);
 app.provide('svelteService', svelteRepository);
+app.provide('modules', modulesRepository);
 app.use(router);
 
 app.mount('#app');

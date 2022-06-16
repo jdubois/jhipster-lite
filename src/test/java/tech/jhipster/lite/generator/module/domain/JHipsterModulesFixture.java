@@ -35,7 +35,7 @@ public final class JHipsterModulesFixture {
 
   public static JHipsterModule module() {
     // @formatter:off
-   return moduleForProject(testModuleProperties())
+   return moduleBuilder(testModuleProperties())
     .context()
       .put("packageName", "com.test.myapp")
       .and()
@@ -132,7 +132,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static JHipsterModuleBuilder emptyModuleBuilder() {
-    return moduleForProject(testModuleProperties());
+    return moduleBuilder(testModuleProperties());
   }
 
   public static JHipsterModuleProperties testModuleProperties() {

@@ -147,12 +147,6 @@ public class FileUtils {
     return Optional.empty();
   }
 
-  public static List<String> readLinesInClasspath(String filename) {
-    Assert.notBlank(FILENAME, filename);
-
-    return new BufferedReader(new InputStreamReader(getInputStream(filename))).lines().toList();
-  }
-
   private static InputStream getInputStream(String... paths) {
     InputStream in = FileUtils.class.getResourceAsStream(FILE_SEPARATOR + getPath(paths));
 

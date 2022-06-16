@@ -12,6 +12,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.assertj.core.api.SoftAssertions;
+import tech.jhipster.lite.common.infrastructure.secondary.FileSystemProjectFilesReader;
+import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.module.application.JHipsterModulesApplicationService;
 import tech.jhipster.lite.generator.module.domain.JHipsterModule;
 import tech.jhipster.lite.generator.module.domain.JHipsterModuleEvents;
@@ -29,25 +31,41 @@ public final class JHipsterModulesAssertions {
   }
 
   public static ModuleAsserter assertThatModuleOnProjectWithDefaultPom(JHipsterModule module) {
-    addPomToproject(module.projectFolder());
+    return assertThatModuleWithFiles(module, pomFile());
+  }
+
+  public static ModuleFile pomFile() {
+    return file("src/test/resources/projects/maven/pom.xml", "pom.xml");
+  }
+
+  public static ModuleFile file(String source, String destination) {
+    return new ModuleFile(source, destination);
+  }
+
+  public static ModuleAsserter assertThatModuleWithFiles(JHipsterModule module, ModuleFile... files) {
+    addFilesToproject(module.projectFolder(), files);
 
     return new ModuleAsserter(module);
   }
 
-  private static void addPomToproject(JHipsterProjectFolder project) {
-    Path folder = Paths.get(project.folder());
-    try {
-      Files.createDirectories(folder);
-    } catch (IOException e) {
-      throw new AssertionError(e);
-    }
+  private static void addFilesToproject(JHipsterProjectFolder project, ModuleFile... files) {
+    Stream
+      .of(files)
+      .forEach(file -> {
+        Path destination = Paths.get(project.folder()).resolve(file.destination);
 
-    Path pomPath = folder.resolve("pom.xml");
-    try {
-      Files.copy(Paths.get("src/test/resources/projects/maven/pom.xml"), pomPath);
-    } catch (IOException e) {
-      throw new AssertionError(e);
-    }
+        try {
+          Files.createDirectories(destination.getParent());
+        } catch (IOException e) {
+          throw new AssertionError(e);
+        }
+
+        try {
+          Files.copy(Paths.get(file.source), destination);
+        } catch (IOException e) {
+          throw new AssertionError(e);
+        }
+      });
   }
 
   public static class ModuleAsserter {
@@ -59,8 +77,9 @@ public final class JHipsterModulesAssertions {
     private final JHipsterProjectFolder projectFolder;
 
     private static JHipsterModulesApplicationService buildApplicationService() {
+      FileSystemProjectFilesReader filesReader = new FileSystemProjectFilesReader();
       FileSystemJHipsterModulesRepository modulesRepository = new FileSystemJHipsterModulesRepository(
-        new FileSystemJHipsterModuleFiles(),
+        new FileSystemJHipsterModuleFiles(filesReader),
         new FileSystemJavaDependenciesCommandsHandler(),
         new FileSystemSpringPropertiesCommandsHandler()
       );
@@ -68,7 +87,7 @@ public final class JHipsterModulesAssertions {
       return new JHipsterModulesApplicationService(
         modulesRepository,
         mock(JHipsterModuleEvents.class),
-        new FileSystemCurrentJavaDependenciesVersionsRepository(),
+        new FileSystemCurrentJavaDependenciesVersionsRepository(filesReader),
         new FileSystemProjectJavaDependenciesRepository()
       );
     }
@@ -186,6 +205,13 @@ public final class JHipsterModulesAssertions {
         .collect(Collectors.joining(", "));
     } catch (IOException e) {
       return "unreadable folder";
+    }
+  }
+
+  public static record ModuleFile(String source, String destination) {
+    public ModuleFile {
+      Assert.notBlank("source", source);
+      Assert.notBlank("destination", destination);
     }
   }
 }

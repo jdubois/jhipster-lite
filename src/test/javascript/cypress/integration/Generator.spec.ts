@@ -60,7 +60,21 @@ describe('Generator', () => {
     cy.get(springBootGeneratorSelector('add-liquibase-with-users-and-authority-changelogs-button')).contains('Liquibase with users');
     cy.get(springBootGeneratorSelector('add-mongock-button')).contains('Mongock');
 
+    cy.get(springBootGeneratorSelector('add-eureka-client-button')).contains('Eureka client');
+    cy.get(springBootGeneratorSelector('add-consul-button')).contains('Consul');
+    cy.get(springBootGeneratorSelector('add-spring-cloud-button')).contains('SpringCloud Config client');
+
+    cy.get(springBootGeneratorSelector('add-dev-tools-button')).contains('Dev tools');
+    cy.get(springBootGeneratorSelector('add-dockerfile-button')).contains('Docker file');
+    cy.get(springBootGeneratorSelector('add-jib-button')).contains('Docker Jib');
+    cy.get(springBootGeneratorSelector('add-spring-boot-async-button')).contains('Async config');
+
     cy.get(springBootGeneratorSelector('add-spring-boot-pulsar-button')).contains('Pulsar');
+    cy.get(springBootGeneratorSelector('add-spring-boot-kafka-button')).contains('Kafka');
+    cy.get(springBootGeneratorSelector('add-spring-boot-kafka-dummy-producer-consumer-button')).contains(
+      'Dummy Producer and Consumer for Kafka'
+    );
+    cy.get(springBootGeneratorSelector('add-spring-boot-kafka-akhq-button')).contains('AKHQ for Kafka');
     cy.get(springBootGeneratorSelector('add-spring-boot-cucumber-button')).contains('Cucumber');
 
     cy.get(springBootGeneratorSelector('add-spring-boot-dummy-feature-button')).contains('Dummy feature');
@@ -71,6 +85,7 @@ describe('Generator', () => {
     cy.get(angularGeneratorSelector('add-angular-button')).contains('Angular');
     cy.get(angularGeneratorSelector('add-angular-with-jwt-button')).contains('Add JWT');
     cy.get(angularGeneratorSelector('add-angular-oauth2-button')).contains('Add OAuth2');
+    cy.get(angularGeneratorSelector('add-angular-health-button')).contains('Add Health');
   });
 
   it('should display react', () => {

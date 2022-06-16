@@ -11,10 +11,6 @@ public class AngularJwt {
     return List.of("ngx-webstorage");
   }
 
-  public static Map<String, String> jwtFiles() {
-    return Map.ofEntries(Map.entry("proxy.conf.json", ""));
-  }
-
   public static Map<String, String> angularJwtFiles() {
     String primaryAppAuth = "app/auth";
     String primaryAppLogin = "app/login";

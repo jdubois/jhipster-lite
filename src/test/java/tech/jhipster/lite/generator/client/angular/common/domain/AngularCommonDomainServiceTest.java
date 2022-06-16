@@ -7,6 +7,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mockStatic;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -373,6 +374,28 @@ class AngularCommonDomainServiceTest {
           .isInstanceOf(GeneratorException.class)
           .hasMessageContaining(fullFilePath);
       }
+    }
+
+    @Test
+    void shouldGetAngularModules() {
+      // When
+      List<String> angularModules = angularCommonDomainService.getAngularModules();
+
+      // Then
+      assertThat(angularModules)
+        .isEqualTo(
+          List.of(
+            "BrowserAnimationsModule",
+            "HttpClientModule",
+            "MatMenuModule",
+            "MatToolbarModule",
+            "MatIconModule",
+            "MatButtonModule",
+            "MatButtonToggleModule",
+            "BrowserModule",
+            "AppRoutingModule"
+          )
+        );
     }
   }
 

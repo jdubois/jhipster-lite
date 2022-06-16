@@ -6,6 +6,7 @@ import { stubVueService } from '../../../domain/client/VueService.fixture';
 import { VueGeneratorVue } from '@/springboot/primary/generator/vue-generator';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
+import { projectJson } from '../RestProject.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -62,13 +63,7 @@ describe('VueGenerator', () => {
     await component.addVue();
 
     const args = vueService.add.getCall(0).args[0];
-    expect(args).toEqual({
-      baseName: 'beer',
-      folder: 'project/path',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(args).toEqual(projectJson);
   });
 
   it('should handle error on adding Vue failure', async () => {

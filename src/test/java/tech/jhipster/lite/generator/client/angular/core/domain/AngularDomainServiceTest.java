@@ -96,7 +96,7 @@ class AngularDomainServiceTest {
 
     angularDomainService.addFiles(project);
 
-    verify(projectRepository).add(filesCountArgument(5));
+    verify(projectRepository).add(filesCountArgument(6));
   }
 
   @Test

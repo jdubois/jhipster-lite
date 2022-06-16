@@ -69,7 +69,8 @@
         },
         "serve": {
           "options": {
-            "port": 9000
+            "port": 9000,
+            "proxyConfig": "proxy.conf.json"
           },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {

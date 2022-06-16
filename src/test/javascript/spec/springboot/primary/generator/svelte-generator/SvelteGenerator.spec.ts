@@ -5,6 +5,7 @@ import { SvelteGeneratorVue } from '@/springboot/primary/generator/svelte-genera
 import { stubSvelteService } from '../../../domain/client/SvelteService.fixture';
 import { SvelteService } from '../../../../../../../main/webapp/app/springboot/domain/client/SvelteService';
 import { AlertBusFixture, stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
+import { projectJson } from '../RestProject.fixture';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -36,7 +37,6 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
   component = wrapper.vm;
 };
 
-const PROJECT_FOLDER = 'folder/path';
 describe('SvelteGenerator', () => {
   it('should exist', () => {
     wrap();
@@ -46,18 +46,12 @@ describe('SvelteGenerator', () => {
 
   it('should add Svelte', async () => {
     const svelteService = stubSvelteService();
-    await wrap({ svelteService });
+    await wrap({ svelteService, project: createProjectToUpdate({ folder: 'project/path' }) });
 
     await component.addSvelte();
 
     const [addedProject] = svelteService.add.getCall(0).args;
-    expect(addedProject).toEqual({
-      baseName: 'beer',
-      folder: PROJECT_FOLDER,
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: 8080,
-    });
+    expect(addedProject).toEqual(projectJson);
   });
 
   it('should not add Svelte when project path is not filled', async () => {

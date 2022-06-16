@@ -6,9 +6,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.TestUtils.tmpProject;
+import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
 import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.*;
+import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.GROUP_ID_BEGIN;
+import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.GROUP_ID_END;
+import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.NAME_BEGIN;
+import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.NAME_END;
 import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
 
 import java.util.List;

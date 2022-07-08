@@ -1,11 +1,11 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.domain;
 
-import static tech.jhipster.lite.generator.module.domain.JHipsterModule.*;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.generator.module.domain.JHipsterDestination;
-import tech.jhipster.lite.generator.module.domain.JHipsterModule;
-import tech.jhipster.lite.generator.module.domain.JHipsterSource;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.JHipsterDestination;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class OAuth2AccountModuleFactory {
 
@@ -34,46 +34,43 @@ public class OAuth2AccountModuleFactory {
 
     //@formatter:off
     return moduleBuilder(properties)
-        .context()
-          .packageName(properties.basePackage())
-          .and()
         .files()
           .add(ACCOUNT_MAIN_SOURCE.append(APPLICATION).template("AccountsApplicationService.java"), accountMainDestination.append(APPLICATION).append("AccountsApplicationService.java"))
           .batch(ACCOUNT_MAIN_SOURCE.append(DOMAIN), accountMainDestination.append(DOMAIN))
-            .add("Account.java")
-            .add("AccountsRepository.java")
+            .template("Account.java")
+            .template("AccountsRepository.java")
             .and()
           .batch(ACCOUNT_MAIN_SOURCE.append(PRIMARY), accountMainDestination.append(PRIMARY))
-            .add("RestAccount.java")
-            .add("AccountsResource.java")
+            .template("RestAccount.java")
+            .template("AccountsResource.java")
             .and()
           .batch(ACCOUNT_MAIN_SOURCE.append(SECONDARY), accountMainDestination.append(SECONDARY))
-            .add("OAuth2AccountsRepository.java")
-            .add("OAuth2AuthenticationReader.java")
-            .add("UnknownAuthenticationSchemeException.java")
+            .template("OAuth2AccountsRepository.java")
+            .template("OAuth2AuthenticationReader.java")
+            .template("UnknownAuthenticationSchemeException.java")
             .and()
           .add(ACCOUNT_MAIN_SOURCE.template(PACKAGE_INFO), accountMainDestination.append(PACKAGE_INFO))
           .add(ACCOUNT_TEST_SOURCE.append(DOMAIN).template("AccountsFixture.java"), accountTestDestination.append(DOMAIN).append("AccountsFixture.java"))
           .batch(ACCOUNT_TEST_SOURCE.append(PRIMARY), accountTestDestination.append(PRIMARY))
-            .add("RestAccountTest.java")
-            .add("AccountsResourceIntTest.java")
-            .add("AccountsResourceTest.java")
+            .template("RestAccountTest.java")
+            .template("AccountsResourceIntTest.java")
+            .template("AccountsResourceTest.java")
             .and()
           .add(ACCOUNT_TEST_SOURCE.append(SECONDARY).template("OAuth2AuthenticationReaderTest.java"), accountTestDestination.append(SECONDARY).append("OAuth2AuthenticationReaderTest.java"))
           .add(ACCOUNT_TEST_SOURCE.append(INFRASTRUCTURE).template("OAuth2TokenFixture.java"), accountTestDestination.append(INFRASTRUCTURE).append("OAuth2TokenFixture.java"))
           .batch(USER_IDENTITY_MAIN_SOURCE.append(DOMAIN), userIdentityMainDestination.append(DOMAIN))
-            .add("Email.java")
-            .add("Firstname.java")
-            .add("Lastname.java")
-            .add("Name.java")
+            .template("Email.java")
+            .template("Firstname.java")
+            .template("Lastname.java")
+            .template("Name.java")
             .and()
           .add(USER_IDENTITY_MAIN_SOURCE.template(PACKAGE_INFO), userIdentityMainDestination.append(PACKAGE_INFO))
           .batch(USER_IDENTITY_TEST_SOURCE.append(DOMAIN), userIdentityTestDestination.append(DOMAIN))
-            .add("EmailTest.java")
-            .add("FirstnameTest.java")
-            .add("LastnameTest.java")
-            .add("NameTest.java")
-            .add("UsersIdentitiesFixture.java")
+            .template("EmailTest.java")
+            .template("FirstnameTest.java")
+            .template("LastnameTest.java")
+            .template("NameTest.java")
+            .template("UsersIdentitiesFixture.java")
             .and()
           .and()
         .build();

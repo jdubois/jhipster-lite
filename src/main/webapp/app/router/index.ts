@@ -1,4 +1,4 @@
-import { ModulesListVue } from '@/module/primary/modules-list';
+import { ModulesVue } from '@/module/primary/modules';
 import { GeneratorVue } from '@/springboot/primary';
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -14,8 +14,8 @@ const routes = [
   },
   {
     path: '/modules',
-    name: 'ModulesList',
-    component: ModulesListVue,
+    name: 'Modules',
+    component: ModulesVue,
   },
 ];
 

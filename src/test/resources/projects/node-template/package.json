@@ -1,0 +1,16 @@
+{
+  "name": "test-jhipster-project",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JHipster Project",
+  "license": "UNLICENSED",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
+}

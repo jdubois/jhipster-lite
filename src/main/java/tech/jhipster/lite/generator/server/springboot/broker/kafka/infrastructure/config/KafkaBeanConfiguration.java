@@ -2,8 +2,8 @@ package tech.jhipster.lite.generator.server.springboot.broker.kafka.infrastructu
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 import tech.jhipster.lite.generator.readme.domain.ReadMeService;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.KafkaDomainService;

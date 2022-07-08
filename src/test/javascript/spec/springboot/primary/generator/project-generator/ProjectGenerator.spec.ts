@@ -4,8 +4,6 @@ import { createProjectToUpdate } from '../../ProjectToUpdate.fixture';
 import { ProjectService } from '@/springboot/domain/ProjectService';
 import { stubProjectService } from '../../../domain/ProjectService.fixture';
 import { ProjectGeneratorVue } from '@/springboot/primary/generator/project-generator';
-import { FileDownloader } from '@/common/primary/FileDownloader';
-import { stubFileDownloader } from '../../../../common/primary/FileDownloader.fixture';
 import { stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { projectJson } from '../RestProject.fixture';
@@ -16,15 +14,13 @@ let component: any;
 interface WrapperOptions {
   alertBus: AlertBus;
   projectService: ProjectService;
-  fileDownloader: FileDownloader;
   project: ProjectToUpdate;
 }
 
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { alertBus, projectService, fileDownloader, project }: WrapperOptions = {
+  const { alertBus, projectService, project }: WrapperOptions = {
     alertBus: stubAlertBus(),
     projectService: stubProjectService(),
-    fileDownloader: stubFileDownloader(),
     project: createProjectToUpdate(),
     ...wrapperOptions,
   };
@@ -38,7 +34,6 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
       provide: {
         alertBus,
         projectService,
-        fileDownloader,
       },
     },
   });
@@ -415,53 +410,5 @@ describe('ProjectGenerator', () => {
 
     const [message] = alertBus.error.getCall(0).args;
     expect(message).toBe('Adding Frontend Maven Plugin to project failed error');
-  });
-
-  it('should download initialized project with basename', async () => {
-    const projectService = stubProjectService();
-    projectService.download.resolves({});
-    const projectToUpdate: ProjectToUpdate = createProjectToUpdate({
-      folder: 'project/path',
-      baseName: 'beer',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: '8080',
-    });
-    await wrap({ projectService, project: projectToUpdate });
-
-    await component.download();
-
-    const args = projectService.download.getCall(0).args[0];
-    expect(args).toEqual(projectJson);
-  });
-
-  it('should download initialized project without basename', async () => {
-    const projectService = stubProjectService();
-    projectService.download.resolves({});
-    const projectToUpdate: ProjectToUpdate = createProjectToUpdate({
-      folder: 'project/path',
-      baseName: 'beer',
-      projectName: 'Beer Project',
-      packageName: 'tech.jhipster.beer',
-      serverPort: '8080',
-    });
-    await wrap({ projectService, project: projectToUpdate });
-
-    await component.download();
-
-    const args = projectService.download.getCall(0).args[0];
-    expect(args).toEqual(projectJson);
-  });
-
-  it('should not download an non existing project', async () => {
-    const alertBus = stubAlertBus();
-    const projectService = stubProjectService();
-    projectService.download.rejects('error');
-    await wrap({ alertBus, projectService, project: createProjectToUpdate({ folder: 'project/path' }) });
-
-    await component.download();
-
-    const [message] = alertBus.error.getCall(0).args;
-    expect(message).toBe('Downloading project failed error');
   });
 });

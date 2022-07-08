@@ -33,6 +33,12 @@
           @click.prevent="addSpringBootActuator"
         />
         <GeneratorButtonVue :label="'Spring Doc'" :service="'spring-doc'" :selector-prefix="selectorPrefix" @click.prevent="addSpringDoc" />
+        <GeneratorButtonVue
+          :label="'Java Archunit'"
+          :service="'java-archunit'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addJavaArchunit"
+        />
       </div>
       <div>
         <GeneratorButtonVue
@@ -90,6 +96,7 @@
         <GeneratorButtonVue :label="'MySQL'" :service="'mysql'" :selector-prefix="selectorPrefix" @click.prevent="addMySQL" />
         <GeneratorButtonVue :label="'MariaDB'" :service="'mariadb'" :selector-prefix="selectorPrefix" @click.prevent="addMariaDB" />
         <GeneratorButtonVue :label="'MongoDB'" :service="'mongodb'" :selector-prefix="selectorPrefix" @click.prevent="addMongoDB" />
+        <GeneratorButtonVue :label="'MSSQL'" :service="'mssql'" :selector-prefix="selectorPrefix" @click.prevent="addMSSQL" />
       </div>
       <div>
         <GeneratorButtonVue :label="'Flyway'" :service="'flyway'" :selector-prefix="selectorPrefix" @click.prevent="addFlyway" />
@@ -163,6 +170,20 @@
           :service="'spring-boot-kafka-akhq'"
           :selector-prefix="selectorPrefix"
           @click.prevent="addKafkaAkhq"
+        />
+      </div>
+      <div>
+        <GeneratorButtonVue
+          :label="'Ehcache with Java config'"
+          :service="'ehcache-with-java-config'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addEhcacheWithJavaConfig"
+        />
+        <GeneratorButtonVue
+          :label="'Ehcache with XML config'"
+          :service="'ehcache-with-xml-config'"
+          :selector-prefix="selectorPrefix"
+          @click.prevent="addEhcacheWithXml"
         />
       </div>
       <div>

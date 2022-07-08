@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.broker.kafka.infrastructu
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static tech.jhipster.lite.TestUtils.*;
-import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 import static tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.Akhq.*;
 import static tech.jhipster.lite.generator.server.springboot.broker.kafka.domain.Kafka.*;
@@ -14,24 +13,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.jhipster.lite.IntegrationTest;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.application.KafkaApplicationService;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class KafkaResourceIT {
-
-  @Autowired
-  private InitApplicationService initApplicationService;
-
-  @Autowired
-  private MavenApplicationService mavenApplicationService;
 
   @Autowired
   private SpringBootApplicationService springBootApplicationService;
@@ -44,13 +37,13 @@ class KafkaResourceIT {
 
   @Test
   void shouldInitKafka() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
     if (projectDTO == null) {
       throw new GeneratorException("Error when reading file");
     }
     Project project = ProjectDTO.toProject(projectDTO);
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     springBootApplicationService.init(project);
 
     mockMvc
@@ -71,13 +64,13 @@ class KafkaResourceIT {
 
   @Test
   void shouldAddProducerConsumer() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
     if (projectDTO == null) {
       throw new GeneratorException("Error when reading file");
     }
     Project project = ProjectDTO.toProject(projectDTO);
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     springBootApplicationService.init(project);
     kafkaApplicationService.init(project);
 
@@ -102,10 +95,10 @@ class KafkaResourceIT {
 
   @Test
   void shouldAkhq() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     springBootApplicationService.init(project);
     kafkaApplicationService.init(project);
 

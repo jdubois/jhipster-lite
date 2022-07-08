@@ -1,23 +1,24 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoc.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoc.domain.SpringdocService;
+import tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoc.domain.SpringdocDomainService;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringdocApplicationService {
 
-  private final SpringdocService springdocService;
+  private final SpringdocDomainService springdocDomainService;
 
-  public SpringdocApplicationService(SpringdocService springdocService) {
-    this.springdocService = springdocService;
+  public SpringdocApplicationService(SpringdocDomainService springdocDomainService) {
+    this.springdocDomainService = springdocDomainService;
   }
 
-  public void init(Project project) {
-    springdocService.init(project);
+  public JHipsterModule buildSpringdocModule(JHipsterModuleProperties properties) {
+    return springdocDomainService.buildSpringdocModule(properties);
   }
 
-  public void initWithSecurityJWT(Project project) {
-    springdocService.initWithSecurityJWT(project);
+  public JHipsterModule buildSpringdocModuleWithSecurityJWT(JHipsterModuleProperties properties) {
+    return springdocDomainService.buildSpringdocModuleWithSecurityJWT(properties);
   }
 }

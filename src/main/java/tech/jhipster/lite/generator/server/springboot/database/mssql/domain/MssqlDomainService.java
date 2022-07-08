@@ -4,9 +4,9 @@ import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
+import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
-import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;

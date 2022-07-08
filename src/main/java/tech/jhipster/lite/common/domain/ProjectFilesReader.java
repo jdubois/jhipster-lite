@@ -1,5 +1,7 @@
 package tech.jhipster.lite.common.domain;
 
 public interface ProjectFilesReader {
-  String read(String path);
+  String readString(String path);
+
+  byte[] readBytes(String path);
 }

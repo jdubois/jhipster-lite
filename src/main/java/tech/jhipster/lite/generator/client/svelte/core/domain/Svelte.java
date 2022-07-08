@@ -37,7 +37,8 @@ public class Svelte {
       "svelte-jester",
       "tslib",
       "ts-jest",
-      "typescript"
+      "typescript",
+      "vite"
     );
   }
 }

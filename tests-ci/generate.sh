@@ -101,7 +101,9 @@ elif [[ $application == 'fullapp' ]]; then
   callApi "/api/servers/spring-boot/security-systems/jwt"
   callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
+  callApi "/api/servers/spring-boot/logs-spy"
   callApi "/api/servers/spring-boot/features/dummy"
+  callApi "/api/servers/hexagonal-architecture-documentation"
 
   callApi "/api/servers/spring-boot/databases/postgresql"
   callApi "/api/servers/spring-boot/features/user/postgresql"
@@ -244,6 +246,10 @@ elif [[ $application == 'reactapp' ]]; then
   callApi "/api/clients/react/styles"
   callApi "/api/clients/cypress"
 
+  callApi "/api/servers/spring-boot/security-systems/jwt"
+  callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
+  callApi "/api/clients/react/jwt"
+
 elif [[ $application == 'vueapp' ]]; then
   springboot_mvc
   sonar_back_front
@@ -265,7 +271,6 @@ elif [[ $application == 'kafkaapp' ]]; then
   sonar_back
 
   callApi "/api/servers/spring-boot/brokers/kafka"
-  callApi "/api/servers/spring-boot/brokers/kafka/dummy-producer-consumer"
   callApi "/api/servers/spring-boot/brokers/kafka/akhq"
 
 elif [[ $application == 'pulsarapp' ]]; then

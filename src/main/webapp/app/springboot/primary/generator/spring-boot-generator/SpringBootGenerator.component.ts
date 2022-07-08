@@ -88,6 +88,14 @@ export default defineComponent({
           });
       }
     };
+    const addJavaArchunit = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addJavaArchunit(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Java Archunit successfully added'))
+          .catch(error => alertBus.error(`Adding Java Archunit to project failed ${error}`));
+      }
+    };
 
     const addSpringBootAopLogging = async (): Promise<void> => {
       if (props.project.folder !== '') {
@@ -167,6 +175,15 @@ export default defineComponent({
           .addMySQL(toProject(props.project as ProjectToUpdate))
           .then(() => alertBus.success('SpringBoot Database MySQL successfully added'))
           .catch(error => alertBus.error(`Adding SpringBoot Database MySQL to project failed ${error}`));
+      }
+    };
+
+    const addMSSQL = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addMSSQL(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('SpringBoot Database MSSQL successfully added'))
+          .catch(error => alertBus.error(`Adding SpringBoot Database MSSQL to project failed ${error}`));
       }
     };
 
@@ -340,6 +357,24 @@ export default defineComponent({
       }
     };
 
+    const addEhcacheWithJavaConfig = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addEhcacheWithJavaConf(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Ehcache with Java config successfully added'))
+          .catch(error => alertBus.error(`Adding Ehcache with Java config to project failed ${error}`));
+      }
+    };
+
+    const addEhcacheWithXml = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await springBootService
+          .addEhcacheWithXML(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Ehcache with XML successfully added'))
+          .catch(error => alertBus.error(`Adding Ehcache with XML to project failed ${error}`));
+      }
+    };
+
     return {
       selectorPrefix,
       addSpringBoot,
@@ -349,6 +384,7 @@ export default defineComponent({
       addSpringBootWebfluxNetty,
       addSpringBootActuator,
       addSpringDoc,
+      addJavaArchunit,
       addSpringBootAopLogging,
       addSpringBootLogstash,
       addSpringBootSecurityJWT,
@@ -358,6 +394,7 @@ export default defineComponent({
       addSpringBootSecurityOAuth2Account,
       addPostgreSQL,
       addMySQL,
+      addMSSQL,
       addMariaDB,
       addMongoDB,
       addFlyway,
@@ -377,6 +414,8 @@ export default defineComponent({
       addKafka,
       addKafkaDummyProducerConsumer,
       addKafkaAkhq,
+      addEhcacheWithJavaConfig,
+      addEhcacheWithXml,
     };
   },
 });

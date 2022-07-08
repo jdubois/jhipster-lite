@@ -12,18 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class KafkaApplicationServiceIT {
 
   @Autowired
   private KafkaApplicationService kafkaApplicationService;
-
-  @Autowired
-  private InitApplicationService initApplicationService;
 
   @Autowired
   private MavenApplicationService mavenApplicationService;
@@ -34,7 +31,7 @@ class KafkaApplicationServiceIT {
   @Test
   void shouldInit() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -74,7 +71,7 @@ class KafkaApplicationServiceIT {
   @Test
   void shouldAddProducerConsumer() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
     kafkaApplicationService.init(project);
@@ -117,7 +114,7 @@ class KafkaApplicationServiceIT {
   @Test
   void shouldAddAkhq() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
     kafkaApplicationService.init(project);

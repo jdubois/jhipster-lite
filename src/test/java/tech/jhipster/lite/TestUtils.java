@@ -93,7 +93,7 @@ public class TestUtils {
   }
 
   public static Project.ProjectBuilder tmpProjectBuilder() {
-    return Project.builder().folder(FileUtils.tmpDirForTest());
+    return Project.builder().folder(TestFileUtils.tmpDirForTest());
   }
 
   public static Project tmpProject() {

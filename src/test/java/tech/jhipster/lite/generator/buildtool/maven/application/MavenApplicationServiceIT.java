@@ -1,16 +1,10 @@
 package tech.jhipster.lite.generator.buildtool.maven.application;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileContentManyTimes;
-import static tech.jhipster.lite.TestUtils.assertFileNoContent;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
-import static tech.jhipster.lite.common.domain.WordUtils.DEFAULT_INDENTATION;
-import static tech.jhipster.lite.generator.buildtool.maven.application.MavenAssertFiles.assertFilesMaven;
-import static tech.jhipster.lite.generator.buildtool.maven.application.MavenAssertFiles.assertFilesMavenWrapper;
-import static tech.jhipster.lite.generator.buildtool.maven.application.MavenAssertFiles.assertFilesPomXml;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
+import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
+import static tech.jhipster.lite.generator.buildtool.maven.application.MavenAssertFiles.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -631,17 +625,6 @@ class MavenApplicationServiceIT {
       Maven.getPluginRepositoryHeader(repository, DEFAULT_INDENTATION).indent(2 * DEFAULT_INDENTATION),
       1
     );
-  }
-
-  @Test
-  void shouldInit() {
-    Project project = tmpProject();
-
-    mavenApplicationService.init(project);
-
-    assertFilesMaven(project);
-    assertFileContent(project, POM_XML, "<name>jhipster</name>");
-    assertFileContent(project, POM_XML, "<description>JHipster Project</description>");
   }
 
   @Test

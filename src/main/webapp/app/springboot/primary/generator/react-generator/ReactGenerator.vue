@@ -21,6 +21,19 @@
       :selector-prefix="selectorPrefix"
       @click.prevent="addReact"
     />
+    <GeneratorButtonVue :label="'Add JWT'" :service="'react-jwt'" :selector-prefix="selectorPrefix" @click.prevent="addReactWithJWT" />
+    <GeneratorButtonVue
+      :label="'Cypress'"
+      :service="'react-cypress'"
+      :selector-prefix="selectorPrefix"
+      @click.prevent="addCypressForReact"
+    />
+    <GeneratorButtonVue
+      :label="'Playwright'"
+      :service="'client-common-playwright'"
+      :selector-prefix="selectorPrefix"
+      @click.prevent="addPlaywrightForReact"
+    />
   </div>
 </template>
 

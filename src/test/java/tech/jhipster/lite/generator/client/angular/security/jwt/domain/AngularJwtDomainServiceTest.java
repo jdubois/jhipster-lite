@@ -73,6 +73,6 @@ class AngularJwtDomainServiceTest {
 
     angularJwtDomainService.addAngularJwtFiles(project);
 
-    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(15));
+    verify(projectRepository).template(ProjectFilesAsserter.filesCountArgument(17));
   }
 }

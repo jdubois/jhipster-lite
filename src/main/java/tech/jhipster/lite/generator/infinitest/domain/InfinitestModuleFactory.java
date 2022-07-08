@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.infinitest.domain;
 
-import static tech.jhipster.lite.generator.module.domain.JHipsterModule.*;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.generator.module.domain.JHipsterModule;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class InfinitestModuleFactory {
 

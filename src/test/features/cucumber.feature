@@ -11,6 +11,7 @@ Feature: Cucumber module
       | Key                   | Type    | Mandatory |
       | packageName           | STRING  | true      |
       | baseName              | STRING  | true      |
+      | jpaReset              | BOOLEAN | false     |
       | prettierDefaultIndent | INTEGER | false     |
 
   Scenario: Should add cucumber elements using module url

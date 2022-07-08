@@ -6,17 +6,22 @@ export type ServiceProjection =
   | 'angular-with-jwt'
   | 'angular-oauth2'
   | 'angular-health'
+  | 'client-common-playwright'
   | 'consul'
   | 'dev-tools'
   | 'dockerfile'
   | 'download'
+  | 'ehcache-with-java-config'
+  | 'ehcache-with-xml-config'
   | 'eureka-client'
   | 'initialization'
   | 'flyway'
   | 'flyway-with-users-and-authority-changelogs'
   | 'frontend-maven-plugin'
+  | 'github-actions'
   | 'jacoco-check-minimal-coverage'
   | 'java-base'
+  | 'java-archunit'
   | 'jib'
   | 'liquibase'
   | 'liquibase-with-users-and-authority-changelogs'
@@ -26,9 +31,11 @@ export type ServiceProjection =
   | 'gitpod-setup'
   | 'mariadb'
   | 'mysql'
+  | 'mssql'
   | 'mongodb'
   | 'mongock'
   | 'postgresql'
+  | 'react-cypress'
   | 'sonar-java-backend'
   | 'sonar-java-backend-and-frontend'
   | 'spring-boot'
@@ -52,6 +59,7 @@ export type ServiceProjection =
   | 'spring-cloud'
   | 'react'
   | 'react-styled'
+  | 'react-jwt'
   | 'vue'
   | 'unknown';
 
@@ -61,17 +69,22 @@ const SERVICES_PROJECTION: Record<Service, ServiceProjection> = {
   [Service.ANGULAR_WITH_JWT]: 'angular-with-jwt',
   [Service.ANGULAR_OAUTH2]: 'angular-oauth2',
   [Service.ANGULAR_HEALTH]: 'angular-health',
+  [Service.CLIENT_COMMON_PLAYWRIGHT]: 'client-common-playwright',
   [Service.CONSUL]: 'consul',
   [Service.DEV_TOOLS]: 'dev-tools',
   [Service.DOCKERFILE]: 'dockerfile',
   [Service.DOWNLOAD]: 'download',
+  [Service.EHCACHE_WITH_JAVA_CONFIG]: 'ehcache-with-java-config',
+  [Service.EHCACHE_WITH_XML_CONFIG]: 'ehcache-with-xml-config',
   [Service.EUREKA_CLIENT]: 'eureka-client',
   [Service.FLYWAY]: 'flyway',
   [Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS]: 'flyway-with-users-and-authority-changelogs',
   [Service.FRONTEND_MAVEN_PLUGIN]: 'frontend-maven-plugin',
+  [Service.GITHUB_ACTIONS]: 'github-actions',
   [Service.INITIALIZATION]: 'initialization',
   [Service.JACOCO_CHECK_MINIMAL_COVERAGE]: 'jacoco-check-minimal-coverage',
   [Service.JAVA_BASE]: 'java-base',
+  [Service.JAVA_ARCHUNIT]: 'java-archunit',
   [Service.JIB]: 'jib',
   [Service.LIQUIBASE]: 'liquibase',
   [Service.LIQUIBASE_WITH_USERS_AND_AUTHORITY_CHANGELOGS]: 'liquibase-with-users-and-authority-changelogs',
@@ -81,9 +94,11 @@ const SERVICES_PROJECTION: Record<Service, ServiceProjection> = {
   [Service.GITPOD_SETUP]: 'gitpod-setup',
   [Service.MARIADB]: 'mariadb',
   [Service.MYSQL]: 'mysql',
+  [Service.MSSQL]: 'mssql',
   [Service.MONGODB]: 'mongodb',
   [Service.MONGOCK]: 'mongock',
   [Service.POSTGRESQL]: 'postgresql',
+  [Service.REACT_CYPRESS]: 'react-cypress',
   [Service.SONAR_JAVA_BACKEND]: 'sonar-java-backend',
   [Service.SONAR_JAVA_BACKEND_AND_FRONTEND]: 'sonar-java-backend-and-frontend',
   [Service.SPRINGBOOT]: 'spring-boot',
@@ -107,6 +122,7 @@ const SERVICES_PROJECTION: Record<Service, ServiceProjection> = {
   [Service.SPRING_CLOUD]: 'spring-cloud',
   [Service.REACT]: 'react',
   [Service.REACT_STYLED]: 'react-styled',
+  [Service.REACT_JWT]: 'react-jwt',
   [Service.VUE]: 'vue',
   [Service.UNKNOWN]: 'unknown',
 };
@@ -119,17 +135,22 @@ const SERVICES: Record<ServiceProjection, Service> = {
   'angular-with-jwt': Service.ANGULAR_WITH_JWT,
   'angular-oauth2': Service.ANGULAR_OAUTH2,
   'angular-health': Service.ANGULAR_HEALTH,
+  'client-common-playwright': Service.CLIENT_COMMON_PLAYWRIGHT,
   consul: Service.CONSUL,
   'dev-tools': Service.DEV_TOOLS,
+  'ehcache-with-java-config': Service.EHCACHE_WITH_JAVA_CONFIG,
   dockerfile: Service.DOCKERFILE,
   download: Service.DOWNLOAD,
+  'ehcache-with-xml-config': Service.EHCACHE_WITH_XML_CONFIG,
   'eureka-client': Service.EUREKA_CLIENT,
   flyway: Service.FLYWAY,
   'flyway-with-users-and-authority-changelogs': Service.FLYWAY_WITH_USERS_AND_AUTHORITY_CHANGELOGS,
   'frontend-maven-plugin': Service.FRONTEND_MAVEN_PLUGIN,
+  'github-actions': Service.GITHUB_ACTIONS,
   initialization: Service.INITIALIZATION,
   'jacoco-check-minimal-coverage': Service.JACOCO_CHECK_MINIMAL_COVERAGE,
   'java-base': Service.JAVA_BASE,
+  'java-archunit': Service.JAVA_ARCHUNIT,
   jib: Service.JIB,
   liquibase: Service.LIQUIBASE,
   'liquibase-with-users-and-authority-changelogs': Service.LIQUIBASE_WITH_USERS_AND_AUTHORITY_CHANGELOGS,
@@ -139,9 +160,11 @@ const SERVICES: Record<ServiceProjection, Service> = {
   'gitpod-setup': Service.GITPOD_SETUP,
   mariadb: Service.MARIADB,
   mysql: Service.MYSQL,
+  mssql: Service.MSSQL,
   mongodb: Service.MONGODB,
   mongock: Service.MONGOCK,
   postgresql: Service.POSTGRESQL,
+  'react-cypress': Service.REACT_CYPRESS,
   'sonar-java-backend': Service.SONAR_JAVA_BACKEND,
   'sonar-java-backend-and-frontend': Service.SONAR_JAVA_BACKEND_AND_FRONTEND,
   'spring-boot': Service.SPRINGBOOT,
@@ -165,6 +188,7 @@ const SERVICES: Record<ServiceProjection, Service> = {
   'spring-cloud': Service.SPRING_CLOUD,
   react: Service.REACT,
   'react-styled': Service.REACT_STYLED,
+  'react-jwt': Service.REACT_JWT,
   vue: Service.VUE,
   unknown: Service.UNKNOWN,
 };

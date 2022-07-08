@@ -6,16 +6,26 @@ import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Parent;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Repository;
+import tech.jhipster.lite.generator.buildtool.maven.domain.MavenModuleFactory;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class MavenApplicationService {
 
   private final MavenService mavenService;
+  private final MavenModuleFactory factory;
 
   public MavenApplicationService(MavenService mavenService) {
     this.mavenService = mavenService;
+
+    factory = new MavenModuleFactory();
+  }
+
+  public JHipsterModule buildInitModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 
   public void addParent(Project project, Parent parent) {
@@ -60,10 +70,6 @@ public class MavenApplicationService {
 
   public void addPluginRepository(Project project, Repository repository) {
     mavenService.addPluginRepository(project, repository);
-  }
-
-  public void init(Project project) {
-    mavenService.initJava(project);
   }
 
   public void addPomXml(Project project) {

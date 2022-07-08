@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 public class SimpleSteps {
+
   @Autowired
   private TestRestTemplate rest;
 
@@ -33,15 +34,10 @@ public class SimpleSteps {
 
   @Then("I get simple response with name {string} and age {int}")
   public void shouldGetResponse(String name, int age) {
-    assertThatLastResponse()
-      .hasOkStatus()
-      .hasElement("$.name")
-      .withValue(name)
-      .and()
-      .hasElement("$.age")
-      .withValue(age);
+    assertThatLastResponse().hasOkStatus().hasElement("$.name").withValue(name).and().hasElement("$.age").withValue(age);
   }
 }
+
 ```
 
 Use a `TestRestTemplate` to make your rest calls so you'll have the `context` management: the stuff allowing easier assertions in the `Then` steps.
@@ -115,20 +111,11 @@ You may need to mock beans for your component tests but you won't be able to do 
 @CucumberContextConfiguration
 @CucumberOptions(
   glue = "tech.jhipster.lite",
-  plugin = {
-    "pretty",
-    "json:target/cucumber/cucumber.json",
-    "html:target/cucumber/cucumber.htm",
-    "junit:target/cucumber/cucumber.xml"
-  },
+  plugin = { "pretty", "json:target/cucumber/cucumber.json", "html:target/cucumber/cucumber.htm", "junit:target/cucumber/cucumber.xml" },
   features = "src/test/features"
 )
 @SpringBootTest(
-  classes = {
-    TestApplication.class,
-    CucumberConfiguration.class,
-    CucumberMocksConfiguration.class
-  },
+  classes = { TestApplication.class, CucumberConfiguration.class, CucumberMocksConfiguration.class },
   webEnvironment = WebEnvironment.RANDOM_PORT
 )
 public class CucumberTest {
@@ -143,6 +130,7 @@ public class CucumberTest {
     }
   }
 }
+
 ```
 
 **Careful: the mock bean names (by default the method name) must be different from the real one or else they may just be ignored**

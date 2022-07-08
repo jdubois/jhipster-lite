@@ -1,5 +1,5 @@
 import { defineComponent, inject, ref } from 'vue';
-import { ProjectToUpdate } from '@/springboot/primary/ProjectToUpdate';
+import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
 import { AngularGeneratorVue } from '@/springboot/primary/generator/angular-generator';
 import { ReactGeneratorVue } from '@/springboot/primary/generator/react-generator';
 import { VueGeneratorVue } from '@/springboot/primary/generator/vue-generator';
@@ -13,6 +13,9 @@ import { ProjectHistoryService } from '@/common/domain/ProjectHistoryService';
 import { History } from '@/common/domain/History';
 import { ProjectService } from '../domain/ProjectService';
 import { StoreGeneric } from 'pinia';
+import { SetupGeneratorVue } from '@/springboot/primary/generator/setup-generator';
+import { AlertBus } from '@/common/domain/alert/AlertBus';
+import { FileDownloader } from '@/common/primary/FileDownloader';
 
 export default defineComponent({
   name: 'GeneratorComponent',
@@ -21,6 +24,7 @@ export default defineComponent({
     IconVue,
     DefaultButtonVue,
     ProjectGeneratorVue,
+    SetupGeneratorVue,
     SpringBootGeneratorVue,
     AngularGeneratorVue,
     ReactGeneratorVue,
@@ -33,6 +37,8 @@ export default defineComponent({
     const globalWindow = inject('globalWindow') as Window;
     const projectStore = inject('projectStore') as StoreGeneric;
     const selectorPrefix = 'generator';
+    const alertBus = inject('alertBus') as AlertBus;
+    const fileDownloader = inject('fileDownloader') as FileDownloader;
 
     const project = ref<ProjectToUpdate>({
       folder: '',
@@ -61,6 +67,16 @@ export default defineComponent({
       }, 400);
     };
 
+    const download = async (): Promise<void> => {
+      await projectService
+        .download(toProject(project.value))
+        .then(file => {
+          alertBus.success('File ready for download');
+          fileDownloader.download(file);
+        })
+        .catch(error => alertBus.error(`Downloading project failed ${error}`));
+    };
+
     return {
       project,
       language,
@@ -72,6 +88,7 @@ export default defineComponent({
       getCurrentProjectHistory,
       getProjectDetails,
       debounceGetProjectDetails,
+      download,
     };
   },
 });

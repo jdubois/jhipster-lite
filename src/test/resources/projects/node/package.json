@@ -1,0 +1,22 @@
+{
+  "name": "test-jhipster-project",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JHipster Project",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "vue-tsc -p tsconfig-build.json --noEmit && vite build --emptyOutDir"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1"
+  },
+  "devDependencies": {
+    "@prettier/plugin-xml": "2.1.0"
+  },
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ]
+}

@@ -36,16 +36,16 @@ import reactor.test.StepVerifier;
 class GatewayResourceIT {
 
   @MockBean
-  DiscoveryClient discoveryClient;
+  private DiscoveryClient discoveryClient;
 
   @MockBean
-  RouteLocator routeLocator;
+  private RouteLocator routeLocator;
 
   @Autowired
-  ObjectMapper objectMapper;
+  private ObjectMapper objectMapper;
 
   @Autowired
-  WebTestClient webTestClient;
+  private WebTestClient webTestClient;
 
   @Value("${spring.application.name}")
   private String appName;

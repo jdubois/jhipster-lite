@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.gateway.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.springcloud.gateway.domain.GatewayService;
+import tech.jhipster.lite.generator.server.springboot.springcloud.gateway.domain.GatewayModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class GatewayApplicationService {
 
-  private final GatewayService gatewayService;
+  private final GatewayModuleFactory factory;
 
-  public GatewayApplicationService(GatewayService gatewayService) {
-    this.gatewayService = gatewayService;
+  public GatewayApplicationService() {
+    factory = new GatewayModuleFactory();
   }
 
-  public void init(Project project) {
-    gatewayService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

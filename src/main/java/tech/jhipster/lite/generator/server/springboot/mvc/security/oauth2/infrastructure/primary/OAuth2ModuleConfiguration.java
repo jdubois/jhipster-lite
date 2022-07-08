@@ -2,10 +2,10 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.infra
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModulePropertiesDefinition;
-import tech.jhipster.lite.generator.module.infrastructure.primary.JHipsterModuleApiDoc;
-import tech.jhipster.lite.generator.module.infrastructure.primary.JHipsterModuleResource;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.application.OAuth2SecurityApplicationService;
+import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertiesDefinition;
+import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleApiDoc;
+import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleResource;
 
 @Configuration
 class OAuth2ModuleConfiguration {
@@ -16,7 +16,7 @@ class OAuth2ModuleConfiguration {
       .builder()
       .legacyUrl("/api/servers/spring-boot/security-systems/oauth2")
       .slug("springboot-oauth2")
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().build())
       .apiDoc(
         new JHipsterModuleApiDoc(
           "Spring Boot - MVC - Security",

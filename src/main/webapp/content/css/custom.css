@@ -25,6 +25,7 @@
   --bs-vue-rgb: 63, 178, 127;
   --bs-angular-rgb: 195, 0, 47;
   --bs-spring-rgb: 109, 179, 63;
+  --bs-setup-rgb: 125, 60, 152;
   --bs-svelte-rgb: 255, 62, 0;
   --primary-color-light: #4ba8f8;
   --success-color: #00543c;
@@ -201,6 +202,13 @@ input[type='radio'] {
 .btn-outline-primary {
   color: var(--primary-color);
   border-color: var(--primary-color);
+}
+.bg-setup {
+  --bs-bg-opacity: 0.05;
+  background-color: rgba(var(--bs-setup-rgb), var(--bs-bg-opacity)) !important;
+}
+.text-setup {
+  color: rgba(var(--bs-setup-rgb)) !important;
 }
 .bg-spring {
   --bs-bg-opacity: 0.05;

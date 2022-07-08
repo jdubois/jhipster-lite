@@ -1,13 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.admin.health.domain;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJson;
+import static tech.jhipster.lite.TestUtils.*;
 
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

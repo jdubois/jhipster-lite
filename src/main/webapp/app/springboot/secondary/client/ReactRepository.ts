@@ -18,4 +18,8 @@ export default class ReactRepository implements ReactService {
   async addWithStyle(project: Project): Promise<void> {
     await this.postAndGetHistory('/api/clients/react/styles', toRestProject(project));
   }
+
+  async addWithJWT(project: Project): Promise<void> {
+    await this.postAndGetHistory('/api/clients/react/jwt', toRestProject(project));
+  }
 }

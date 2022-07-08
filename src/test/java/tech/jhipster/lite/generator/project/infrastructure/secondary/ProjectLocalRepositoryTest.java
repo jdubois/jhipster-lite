@@ -27,6 +27,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
@@ -93,7 +94,7 @@ class ProjectLocalRepositoryTest {
 
   @Test
   void shouldHandleTemplatingError() {
-    Project project = Project.builder().folder(FileUtils.tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
 
     try (MockedStatic<MustacheUtils> mustacheUtils = Mockito.mockStatic(MustacheUtils.class)) {
       mustacheUtils.when(() -> MustacheUtils.template(anyString(), any())).thenThrow(new IOException());

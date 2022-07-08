@@ -3,6 +3,7 @@ package {{packageName}}.authentication.infrastructure.primary;
 import {{packageName}}.authentication.domain.Role;
 import {{packageName}}.authentication.domain.Roles;
 import {{packageName}}.authentication.domain.Username;
+import {{packageName}}.error.domain.Assert;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -48,7 +49,18 @@ public final class AuthenticatedUser {
     return authentication().map(AuthenticatedUser::readPrincipal).flatMap(Username::of);
   }
 
-  private static String readPrincipal(Authentication authentication) {
+  /**
+   * Read user principal from authentication
+   *
+   * @param authentication
+   *          authentication to read the principal from
+   * @return The user principal
+   * @throws UnknownAuthenticationException
+   *           if the authentication can't be read (unknown token type)
+   */
+  public static String readPrincipal(Authentication authentication) {
+    Assert.notNull("authentication", authentication);
+    
     if (authentication.getPrincipal() instanceof UserDetails details) {
       return details.getUsername();
     }

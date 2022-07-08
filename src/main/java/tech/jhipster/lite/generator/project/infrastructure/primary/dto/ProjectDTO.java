@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Schema(description = "Project DTO")
 public class ProjectDTO {

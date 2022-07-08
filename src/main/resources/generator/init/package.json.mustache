@@ -1,11 +1,16 @@
 {
-  "name": "{{dasherizedBaseName}}{{^dasherizedBaseName}}jhipster-project{{/dasherizedBaseName}}",
+  "name": "{{dasherizedBaseName}}",
   "version": "0.0.0",
   "private": true,
-  "description": "{{projectName}}{{^projectName}}JHipster Project{{/projectName}}",
+  "description": "{{projectName}}",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">={{nodeVersion}}{{^nodeVersion}}14.18.1{{/nodeVersion}}"
+    "node": ">={{nodeVersion}}"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "prettier:check": "prettier --check \"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\"",
+    "prettier:format": "prettier --write \"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\""
   },
   "cacheDirectories": [
     "node_modules"

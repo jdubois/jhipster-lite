@@ -8,6 +8,7 @@ import static tech.jhipster.lite.generator.server.springboot.dbmigration.liquiba
 
 import java.time.Clock;
 import tech.jhipster.lite.common.domain.TimeUtils;
+import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -51,7 +52,20 @@ public class LiquibaseDomainService implements LiquibaseService {
 
   @Override
   public void addLiquibase(Project project) {
-    Dependency liquibaseDependency = Dependency.builder().groupId("org.liquibase").artifactId("liquibase-core").build();
+    buildToolService
+      .getVersion(project, "liquibase")
+      .ifPresentOrElse(
+        version -> buildToolService.addProperty(project, "liquibase.version", version),
+        () -> {
+          throw new GeneratorException("Version not found: liquibase");
+        }
+      );
+    Dependency liquibaseDependency = Dependency
+      .builder()
+      .groupId("org.liquibase")
+      .artifactId("liquibase-core")
+      .version("\\${liquibase.version}")
+      .build();
     buildToolService.addDependency(project, liquibaseDependency);
 
     Dependency h2dependency = Dependency.builder().groupId("com.h2database").artifactId("h2").scope("test").build();

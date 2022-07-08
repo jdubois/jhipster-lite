@@ -1,27 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.devtools.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.devtools.domain.DevToolsService;
+import tech.jhipster.lite.generator.server.springboot.devtools.domain.DevToolsModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class DevToolsApplicationService {
 
-  private final DevToolsService devToolsService;
+  private final DevToolsModuleFactory devToolsFactory;
 
-  public DevToolsApplicationService(DevToolsService devToolsService) {
-    this.devToolsService = devToolsService;
+  public DevToolsApplicationService() {
+    devToolsFactory = new DevToolsModuleFactory();
   }
 
-  public void init(Project project) {
-    devToolsService.init(project);
-  }
-
-  public void addSpringBootDevTools(Project project) {
-    devToolsService.addSpringBootDevTools(project);
-  }
-
-  public void addProperties(Project project) {
-    devToolsService.addProperties(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return devToolsFactory.buildModule(properties);
   }
 }

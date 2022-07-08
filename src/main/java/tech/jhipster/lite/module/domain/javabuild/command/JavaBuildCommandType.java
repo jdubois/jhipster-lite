@@ -1,0 +1,11 @@
+package tech.jhipster.lite.module.domain.javabuild.command;
+
+public enum JavaBuildCommandType {
+  SET_VERSION,
+  REMOVE_DEPENDENCY_MANAGEMENT,
+  ADD_DEPENDENCY_MANAGEMENT,
+  REMOVE_DEPENDENCY,
+  ADD_DEPENDENCY,
+  ADD_DIRECT_JAVA_BUILD_PLUGIN,
+  ADD_JAVA_BUILD_PLUGIN_MANAGEMENT,
+}

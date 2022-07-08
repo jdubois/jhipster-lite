@@ -1,6 +1,6 @@
 import { Oauth2AuthService } from './oauth2-auth.service';
 import { TestBed } from '@angular/core/testing';
-import Keycloak, { KeycloakError, KeycloakInitOptions, KeycloakInstance, KeycloakPromise } from 'keycloak-js';
+import Keycloak, { KeycloakError, KeycloakInitOptions, KeycloakPromise } from 'keycloak-js';
 import { lastValueFrom } from 'rxjs';
 import SpyInstance = jest.SpyInstance;
 
@@ -16,7 +16,7 @@ jest.mock('keycloak-js', () => ({
       exp: 1200,
     },
     timeSkew: 0,
-  } as unknown as KeycloakInstance),
+  } as unknown as Keycloak),
 }));
 
 jest.mock('../../environments/environment', () => ({
@@ -38,7 +38,7 @@ const UPDATE_TOKEN_INTERVAL_MS = 6000;
 
 describe('Oauth2 Auth Service', () => {
   let service: Oauth2AuthService;
-  let keycloakInstance: KeycloakInstance;
+  let keycloakInstance: Keycloak;
 
   let consoleDebugMock: SpyInstance;
   let consoleErrorMock: SpyInstance;
@@ -49,7 +49,7 @@ describe('Oauth2 Auth Service', () => {
     });
 
     service = TestBed.inject(Oauth2AuthService);
-    keycloakInstance = Keycloak();
+    keycloakInstance = new Keycloak();
 
     consoleDebugMock = jest.spyOn(console, 'debug').mockImplementation(() => {});
     consoleErrorMock = jest.spyOn(console, 'error').mockImplementation(() => {});

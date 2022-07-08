@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Keycloak, { KeycloakConfig, KeycloakInstance } from 'keycloak-js';
+import Keycloak, { KeycloakConfig } from 'keycloak-js';
 import { from, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -8,7 +8,7 @@ const REFRESH_TOKEN_TIMEOUT_MS = 6000;
 
 @Injectable({ providedIn: 'root' })
 export class Oauth2AuthService {
-  private keycloak!: KeycloakInstance;
+  private keycloak = new Keycloak();
 
   get token(): string | undefined {
     return this.keycloak.token;
@@ -24,7 +24,7 @@ export class Oauth2AuthService {
       realm: environment.keycloak.realm,
       clientId: environment.keycloak.client_id,
     };
-    this.keycloak = Keycloak(config);
+    this.keycloak = new Keycloak(config);
 
     return from(this.keycloak.init({ onLoad: 'login-required', checkLoginIframe: false })).pipe(
       tap(authenticated => {

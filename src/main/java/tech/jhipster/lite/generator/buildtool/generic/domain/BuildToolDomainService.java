@@ -1,13 +1,10 @@
 package tech.jhipster.lite.generator.buildtool.generic.domain;
 
-import static tech.jhipster.lite.generator.project.domain.BuildToolType.MAVEN;
-
 import java.util.List;
 import java.util.Optional;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.gradle.domain.GradleService;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
-import tech.jhipster.lite.generator.project.domain.BuildToolType;
 import tech.jhipster.lite.generator.project.domain.Project;
 
 public class BuildToolDomainService implements BuildToolService {
@@ -121,15 +118,6 @@ public class BuildToolDomainService implements BuildToolService {
       mavenService.deleteDependency(project, dependency);
     } else if (project.isGradleProject()) {
       gradleService.deleteDependency(project, dependency);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
-  public void init(Project project, BuildToolType buildTool) {
-    if (buildTool == MAVEN) {
-      mavenService.initJava(project);
     } else {
       throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
     }

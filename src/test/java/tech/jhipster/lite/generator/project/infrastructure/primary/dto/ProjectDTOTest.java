@@ -7,13 +7,13 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
-import tech.jhipster.lite.generator.module.domain.Indentation;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterBasePackage;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectBaseName;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.module.domain.Indentation;
+import tech.jhipster.lite.module.domain.properties.JHipsterBasePackage;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.properties.JHipsterProjectBaseName;
+import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
 class ProjectDTOTest {

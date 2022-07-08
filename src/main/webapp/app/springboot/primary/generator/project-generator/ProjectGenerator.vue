@@ -56,15 +56,6 @@
           @click.prevent="addFrontendMavenPlugin"
         />
       </div>
-      <div>
-        <GeneratorButtonVue
-          v-if="project.folder !== ''"
-          :label="'Download'"
-          :service="'download'"
-          :selector-prefix="selectorPrefix"
-          @click.prevent="download"
-        />
-      </div>
     </div>
   </div>
 </template>

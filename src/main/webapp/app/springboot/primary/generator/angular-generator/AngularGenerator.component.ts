@@ -3,6 +3,7 @@ import { AngularService } from '@/springboot/domain/client/AngularService';
 import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
 import { GeneratorButtonVue } from '@/springboot/primary/generator/generator-button';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
+import { ProjectService } from '@/springboot/domain/ProjectService';
 
 export default defineComponent({
   name: 'AngularGeneratorComponent',
@@ -21,6 +22,7 @@ export default defineComponent({
   setup(props) {
     const alertBus = inject('alertBus') as AlertBus;
     const angularService = inject('angularService') as AngularService;
+    const projectService = inject('projectService') as ProjectService;
 
     const selectorPrefix = 'angular-generator';
 
@@ -60,12 +62,31 @@ export default defineComponent({
       }
     };
 
+    const addCypressForAngular = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await projectService
+          .addCypress(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Cypress successfully added'))
+          .catch(error => alertBus.error(`Adding Cypress to project failed ${error}`));
+      }
+    };
+    const addPlaywrightForAngular = async (): Promise<void> => {
+      if (props.project.folder !== '') {
+        await projectService
+          .addPlaywright(toProject(props.project as ProjectToUpdate))
+          .then(() => alertBus.success('Playwright successfully added'))
+          .catch(error => alertBus.error(`Adding Playwright to project failed ${error}`));
+      }
+    };
+
     return {
       selectorPrefix,
       addAngular,
       addAngularWithJWT,
       addOauth2,
       addHealth,
+      addCypressForAngular,
+      addPlaywrightForAngular,
       props,
     };
   },

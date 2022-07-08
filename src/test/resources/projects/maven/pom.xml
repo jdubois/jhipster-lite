@@ -14,6 +14,7 @@
   <properties>
     <jjwt.version>0.11.5</jjwt.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
+    <spring-boot.version>2.7.1</spring-boot.version>
   </properties>
 
   <dependencyManagement>
@@ -22,6 +23,13 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-ui</artifactId>
         <version>${springdoc-openapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -40,4 +48,32 @@
       <optional>true</optional>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <mainClass>${start-class}</mainClass>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>

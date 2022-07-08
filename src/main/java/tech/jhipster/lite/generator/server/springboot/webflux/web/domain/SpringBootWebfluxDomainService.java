@@ -7,8 +7,6 @@ import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_PATH;
 import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.TECHNICAL_INFRASTRUCTURE_PRIMARY_EXCEPTION;
 import static tech.jhipster.lite.generator.server.springboot.webflux.web.domain.SpringBootWebflux.*;
-import static tech.jhipster.lite.generator.server.springboot.webflux.web.domain.SpringBootWebflux.problemSpringWebfluxDependency;
-import static tech.jhipster.lite.generator.server.springboot.webflux.web.domain.SpringBootWebflux.springBootStarterWebfluxDependency;
 
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;

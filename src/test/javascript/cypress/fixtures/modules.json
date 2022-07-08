@@ -1,0 +1,38 @@
+{
+  "categories": [
+    {
+      "name": "Spring",
+      "modules": [
+        {
+          "slug": "spring-cucumber",
+          "description": "Add cucumber to the application",
+          "properties": {
+            "definitions": [
+              {
+                "type": "STRING",
+                "mandatory": true,
+                "key": "baseName",
+                "description": "Application base name",
+                "example": "jhipster"
+              },
+              {
+                "type": "BOOLEAN",
+                "mandatory": false,
+                "key": "optionalBoolean"
+              },
+              {
+                "type": "INTEGER",
+                "mandatory": false,
+                "key": "optionalInteger"
+              }
+            ]
+          }
+        },
+        {
+          "slug": "spring-test",
+          "description": "Add spring test to the application"
+        }
+      ]
+    }
+  ]
+}

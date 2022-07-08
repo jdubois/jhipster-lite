@@ -1,0 +1,68 @@
+import { getTestBed, TestBed } from '@angular/core/testing';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { LocalStorageService, NgxWebstorageModule, SessionStorageService } from 'ngx-webstorage';
+
+import { AuthServerProvider } from './auth-jwt.service';
+import { AuthInterceptor } from './auth.interceptor';
+
+describe('Auth Interceptor', () => {
+  let service: AuthServerProvider;
+  let localStorageService: LocalStorageService;
+  let sessionStorageService: SessionStorageService;
+  let injector: TestBed;
+  let httpMock: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, NgxWebstorageModule.forRoot()],
+      providers: [
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: AuthInterceptor,
+          multi: true
+        }
+      ]
+    });
+
+    injector = getTestBed();
+    httpMock = TestBed.inject(HttpTestingController);
+    localStorageService = TestBed.inject(LocalStorageService);
+    sessionStorageService = TestBed.inject(SessionStorageService);
+    service = TestBed.inject(AuthServerProvider);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  describe('intercept', () => {
+    it('should add authorization header with localStorageService', () => {
+      // GIVEN
+      const token = 'azerty';
+      localStorageService.retrieve = jest.fn(() => token);
+
+      // WHEN
+      service.login({ username: 'John', password: '123' }).subscribe();
+
+      // THEN
+      const httpReq = httpMock.expectOne('api/authenticate');
+      expect(httpReq.request.headers.has('Authorization')).toBe(true);
+    });
+
+    it('should add authorization header with sessionStorageService', () => {
+      // GIVEN
+      const token = 'azerty';
+      sessionStorageService.retrieve = jest.fn(() => token);
+
+      // WHEN
+      service.login({ username: 'John', password: '123' }).subscribe();
+
+      // THEN
+      const httpReq = httpMock.expectOne('api/authenticate');
+      expect(httpReq.request.headers.has('Authorization')).toBe(true);
+    });
+  });
+
+});

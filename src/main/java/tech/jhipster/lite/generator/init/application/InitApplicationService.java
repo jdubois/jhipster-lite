@@ -1,47 +1,25 @@
 package tech.jhipster.lite.generator.init.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.init.domain.InitService;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.init.domain.GitRepository;
+import tech.jhipster.lite.generator.init.domain.InitModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class InitApplicationService {
 
-  private final InitService initService;
+  private final InitModuleFactory factory;
 
-  public InitApplicationService(InitService initService) {
-    this.initService = initService;
+  public InitApplicationService(GitRepository git) {
+    factory = new InitModuleFactory(git);
   }
 
-  public void init(Project project) {
-    initService.init(project);
+  public JHipsterModule buildFullInitModule(JHipsterModuleProperties properties) {
+    return factory.buildFullModule(properties);
   }
 
-  public void initMinimal(Project project) {
-    initService.initMinimal(project);
-  }
-
-  public void addPackageJson(Project project) {
-    initService.addPackageJson(project);
-  }
-
-  public void addReadme(Project project) {
-    initService.addReadme(project);
-  }
-
-  public void addGitConfiguration(Project project) {
-    initService.addGitConfiguration(project);
-  }
-
-  public void addEditorConfiguration(Project project) {
-    initService.addEditorConfiguration(project);
-  }
-
-  public void addPrettier(Project project) {
-    initService.addPrettier(project);
-  }
-
-  public void gitInit(Project project) {
-    initService.gitInit(project);
+  public JHipsterModule buildMinimalInitModule(JHipsterModuleProperties properties) {
+    return factory.buildMinimalModule(properties);
   }
 }

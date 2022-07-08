@@ -1,9 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.admin.health.application;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
+import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
 
 import java.io.IOException;
 import java.nio.file.Files;

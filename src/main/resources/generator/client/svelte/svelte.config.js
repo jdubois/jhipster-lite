@@ -1,11 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
-import path from 'path';
 
-/** @type {import('@sveltejs/kit').Config} */
 const config = {
-  // Consult https://github.com/sveltejs/svelte-preprocess
-  // for more information about preprocessors
   preprocess: preprocess(),
 
   kit: {
@@ -22,14 +18,6 @@ const config = {
       hooks: 'src/main/webapp/hooks',
       lib: 'src/main/webapp/lib',
       serviceWorker: 'src/main/webapp/service-worker',
-    },
-    vite: {
-      resolve: {
-        alias: [
-          { find: '@', replacement: path.resolve('src/main/webapp') },
-          { find: '@assets', replacement: path.resolve('src/main/webapp/assets') },
-        ],
-      },
     },
   },
 };

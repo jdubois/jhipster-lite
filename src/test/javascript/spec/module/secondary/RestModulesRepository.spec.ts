@@ -1,6 +1,6 @@
 import { RestModules, RestModulesRepository, RestModuleProperties } from '@/module/secondary/RestModulesRepository';
 import { dataBackendResponse, stubAxiosHttp } from '../../http/AxiosHttpStub';
-import { defaultModuleProperties, defaultModules } from '../domain/Modules.fixture';
+import { defaultModules, defaultModuleToApply } from '../domain/Modules.fixture';
 
 describe('Rest modules repository', () => {
   it('Should list modules using axios', async () => {
@@ -13,18 +13,57 @@ describe('Rest modules repository', () => {
     expect(modules).toEqual(defaultModules());
   });
 
-  it('Should get modules properties using axios', async () => {
+  it('Should get module without properties', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
-    axiosInstance.get.resolves(dataBackendResponse(restModuleProperties()));
+    axiosInstance.get.resolves(dataBackendResponse(restModulesWithoutProperties()));
 
-    const module = await repository.get('spring-cucumber');
+    const modules = await repository.list();
 
-    expect(module).toEqual(defaultModuleProperties());
+    expect(modules.categories[0].modules[0].properties).toEqual([]);
+  });
+
+  it('Should apply modules using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.post.resolves(dataBackendResponse(null));
+
+    await repository.apply('module', defaultModuleToApply());
+
+    expect(axiosInstance.post.calledOnce).toBe(true);
+  });
+
+  it('Should get applied modules using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.get.resolves(dataBackendResponse([{ serviceId: 'spring-cucumber' }]));
+
+    const appliedModules = await repository.appliedModules('test');
+
+    expect(appliedModules).toEqual(['spring-cucumber']);
   });
 });
 
 const restModules = (): RestModules => ({
+  categories: [
+    {
+      name: 'Spring',
+      modules: [
+        {
+          slug: 'spring-cucumber',
+          description: 'Add cucumber to the application',
+          properties: restModuleProperties(),
+        },
+        {
+          slug: 'banner',
+          description: 'Add a banner to the application',
+        },
+      ],
+    },
+  ],
+});
+
+const restModulesWithoutProperties = (): RestModules => ({
   categories: [
     {
       name: 'Spring',

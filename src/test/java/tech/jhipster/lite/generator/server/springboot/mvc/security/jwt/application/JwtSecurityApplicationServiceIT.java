@@ -17,12 +17,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.secondary.GitUtils;
 import tech.jhipster.lite.generator.server.javatool.base.application.JavaBaseApplicationService;
 import tech.jhipster.lite.generator.server.springboot.core.domain.SpringBootService;
 import tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvcService;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @IntegrationTest
 class JwtSecurityApplicationServiceIT {

@@ -11,30 +11,27 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class SpringBootMvcApplicationServiceIT {
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private MavenApplicationService mavenApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
-  SpringBootApplicationService springBootApplicationService;
-
-  @Autowired
-  SpringBootMvcApplicationService springBootMvcApplicationService;
+  private SpringBootMvcApplicationService springBootMvcApplicationService;
 
   @Test
   void shouldInit() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -54,7 +51,7 @@ class SpringBootMvcApplicationServiceIT {
   @Test
   void shouldAddSpringBootMvc() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -75,7 +72,7 @@ class SpringBootMvcApplicationServiceIT {
   void shouldAddSpringBootMvcWithServerPort() {
     Project project = tmpProject();
     project.addConfig("serverPort", 7419);
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -96,7 +93,7 @@ class SpringBootMvcApplicationServiceIT {
   void shouldAddSpringBootMvcWithInvalidServerPort() {
     Project project = tmpProject();
     project.addConfig("serverPort", "chips");
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -116,7 +113,7 @@ class SpringBootMvcApplicationServiceIT {
   @Test
   void shouldAddSpringBootUndertow() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -137,7 +134,7 @@ class SpringBootMvcApplicationServiceIT {
   void shouldAddSpringBootUndertowWithServerPort() {
     Project project = tmpProject();
     project.addConfig("serverPort", 1664);
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -157,7 +154,7 @@ class SpringBootMvcApplicationServiceIT {
   @Test
   void shouldAddExceptionHandler() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 

@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.setup.gitpod.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.setup.gitpod.domain.GitpodService;
+import tech.jhipster.lite.generator.setup.gitpod.domain.GitpodModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class GitpodApplicationService {
 
-  private final GitpodService gitpodService;
+  private final GitpodModuleFactory factory;
 
-  public GitpodApplicationService(GitpodService gitpodService) {
-    this.gitpodService = gitpodService;
+  public GitpodApplicationService() {
+    factory = new GitpodModuleFactory();
   }
 
-  public void init(Project project) {
-    gitpodService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

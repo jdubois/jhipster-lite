@@ -25,6 +25,7 @@ import 'bootstrap';
 import '../content/css/custom.css';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 import { RestModulesRepository } from './module/secondary/RestModulesRepository';
+import SetupRepository from '@/springboot/secondary/SetupRepository';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -44,6 +45,7 @@ const projectRepository = new ProjectRepository(axiosHttp, projectHistoryReposit
 const angularRepository = new AngularRepository(axiosHttp, projectHistoryRepository);
 const reactRepository = new ReactRepository(axiosHttp, projectHistoryRepository);
 const springBootRepository = new SpringBootRepository(axiosHttp, projectHistoryRepository);
+const setupRepository = new SetupRepository(axiosHttp, projectHistoryRepository);
 const svelteRepository = new SvelteRepository(axiosHttp, projectHistoryRepository);
 const vueRepository = new VueRepository(axiosHttp, projectHistoryRepository);
 const modulesRepository = new RestModulesRepository(axiosHttp);
@@ -60,6 +62,7 @@ app.provide('projectService', projectRepository);
 app.provide('projectHistoryService', projectHistoryRepository);
 app.provide('reactService', reactRepository);
 app.provide('springBootService', springBootRepository);
+app.provide('setupService', setupRepository);
 app.provide('vueService', vueRepository);
 app.provide('svelteService', svelteRepository);
 app.provide('modules', modulesRepository);

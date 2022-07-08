@@ -1,23 +1,25 @@
 package tech.jhipster.lite.generator.server.sonar.application;
 
 import org.springframework.stereotype.Component;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.sonar.domain.SonarService;
+import tech.jhipster.lite.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.server.sonar.domain.SonarModulesFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Component
 public class SonarApplicationService {
 
-  private final SonarService sonarService;
+  private final SonarModulesFactory factory;
 
-  public SonarApplicationService(SonarService sonarService) {
-    this.sonarService = sonarService;
+  public SonarApplicationService(DockerImages dockerImages) {
+    factory = new SonarModulesFactory(dockerImages);
   }
 
-  public void addSonarJavaBackend(Project project) {
-    this.sonarService.addSonarJavaBackend(project);
+  public JHipsterModule buildBackendModule(JHipsterModuleProperties properties) {
+    return factory.buildBackendModule(properties);
   }
 
-  public void addSonarJavaBackendAndFrontend(Project project) {
-    this.sonarService.addSonarJavaBackendAndFrontend(project);
+  public JHipsterModule buildBackendFrontendModule(JHipsterModuleProperties properties) {
+    return factory.buildBackendFrontendModule(properties);
   }
 }

@@ -21,8 +21,6 @@ public interface MavenService {
   void addRepository(Project project, Repository repository);
   void addPluginRepository(Project project, Repository repository);
 
-  void initJava(Project project);
-
   void addJavaPomXml(Project project);
   void addMavenWrapper(Project project);
 

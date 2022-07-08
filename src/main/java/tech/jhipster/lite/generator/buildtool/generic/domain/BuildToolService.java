@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.buildtool.generic.domain;
 
 import java.util.List;
 import java.util.Optional;
-import tech.jhipster.lite.generator.project.domain.BuildToolType;
 import tech.jhipster.lite.generator.project.domain.Project;
 
 public interface BuildToolService {
@@ -17,8 +16,6 @@ public interface BuildToolService {
   void addPluginRepository(Project project, Repository repository);
   void deleteDependency(Project project, Dependency dependency);
   void addVersionPropertyAndDependency(Project project, String versionProperty, Dependency dependency);
-
-  void init(Project project, BuildToolType buildTool);
 
   Optional<String> getVersion(Project project, String name);
 

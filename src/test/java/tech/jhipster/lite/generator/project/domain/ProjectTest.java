@@ -6,8 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static tech.jhipster.lite.TestUtils.tmpProject;
 import static tech.jhipster.lite.TestUtils.tmpProjectWithBuildGradle;
 import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.common.domain.FileUtils.tmpDirForTest;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.common.domain.WordUtils.CRLF;
 import static tech.jhipster.lite.common.domain.WordUtils.LF;
 import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
@@ -21,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.error.domain.UnauthorizedValueException;
@@ -36,7 +35,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildMinimalProject() {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
       Project project = minimalBuilder(folder).build();
 
       assertThat(project.getFolder()).isEqualTo(folder);
@@ -57,7 +56,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildWithNullConfig() {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
       Project project = minimalBuilder(folder).config(null).build();
 
       assertThat(project.getFolder()).isEqualTo(folder);
@@ -67,7 +66,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildFullProject() {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
       Project project = fullBuilder(folder).config(Map.of(PROJECT_NAME, "JHipster Lite")).build();
 
       assertThat(project.getFolder()).isEqualTo(folder);
@@ -113,7 +112,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildProjectCrlf() throws IOException {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
 
       Files.createDirectory(Path.of(folder));
       Files.writeString(Path.of(folder, "file.txt"), "my file with \r\ncrlf", StandardOpenOption.CREATE);
@@ -126,7 +125,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildProjectLf() throws IOException {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
 
       Files.createDirectory(Path.of(folder));
       Files.writeString(Path.of(folder, "file.txt"), "my file with \nlf", StandardOpenOption.CREATE);
@@ -139,7 +138,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildProjectNoNewline() throws IOException {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
 
       Files.createDirectory(Path.of(folder));
       Files.writeString(Path.of(folder, "file.txt"), "my file with only 1 line", StandardOpenOption.CREATE);
@@ -152,7 +151,7 @@ class ProjectTest {
 
     @Test
     void shouldBuildProjectDefault() {
-      String folder = tmpDirForTest();
+      String folder = TestFileUtils.tmpDirForTest();
 
       Project project = minimalBuilder(folder).build();
 
@@ -166,7 +165,7 @@ class ProjectTest {
 
     @Test
     void shouldGetConfig() {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       Project project = Project.builder().folder(path).config(Map.of(PROJECT_NAME, "JHipster Lite")).build();
 
       assertThat(project.getConfig(PROJECT_NAME)).contains("JHipster Lite");
@@ -182,7 +181,7 @@ class ProjectTest {
 
     @Test
     void shouldAddConfigInEmptyConfig() {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       Project project = Project.builder().folder(path).build();
 
       assertThat(project.getConfig("apero")).isEmpty();
@@ -197,7 +196,7 @@ class ProjectTest {
     @Test
     void shouldAddConfigInExistingConfig() {
       // Given
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       Map<String, Object> config = new HashMap<>(Map.of(PROJECT_NAME, "JHipster Lite"));
       Project project = Project.builder().folder(path).config(config).build();
 
@@ -233,7 +232,7 @@ class ProjectTest {
 
     @Test
     void shouldAddDefaultConfig() {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       Project project = Project.builder().folder(path).build();
 
       project.addDefaultConfig(BASE_NAME);
@@ -243,7 +242,7 @@ class ProjectTest {
 
     @Test
     void shouldNotAddDefaultConfig() {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       Project project = Project.builder().folder(path).build();
 
       project.addDefaultConfig("apero");
@@ -378,7 +377,7 @@ class ProjectTest {
 
   @Test
   void shouldBeMavenProject() throws Exception {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
     TestUtils.copyPomXml(project);
 
     assertThat(project.isMavenProject()).isTrue();
@@ -386,21 +385,21 @@ class ProjectTest {
 
   @Test
   void shouldNotBeMavenProjectWithGradle() {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
 
     assertThat(project.isMavenProject()).isFalse();
   }
 
   @Test
   void shouldNotBeMavenProjectWithoutBuildTool() {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
 
     assertThat(project.isMavenProject()).isFalse();
   }
 
   @Test
   void shouldBeGradleProject() throws Exception {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
     TestUtils.copyBuildGradle(project);
 
     assertThat(project.isGradleProject()).isTrue();
@@ -408,14 +407,14 @@ class ProjectTest {
 
   @Test
   void shouldNotBeGradleProjectWithMaven() {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
 
     assertThat(project.isGradleProject()).isFalse();
   }
 
   @Test
   void shouldNotBeGradleProjectWithoutBuildTool() {
-    Project project = Project.builder().folder(tmpDirForTest()).build();
+    Project project = Project.builder().folder(TestFileUtils.tmpDirForTest()).build();
 
     assertThat(project.isGradleProject()).isFalse();
   }

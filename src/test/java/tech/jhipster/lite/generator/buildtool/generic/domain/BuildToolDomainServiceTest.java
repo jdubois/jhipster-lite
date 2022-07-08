@@ -1,13 +1,9 @@
 package tech.jhipster.lite.generator.buildtool.generic.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithBuildGradle;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +17,6 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.gradle.domain.GradleService;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
-import tech.jhipster.lite.generator.project.domain.BuildToolType;
 import tech.jhipster.lite.generator.project.domain.Project;
 
 @UnitTest
@@ -150,24 +145,6 @@ class BuildToolDomainServiceTest {
     }
 
     @Test
-    void shouldInit() {
-      Project project = tmpProjectWithPomXml();
-
-      buildToolDomainService.init(project, BuildToolType.MAVEN);
-
-      verify(mavenService).initJava(project);
-    }
-
-    @Test
-    void shouldInitWithoutExistingPomXml() {
-      Project project = tmpProject();
-
-      buildToolDomainService.init(project, BuildToolType.MAVEN);
-
-      verify(mavenService).initJava(project);
-    }
-
-    @Test
     void shouldGetVersion() {
       Project project = tmpProjectWithPomXml();
 
@@ -197,20 +174,6 @@ class BuildToolDomainServiceTest {
 
   @Nested
   class GradleTest {
-
-    @Test
-    void shouldNotInit() {
-      Project project = tmpProject();
-
-      assertThatThrownBy(() -> buildToolDomainService.init(project, BuildToolType.GRADLE)).isExactlyInstanceOf(GeneratorException.class);
-    }
-
-    @Test
-    void shouldNotInitWithExistingGradle() {
-      Project project = tmpProjectWithBuildGradle();
-
-      assertThatThrownBy(() -> buildToolDomainService.init(project, BuildToolType.GRADLE)).isExactlyInstanceOf(GeneratorException.class);
-    }
 
     @Test
     void shouldGetGroup() {

@@ -7,6 +7,8 @@ import { AngularGeneratorVue } from '@/springboot/primary/generator/angular-gene
 import { AlertBusFixture, stubAlertBus } from '../../../../common/domain/AlertBus.fixture';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { projectJson } from '../RestProject.fixture';
+import { stubProjectService } from '../../../domain/ProjectService.fixture';
+import { ProjectService } from '../../../../../../../main/webapp/app/springboot/domain/ProjectService';
 
 let wrapper: VueWrapper;
 let component: InstanceType<typeof AngularGeneratorVue>;
@@ -14,13 +16,15 @@ let component: InstanceType<typeof AngularGeneratorVue>;
 interface WrapperOptions {
   alertBus: AlertBus;
   angularService: AngularService;
+  projectService: ProjectService;
   project: ProjectToUpdate;
 }
 
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { alertBus, angularService, project }: WrapperOptions = {
+  const { alertBus, angularService, projectService, project }: WrapperOptions = {
     alertBus: stubAlertBus(),
     angularService: stubAngularService(),
+    projectService: stubProjectService(),
     project: createProjectToUpdate(),
     ...wrapperOptions,
   };
@@ -32,6 +36,7 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
       provide: {
         alertBus,
         angularService,
+        projectService,
       },
     },
   });
@@ -189,5 +194,73 @@ describe('AngularGenerator', () => {
     await component.addHealth();
 
     expectAlertErrorToBe(alertBus, 'Adding Health to project failed error');
+  });
+
+  it('should not add Cypress when project path is not filled', async () => {
+    const projectService = stubProjectService();
+    projectService.addCypress.resolves({});
+    await wrap({ projectService, project: createProjectToUpdate({ folder: '' }) });
+
+    await component.addCypressForAngular();
+
+    expect(projectService.addCypress.called).toBe(false);
+  });
+
+  it('should add Cypress when project path is filled', async () => {
+    const projectService = stubProjectService();
+    projectService.addCypress.resolves({});
+    const alertBus = stubAlertBus();
+    await wrap({ projectService, project: createProjectToUpdate({ folder: 'project/path' }), alertBus });
+
+    await component.addCypressForAngular();
+
+    const args = projectService.addCypress.getCall(0).args[0];
+    expect(args).toEqual(projectJson);
+    expectAlertSuccessToBe(alertBus, 'Cypress successfully added');
+  });
+
+  it('should handle error on adding Cypress failure', async () => {
+    const projectService = stubProjectService();
+    const alertBus = stubAlertBus();
+    projectService.addCypress.rejects('error');
+    await wrap({ projectService, project: createProjectToUpdate({ folder: 'path' }), alertBus });
+
+    await component.addCypressForAngular();
+
+    expectAlertErrorToBe(alertBus, 'Adding Cypress to project failed error');
+  });
+
+  it('should not add Playwright when project path is not filled', async () => {
+    const projectService = stubProjectService();
+    projectService.addPlaywright.resolves({});
+    await wrap({ projectService, project: createProjectToUpdate({ folder: '' }) });
+
+    await component.addPlaywrightForAngular();
+
+    expect(projectService.addPlaywright.called).toBe(false);
+  });
+
+  it('should add Playwright when project path is filled', async () => {
+    const projectService = stubProjectService();
+    projectService.addPlaywright.resolves({});
+    const alertBus = stubAlertBus();
+    await wrap({ projectService, project: createProjectToUpdate({ folder: 'project/path' }), alertBus });
+
+    await component.addPlaywrightForAngular();
+
+    const args = projectService.addPlaywright.getCall(0).args[0];
+    expect(args).toEqual(projectJson);
+    expectAlertSuccessToBe(alertBus, 'Playwright successfully added');
+  });
+
+  it('should handle error on adding Playwright failure', async () => {
+    const projectService = stubProjectService();
+    const alertBus = stubAlertBus();
+    projectService.addPlaywright.rejects('error');
+    await wrap({ projectService, project: createProjectToUpdate({ folder: 'path' }), alertBus });
+
+    await component.addPlaywrightForAngular();
+
+    expectAlertErrorToBe(alertBus, 'Adding Playwright to project failed error');
   });
 });

@@ -1,31 +1,21 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.configclient.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.springcloud.configclient.domain.SpringCloudConfigClientService;
+import tech.jhipster.lite.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.server.springboot.springcloud.configclient.domain.SpringCloudConfigModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringCloudConfigClientApplicationService {
 
-  private final SpringCloudConfigClientService springCloudConfigClientService;
+  private final SpringCloudConfigModuleFactory factory;
 
-  public SpringCloudConfigClientApplicationService(SpringCloudConfigClientService springCloudConfigClientService) {
-    this.springCloudConfigClientService = springCloudConfigClientService;
+  public SpringCloudConfigClientApplicationService(DockerImages dockerImages) {
+    factory = new SpringCloudConfigModuleFactory(dockerImages);
   }
 
-  public void init(Project project) {
-    this.springCloudConfigClientService.init(project);
-  }
-
-  public void addDependencies(Project project) {
-    this.springCloudConfigClientService.addCloudConfigDependencies(project);
-  }
-
-  public void addDockerCompose(Project project) {
-    this.springCloudConfigClientService.addDockerCompose(project);
-  }
-
-  public void addProperties(Project project) {
-    this.springCloudConfigClientService.addProperties(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

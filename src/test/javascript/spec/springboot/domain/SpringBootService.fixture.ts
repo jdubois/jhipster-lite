@@ -9,6 +9,7 @@ export interface SpringBootServiceFixture extends SpringBootService {
   addSpringBootWebfluxNetty: SinonStub;
   addSpringBootActuator: SinonStub;
   addSpringDoc: SinonStub;
+  addJavaArchunit: SinonStub;
 
   addSpringBootAopLogging: SinonStub;
   addSpringBootLogstash: SinonStub;
@@ -32,6 +33,7 @@ export interface SpringBootServiceFixture extends SpringBootService {
   addPostgres: SinonStub;
   addMySQL: SinonStub;
   addMariaDB: SinonStub;
+  addMSSQL: SinonStub;
   addMongoDB: SinonStub;
   addSpringBootFlywayInit: SinonStub;
   addSpringBootFlywayUser: SinonStub;
@@ -63,6 +65,7 @@ export const stubSpringBootService = (): SpringBootServiceFixture => ({
   addSpringBootWebfluxNetty: sinon.stub(),
   addSpringBootActuator: sinon.stub(),
   addSpringDoc: sinon.stub(),
+  addJavaArchunit: sinon.stub(),
 
   addSpringBootAopLogging: sinon.stub(),
   addSpringBootLogstash: sinon.stub(),
@@ -86,6 +89,7 @@ export const stubSpringBootService = (): SpringBootServiceFixture => ({
   addPostgres: sinon.stub(),
   addMySQL: sinon.stub(),
   addMariaDB: sinon.stub(),
+  addMSSQL: sinon.stub(),
   addMongoDB: sinon.stub(),
   addSpringBootFlywayInit: sinon.stub(),
   addSpringBootFlywayUser: sinon.stub(),

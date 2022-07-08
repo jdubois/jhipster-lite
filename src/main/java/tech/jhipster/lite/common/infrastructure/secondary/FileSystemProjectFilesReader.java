@@ -16,25 +16,56 @@ public class FileSystemProjectFilesReader implements ProjectFilesReader {
   private static final String SLASH = "/";
 
   @Override
-  @Generated
-  public String read(String path) {
+  @Generated(reason = "The error handling is an hard to test implementation detail")
+  public String readString(String path) {
     Assert.notBlank("path", path);
 
-    try (InputStream input = FileSystemProjectFilesReader.class.getResourceAsStream(path.replace("\\", SLASH))) {
-      if (input == null) {
-        throw new GeneratorException("Can't find file: " + path);
-      }
+    try (InputStream input = getInputStream(path)) {
+      assertFileExist(path, input);
 
-      return read(input);
+      return toString(input);
     } catch (IOException e) {
       throw new GeneratorException("Error closing " + path + ": " + e.getMessage(), e);
     }
   }
 
-  @Generated
-  private static String read(InputStream input) {
+  @Generated(reason = "The error handling is an hard to test implementation detail")
+  private static String toString(InputStream input) {
     try {
       return IOUtils.toString(input, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new GeneratorException("Error reading file: " + e.getMessage(), e);
+    }
+  }
+
+  @Override
+  @Generated(reason = "The error handling is an hard to test implementation detail")
+  public byte[] readBytes(String path) {
+    Assert.notBlank("path", path);
+
+    try (InputStream input = getInputStream(path)) {
+      assertFileExist(path, input);
+
+      return toByteArray(input);
+    } catch (IOException e) {
+      throw new GeneratorException("Error closing " + path + ": " + e.getMessage(), e);
+    }
+  }
+
+  private void assertFileExist(String path, InputStream input) {
+    if (input == null) {
+      throw new GeneratorException("Can't find file: " + path);
+    }
+  }
+
+  private InputStream getInputStream(String path) {
+    return FileSystemProjectFilesReader.class.getResourceAsStream(path.replace("\\", SLASH));
+  }
+
+  @Generated(reason = "The error handling is an hard to test implementation detail")
+  private static byte[] toByteArray(InputStream input) {
+    try {
+      return IOUtils.toByteArray(input);
     } catch (IOException e) {
       throw new GeneratorException("Error reading file: " + e.getMessage(), e);
     }

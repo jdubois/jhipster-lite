@@ -1,19 +1,11 @@
 package tech.jhipster.lite.generator.server.springboot.common.application;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.assertFileContentRegexp;
-import static tech.jhipster.lite.TestUtils.assertFileExist;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithSpringBootLoggingConfiguration;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithSpringBootProperties;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.common.domain.WordUtils.LF;
-import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
+import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import java.io.IOException;
 import org.junit.jupiter.api.Nested;
@@ -22,33 +14,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class SpringBootCommonApplicationServiceIT {
 
   @Autowired
-  SpringBootCommonApplicationService springBootCommonApplicationService;
+  private SpringBootCommonApplicationService springBootCommonApplicationService;
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private MavenApplicationService mavenApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  SpringBootApplicationService springBootApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Test
   void shouldAddTestLogbackRecorder() {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "foo");
     project.addConfig(PACKAGE_NAME, "tech.jhipster.bar");
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 
@@ -489,7 +478,7 @@ class SpringBootCommonApplicationServiceIT {
   @Test
   void shouldUpdateIntegrationTestAnnotation() {
     Project project = tmpProject();
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 

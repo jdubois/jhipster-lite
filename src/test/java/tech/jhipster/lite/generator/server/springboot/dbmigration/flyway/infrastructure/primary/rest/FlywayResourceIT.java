@@ -1,12 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.infrastructure.primary.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.assertDependencies;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.assertInitSqlFile;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.assertProperties;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.assertUserAuthoritySqlFile;
-import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.initClock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayAssert.*;
 
 import java.time.Clock;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,33 +13,26 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.jhipster.lite.IntegrationTest;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
-import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class FlywayResourceIT {
 
   @Autowired
-  InitApplicationService initApplicationService;
-
-  @Autowired
-  MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  SpringBootApplicationService springBootApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @SpyBean
-  Clock clock;
+  private Clock clock;
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @BeforeEach
   void setUp() {
@@ -56,11 +45,11 @@ class FlywayResourceIT {
     if (projectDTO == null) {
       throw new GeneratorException("Error when reading file");
     }
-    projectDTO.folder(FileUtils.tmpDirForTest());
+    projectDTO.folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
 
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     springBootApplicationService.init(project);
 
     mockMvc
@@ -82,11 +71,11 @@ class FlywayResourceIT {
     if (projectDTO == null) {
       throw new GeneratorException("Error when reading file");
     }
-    projectDTO.folder(FileUtils.tmpDirForTest());
+    projectDTO.folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
 
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     springBootApplicationService.init(project);
 
     mockMvc

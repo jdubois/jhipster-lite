@@ -13,6 +13,8 @@ export interface ProjectServiceFixture extends ProjectService {
   addCodespacesSetup: SinonStub;
   addGitpodSetup: SinonStub;
   getProjectDetails: SinonStub;
+  addCypress: SinonStub;
+  addPlaywright: SinonStub;
 }
 
 export const stubProjectService = (): ProjectServiceFixture => ({
@@ -27,4 +29,6 @@ export const stubProjectService = (): ProjectServiceFixture => ({
   addCodespacesSetup: sinon.stub(),
   addGitpodSetup: sinon.stub(),
   getProjectDetails: sinon.stub(),
+  addCypress: sinon.stub(),
+  addPlaywright: sinon.stub(),
 });

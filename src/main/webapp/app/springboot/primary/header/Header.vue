@@ -29,6 +29,12 @@
 
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
           <li class="nav-item col-6 col-md-auto">
+            <a class="nav-link p-2" href="./modules" target="_blank" rel="noopener">
+              <IconVue :name="'nut-fill'" :aria-label="'Modules'" :title="'Modules'" />
+              <small class="d-md-none ms-2">Modules</small>
+            </a>
+          </li>
+          <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="./swagger-ui.html" target="_blank" rel="noopener">
               <IconVue :name="'book-half'" :aria-label="'API'" :title="'The Swagger-ui'" />
               <small class="d-md-none ms-2">API</small>

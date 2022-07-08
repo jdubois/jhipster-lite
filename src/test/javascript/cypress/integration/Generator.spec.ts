@@ -4,6 +4,7 @@ const generatorSelector = (name: string) => dataSelector(composeSelector('genera
 const headerSelector = (name: string) => dataSelector(composeSelector('header', name));
 const projectGeneratorSelector = (name: string) => dataSelector(composeSelector('project-generator', name));
 const springBootGeneratorSelector = (name: string) => dataSelector(composeSelector('spring-boot-generator', name));
+const setupGeneratorSelector = (name: string) => dataSelector(composeSelector('setup-generator', name));
 const angularGeneratorSelector = (name: string) => dataSelector(composeSelector('angular-generator', name));
 const reactGeneratorSelector = (name: string) => dataSelector(composeSelector('react-generator', name));
 const vueGeneratorSelector = (name: string) => dataSelector(composeSelector('vue-generator', name));
@@ -28,7 +29,12 @@ describe('Generator', () => {
     cy.get(projectGeneratorSelector('add-sonar-java-backend-and-frontend-button')).contains('Sonar Backend+Frontend');
     cy.get(projectGeneratorSelector('add-java-base-button')).contains('Java Base');
     cy.get(projectGeneratorSelector('add-frontend-maven-plugin-button')).contains('Frontend Maven Plugin');
-    cy.get(projectGeneratorSelector('add-download-button')).should('not.exist');
+  });
+
+  it('should display setup', () => {
+    cy.get(dataSelector('section-setup')).contains('SETUP');
+
+    cy.get(setupGeneratorSelector('add-github-actions-button')).contains('Github Actions');
   });
 
   it('should display spring boot', () => {
@@ -40,7 +46,7 @@ describe('Generator', () => {
     cy.get(springBootGeneratorSelector('add-spring-boot-webflux-netty-button')).contains('Spring Webflux Netty');
     cy.get(springBootGeneratorSelector('add-spring-boot-actuator-button')).contains('Spring Boot Actuator');
     cy.get(springBootGeneratorSelector('add-spring-doc-button')).contains('Spring Doc');
-
+    cy.get(springBootGeneratorSelector('add-java-archunit-button')).contains('Java Archunit');
     cy.get(springBootGeneratorSelector('add-aop-logging-button')).contains('AOP Logging');
     cy.get(springBootGeneratorSelector('add-logstash-button')).contains('Logstash');
 
@@ -52,6 +58,7 @@ describe('Generator', () => {
 
     cy.get(springBootGeneratorSelector('add-postgresql-button')).contains('PostgreSQL');
     cy.get(springBootGeneratorSelector('add-mysql-button')).contains('MySQL');
+    cy.get(springBootGeneratorSelector('add-mssql-button')).contains('MSSQL');
     cy.get(springBootGeneratorSelector('add-mariadb-button')).contains('MariaDB');
     cy.get(springBootGeneratorSelector('add-mongodb-button')).contains('MongoDB');
     cy.get(springBootGeneratorSelector('add-flyway-button')).contains('Flyway');
@@ -75,6 +82,8 @@ describe('Generator', () => {
       'Dummy Producer and Consumer for Kafka'
     );
     cy.get(springBootGeneratorSelector('add-spring-boot-kafka-akhq-button')).contains('AKHQ for Kafka');
+    cy.get(springBootGeneratorSelector('add-ehcache-with-java-config-button')).contains('Ehcache with Java config');
+    cy.get(springBootGeneratorSelector('add-ehcache-with-xml-config-button')).contains('Ehcache with XML config');
     cy.get(springBootGeneratorSelector('add-spring-boot-cucumber-button')).contains('Cucumber');
 
     cy.get(springBootGeneratorSelector('add-spring-boot-dummy-feature-button')).contains('Dummy feature');
@@ -86,16 +95,22 @@ describe('Generator', () => {
     cy.get(angularGeneratorSelector('add-angular-with-jwt-button')).contains('Add JWT');
     cy.get(angularGeneratorSelector('add-angular-oauth2-button')).contains('Add OAuth2');
     cy.get(angularGeneratorSelector('add-angular-health-button')).contains('Add Health');
+    cy.get(angularGeneratorSelector('add-react-cypress-button')).contains('Cypress');
+    cy.get(angularGeneratorSelector('add-client-common-playwright-button')).contains('Playwright');
   });
 
   it('should display react', () => {
     cy.get(generatorSelector('option-react')).check();
     cy.get(reactGeneratorSelector('add-react-button')).contains('React');
+    cy.get(reactGeneratorSelector('add-react-cypress-button')).contains('Cypress');
+    cy.get(reactGeneratorSelector('add-client-common-playwright-button')).contains('Playwright');
   });
 
   it('should display vue', () => {
     cy.get(generatorSelector('option-vue')).check();
     cy.get(vueGeneratorSelector('add-vue-button')).contains('Vue');
+    cy.get(vueGeneratorSelector('add-react-cypress-button')).contains('Cypress');
+    cy.get(vueGeneratorSelector('add-client-common-playwright-button')).contains('Playwright');
   });
 
   it('should display svelte', () => {
@@ -113,8 +128,12 @@ describe('Generator', () => {
     cy.get(projectGeneratorSelector('add-gitpod-setup-button')).contains('Gitpod');
   });
 
-  it('should display download button when project path is filled', () => {
+  it('should not disable download button when project path is filled', () => {
     cy.get('#path').type('/tmp/jhlite');
-    cy.get(projectGeneratorSelector('add-download-button')).contains('Download');
+    cy.get(dataSelector('section-download')).contains('DOWNLOAD');
+    cy.get(dataSelector('section-download')).should('not.be.disabled');
+  });
+  it('should disable download button when project path is not filled', () => {
+    cy.get(dataSelector('section-download')).should('be.disabled');
   });
 });

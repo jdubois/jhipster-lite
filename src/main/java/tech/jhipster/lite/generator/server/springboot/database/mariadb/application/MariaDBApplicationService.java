@@ -1,51 +1,21 @@
 package tech.jhipster.lite.generator.server.springboot.database.mariadb.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.database.mariadb.domain.MariaDBService;
+import tech.jhipster.lite.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.server.springboot.database.mariadb.domain.MariaDBModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class MariaDBApplicationService {
 
-  private final MariaDBService mariaDBService;
+  private final MariaDBModuleFactory factory;
 
-  public MariaDBApplicationService(MariaDBService mariaDBService) {
-    this.mariaDBService = mariaDBService;
+  public MariaDBApplicationService(DockerImages dockerImages) {
+    factory = new MariaDBModuleFactory(dockerImages);
   }
 
-  public void init(Project project) {
-    mariaDBService.init(project);
-  }
-
-  public void addSpringDataJpa(Project project) {
-    mariaDBService.addSpringDataJpa(project);
-  }
-
-  public void addMariaDBDriver(Project project) {
-    mariaDBService.addMariaDBDriver(project);
-  }
-
-  public void addHikari(Project project) {
-    mariaDBService.addHikari(project);
-  }
-
-  public void addHibernateCore(Project project) {
-    mariaDBService.addHibernateCore(project);
-  }
-
-  public void addDockerCompose(Project project) {
-    mariaDBService.addDockerCompose(project);
-  }
-
-  public void addJavaFiles(Project project) {
-    mariaDBService.addJavaFiles(project);
-  }
-
-  public void addProperties(Project project) {
-    mariaDBService.addProperties(project);
-  }
-
-  public void addLogger(Project project) {
-    mariaDBService.addLoggerInConfiguration(project);
+  public JHipsterModule build(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

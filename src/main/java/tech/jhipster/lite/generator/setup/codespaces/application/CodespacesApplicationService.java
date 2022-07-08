@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.setup.codespaces.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.setup.codespaces.domain.CodespacesService;
+import tech.jhipster.lite.generator.setup.codespaces.domain.CodespacesModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class CodespacesApplicationService {
 
-  private final CodespacesService codespacesService;
+  private final CodespacesModuleFactory factory;
 
-  public CodespacesApplicationService(CodespacesService codespacesService) {
-    this.codespacesService = codespacesService;
+  public CodespacesApplicationService() {
+    factory = new CodespacesModuleFactory();
   }
 
-  public void init(Project project) {
-    codespacesService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

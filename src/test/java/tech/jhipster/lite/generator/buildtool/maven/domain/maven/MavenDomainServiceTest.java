@@ -166,17 +166,6 @@ class MavenDomainServiceTest {
   }
 
   @Test
-  void shouldInitJava() {
-    Project project = tmpProject();
-
-    mavenDomainService.initJava(project);
-
-    verify(projectRepository).template(any(ProjectFile.class));
-    verify(projectRepository, times(4)).add(any(ProjectFile.class));
-    verify(projectRepository, times(2)).setExecutable(any(Project.class), anyString(), anyString());
-  }
-
-  @Test
   void shouldAddJavaPomXml() {
     Project project = tmpProject();
 

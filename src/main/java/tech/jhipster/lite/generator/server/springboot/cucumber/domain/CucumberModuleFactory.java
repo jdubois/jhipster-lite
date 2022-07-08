@@ -1,16 +1,19 @@
 package tech.jhipster.lite.generator.server.springboot.cucumber.domain;
 
-import static tech.jhipster.lite.generator.module.domain.JHipsterModule.*;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.generator.module.domain.JHipsterModule;
-import tech.jhipster.lite.generator.module.domain.JHipsterSource;
-import tech.jhipster.lite.generator.module.domain.javadependency.JavaDependency;
-import tech.jhipster.lite.generator.module.domain.javadependency.JavaDependencyScope;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.JHipsterDestination;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
+import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class CucumberModuleFactory {
 
+  private static final JHipsterSource SOURCE = from("server/springboot/cucumber");
   private static final String CUCUMBER_GROUP_ID = "io.cucumber";
   private static final String CUCUMBER_VERSION = "cucumber.version";
 
@@ -19,48 +22,52 @@ public class CucumberModuleFactory {
 
     String packagePath = properties.basePackage().path();
     String applicationName = properties.projectBaseName().capitalized();
-    JHipsterSource source = from("server/springboot/cucumber");
+    JHipsterDestination destination = toSrcTestJava().append(packagePath).append("cucumber");
 
     //@formatter:off
-    return moduleBuilder(properties)
-      .context()
-        .packageName(properties.basePackage())
-        .put("applicationName", applicationName)
+    JHipsterModuleBuilder builder = moduleBuilder(properties)
+    .context()
+      .put("applicationName", applicationName)
+      .and()
+    .documentation(documentationTitle("Cucumber"), SOURCE.template("cucumber.md"))
+    .files()
+      .batch(SOURCE, destination)
+        .template("AsyncElementAsserter.java")
+        .template("AsyncHeaderAsserter.java")
+        .template("AsyncResponseAsserter.java")
+        .template("Awaiter.java")
+        .template("CucumberAssertions.java")
+        .template("CucumberConfiguration.java")
+        .template("CucumberJson.java")
+        .template("CucumberTest.java")
+        .template("CucumberTestContext.java")
+        .template("CucumberTestContextUnitTest.java")
+        .template("ElementAsserter.java")
+        .template("ElementAssertions.java")
+        .template("HeaderAsserter.java")
+        .template("HeaderAssertions.java")
+        .template("ResponseAsserter.java")
+        .template("SyncElementAsserter.java")
+        .template("SyncHeaderAsserter.java")
+        .template("SyncResponseAsserter.java")
         .and()
-      .documentation(documentationTitle("Cucumber"), source.template("cucumber.md"))
-      .files()
-        .batch(source, toSrcTestJava().append(packagePath).append("cucumber"))
-          .add("AsyncElementAsserter.java")
-          .add("AsyncHeaderAsserter.java")
-          .add("AsyncResponseAsserter.java")
-          .add("Awaiter.java")
-          .add("CucumberAssertions.java")
-          .add("CucumberConfiguration.java")
-          .add("CucumberJson.java")
-          .add("CucumberTest.java")
-          .add("CucumberTestContext.java")
-          .add("CucumberTestContextUnitTest.java")
-          .add("ElementAsserter.java")
-          .add("ElementAssertions.java")
-          .add("HeaderAsserter.java")
-          .add("HeaderAssertions.java")
-          .add("ResponseAsserter.java")
-          .add("SyncElementAsserter.java")
-          .add("SyncHeaderAsserter.java")
-          .add("SyncResponseAsserter.java")
-          .and()
-        .add(source.file("gitkeep"), to("src/test/features/.gitkeep"))
-        .and()
-      .javaDependencies()
-        .add(cucumberJunitDependency())
-        .add(cucumberJavaDependency())
-        .add(cucumberSpringDependency())
-        .add(junitVintageDependency())
-        .add(testNgDependency())
-        .add(awaitilityDepencency())
-        .and()
-      .build();
+      .add(SOURCE.file("gitkeep"), to("src/test/features/.gitkeep"))
+      .and()
+    .javaDependencies()
+      .dependency(cucumberJunitDependency())
+      .dependency(cucumberJavaDependency())
+      .dependency(cucumberSpringDependency())
+      .dependency(junitVintageDependency())
+      .dependency(testNgDependency())
+      .dependency(awaitilityDependency())
+      .and();
     //@formatter:on
+
+    if (needJpaReset(properties)) {
+      builder.files().add(SOURCE.template("CucumberJpaReset.java"), destination.append("CucumberJpaReset.java"));
+    }
+
+    return builder.build();
   }
 
   private JavaDependency cucumberJunitDependency() {
@@ -103,7 +110,11 @@ public class CucumberModuleFactory {
       .build();
   }
 
-  private JavaDependency awaitilityDepencency() {
+  private JavaDependency awaitilityDependency() {
     return javaDependency().groupId("org.awaitility").artifactId("awaitility").scope(JavaDependencyScope.TEST).build();
+  }
+
+  private boolean needJpaReset(JHipsterModuleProperties properties) {
+    return properties.getOrDefaultBoolean("jpaReset", false);
   }
 }

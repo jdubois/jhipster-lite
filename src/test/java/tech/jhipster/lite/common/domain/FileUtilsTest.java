@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 
@@ -83,7 +84,7 @@ class FileUtilsTest {
 
     @Test
     void shouldCreateFolderOnlyOnceTime() {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
 
       assertFileNotExist(path);
 
@@ -96,7 +97,7 @@ class FileUtilsTest {
 
     @Test
     void shouldNotCreateFolderWhenItsAFile() throws Exception {
-      String path = FileUtils.tmpDirForTest();
+      String path = TestFileUtils.tmpDirForTest();
       String destinationFile = getPath(path, "chips");
 
       assertFalse(FileUtils.exists(path));
@@ -754,7 +755,7 @@ class FileUtilsTest {
 
   @Test
   void shouldRename() throws Exception {
-    String folder = tmpDirForTest();
+    String folder = TestFileUtils.tmpDirForTest();
     createFolder(folder);
     Files.createFile(Paths.get(folder, "hello.world"));
 
@@ -765,7 +766,7 @@ class FileUtilsTest {
 
   @Test
   void shouldNotRename() {
-    String folder = tmpDirForTest();
+    String folder = TestFileUtils.tmpDirForTest();
 
     assertThatThrownBy(() -> FileUtils.rename(folder, "hello.world", "hello.beer")).isInstanceOf(IOException.class);
   }

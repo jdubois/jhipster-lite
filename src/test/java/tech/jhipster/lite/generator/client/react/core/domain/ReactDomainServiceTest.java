@@ -45,7 +45,7 @@ class ReactDomainServiceTest {
 
     verify(projectRepository).add(filesCountArgument(3));
     verify(projectRepository).template(any(ProjectFile.class));
-    verify(projectRepository).template(filesCountArgument(7));
+    verify(projectRepository).template(filesCountArgument(8));
   }
 
   @Test
@@ -60,7 +60,7 @@ class ReactDomainServiceTest {
     verify(npmService, times(6)).addScript(any(Project.class), anyString(), anyString());
 
     verify(projectRepository).add(filesCountArgument(3));
-    verify(projectRepository).template(filesCountArgument(7));
+    verify(projectRepository).template(filesCountArgument(8));
   }
 
   @Test

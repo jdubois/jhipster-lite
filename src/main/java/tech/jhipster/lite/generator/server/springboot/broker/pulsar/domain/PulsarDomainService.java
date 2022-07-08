@@ -6,9 +6,9 @@ import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 import static tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.Pulsar.*;
 import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBootCommon.*;
 
+import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.buildtool.generic.domain.BuildToolService;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectFile;

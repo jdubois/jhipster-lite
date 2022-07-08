@@ -50,7 +50,7 @@ public class ModulesSteps {
   public void legacyApplyModuleForDefaultProjectWithMavenFile(String moduleUrl) {
     ProjectDTO project = newDefaultProjectDto();
 
-    addPomToproject(project.getFolder());
+    addPomToProject(project.getFolder());
 
     post(moduleUrl, JsonHelper.writeAsString(project));
   }
@@ -60,11 +60,34 @@ public class ModulesSteps {
     rest.getForEntity(moduleUrl(moduleSlug), Void.class);
   }
 
+  @When("I apply {string} module to default project with package json")
+  public void applyModuleForDefaultProjectWithPackageJson(String moduleSlug, Map<String, Object> properties) {
+    String projectFolder = newTestFolder();
+
+    addPackageJsonToProject(projectFolder);
+
+    post(applyModuleUrl(moduleSlug), buildModuleQuery(projectFolder, properties));
+  }
+
+  @When("I apply {string} module to default project with package json without properties")
+  public void applyModuleForDefaultProjectWithPackageJson(String moduleSlug) {
+    String projectFolder = newTestFolder();
+
+    addPackageJsonToProject(projectFolder);
+
+    post(applyModuleUrl(moduleSlug), buildModuleQuery(projectFolder, null));
+  }
+
+  @When("I apply {string} module without properties to last project")
+  public void applyModuleForLastProject(String moduleSlug) {
+    post(applyModuleUrl(moduleSlug), buildModuleQuery(lastProjectFolder(), null));
+  }
+
   @When("I apply {string} module to default project with maven file")
   public void applyModuleForDefaultProjectWithMavenFile(String moduleSlug, Map<String, Object> properties) {
     String projectFolder = newTestFolder();
 
-    addPomToproject(projectFolder);
+    addPomToProject(projectFolder);
 
     post(applyModuleUrl(moduleSlug), buildModuleQuery(projectFolder, properties));
   }
@@ -82,7 +105,7 @@ public class ModulesSteps {
   }
 
   private String applyModuleUrl(String moduleSlug) {
-    return moduleUrl(moduleSlug) + "/apply";
+    return moduleUrl(moduleSlug) + "/apply-patch";
   }
 
   private String moduleUrl(String moduleSlug) {
@@ -123,7 +146,15 @@ public class ModulesSteps {
     return "\"" + value.toString() + "\"";
   }
 
-  private static void addPomToproject(String folder) {
+  private static void addPackageJsonToProject(String folder) {
+    addFileToProject(folder, "src/test/resources/projects/node/package.json", "package.json");
+  }
+
+  private static void addPomToProject(String folder) {
+    addFileToProject(folder, "src/test/resources/projects/maven/pom.xml", "pom.xml");
+  }
+
+  private static void addFileToProject(String folder, String source, String destination) {
     Path folderPath = Paths.get(folder);
     try {
       Files.createDirectories(folderPath);
@@ -131,9 +162,9 @@ public class ModulesSteps {
       throw new AssertionError(e);
     }
 
-    Path pomPath = folderPath.resolve("pom.xml");
+    Path pomPath = folderPath.resolve(destination);
     try {
-      Files.copy(Paths.get("src/test/resources/projects/maven/pom.xml"), pomPath);
+      Files.copy(Paths.get(source), pomPath);
     } catch (IOException e) {
       throw new AssertionError(e);
     }

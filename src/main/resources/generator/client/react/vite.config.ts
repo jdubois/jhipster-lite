@@ -13,5 +13,9 @@ export default defineConfig({
   root: 'src/main/webapp',
   server: {
     port: 9000,
+    hmr: { overlay: false },
+  },
+  define: {
+    'process.env': {},
   },
 });

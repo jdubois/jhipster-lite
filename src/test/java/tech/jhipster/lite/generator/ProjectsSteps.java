@@ -1,7 +1,6 @@
 package tech.jhipster.lite.generator;
 
 import static org.assertj.core.api.Assertions.*;
-import static tech.jhipster.lite.common.domain.FileUtils.*;
 
 import io.cucumber.java.en.Then;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.assertj.core.api.SoftAssertions;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.cucumber.CucumberAssertions;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
@@ -28,7 +28,11 @@ public class ProjectsSteps {
   }
 
   public static String newTestFolder() {
-    return lastProjectFolder = tmpDirForTest();
+    return lastProjectFolder = TestFileUtils.tmpDirForTest();
+  }
+
+  public static String lastProjectFolder() {
+    return lastProjectFolder;
   }
 
   @Then("I should have files in {string}")
@@ -80,5 +84,15 @@ public class ProjectsSteps {
   @Then("I should have history entry for {string}")
   public void shouldHaveHistoryEntry(String slug) throws IOException {
     assertThat(Files.readString(Paths.get(lastProjectFolder, ".jhipster/history", "history.json"))).contains(slug);
+  }
+
+  @Then("I should have {string} in {string}")
+  public void shouldHaveFileContent(String content, String file) throws IOException {
+    assertThat(Files.readString(Paths.get(lastProjectFolder, file))).contains(content);
+  }
+
+  @Then("I should not have {string} in {string}")
+  public void shouldNotHaveFileContent(String content, String file) throws IOException {
+    assertThat(Files.readString(Paths.get(lastProjectFolder, file))).doesNotContain(content);
   }
 }

@@ -1,13 +1,13 @@
 package tech.jhipster.lite.generator.server.javatool.base.domain;
 
-import static tech.jhipster.lite.generator.module.infrastructure.secondary.JHipsterModulesAssertions.*;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.FileUtils;
-import tech.jhipster.lite.generator.module.domain.JHipsterModule;
-import tech.jhipster.lite.generator.module.domain.JHipsterModulesFixture;
-import tech.jhipster.lite.generator.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
 class JavaBaseModuleFactoryTest {
@@ -17,14 +17,14 @@ class JavaBaseModuleFactoryTest {
   @Test
   void shouldCreateModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
-      .propertiesBuilder(FileUtils.tmpDirForTest())
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
       .projectBaseName("myapp")
       .build();
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module)
+    assertThatModuleWithFiles(module, readmeFile())
       .createPrefixedFiles("src/main/java/com/jhipster/test", "BusinessContext.java", "SharedKernel.java")
       .createPrefixedFiles(
         "src/main/java/com/jhipster/test/error/domain",
@@ -48,11 +48,18 @@ class JavaBaseModuleFactoryTest {
         "com/jhipster/test/ComponentTest.java",
         "com/jhipster/test/ReplaceCamelCase.java"
       )
-      .createFile("src/main/java/com/jhipster/test/error/package-info.java")
-      .and()
-      .createFile("src/main/java/com/jhipster/test/common/package-info.java")
-      .and()
+      .createFiles(
+        "src/main/java/com/jhipster/test/error/package-info.java",
+        "src/main/java/com/jhipster/test/common/package-info.java",
+        "src/main/java/com/jhipster/test/common/domain/Generated.java"
+      )
       .createFile("src/main/java/com/jhipster/test/common/domain/MyappCollections.java")
-      .containing("class MyappCollections");
+      .containing("class MyappCollections")
+      .and()
+      .createPrefixedFiles("documentation", "package-types.md")
+      .createPrefixedFiles("documentation", "assertions.md")
+      .createFile("README.md")
+      .containing("[Package types](documentation/package-types.md)")
+      .containing("[Assertions](documentation/assertions.md)");
   }
 }

@@ -44,7 +44,7 @@ class HexagonalArchTest {
   private static Collection<String> getPackageAnnotatedBy(Class<? extends Annotation> annotationClass) throws AssertionError {
     try {
       return Files
-        .walk(Paths.get("src", "main", "java", {{{packageWalkPath}}}))
+        .walk(Paths.get("src", "main", "java", {{ packageWalkPath }}))
         .filter(path -> path.toString().endsWith("package-info.java"))
         .map(toPackageName())
         .map(path -> path.replaceAll("[\\/]", "."))

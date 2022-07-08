@@ -329,6 +329,22 @@
               INITIALIZATION
             </button>
           </li>
+          <li class="nav-item">
+            <div class="q-focus-helper" tabindex="-1"></div>
+            <button
+              id="section-setup"
+              data-selector="section-setup"
+              class="nav-link bg-setup fw-bold text-setup"
+              data-bs-toggle="tab"
+              data-bs-target="#v-pills-setup"
+              role="tab"
+              aria-controls="v-pills-setup"
+              aria-selected="true"
+            >
+              <IconVue :name="'code-slash'" :aria-hidden="true" />
+              SETUP
+            </button>
+          </li>
 
           <li v-if="server === 'springboot'" class="nav-item">
             <div class="q-focus-helper" tabindex="-1"></div>
@@ -453,12 +469,27 @@
               SVELTE
             </button>
           </li>
+          <li class="nav-item">
+            <button
+              id="section-download"
+              data-selector="section-download"
+              class="nav-link text-primary fw-bold"
+              :class="project.folder !== '' ? 'bg-primary' : ''"
+              type="button"
+              :disabled="project.folder !== '' ? false : true"
+              @click.prevent="download"
+            >
+              <IconVue :name="'download'" :aria-hidden="true" />
+              DOWNLOAD
+            </button>
+          </li>
         </ul>
       </div>
 
       <div class="col py-2">
         <div id="v-pills-tab" class="tab-content">
           <ProjectGeneratorVue :build-tool="buildTool" :setup-tool="setupTool" :project="project" />
+          <SetupGeneratorVue :project="project" />
           <SpringBootGeneratorVue v-if="server === 'springboot'" :project="project" />
           <AngularGeneratorVue v-if="client === 'angular'" :project="project" />
           <ReactGeneratorVue v-if="client === 'react'" :project="project" />

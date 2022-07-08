@@ -1,7 +1,6 @@
 import { defineComponent, inject } from 'vue';
 import { ProjectToUpdate, toProject } from '@/springboot/primary/ProjectToUpdate';
 import { ProjectService } from '@/springboot/domain/ProjectService';
-import { FileDownloader } from '@/common/primary/FileDownloader';
 import { GeneratorButtonVue } from '@/springboot/primary/generator/generator-button';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 
@@ -30,7 +29,6 @@ export default defineComponent({
   setup(props) {
     const alertBus = inject('alertBus') as AlertBus;
     const projectService = inject('projectService') as ProjectService;
-    const fileDownloader = inject('fileDownloader') as FileDownloader;
 
     const selectorPrefix = 'project-generator';
 
@@ -119,16 +117,6 @@ export default defineComponent({
       }
     };
 
-    const download = async (): Promise<void> => {
-      await projectService
-        .download(toProject(props.project as ProjectToUpdate))
-        .then(file => {
-          alertBus.success('File ready for download');
-          fileDownloader.download(file);
-        })
-        .catch(error => alertBus.error(`Downloading project failed ${error}`));
-    };
-
     return {
       selectorPrefix,
       props,
@@ -141,7 +129,6 @@ export default defineComponent({
       addFrontendMavenPlugin,
       addCodespacesSetup,
       addGitpodSetup,
-      download,
     };
   },
 });

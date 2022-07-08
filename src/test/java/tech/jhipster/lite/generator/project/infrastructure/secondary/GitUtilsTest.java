@@ -8,15 +8,15 @@ import static tech.jhipster.lite.generator.project.domain.Constants.TEST_TEMPLAT
 import java.io.File;
 import java.io.FileNotFoundException;
 import org.junit.jupiter.api.Test;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.FileUtils;
 
 @UnitTest
 class GitUtilsTest {
 
   @Test
   void shouldInitThenAddThenCommit() throws Exception {
-    String dir = FileUtils.tmpDirForTest();
+    String dir = TestFileUtils.tmpDirForTest();
 
     GitUtils.init(dir);
     File file = File.createTempFile("hello", ".world", new File(dir));
@@ -30,7 +30,7 @@ class GitUtilsTest {
 
   @Test
   void shouldInitThenAddAndCommit() throws Exception {
-    String dir = FileUtils.tmpDirForTest();
+    String dir = TestFileUtils.tmpDirForTest();
 
     GitUtils.init(dir);
     File file = File.createTempFile("hello", ".world", new File(dir));
@@ -43,7 +43,7 @@ class GitUtilsTest {
 
   @Test
   void shouldApply() throws Exception {
-    String dir = FileUtils.tmpDirForTest();
+    String dir = TestFileUtils.tmpDirForTest();
     GitUtils.init(dir);
 
     GitUtils.apply(dir, getPath(TEST_TEMPLATE_RESOURCES, "utils", "example.patch"));
@@ -53,7 +53,7 @@ class GitUtilsTest {
 
   @Test
   void shouldNotApplyWhenNoExistingPatch() throws Exception {
-    String dir = FileUtils.tmpDirForTest();
+    String dir = TestFileUtils.tmpDirForTest();
     GitUtils.init(dir);
 
     assertThatThrownBy(() -> GitUtils.apply(dir, getPath(TEST_TEMPLATE_RESOURCES, "utils", "unknown.patch")))

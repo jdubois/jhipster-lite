@@ -4,7 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tech.jhipster.lite.TestUtils.assertFileContent;
 import static tech.jhipster.lite.TestUtils.readFileToObject;
-import static tech.jhipster.lite.common.domain.FileUtils.tmpDirForTest;
 import static tech.jhipster.lite.generator.buildtool.gradle.application.GradleAssertFiles.assertFilesBuildGradleKts;
 import static tech.jhipster.lite.generator.buildtool.gradle.application.GradleAssertFiles.assertFilesGradle;
 import static tech.jhipster.lite.generator.buildtool.gradle.application.GradleAssertFiles.assertFilesGradleWrapper;
@@ -17,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.jhipster.lite.IntegrationTest;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
@@ -30,7 +30,7 @@ class GradleResourceIT {
 
   @Test
   void shouldInit() throws Exception {
-    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
 
     mockMvc
       .perform(
@@ -47,7 +47,7 @@ class GradleResourceIT {
 
   @Test
   void shouldAddBuildGradleKts() throws Exception {
-    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
 
     mockMvc
       .perform(
@@ -65,7 +65,7 @@ class GradleResourceIT {
 
   @Test
   void shouldAddGradleWrapper() throws Exception {
-    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(tmpDirForTest());
+    ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
 
     mockMvc
       .perform(

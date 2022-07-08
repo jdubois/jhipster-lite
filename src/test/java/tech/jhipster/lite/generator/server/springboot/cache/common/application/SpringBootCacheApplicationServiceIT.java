@@ -1,40 +1,35 @@
 package tech.jhipster.lite.generator.server.springboot.cache.common.application;
 
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.BASE_NAME;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PACKAGE_NAME;
-import static tech.jhipster.lite.generator.server.springboot.cache.common.application.SpringBootCacheAssert.assertDependencies;
-import static tech.jhipster.lite.generator.server.springboot.cache.common.application.SpringBootCacheAssert.assertEnableCaching;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
+import static tech.jhipster.lite.generator.server.springboot.cache.common.application.SpringBootCacheAssert.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class SpringBootCacheApplicationServiceIT {
 
   @Autowired
-  SpringBootCacheApplicationService springBootCacheApplicationService;
+  private SpringBootCacheApplicationService springBootCacheApplicationService;
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private MavenApplicationService mavenApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  SpringBootApplicationService springBootApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Test
   void shouldAddDependencies() {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "bar");
     project.addConfig(PACKAGE_NAME, "tech.jhipster.baz");
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
 
     springBootCacheApplicationService.addDependencies(project);
@@ -47,7 +42,7 @@ class SpringBootCacheApplicationServiceIT {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "bar");
     project.addConfig(PACKAGE_NAME, "tech.jhipster.baz");
-    initApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
     mavenApplicationService.addPomXml(project);
     springBootApplicationService.init(project);
 

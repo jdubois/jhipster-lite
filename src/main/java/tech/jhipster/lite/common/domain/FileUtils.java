@@ -18,7 +18,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -62,10 +61,6 @@ public class FileUtils {
     return tempDir;
   }
 
-  public static String tmpDirForTest() {
-    return getPath(tmpDir(), "jhlite-test", UUID.randomUUID().toString());
-  }
-
   public static String getPath(String... paths) {
     return String.join(FILE_SEPARATOR, paths).replace("\\", FILE_SEPARATOR);
   }
@@ -85,7 +80,7 @@ public class FileUtils {
   public static Optional<String> getValueBetween(String filename, String prefix, String suffix) {
     Assert.notBlank(FILENAME, filename);
     Optional<String> matchingLine = readLine(filename, prefix);
-    return matchingLine.map(line -> getValueFromLine(prefix, suffix, line)).orElse(Optional.empty());
+    return matchingLine.flatMap(line -> getValueFromLine(prefix, suffix, line));
   }
 
   public static Optional<String> getValueFromLine(String prefix, String suffix, String line) {

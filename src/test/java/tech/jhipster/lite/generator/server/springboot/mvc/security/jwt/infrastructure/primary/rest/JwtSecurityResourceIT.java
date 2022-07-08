@@ -10,10 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.jhipster.lite.IntegrationTest;
+import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
-import tech.jhipster.lite.common.domain.FileUtils;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
-import tech.jhipster.lite.generator.init.application.InitApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.generator.project.infrastructure.secondary.GitUtils;
@@ -21,40 +19,35 @@ import tech.jhipster.lite.generator.server.javatool.base.application.JavaBaseApp
 import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityApplicationService;
 import tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcApplicationService;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class JwtSecurityResourceIT {
 
   @Autowired
-  InitApplicationService initApplicationService;
+  private JavaBaseApplicationService javaBaseApplicationService;
 
   @Autowired
-  MavenApplicationService mavenApplicationService;
+  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
-  JavaBaseApplicationService javaBaseApplicationService;
+  private SpringBootMvcApplicationService springBootMvcApplicationService;
 
   @Autowired
-  SpringBootApplicationService springBootApplicationService;
+  private JwtSecurityApplicationService jwtSecurityApplicationService;
 
   @Autowired
-  SpringBootMvcApplicationService springBootMvcApplicationService;
-
-  @Autowired
-  JwtSecurityApplicationService jwtSecurityApplicationService;
-
-  @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @Test
   void shouldInit() throws Exception {
     ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class);
-    projectDTO.folder(FileUtils.tmpDirForTest());
+    projectDTO.folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
     GitUtils.init(project.getFolder());
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     javaBaseApplicationService.build(projectDTO.toModuleProperties());
     springBootApplicationService.init(project);
     springBootMvcApplicationService.init(project);
@@ -75,11 +68,11 @@ class JwtSecurityResourceIT {
   @Test
   void shouldAddBasicAuth() throws Exception {
     ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class);
-    projectDTO.folder(FileUtils.tmpDirForTest());
+    projectDTO.folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
     GitUtils.init(project.getFolder());
-    initApplicationService.init(project);
-    mavenApplicationService.init(project);
+    TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyMaven(project);
     javaBaseApplicationService.build(projectDTO.toModuleProperties());
     springBootApplicationService.init(project);
     springBootMvcApplicationService.init(project);

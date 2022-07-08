@@ -1,0 +1,12 @@
+<div class="jhipster-module-properties" v-if="properties.length !== 0">
+  <div class="jhipster-module-properties--type">
+    {{ propertiesType }}
+    <div :data-selector="`module-${moduleSlug}-${propertiesType}-properties-stats`">{{ propertiesStats() }}</div>
+  </div>
+  <div v-for="property in properties" class="jhipster-module-properties--property">
+    <div class="jhipster-module-properties--property-key">{{ property.key }}</div>
+    <div class="jhipster-module-properties--property-value" :data-selector="`module-${moduleSlug}-${property.key}-property-value`">
+      {{ moduleProperties.get(property.key) }}
+    </div>
+  </div>
+</div>

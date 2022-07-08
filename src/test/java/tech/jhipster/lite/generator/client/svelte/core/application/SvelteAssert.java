@@ -19,11 +19,11 @@ public class SvelteAssert {
   }
 
   public static void assertScripts(Project project) {
-    assertFileContent(project, PACKAGE_JSON, "\"build\": \"svelte-kit build\"");
-    assertFileContent(project, PACKAGE_JSON, "\"dev\": \"svelte-kit dev --port 9000\"");
-    assertFileContent(project, PACKAGE_JSON, "\"start\": \"svelte-kit dev --port 9000\"");
-    assertFileContent(project, PACKAGE_JSON, "\"preview\": \"svelte-kit preview\"");
-    assertFileContent(project, PACKAGE_JSON, "\"package\": \"svelte-kit package\"");
+    assertFileContent(project, PACKAGE_JSON, "\"build\": \"vite build\"");
+    assertFileContent(project, PACKAGE_JSON, "\"dev\": \"vite dev --port 9000\"");
+    assertFileContent(project, PACKAGE_JSON, "\"start\": \"vite dev --port 9000\"");
+    assertFileContent(project, PACKAGE_JSON, "\"preview\": \"vite preview\"");
+    assertFileContent(project, PACKAGE_JSON, "\"package\": \"vite package\"");
     assertFileContent(project, PACKAGE_JSON, "\"check\": \"svelte-check --tsconfig ./tsconfig.json\"");
     assertFileContent(project, PACKAGE_JSON, "\"check:watch\": \"svelte-check --tsconfig ./tsconfig.json --watch\"");
     assertFileContent(

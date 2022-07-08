@@ -1,19 +1,21 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.eureka.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.springcloud.eureka.domain.EurekaService;
+import tech.jhipster.lite.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.server.springboot.springcloud.eureka.domain.EurekaModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class EurekaApplicationService {
 
-  private final EurekaService eurekaService;
+  private final EurekaModuleFactory factory;
 
-  public EurekaApplicationService(EurekaService eurekaService) {
-    this.eurekaService = eurekaService;
+  public EurekaApplicationService(DockerImages dockerImages) {
+    factory = new EurekaModuleFactory(dockerImages);
   }
 
-  public void init(Project project) {
-    eurekaService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

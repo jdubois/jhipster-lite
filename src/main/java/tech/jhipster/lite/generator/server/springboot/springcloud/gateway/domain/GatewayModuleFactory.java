@@ -25,9 +25,9 @@ public class GatewayModuleFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .javaDependencies()
-        .dependencyManagement(springCloudDependenciesManagement())
-        .dependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
-        .dependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-gateway"))
+        .addDependencyManagement(springCloudDependenciesManagement())
+        .addDependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
+        .addDependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-gateway"))
         .and()
       .springMainBootstrapProperties()
         .set(propertyKey("spring.application.name"), propertyValue(properties.projectBaseName().get()))

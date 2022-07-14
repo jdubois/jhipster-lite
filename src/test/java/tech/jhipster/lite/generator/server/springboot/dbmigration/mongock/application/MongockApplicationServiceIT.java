@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
@@ -19,12 +17,6 @@ class MongockApplicationServiceIT {
 
   @Autowired
   private MongockApplicationService mongockApplicationService;
-
-  @Autowired
-  private MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Test
   void shouldInit() {
@@ -34,8 +26,8 @@ class MongockApplicationServiceIT {
     project.addConfig(BASE_NAME, "foo");
 
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     // When
     mongockApplicationService.init(project);

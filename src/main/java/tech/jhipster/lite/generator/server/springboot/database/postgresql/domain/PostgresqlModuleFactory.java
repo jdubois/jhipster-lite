@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.postgresql.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.NEEDLE_LOGBACK_LOGGER;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommonModuleBuilder.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
@@ -41,7 +41,7 @@ public class PostgresqlModuleFactory {
       )
       .and()
       .javaDependencies()
-      .dependency(groupId(ORG_POSTGRESQL), artifactId("postgresql"))
+      .addDependency(groupId(ORG_POSTGRESQL), artifactId("postgresql"))
       .and()
       .springMainProperties()
       .set(propertyKey("spring.datasource.url"), propertyValue("jdbc:postgresql://localhost:5432/" + properties.projectBaseName().name()))

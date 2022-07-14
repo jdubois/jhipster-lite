@@ -1,7 +1,6 @@
 package tech.jhipster.lite.history.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.history.domain.HistoryProjectsFixture.*;
 

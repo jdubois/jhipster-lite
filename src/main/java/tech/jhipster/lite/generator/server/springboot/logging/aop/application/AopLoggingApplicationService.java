@@ -1,31 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.logging.aop.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.logging.aop.domain.AopLoggingService;
+import tech.jhipster.lite.generator.server.springboot.logging.aop.domain.AopLoggingModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class AopLoggingApplicationService {
 
-  private final AopLoggingService aopLoggingService;
+  private final AopLoggingModuleFactory factory;
 
-  public AopLoggingApplicationService(AopLoggingService aopLoggingService) {
-    this.aopLoggingService = aopLoggingService;
+  public AopLoggingApplicationService() {
+    factory = new AopLoggingModuleFactory();
   }
 
-  public void init(Project project) {
-    aopLoggingService.init(project);
-  }
-
-  public void addDialectJava(Project project) {
-    aopLoggingService.addJavaFiles(project);
-  }
-
-  public void addMavenDependencies(Project project) {
-    aopLoggingService.addMavenDependencies(project);
-  }
-
-  public void addProperties(Project project) {
-    aopLoggingService.addProperties(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

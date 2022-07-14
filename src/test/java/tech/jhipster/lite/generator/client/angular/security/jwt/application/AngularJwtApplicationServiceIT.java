@@ -1,7 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.security.jwt.application;
 
 import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJsonComplete;
-import static tech.jhipster.lite.generator.client.angular.security.jwt.application.AngularJwtAssert.*;
+import static tech.jhipster.lite.generator.client.angular.security.jwt.application.AngularJwtAssert.assertAppJwt;
+import static tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules.applyAngular;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ class AngularJwtApplicationServiceIT {
   void shouldAddJwtAngular() {
     Project project = tmpProjectWithPackageJsonComplete();
 
-    angularApplicationService.addAngular(project);
+    applyAngular(project);
     angularJwtApplicationService.addJwtAngular(project);
 
     assertAppJwt(project);

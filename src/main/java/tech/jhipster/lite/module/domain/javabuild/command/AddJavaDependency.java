@@ -1,5 +1,6 @@
 package tech.jhipster.lite.module.domain.javabuild.command;
 
+import java.util.Collection;
 import java.util.Optional;
 import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
 import tech.jhipster.lite.module.domain.javadependency.DependencyId;
@@ -28,5 +29,9 @@ public sealed interface AddJavaDependency permits AddDirectJavaDependency, AddJa
 
   default Optional<JavaDependencyType> dependencyType() {
     return dependency().type();
+  }
+
+  default Collection<DependencyId> exclusions() {
+    return dependency().exclusions();
   }
 }

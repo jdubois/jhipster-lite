@@ -1,19 +1,11 @@
 package tech.jhipster.lite.generator.buildtool.maven.domain.maven;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPomXml;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.GROUP_ID_BEGIN;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.GROUP_ID_END;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.NAME_BEGIN;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.NAME_END;
-import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +21,8 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Parent;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Repository;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenDomainService;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.project.domain.ProjectFile;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
 @UnitTest
@@ -46,16 +34,6 @@ class MavenDomainServiceTest {
 
   @InjectMocks
   private MavenDomainService mavenDomainService;
-
-  @Test
-  void shouldAddParent() {
-    Project project = tmpProjectWithPomXml();
-    Parent parent = Parent.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter-parent").version("0.0.0").build();
-
-    mavenDomainService.addParent(project, parent);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
 
   @Test
   void shouldAddDependency() {
@@ -98,36 +76,6 @@ class MavenDomainServiceTest {
   }
 
   @Test
-  void shouldDeleteDependency() {
-    Project project = tmpProjectWithPomXml();
-    Dependency dependency = Dependency.builder().groupId("org.junit.jupiter").artifactId("junit-jupiter-engine").build();
-
-    mavenDomainService.deleteDependency(project, dependency);
-
-    verify(projectRepository).replaceRegexp(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddPlugin() {
-    Project project = tmpProjectWithPomXml();
-    Plugin plugin = Plugin.builder().groupId("org.springframework.boot").artifactId("spring-boot-maven-plugin").build();
-
-    mavenDomainService.addPlugin(project, plugin);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddPluginManagement() {
-    Project project = tmpProjectWithPomXml();
-    Plugin plugin = Plugin.builder().groupId("org.springframework.boot").artifactId("spring-boot-maven-plugin").build();
-
-    mavenDomainService.addPluginManagement(project, plugin);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
   void shouldAddProperty() {
     Project project = tmpProjectWithPomXml();
 
@@ -143,45 +91,6 @@ class MavenDomainServiceTest {
     mavenDomainService.deleteProperty(project, "java");
 
     verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddRepository() {
-    Project project = tmpProjectWithPomXml();
-    Repository repository = Repository.builder().id("spring-milestone").url("https://repo.spring.io/milestone").build();
-
-    mavenDomainService.addRepository(project, repository);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddPluginRepository() {
-    Project project = tmpProjectWithPomXml();
-    Repository repository = Repository.builder().id("spring-milestone").url("https://repo.spring.io/milestone").build();
-
-    mavenDomainService.addPluginRepository(project, repository);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddJavaPomXml() {
-    Project project = tmpProject();
-
-    mavenDomainService.addJavaPomXml(project);
-
-    verify(projectRepository).template(any(ProjectFile.class));
-  }
-
-  @Test
-  void shouldAddMavenWrapper() {
-    Project project = tmpProject();
-
-    mavenDomainService.addMavenWrapper(project);
-
-    verify(projectRepository, times(4)).add(any(ProjectFile.class));
-    verify(projectRepository, times(2)).setExecutable(any(Project.class), anyString(), anyString());
   }
 
   @Nested

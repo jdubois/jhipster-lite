@@ -2,24 +2,19 @@ package tech.jhipster.lite.generator.project.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 
 import com.github.mustachejava.MustacheNotFoundException;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.eclipse.jgit.api.errors.InvalidConfigurationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,26 +36,6 @@ class ProjectLocalRepositoryTest {
 
   @InjectMocks
   private ProjectLocalRepository repository;
-
-  @Test
-  void shouldCreate() {
-    Project project = tmpProject();
-
-    repository.create(project);
-
-    assertFileExist(project.getFolder());
-  }
-
-  @Test
-  void shouldNotCreate() {
-    Project project = tmpProject();
-
-    try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
-      fileUtils.when(() -> FileUtils.createFolder(anyString())).thenThrow(new IOException());
-
-      assertThatThrownBy(() -> repository.create(project)).isExactlyInstanceOf(GeneratorException.class);
-    }
-  }
 
   @Test
   void shouldNotAddFileToUnknownFolder() {
@@ -151,27 +126,6 @@ class ProjectLocalRepositoryTest {
   }
 
   @Test
-  void shouldGetComputedTemplate() {
-    Project project = tmpProject();
-
-    String result = repository.getComputedTemplate(project, "mustache", "README.md.mustache");
-
-    assertThat(result.lines().toList()).isEqualTo("The path is: ".lines().collect(Collectors.toList()));
-  }
-
-  @Test
-  void shouldNotGetComputedTemplate() {
-    Project project = tmpProject();
-
-    try (MockedStatic<MustacheUtils> mustacheUtils = Mockito.mockStatic(MustacheUtils.class)) {
-      mustacheUtils.when(() -> MustacheUtils.template(anyString(), any())).thenThrow(new IOException());
-
-      assertThatThrownBy(() -> repository.getComputedTemplate(project, "mustache", README_MD))
-        .isExactlyInstanceOf(GeneratorException.class);
-    }
-  }
-
-  @Test
   void shouldContainsRegexp() {
     Project project = tmpProjectWithPomXml();
 
@@ -246,46 +200,6 @@ class ProjectLocalRepositoryTest {
   }
 
   @Test
-  void shouldNotSetExecutableForNonPosix() {
-    Project project = tmpProjectWithPomXml();
-    try (
-      MockedStatic<FileUtils> fileUtilsMock = Mockito.mockStatic(FileUtils.class);
-      MockedStatic<Files> filesMock = Mockito.mockStatic(Files.class)
-    ) {
-      fileUtilsMock.when(() -> FileUtils.getPath(Mockito.any(String.class))).thenReturn(project.getFolder());
-      fileUtilsMock.when(FileUtils::isPosix).thenReturn(false);
-
-      repository.setExecutable(project, "", POM_XML);
-      filesMock.verify(() -> Files.setPosixFilePermissions(Mockito.any(), Mockito.any()), never());
-    }
-  }
-
-  @Test
-  void shouldSetExecutable() throws IOException {
-    if (!FileUtils.isPosix()) {
-      return;
-    }
-    Project project = tmpProjectWithPomXml();
-    String pomXmlFolder = getPath(project.getFolder(), POM_XML);
-    Set<PosixFilePermission> posixFilePermissions = Files.getPosixFilePermissions(getPathOf(pomXmlFolder));
-    assertThat(posixFilePermissions).doesNotContain(PosixFilePermission.OWNER_EXECUTE);
-
-    repository.setExecutable(project, "", POM_XML);
-
-    posixFilePermissions = Files.getPosixFilePermissions(getPathOf(pomXmlFolder));
-    assertThat(posixFilePermissions).contains(PosixFilePermission.OWNER_EXECUTE);
-  }
-
-  @Test
-  void shouldNotSetExecutable() {
-    if (!FileUtils.isPosix()) {
-      return;
-    }
-    Project project = tmpProject();
-    assertThatThrownBy(() -> repository.setExecutable(project, "", POM_XML)).isExactlyInstanceOf(GeneratorException.class);
-  }
-
-  @Test
   void shouldNotWriteNullText() {
     Project project = tmpProject();
 
@@ -311,30 +225,6 @@ class ProjectLocalRepositoryTest {
       gitUtils.when(() -> GitUtils.init(anyString())).thenThrow(new InvalidConfigurationException("error"));
 
       assertThatThrownBy(() -> repository.gitInit(project)).isExactlyInstanceOf(GeneratorException.class);
-      assertFileNotExist(project, ".git/config");
-    }
-  }
-
-  @Test
-  void shouldInitThenAddAndCommit() throws Exception {
-    Project project = tmpProject();
-
-    repository.gitInit(project);
-    File file = File.createTempFile("hello", ".world", new File(project.getFolder()));
-    repository.gitAddAndCommit(project, "1st commit");
-
-    assertFileExist(project, ".git");
-    assertFileExist(project, file.getName());
-  }
-
-  @Test
-  void shouldNotAddAndCommit() {
-    Project project = tmpProject();
-
-    try (MockedStatic<GitUtils> gitUtils = Mockito.mockStatic(GitUtils.class)) {
-      gitUtils.when(() -> GitUtils.addAndCommit(anyString(), anyString())).thenThrow(new InvalidConfigurationException("error"));
-
-      assertThatThrownBy(() -> repository.gitAddAndCommit(project, "1st commit")).isExactlyInstanceOf(GeneratorException.class);
       assertFileNotExist(project, ".git/config");
     }
   }
@@ -410,26 +300,5 @@ class ProjectLocalRepositoryTest {
 
       assertThatThrownBy(() -> repository.download(project)).isExactlyInstanceOf(GeneratorException.class);
     }
-  }
-
-  @Test
-  void shouldBeJHipsterLiteProject() throws Exception {
-    Project project = tmpProject();
-    FileUtils.createFolder(getPath(project.getFolder(), JHIPSTER_FOLDER));
-    Files.createFile(getPathOf(project.getFolder(), JHIPSTER_FOLDER, HISTORY_JSON));
-
-    boolean result = repository.isJHipsterLiteProject(project.getFolder());
-
-    assertThat(result).isTrue();
-  }
-
-  @Test
-  void shouldNotBeJHipsterLiteProject() throws Exception {
-    Project project = tmpProject();
-    FileUtils.createFolder(getPath(project.getFolder(), JHIPSTER_FOLDER));
-
-    boolean result = repository.isJHipsterLiteProject(project.getFolder());
-
-    assertThat(result).isFalse();
   }
 }

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoc.domain;
 
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleOnProjectWithDefaultPom;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,6 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.ModuleAsserter;
 
 @UnitTest
 class SpringdocModuleFactoryTest {
@@ -27,7 +26,7 @@ class SpringdocModuleFactoryTest {
 
     JHipsterModule module = springdocModuleFactory.buildModuleForMvc(moduleProperties);
 
-    ModuleAsserter moduleAsserter = assertThatModuleOnProjectWithDefaultPom(module)
+    ModuleAsserter moduleAsserter = assertThatModuleWithFiles(module, pomFile())
       .createFile("src/main/java/com/jhipster/test/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java")
       .notContaining("JWT")
       .and()
@@ -47,7 +46,7 @@ class SpringdocModuleFactoryTest {
 
     JHipsterModule module = springdocModuleFactory.buildModuleForWebflux(moduleProperties);
 
-    ModuleAsserter moduleAsserter = assertThatModuleOnProjectWithDefaultPom(module)
+    ModuleAsserter moduleAsserter = assertThatModuleWithFiles(module, pomFile())
       .createFile("src/main/java/com/jhipster/test/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java")
       .notContaining("JWT")
       .and()
@@ -67,7 +66,7 @@ class SpringdocModuleFactoryTest {
 
     JHipsterModule module = springdocModuleFactory.buildModuleWithSecurityJwtForMvc(moduleProperties);
 
-    ModuleAsserter moduleAsserter = assertThatModuleOnProjectWithDefaultPom(module)
+    ModuleAsserter moduleAsserter = assertThatModuleWithFiles(module, pomFile())
       .createFile("src/main/java/com/jhipster/test/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java")
       .containing("JWT")
       .and()
@@ -88,7 +87,7 @@ class SpringdocModuleFactoryTest {
 
     JHipsterModule module = springdocModuleFactory.buildModuleWithSecurityJwtForWebflux(moduleProperties);
 
-    ModuleAsserter moduleAsserter = assertThatModuleOnProjectWithDefaultPom(module)
+    ModuleAsserter moduleAsserter = assertThatModuleWithFiles(module, pomFile())
       .createFile("src/main/java/com/jhipster/test/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java")
       .containing("JWT")
       .and()

@@ -8,7 +8,7 @@ import static tech.jhipster.lite.generator.project.domain.Constants.MAIN_RESOURC
 import static tech.jhipster.lite.generator.project.domain.Constants.POM_XML;
 import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
 import static tech.jhipster.lite.generator.project.domain.Constants.TEST_RESOURCES;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.LOGGING_TEST_CONFIGURATION;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 
 import java.util.List;
 import tech.jhipster.lite.generator.project.domain.DefaultConfig;

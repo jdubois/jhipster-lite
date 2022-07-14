@@ -9,10 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.npm.domain.NpmVersion;
 import tech.jhipster.lite.npm.domain.NpmVersionSource;
 import tech.jhipster.lite.npm.domain.UnknownNpmPackageException;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)

@@ -143,7 +143,7 @@ You can edit your `.git/config`, and update this section:
 	fetch = +refs/pull/*/head:refs/remotes/upstream/pr/*
 ```
 
-With this change, you'll be able to use `git fetch upstream` and test all existing pull requests, using `git checkout pr/<number>`.
+With this change, you'll be able to use `git fetch upstream` and test all existing pull requests, using `git switch pr/<number>`.
 
 ### Set NPM to use the cloned project
 
@@ -217,7 +217,7 @@ Before you submit your pull request consider the following guidelines:
 - Refresh your project
 
   ```shell
-  git checkout main
+  git switch main
   git fetch upstream
   git rebase upstream/main
   ```
@@ -225,7 +225,7 @@ Before you submit your pull request consider the following guidelines:
 - Make your changes in a new git branch
 
   ```shell
-  git checkout -b my-fix-branch
+  git switch -c my-fix-branch
   ```
 
 - Create your patch, **including appropriate test cases**.
@@ -321,10 +321,10 @@ from the main (upstream) repository:
   git push origin --delete my-fix-branch
   ```
 
-- Check out the main branch:
+- Switch to the main branch:
 
   ```shell
-  git checkout main -f
+  git switch main -f
   ```
 
 - Delete the local branch:

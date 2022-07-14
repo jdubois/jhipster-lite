@@ -52,10 +52,8 @@ export class RestModulesRepository implements ModulesRepository {
     return this.axiosInstance.get<RestModules>('/api/modules').then(mapToModules);
   }
 
-  apply(module: ModuleSlug, moduleToApply: ModuleToApply): Promise<void> {
-    return this.axiosInstance
-      .post<void, RestModuleToApply>(`/api/modules/${module}/apply-patch`, toRestModuleToApply(moduleToApply))
-      .then(() => undefined);
+  async apply(module: ModuleSlug, moduleToApply: ModuleToApply): Promise<void> {
+    await this.axiosInstance.post<void, RestModuleToApply>(`/api/modules/${module}/apply-patch`, toRestModuleToApply(moduleToApply));
   }
 
   appliedModules(folder: ProjectFolder): Promise<ModuleSlug[]> {

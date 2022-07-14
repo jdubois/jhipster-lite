@@ -1,7 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.webflux.web.domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.HashMap;

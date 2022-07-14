@@ -11,10 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.OngoingStubbing;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.docker.domain.DockerImage;
 import tech.jhipster.lite.docker.domain.DockerImageName;
 import tech.jhipster.lite.docker.domain.UnknownDockerImageException;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)

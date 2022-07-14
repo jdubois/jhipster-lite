@@ -48,6 +48,14 @@ public class JHipsterModulePropertyDefinition {
       .build();
   }
 
+  static JHipsterModulePropertyDefinition serverPortProperty() {
+    return mandatoryIntegerProperty(JHipsterModuleProperties.SERVER_PORT_PROPERTY)
+      .description("Server port")
+      .example("8080")
+      .order(-50)
+      .build();
+  }
+
   static JHipsterModulePropertyDefinition indentationProperty() {
     return optionalIntegerProperty(JHipsterModuleProperties.INDENTATION_PROPERTY)
       .description("Number of spaces in indentation")

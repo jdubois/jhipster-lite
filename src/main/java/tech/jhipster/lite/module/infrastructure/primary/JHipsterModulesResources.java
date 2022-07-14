@@ -7,7 +7,7 @@ import tech.jhipster.lite.error.domain.Assert;
 
 record JHipsterModulesResources(Collection<JHipsterModuleResource> modulesResources) {
   public JHipsterModulesResources {
-    Assert.field("modulesrouces", modulesResources).noNullElement().notEmpty();
+    Assert.field("modulesResources", modulesResources).noNullElement().notEmpty();
 
     assertUniqSlugs(modulesResources);
   }

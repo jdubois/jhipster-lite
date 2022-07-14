@@ -26,6 +26,8 @@ import '../content/css/custom.css';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 import { RestModulesRepository } from './module/secondary/RestModulesRepository';
 import SetupRepository from '@/springboot/secondary/SetupRepository';
+import ProjectFolderRepository from '@/springboot/secondary/ProjectFolderRepository';
+import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFoldersRepository';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -42,6 +44,7 @@ const historyStore = useHistoryStore();
 const projectStore = useProjectStore();
 const projectHistoryRepository = new ProjectHistoryRepository(axiosHttp, historyStore);
 const projectRepository = new ProjectRepository(axiosHttp, projectHistoryRepository, projectStore);
+const projectFolderRepository = new ProjectFolderRepository(axiosHttp);
 const angularRepository = new AngularRepository(axiosHttp, projectHistoryRepository);
 const reactRepository = new ReactRepository(axiosHttp, projectHistoryRepository);
 const springBootRepository = new SpringBootRepository(axiosHttp, projectHistoryRepository);
@@ -49,6 +52,7 @@ const setupRepository = new SetupRepository(axiosHttp, projectHistoryRepository)
 const svelteRepository = new SvelteRepository(axiosHttp, projectHistoryRepository);
 const vueRepository = new VueRepository(axiosHttp, projectHistoryRepository);
 const modulesRepository = new RestModulesRepository(axiosHttp);
+const projectFoldersRepository = new RestProjectFoldersRepository(axiosHttp);
 
 app.provide('alertBus', alertBus);
 app.provide('alertListener', alertListener);
@@ -59,6 +63,7 @@ app.provide('historyStore', historyStore);
 app.provide('projectStore', projectStore);
 app.provide('logger', consoleLogger);
 app.provide('projectService', projectRepository);
+app.provide('projectFolderService', projectFolderRepository);
 app.provide('projectHistoryService', projectHistoryRepository);
 app.provide('reactService', reactRepository);
 app.provide('springBootService', springBootRepository);
@@ -66,6 +71,7 @@ app.provide('setupService', setupRepository);
 app.provide('vueService', vueRepository);
 app.provide('svelteService', svelteRepository);
 app.provide('modules', modulesRepository);
+app.provide('projectFolders', projectFoldersRepository);
 app.use(router);
 
 app.mount('#app');

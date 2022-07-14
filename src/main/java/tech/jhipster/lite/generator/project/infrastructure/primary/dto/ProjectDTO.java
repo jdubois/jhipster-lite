@@ -1,16 +1,19 @@
 package tech.jhipster.lite.generator.project.infrastructure.primary.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.technical.infrastructure.primary.jackson.JacksonProjectFolderDeserializer;
 
 @Schema(description = "Project DTO")
 public class ProjectDTO {
 
   @JsonProperty("folder")
+  @JsonDeserialize(using = JacksonProjectFolderDeserializer.class)
   @Schema(description = "folder", example = "/tmp/jhlite/jhipster", required = true)
   private String folder;
 

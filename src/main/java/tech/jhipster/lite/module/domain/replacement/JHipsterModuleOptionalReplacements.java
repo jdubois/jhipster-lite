@@ -1,14 +1,9 @@
 package tech.jhipster.lite.module.domain.replacement;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
-import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacements {
 
@@ -46,13 +41,13 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
     }
 
     @Override
-    protected FileReplacer buildReplacer(String file, ElementMatcher toReplace, String replacement) {
+    protected ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement) {
       return new OptionalFileReplacer(file, new OptionalReplacer(toReplace, replacement));
     }
   }
 
-  private static record OptionalFileReplacer(String file, OptionalReplacer replacement) implements FileReplacer {
-    private static final Logger log = LoggerFactory.getLogger(FileReplacer.class);
+  private static record OptionalFileReplacer(String file, OptionalReplacer replacement) implements ContentReplacement {
+    private static final Logger log = LoggerFactory.getLogger(OptionalFileReplacer.class);
 
     public OptionalFileReplacer {
       Assert.notNull("file", file);
@@ -60,21 +55,17 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
     }
 
     @Override
-    public void apply(JHipsterProjectFolder folder) {
-      Path filePath = folder.filePath(file());
+    public String apply(String content) {
+      return replacement().apply(content);
+    }
 
-      try {
-        String content = Files.readString(filePath);
-        String updatedContent = replacement().apply(content);
-
-        Files.writeString(filePath, updatedContent, StandardOpenOption.TRUNCATE_EXISTING);
-      } catch (IOException e) {
-        log.debug("Can't replace content, no replacement done {}", e.getMessage(), e);
-      }
+    @Override
+    public void handleError(Throwable e) {
+      log.debug("Can't apply optional replacement: {}", e.getMessage());
     }
   }
 
-  private static record OptionalReplacer(ElementMatcher currentValue, String updatedValue) {
+  private static record OptionalReplacer(ElementReplacer currentValue, String updatedValue) {
     public OptionalReplacer {
       Assert.notNull("currentValue", currentValue);
       Assert.notNull("updatedValue", updatedValue);

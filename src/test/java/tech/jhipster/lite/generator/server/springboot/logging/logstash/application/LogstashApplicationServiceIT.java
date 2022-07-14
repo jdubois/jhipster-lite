@@ -7,9 +7,7 @@ import static tech.jhipster.lite.generator.server.springboot.logging.logstash.ap
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
@@ -18,20 +16,14 @@ class LogstashApplicationServiceIT {
   @Autowired
   private LogstashApplicationService logstashApplicationService;
 
-  @Autowired
-  private MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
-
   @Test
   void shouldInit() {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "foo");
 
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     logstashApplicationService.init(project);
 
@@ -47,7 +39,7 @@ class LogstashApplicationServiceIT {
     project.addConfig(BASE_NAME, "bar");
     project.addConfig(PACKAGE_NAME, "tech.jhipster.baz");
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
+    TestJHipsterModules.applyMaven(project);
 
     logstashApplicationService.addDependencies(project);
 
@@ -60,8 +52,8 @@ class LogstashApplicationServiceIT {
     project.addConfig(BASE_NAME, "bar");
     project.addConfig(PACKAGE_NAME, "tech.jhipster.baz");
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     logstashApplicationService.addJavaFiles(project);
 
@@ -73,8 +65,8 @@ class LogstashApplicationServiceIT {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "bar");
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     logstashApplicationService.addProperties(project);
 
@@ -86,8 +78,8 @@ class LogstashApplicationServiceIT {
     Project project = tmpProject();
     project.addConfig(BASE_NAME, "bar");
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     logstashApplicationService.addLoggerInConfiguration(project);
 

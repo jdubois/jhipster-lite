@@ -23,12 +23,8 @@ public final class JHipsterModulesAssertions {
     return new ModuleAsserter(module);
   }
 
-  public static ModuleAsserter assertThatModuleOnProjectWithDefaultPom(JHipsterModule module) {
-    return assertThatModuleWithFiles(module, pomFile());
-  }
-
   public static ModuleFile pomFile() {
-    return file("src/test/resources/projects/maven/pom.xml", "pom.xml");
+    return file("src/test/resources/projects/init-maven/pom.xml", "pom.xml");
   }
 
   public static ModuleFile propertiesFile() {

@@ -7,7 +7,6 @@ import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties.JHipsterModuleSpringPropertiesBuilder;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
@@ -59,9 +58,9 @@ public class SpringCloudConfigModuleFactory {
         .put("base64JwtSecret", Base64Utils.getBase64Secret())
         .and()
       .javaDependencies()
-        .dependencyManagement(springCloudDependenciesManagement())
-        .dependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
-        .dependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-config"))
+        .addDependencyManagement(springCloudDependenciesManagement())
+        .addDependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
+        .addDependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-config"))
         .and()
       .files()
         .add(SOURCE.template("jhipster-registry.yml"), toSrcMainDocker().append("jhipster-registry.yml"))

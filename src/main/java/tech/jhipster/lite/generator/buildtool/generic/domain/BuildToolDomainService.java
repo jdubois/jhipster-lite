@@ -19,15 +19,6 @@ public class BuildToolDomainService implements BuildToolService {
   }
 
   @Override
-  public void addParent(Project project, Parent parent) {
-    if (project.isMavenProject()) {
-      mavenService.addParent(project, parent);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
   public void addDependency(Project project, Dependency dependency) {
     if (project.isMavenProject()) {
       mavenService.addDependency(project, dependency);
@@ -66,58 +57,9 @@ public class BuildToolDomainService implements BuildToolService {
   }
 
   @Override
-  public void addPlugin(Project project, Plugin plugin) {
-    if (project.isMavenProject()) {
-      mavenService.addPlugin(project, plugin);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
-  public void addPluginManagement(Project project, Plugin plugin) {
-    if (project.isMavenProject()) {
-      mavenService.addPluginManagement(project, plugin);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
   public void addProperty(Project project, String key, String value) {
     if (project.isMavenProject()) {
       mavenService.addProperty(project, key, value);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
-  public void addRepository(Project project, Repository repository) {
-    if (project.isMavenProject()) {
-      mavenService.addRepository(project, repository);
-    } else if (project.isGradleProject()) {
-      gradleService.addRepository(project, repository);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
-  public void addPluginRepository(Project project, Repository repository) {
-    if (project.isMavenProject()) {
-      mavenService.addPluginRepository(project, repository);
-    } else {
-      throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
-    }
-  }
-
-  @Override
-  public void deleteDependency(Project project, Dependency dependency) {
-    if (project.isMavenProject()) {
-      mavenService.deleteDependency(project, dependency);
-    } else if (project.isGradleProject()) {
-      gradleService.deleteDependency(project, dependency);
     } else {
       throw new GeneratorException(EXCEPTION_NO_BUILD_TOOL);
     }

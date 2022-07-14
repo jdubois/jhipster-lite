@@ -10,6 +10,7 @@ public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<
   public static final String INDENTATION_PROPERTY = "prettierDefaultIndent";
   public static final String PROJECT_NAME_PROPERTY = "projectName";
   public static final String PROJECT_BASE_NAME_PROPERTY = "baseName";
+  public static final String SERVER_PORT_PROPERTY = "serverPort";
 
   public JHipsterModuleProperties(String projectFolder, Map<String, Object> properties) {
     this(new JHipsterProjectFolder(projectFolder), properties);
@@ -23,10 +24,6 @@ public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<
   }
 
   public static JHipsterModuleProperties defaultProperties(JHipsterProjectFolder projectFolder) {
-    return new JHipsterModuleProperties(projectFolder, null);
-  }
-
-  public static JHipsterModuleProperties defaultProperties(String projectFolder) {
     return new JHipsterModuleProperties(projectFolder, null);
   }
 
@@ -70,6 +67,10 @@ public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<
 
   public JHipsterProjectBaseName projectBaseName() {
     return new JHipsterProjectBaseName(getOrDefault(PROJECT_BASE_NAME_PROPERTY, null, String.class));
+  }
+
+  public JHipsterServerPort serverPort() {
+    return new JHipsterServerPort(getOrDefault(SERVER_PORT_PROPERTY, null, Integer.class));
   }
 
   private <T> T getOrDefault(String key, T defaultValue, Class<T> clazz) {

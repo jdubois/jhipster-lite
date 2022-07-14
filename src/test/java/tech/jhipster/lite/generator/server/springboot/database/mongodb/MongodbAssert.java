@@ -3,7 +3,7 @@ package tech.jhipster.lite.generator.server.springboot.database.mongodb;
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 
 import java.util.List;
 import tech.jhipster.lite.common.domain.FileUtils;

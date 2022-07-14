@@ -3,10 +3,10 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 import java.util.List;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesCurrentVersionsRepository;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @Repository
 class FileSystemCurrentJavaDependenciesVersionsRepository implements JavaDependenciesCurrentVersionsRepository {

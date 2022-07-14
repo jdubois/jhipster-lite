@@ -37,9 +37,9 @@ public class EurekaModuleFactory {
         .put("base64JwtSecret", Base64Utils.getBase64Secret())
         .and()
       .javaDependencies()
-        .dependencyManagement(springCloudDependenciesManagement())
-        .dependency( SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
-        .dependency(
+        .addDependencyManagement(springCloudDependenciesManagement())
+        .addDependency( SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
+        .addDependency(
           SPRING_CLOUD_GROUP,
           artifactId("spring-cloud-starter-netflix-eureka-client"),
           versionSlug("spring-cloud-netflix-eureka-client")

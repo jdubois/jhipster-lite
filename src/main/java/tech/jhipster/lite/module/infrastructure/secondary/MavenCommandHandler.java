@@ -10,8 +10,10 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -288,6 +290,7 @@ class MavenCommandHandler {
     appendScope(command, dependency, level);
     appendOptional(command, dependency, level);
     appendType(command, dependency, level);
+    appendExclusions(command, dependency, level);
 
     dependency.append(LINE_BREAK).append(indentation.times(level));
 
@@ -319,6 +322,33 @@ class MavenCommandHandler {
       .ifPresent(type ->
         dependency.append(LINE_BREAK).append(indentation.times(level + 1)).append($("type", Enums.map(type, MavenType.class).key()))
       );
+  }
+
+  private void appendExclusions(AddJavaDependency command, Match dependency, int level) {
+    Collection<DependencyId> exclusions = command.exclusions();
+    if (exclusions.isEmpty()) {
+      return;
+    }
+
+    dependency.append(LINE_BREAK).append(indentation.times(level + 1)).append(buildExclusionsNode(level, exclusions));
+  }
+
+  private Match buildExclusionsNode(int level, Collection<DependencyId> exclusions) {
+    Match exclusionsNode = $("exclusions");
+
+    exclusions.stream().map(toExclusionNode(level)).forEach(appendExclusionNode(level, exclusionsNode));
+
+    exclusionsNode.append(LINE_BREAK).append(indentation.times(level + 1));
+
+    return exclusionsNode;
+  }
+
+  private Function<DependencyId, Match> toExclusionNode(int level) {
+    return exculsion -> appendDependencyId($("exclusion"), exculsion, level + 2).append(LINE_BREAK).append(indentation.times(level + 2));
+  }
+
+  private Consumer<Match> appendExclusionNode(int level, Match exclusionsNode) {
+    return exclusionNode -> exclusionsNode.append(LINE_BREAK).append(indentation.times(level + 2)).append(exclusionNode);
   }
 
   public void handle(AddBuildPluginManagement command) {

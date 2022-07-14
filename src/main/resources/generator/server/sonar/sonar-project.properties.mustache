@@ -13,7 +13,7 @@ sonar.junit.reportPaths=target/surefire-reports,target/failsafe-reports
 sonar.sourceEncoding=UTF-8
 sonar.exclusions=src/main/webapp/main.ts, src/main/webapp/app/main.ts, src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.js, target/classes/static/**/*.*, src/main/webapp/app/index.tsx
 
-sonar.issue.ignore.multicriteria=S3437,S4502,S4684,S4032,S5778,S1133,UndocumentedApi
+sonar.issue.ignore.multicriteria=S3437,S4502,S4684,S4032,S5778,S1133,S1133,UndocumentedApi
 
 # Rule https://rules.sonarsource.com/java/RSPEC-3437 is ignored, as a JPA-managed field cannot be transient
 sonar.issue.ignore.multicriteria.S3437.resourceKey=src/main/java/**/*
@@ -42,3 +42,7 @@ sonar.issue.ignore.multicriteria.S5778.ruleKey=java:S5778
 # Rule: Deprecated code should be removed
 sonar.issue.ignore.multicriteria.S1133.resourceKey=src/main/java/**/*
 sonar.issue.ignore.multicriteria.S1133.ruleKey=java:S1133
+
+# Rule: Use record when possible in primary
+sonar.issue.ignore.multicriteria.S6206.resourceKey=src/main/java/**/infrastructure/primary/**/*
+sonar.issue.ignore.multicriteria.S6206.ruleKey=java:S6206

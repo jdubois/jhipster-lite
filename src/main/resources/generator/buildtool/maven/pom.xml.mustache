@@ -29,14 +29,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <maven.version>3.6.0</maven.version>
-    <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
 
     <junit-jupiter.version>5.8.2</junit-jupiter.version>
     <assertj.version>3.22.0</assertj.version>
     <mockito.version>4.2.0</mockito.version>
-    <compiler-plugin.version>3.8.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-    <jacoco.version>0.8.7</jacoco.version>
     <!-- jhipster-needle-maven-property -->
   </properties>
 
@@ -98,168 +94,10 @@
       </resource>
     </resources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${compiler-plugin.version}</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${surefire-plugin.version}</version>
-        <configuration>
-          <!-- Force alphabetical order to have a reproducible build -->
-          <runOrder>alphabetical</runOrder>
-          <excludes>
-            <exclude>**/*IT*</exclude>
-            <exclude>**/*IntTest*</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${surefire-plugin.version}</version>
-        <configuration>
-          <!-- Due to spring-boot repackage, without adding this property test classes are not found
-               See https://github.com/spring-projects/spring-boot/issues/6254 -->
-          <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-          <!-- Force alphabetical order to have a reproducible build -->
-          <runOrder>alphabetical</runOrder>
-          <includes>
-            <include>**/*IT*</include>
-            <include>**/*IntTest*</include>
-          </includes>
-        </configuration>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>verify</id>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <!-- jhipster-needle-maven-add-plugin -->
     </plugins>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>${jacoco.version}</version>
-          <executions>
-            <execution>
-              <id>pre-unit-tests</id>
-              <goals>
-                <goal>prepare-agent</goal>
-              </goals>
-            </execution>
-            <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
-            <execution>
-              <id>post-unit-test</id>
-              <phase>test</phase>
-              <goals>
-                <goal>report</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>pre-integration-tests</id>
-              <goals>
-                <goal>prepare-agent-integration</goal>
-              </goals>
-            </execution>
-            <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
-            <execution>
-              <id>post-integration-tests</id>
-              <phase>post-integration-test</phase>
-              <goals>
-                <goal>report-integration</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>merge</id>
-              <phase>verify</phase>
-              <goals>
-                <goal>merge</goal>
-              </goals>
-              <configuration>
-                <fileSets>
-                  <fileSet implementation="org.apache.maven.shared.model.fileset.FileSet">
-                    <directory>${project.basedir}</directory>
-                    <includes>
-                      <include>**/*.exec</include>
-                    </includes>
-                  </fileSet>
-                </fileSets>
-                <destFile>target/jacoco/allTest.exec</destFile>
-              </configuration>
-            </execution>
-            <execution>
-              <id>post-merge-report</id>
-              <phase>verify</phase>
-              <goals>
-                <goal>report</goal>
-              </goals>
-              <configuration>
-                <dataFile>target/jacoco/allTest.exec</dataFile>
-                <outputDirectory>target/jacoco/</outputDirectory>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven-enforcer-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>enforce-versions</id>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>enforce-dependencyConvergence</id>
-              <configuration>
-                <rules>
-                  <DependencyConvergence />
-                </rules>
-                <fail>false</fail>
-              </configuration>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <rules>
-              <requireMavenVersion>
-                <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>
-                <version>[${maven.version},)</version>
-              </requireMavenVersion>
-              <requireJavaVersion>
-                <message>You are running an incompatible version of Java. JHipster supports JDK 17.</message>
-                <version>[17,18)</version>
-              </requireJavaVersion>
-            </rules>
-          </configuration>
-        </plugin>
         <!-- jhipster-needle-maven-add-plugin-management -->
       </plugins>
     </pluginManagement>

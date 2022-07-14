@@ -1,54 +1,34 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application;
 
-import static tech.jhipster.lite.TestUtils.assertFileContent;
-import static tech.jhipster.lite.TestUtils.tmpProject;
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEST_JAVA;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertBasicAuthJavaFiles;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertBasicAuthProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertExceptionTranslatorWithSecurity;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertJwtSecurityFilesExists;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertJwtSecurityProperties;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertLoggerInConfig;
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.assertPomXmlProperties;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtSecurityAssertFiles.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.buildtool.maven.domain.MavenService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.secondary.GitUtils;
-import tech.jhipster.lite.generator.server.javatool.base.application.JavaBaseApplicationService;
-import tech.jhipster.lite.generator.server.springboot.core.domain.SpringBootService;
 import tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvcService;
-import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class JwtSecurityApplicationServiceIT {
 
   @Autowired
-  MavenService mavenService;
+  private SpringBootMvcService springBootMvcService;
 
   @Autowired
-  JavaBaseApplicationService javaBaseApplicationService;
-
-  @Autowired
-  SpringBootService springBootService;
-
-  @Autowired
-  SpringBootMvcService springBootMvcService;
-
-  @Autowired
-  JwtSecurityApplicationService jwtSecurityApplicationService;
+  private JwtSecurityApplicationService jwtSecurityApplicationService;
 
   @Test
   void shouldInit() throws Exception {
     Project project = tmpProject();
     GitUtils.init(project.getFolder());
-    mavenService.addJavaPomXml(project);
-    javaBaseApplicationService.build(JHipsterModuleProperties.defaultProperties(project.getFolder()));
-    springBootService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
     springBootMvcService.init(project);
 
     jwtSecurityApplicationService.init(project);
@@ -75,9 +55,8 @@ class JwtSecurityApplicationServiceIT {
   void shouldAddBasicAuth() throws Exception {
     Project project = tmpProject();
     GitUtils.init(project.getFolder());
-    mavenService.addJavaPomXml(project);
-    javaBaseApplicationService.build(JHipsterModuleProperties.defaultProperties(project.getFolder()));
-    springBootService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
     springBootMvcService.init(project);
     jwtSecurityApplicationService.init(project);
 

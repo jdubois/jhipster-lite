@@ -2,25 +2,23 @@ package tech.jhipster.lite.module.domain.replacement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import tech.jhipster.lite.common.domain.JHipsterCollections;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
-import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
-abstract class JHipsterModuleReplacements {
+public abstract class JHipsterModuleReplacements {
 
-  private final Collection<FileReplacer> replacers;
+  private final Collection<ContentReplacement> replacements;
 
   protected JHipsterModuleReplacements(JHipsterModuleReplacementsBuilder<?, ?> builder) {
     Assert.notNull("builder", builder);
-    Assert.notNull("builder", builder.replacers);
+    Assert.notNull("replacements", builder.replacements);
 
-    replacers = builder.replacers;
+    replacements = JHipsterCollections.immutable(builder.replacements);
   }
 
-  public void apply(JHipsterProjectFolder folder) {
-    Assert.notNull("folder", folder);
-
-    replacers.forEach(replacement -> replacement.apply(folder));
+  public Collection<ContentReplacement> replacements() {
+    return replacements;
   }
 
   public abstract static class JHipsterModuleReplacementsBuilder<
@@ -28,7 +26,7 @@ abstract class JHipsterModuleReplacements {
   > {
 
     private final JHipsterModuleBuilder module;
-    private final Collection<FileReplacer> replacers = new ArrayList<>();
+    private final Collection<ContentReplacement> replacements = new ArrayList<>();
 
     protected JHipsterModuleReplacementsBuilder(JHipsterModuleBuilder module) {
       Assert.notNull("module", module);
@@ -40,10 +38,10 @@ abstract class JHipsterModuleReplacements {
       return module;
     }
 
-    void add(FileReplacer fileReplacer) {
+    void add(ContentReplacement fileReplacer) {
       Assert.notNull("fileReplacer", fileReplacer);
 
-      replacers.add(fileReplacer);
+      replacements.add(fileReplacer);
     }
 
     public abstract FileReplacementsBuilder in(String file);
@@ -67,18 +65,10 @@ abstract class JHipsterModuleReplacements {
       this.file = file;
     }
 
-    public Builder add(ElementMatcher elementToReplace, String replacement) {
+    public Builder add(ElementReplacer elementToReplace, String replacement) {
       Assert.notNull("elementToReplace", elementToReplace);
 
       replacements.add(buildReplacer(file, elementToReplace, replacement));
-
-      return self();
-    }
-
-    public Builder add(PositionalMatcher positional, String replacement) {
-      Assert.notNull("PositionalMatcher", positional);
-
-      replacements.add(buildReplacer(file, positional.element(), positional.buildReplacement(replacement)));
 
       return self();
     }
@@ -92,6 +82,6 @@ abstract class JHipsterModuleReplacements {
       return replacements;
     }
 
-    protected abstract FileReplacer buildReplacer(String file, ElementMatcher toReplace, String replacement);
+    protected abstract ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement);
   }
 }

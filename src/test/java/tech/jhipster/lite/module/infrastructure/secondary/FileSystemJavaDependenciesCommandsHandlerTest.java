@@ -12,7 +12,7 @@ import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 @UnitTest
 class FileSystemJavaDependenciesCommandsHandlerTest {
 
-  private static final FileSystemJavaDependenciesCommandsHandler handler = new FileSystemJavaDependenciesCommandsHandler();
+  private static final FileSystemJavaBuildCommandsHandler handler = new FileSystemJavaBuildCommandsHandler();
 
   @Test
   void shouldNotTryToHandleEmptyCommands() {

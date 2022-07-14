@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.infrastructure.secondary.FileSystemProjectFilesReader;
+import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 @UnitTest
 class FileSystemCurrentJavaDependenciesVersionsRepositoryTest {

@@ -5,16 +5,10 @@ import java.util.Optional;
 import tech.jhipster.lite.generator.project.domain.Project;
 
 public interface BuildToolService {
-  void addParent(Project project, Parent parent);
   void addDependency(Project project, Dependency dependency);
   void addDependency(Project project, Dependency dependency, List<Dependency> exclusions);
   void addDependencyManagement(Project project, Dependency dependency);
-  void addPlugin(Project project, Plugin plugin);
-  void addPluginManagement(Project project, Plugin plugin);
   void addProperty(Project project, String key, String value);
-  void addRepository(Project project, Repository repository);
-  void addPluginRepository(Project project, Repository repository);
-  void deleteDependency(Project project, Dependency dependency);
   void addVersionPropertyAndDependency(Project project, String versionProperty, Dependency dependency);
 
   Optional<String> getVersion(Project project, String name);

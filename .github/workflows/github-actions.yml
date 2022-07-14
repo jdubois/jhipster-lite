@@ -141,7 +141,6 @@ jobs:
           - consulapp
           - gatewayapp
           - mongodbapp
-          - gradleapp
           - angularapp
           - reactapp
           - vueapp

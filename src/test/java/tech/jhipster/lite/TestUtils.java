@@ -295,7 +295,7 @@ public class TestUtils {
     try {
       return mapper.readValue(stringObject, valueType);
     } catch (JsonProcessingException e) {
-      throw new AssertionError("Can't read value");
+      throw new AssertionError("Can't read value", e);
     }
   }
 }

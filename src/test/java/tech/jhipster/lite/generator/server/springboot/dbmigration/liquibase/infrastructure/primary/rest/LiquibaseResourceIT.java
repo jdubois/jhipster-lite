@@ -18,7 +18,6 @@ import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.generator.server.springboot.database.postgresql.application.PostgresqlApplicationService;
 import tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.application.LiquibaseApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
@@ -28,9 +27,6 @@ import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 @IntegrationTest
 @AutoConfigureMockMvc
 class LiquibaseResourceIT {
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
   private PostgresqlApplicationService postgresqlApplicationService;
@@ -65,7 +61,7 @@ class LiquibaseResourceIT {
 
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
 
     mockMvc
@@ -98,7 +94,7 @@ class LiquibaseResourceIT {
 
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
     liquibaseApplicationService.init(project);
 

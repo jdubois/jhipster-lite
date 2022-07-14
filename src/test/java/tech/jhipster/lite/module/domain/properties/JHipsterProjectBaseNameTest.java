@@ -29,7 +29,17 @@ class JHipsterProjectBaseNameTest {
   }
 
   @Test
+  void shouldUncapitalizeProjectBaseName() {
+    assertThat(new JHipsterProjectBaseName("MyProject").uncapitalized()).isEqualTo("myProject");
+  }
+
+  @Test
   void shouldGetCapitalizedProjectBaseName() {
     assertThat(new JHipsterProjectBaseName("myProject").capitalized()).isEqualTo("MyProject");
+  }
+
+  @Test
+  void shouldGetKebabCaseProjectBaseName() {
+    assertThat(new JHipsterProjectBaseName("MyProject3").kebabCase()).isEqualTo("my-project3");
   }
 }

@@ -4,7 +4,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import static tech.jhipster.lite.module.domain.packagejson.VersionSource.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.Indentation;
+import tech.jhipster.lite.generator.client.common.domain.ClientsModulesFactory;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterSource;
@@ -23,14 +23,10 @@ public class VueModulesFactory {
 
   private static final String IMPORT_NEEDLE = "// jhipster-needle-main-ts-import";
   private static final String PROVIDER_NEEDLE = "// jhipster-needle-main-ts-provider";
-  private static final String CACHE_NEEDLE = "  \"cacheDirectories\":";
-  private static final String BREAK = "\n";
 
   public JHipsterModule buildVueModule(JHipsterModuleProperties properties) {
-    Assert.notNull("properties", properties);
-
     //@formatter:off
-    return moduleBuilder(properties)
+    return ClientsModulesFactory.clientModuleBuilder(properties)
       .packageJson()
         .addDependency(packageName("vue"), VUE)
         .addDependency(packageName("axios"), VUE)
@@ -61,11 +57,6 @@ public class VueModulesFactory {
         .addScript(scriptKey("start"), scriptCommand("vite"))
         .addScript(scriptKey("test"), scriptCommand("npm run jest --"))
         .addScript(scriptKey("test:watch"), scriptCommand("npm run jest -- --watch"))
-        .and()
-      .mandatoryReplacements()
-        .in("package.json")
-          .add(justLineBefore(text(CACHE_NEEDLE)), jestSonar(properties.indentation()))
-          .and()
         .and()
       .files()
         .add(SOURCE.file(".eslintrc.js"), to(".eslintrc.js"))
@@ -115,22 +106,6 @@ public class VueModulesFactory {
     //@formatter:on
   }
 
-  private String jestSonar(Indentation indentation) {
-    return new StringBuilder()
-      .append(indentation.spaces())
-      .append("\"jestSonar\": {")
-      .append(BREAK)
-      .append(indentation.times(2))
-      .append("\"reportPath\": \"target/test-results/jest\",")
-      .append(BREAK)
-      .append(indentation.times(2))
-      .append("\"reportFile\": \"TESTS-results-sonar.xml\"")
-      .append(BREAK)
-      .append(indentation.spaces())
-      .append("},")
-      .toString();
-  }
-
   public JHipsterModule buildPiniaModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
@@ -143,8 +118,8 @@ public class VueModulesFactory {
         .and()
       .mandatoryReplacements()
         .in("src/main/webapp/app/main.ts")
-          .add(justLineBefore(text(IMPORT_NEEDLE)), piniaImports())
-          .add(justLineBefore(text(PROVIDER_NEEDLE)), piniaProvider())
+          .add(lineBeforeText(IMPORT_NEEDLE), piniaImports())
+          .add(lineBeforeText(PROVIDER_NEEDLE), piniaProvider())
           .and()
         .and()
       .build();

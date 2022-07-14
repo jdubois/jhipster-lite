@@ -22,6 +22,9 @@ describe('Generator', () => {
   it('should display generator page', () => {
     cy.get(headerSelector('title')).contains('JHipster lite');
 
+    cy.get(generatorSelector('project-folder'))
+      .invoke('val')
+      .should('match', /^.*\/.{36}$/);
     cy.get(projectGeneratorSelector('add-initialization-button')).contains('Init');
     cy.get(projectGeneratorSelector('add-maven-java-button')).contains('Maven');
     cy.get(projectGeneratorSelector('add-jacoco-check-minimal-coverage-button')).contains('JaCoCo');
@@ -29,6 +32,8 @@ describe('Generator', () => {
     cy.get(projectGeneratorSelector('add-sonar-java-backend-and-frontend-button')).contains('Sonar Backend+Frontend');
     cy.get(projectGeneratorSelector('add-java-base-button')).contains('Java Base');
     cy.get(projectGeneratorSelector('add-frontend-maven-plugin-button')).contains('Frontend Maven Plugin');
+    cy.get(dataSelector('section-download')).contains('DOWNLOAD');
+    cy.get(dataSelector('section-download')).should('not.be.disabled');
   });
 
   it('should display setup', () => {
@@ -128,12 +133,8 @@ describe('Generator', () => {
     cy.get(projectGeneratorSelector('add-gitpod-setup-button')).contains('Gitpod');
   });
 
-  it('should not disable download button when project path is filled', () => {
-    cy.get('#path').type('/tmp/jhlite');
-    cy.get(dataSelector('section-download')).contains('DOWNLOAD');
-    cy.get(dataSelector('section-download')).should('not.be.disabled');
-  });
   it('should disable download button when project path is not filled', () => {
+    cy.get('#path').clear();
     cy.get(dataSelector('section-download')).should('be.disabled');
   });
 });

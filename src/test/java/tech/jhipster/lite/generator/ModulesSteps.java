@@ -83,6 +83,11 @@ public class ModulesSteps {
     post(applyModuleUrl(moduleSlug), buildModuleQuery(lastProjectFolder(), null));
   }
 
+  @When("I apply {string} module to default project with maven file without properties")
+  public void applyModuleForDefaultProjectWithMavenFileWithoutProperties(String moduleSlug) {
+    applyModuleForDefaultProjectWithMavenFile(moduleSlug, null);
+  }
+
   @When("I apply {string} module to default project with maven file")
   public void applyModuleForDefaultProjectWithMavenFile(String moduleSlug, Map<String, Object> properties) {
     String projectFolder = newTestFolder();
@@ -151,7 +156,7 @@ public class ModulesSteps {
   }
 
   private static void addPomToProject(String folder) {
-    addFileToProject(folder, "src/test/resources/projects/maven/pom.xml", "pom.xml");
+    addFileToProject(folder, "src/test/resources/projects/init-maven/pom.xml", "pom.xml");
   }
 
   private static void addFileToProject(String folder, String source, String destination) {
@@ -162,9 +167,9 @@ public class ModulesSteps {
       throw new AssertionError(e);
     }
 
-    Path pomPath = folderPath.resolve(destination);
+    Path filePath = folderPath.resolve(destination);
     try {
-      Files.copy(Paths.get(source), pomPath);
+      Files.copy(Paths.get(source), filePath);
     } catch (IOException e) {
       throw new AssertionError(e);
     }

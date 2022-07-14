@@ -1,5 +1,6 @@
 package tech.jhipster.lite.module.domain.javadependency;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.JHipsterCollections;
+import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
@@ -21,6 +24,7 @@ public class JavaDependency {
   private final JavaDependencyScope scope;
   private final boolean optional;
   private final Optional<JavaDependencyType> type;
+  private final Collection<DependencyId> exclusions;
 
   private JavaDependency(JavaDependencyBuilder builder) {
     id = new DependencyId(builder.groupId, builder.artifactId);
@@ -28,6 +32,7 @@ public class JavaDependency {
     scope = JavaDependencyScope.from(builder.scope);
     optional = builder.optional;
     type = Optional.ofNullable(builder.type);
+    exclusions = JHipsterCollections.immutable(builder.exclusions);
   }
 
   public static JavaDependencyGroupIdBuilder builder() {
@@ -102,6 +107,10 @@ public class JavaDependency {
 
   public Optional<JavaDependencyType> type() {
     return type;
+  }
+
+  public Collection<DependencyId> exclusions() {
+    return exclusions;
   }
 
   private Collection<JavaDependency> merge(JavaDependency other) {
@@ -183,6 +192,7 @@ public class JavaDependency {
     private JavaDependencyScope scope;
     private boolean optional;
     private JavaDependencyType type;
+    private final Collection<DependencyId> exclusions = new ArrayList<>();
 
     private JavaDependencyBuilder() {}
 
@@ -229,6 +239,15 @@ public class JavaDependency {
     }
 
     @Override
+    public JavaDependencyOptionalValueBuilder addExclusion(DependencyId dependency) {
+      Assert.notNull("dependency", dependency);
+
+      exclusions.add(dependency);
+
+      return this;
+    }
+
+    @Override
     public JavaDependency build() {
       return new JavaDependency(this);
     }
@@ -259,6 +278,8 @@ public class JavaDependency {
 
     JavaDependencyOptionalValueBuilder type(JavaDependencyType type);
 
+    JavaDependencyOptionalValueBuilder addExclusion(DependencyId dependency);
+
     JavaDependency build();
 
     default JavaDependencyOptionalValueBuilder versionSlug(String versionSlug) {
@@ -267,6 +288,10 @@ public class JavaDependency {
 
     default JavaDependencyOptionalValueBuilder optional() {
       return optional(true);
+    }
+
+    default JavaDependencyOptionalValueBuilder addExclusion(GroupId groupId, ArtifactId artifactId) {
+      return addExclusion(new DependencyId(groupId, artifactId));
     }
   }
 }

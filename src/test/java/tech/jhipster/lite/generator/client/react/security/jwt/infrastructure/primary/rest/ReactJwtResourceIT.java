@@ -28,10 +28,8 @@ class ReactJwtResourceIT {
     ProjectDTO projectDTO = readFileToObject("json/chips.json", ProjectDTO.class).folder(TestFileUtils.tmpDirForTest());
     Project project = ProjectDTO.toProject(projectDTO);
     TestJHipsterModules.applyInit(project);
+    TestJHipsterModules.applyReact(project);
 
-    mockMvc
-      .perform(post("/api/clients/react").contentType(MediaType.APPLICATION_JSON).content(TestUtils.convertObjectToJsonBytes(projectDTO)))
-      .andExpect(status().isOk());
     mockMvc
       .perform(
         post("/api/clients/react/jwt").contentType(MediaType.APPLICATION_JSON).content(TestUtils.convertObjectToJsonBytes(projectDTO))

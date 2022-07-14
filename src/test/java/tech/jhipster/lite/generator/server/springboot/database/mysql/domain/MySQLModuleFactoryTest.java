@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.database.mysql.domain;
 
 import static org.mockito.Mockito.when;
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleOnProjectWithDefaultPom;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,7 +38,7 @@ class MySQLModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleOnProjectWithDefaultPom(module)
+    assertThatModuleWithFiles(module, pomFile())
       .createFile("documentation/mysql.md")
       .and()
       .createPrefixedFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/mysql", "DatabaseConfiguration.java")

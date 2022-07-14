@@ -38,7 +38,7 @@ class PostgresqlModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleOnProjectWithDefaultPom(module)
+    assertThatModuleWithFiles(module, pomFile())
       .createPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/secondary/postgresql",
         "DatabaseConfiguration.java",

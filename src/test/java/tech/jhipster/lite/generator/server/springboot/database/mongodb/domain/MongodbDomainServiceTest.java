@@ -1,6 +1,5 @@
 package tech.jhipster.lite.generator.server.springboot.database.mongodb.domain;
 
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.TestUtils.*;
 

@@ -6,9 +6,17 @@ import static tech.jhipster.lite.module.infrastructure.primary.JHipsterModulesRe
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 
 @UnitTest
 class JHipsterModulesResourcesTest {
+
+  @Test
+  void shouldNotBuildWithoutResources() {
+    assertThatThrownBy(() -> new JHipsterModulesResources(List.of()))
+      .isExactlyInstanceOf(MissingMandatoryValueException.class)
+      .hasMessageContaining("modulesResources");
+  }
 
   @Test
   void shouldNotBuildWithDuplicatedSlug() {

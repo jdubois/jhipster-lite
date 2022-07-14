@@ -62,6 +62,10 @@ public class JHipsterModulePropertiesDefinition {
       return add(projectBaseNameProperty());
     }
 
+    public JHipsterModulePropertiesDefinitionBuilder addServerPort() {
+      return add(serverPortProperty());
+    }
+
     public JHipsterModulePropertiesDefinitionBuilder addIndentation() {
       return add(indentationProperty());
     }

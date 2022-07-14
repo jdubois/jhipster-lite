@@ -11,6 +11,8 @@ describe('Modules', () => {
   });
 
   describe('Component', () => {
+    beforeEach(() => cy.intercept({ path: '/api/project-folders' }, { body: '/tmp/jhlite/1234' }));
+
     it('Should display loader while loading modules', () => {
       const result = interceptForever({ path: '/api/modules' }, { fixture: 'modules.json' });
 
@@ -23,8 +25,9 @@ describe('Modules', () => {
 
           cy.get(dataSelector('modules-loader')).should('not.exist');
           cy.get(dataSelector('modules-list')).should('be.visible');
-          cy.get(dataSelector('module-spring-test-application-button')).should('be.disabled');
+          cy.get(dataSelector('module-spring-test-application-button')).should('be.enabled');
           cy.get(dataSelector('module-spring-cucumber-application-button')).should('be.disabled');
+          cy.get(dataSelector('folder-path-field')).invoke('val').should('equal', '/tmp/jhlite/1234');
         });
     });
 
@@ -37,7 +40,7 @@ describe('Modules', () => {
       }).as('spring-test-creation');
 
       cy.visit('/modules');
-      cy.get(dataSelector('folder-path-field')).type('test');
+      cy.get(dataSelector('folder-path-field')).clear().type('test');
       cy.get(dataSelector('module-spring-test-application-button')).click();
 
       cy.wait('@spring-test-creation').should(xhr => {
@@ -61,7 +64,7 @@ describe('Modules', () => {
       cy.visit('/modules');
 
       cy.get(dataSelector('spring-cucumber-module-content')).click();
-      cy.get(dataSelector('folder-path-field')).type('test');
+      cy.get(dataSelector('folder-path-field')).clear().type('test');
       cy.get(dataSelector('property-baseName-field')).type('jhipster');
       cy.get(dataSelector('property-optionalBoolean-field')).select('true');
       cy.get(dataSelector('property-optionalInteger-field')).type('42');

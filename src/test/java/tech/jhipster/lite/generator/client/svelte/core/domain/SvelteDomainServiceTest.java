@@ -1,7 +1,6 @@
 package tech.jhipster.lite.generator.client.svelte.core.domain;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.generator.project.domain.ProjectFilesAsserter.*;

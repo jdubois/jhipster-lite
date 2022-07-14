@@ -1,26 +1,23 @@
 package tech.jhipster.lite.generator.client.tools.playwright.application;
 
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJsonComplete;
+import static tech.jhipster.lite.TestUtils.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.client.react.core.application.ReactApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class PlaywrightApplicationServiceIT {
 
   @Autowired
-  PlaywrightApplicationService playwrightApplicationService;
-
-  @Autowired
-  ReactApplicationService reactApplicationService;
+  private PlaywrightApplicationService playwrightApplicationService;
 
   @Test
   void shouldInit() {
     Project project = tmpProjectWithPackageJsonComplete();
-    reactApplicationService.addReact(project);
+    TestJHipsterModules.applyReact(project);
 
     playwrightApplicationService.init(project);
 

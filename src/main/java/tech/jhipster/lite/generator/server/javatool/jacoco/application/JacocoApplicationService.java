@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.javatool.jacoco.application;
 
 import org.springframework.stereotype.Component;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.javatool.jacoco.domain.JacocoService;
+import tech.jhipster.lite.generator.server.javatool.jacoco.domain.JacocoThresholdModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Component
 public class JacocoApplicationService {
 
-  private final JacocoService jacocoService;
+  private final JacocoThresholdModuleFactory factory;
 
-  public JacocoApplicationService(JacocoService jacocoService) {
-    this.jacocoService = jacocoService;
+  public JacocoApplicationService() {
+    factory = new JacocoThresholdModuleFactory();
   }
 
-  public void addCheckMinimumCoverage(Project project) {
-    jacocoService.addCheckMinimumCoverage(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

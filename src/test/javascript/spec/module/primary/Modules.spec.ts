@@ -4,18 +4,27 @@ import { ModulesVue } from '@/module/primary/modules';
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { wrappedElement } from '../../WrappedElement';
 import { stubAlertBus } from '../../common/domain/AlertBus.fixture';
-
-const alertBus = stubAlertBus();
+import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
+import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../domain/ProjectFolders.fixture';
 
 interface WrapperOptions {
   modules: ModulesRepository;
+  projectFolders: ProjectFoldersRepository;
 }
 
-const wrap = (options: WrapperOptions): VueWrapper => {
+const alertBus = stubAlertBus();
+
+const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
+  const { modules, projectFolders }: WrapperOptions = {
+    modules: repositoryWithModules(),
+    projectFolders: repositoryWithProjectFolders(),
+    ...options,
+  };
   return mount(ModulesVue, {
     global: {
       provide: {
-        modules: options.modules,
+        modules,
+        projectFolders,
         alertBus,
       },
     },
@@ -24,9 +33,7 @@ const wrap = (options: WrapperOptions): VueWrapper => {
 
 describe('Modules', () => {
   it('Should display loader when waiting for modules', () => {
-    const modules = repositoryWithModules();
-
-    const wrapper = wrap({ modules });
+    const wrapper = wrap();
 
     expect(wrapper.find(wrappedElement('modules-loader')).exists()).toBe(true);
     expect(wrapper.find(wrappedElement('modules-list')).exists()).toBe(false);
@@ -38,6 +45,8 @@ describe('Modules', () => {
     expect(wrapper.find(wrappedElement('modules-loader')).exists()).toBe(false);
     expect(wrapper.find(wrappedElement('modules-list')).exists()).toBe(true);
     expect(wrapper.find(wrappedElement('spring-cucumber-module-content')).exists()).toBe(true);
+    const element = wrapper.find(wrappedElement('folder-path-field')).element as HTMLInputElement;
+    expect(element.value).toBe('/tmp/jhlite/1234');
   });
 
   it('Should select module', async () => {
@@ -59,6 +68,7 @@ describe('Modules', () => {
     const wrapper = await componentWithModules();
     await selectModule(wrapper);
 
+    wrapper.find(wrappedElement('folder-path-field')).setValue('');
     wrapper.find(wrappedElement('property-baseName-field')).setValue('test');
     await flushForm(wrapper);
 
@@ -321,7 +331,8 @@ describe('Modules', () => {
 
 const componentWithModules = async (): Promise<VueWrapper> => {
   const modules = repositoryWithModules();
-  const wrapper = wrap({ modules });
+  const projectFolders = repositoryWithProjectFolders();
+  const wrapper = wrap({ modules, projectFolders });
 
   await flushPromises();
 
@@ -355,4 +366,11 @@ const repositoryWithModules = (): ModulesRepositoryStub => {
   modules.list.resolves(defaultModules());
 
   return modules;
+};
+
+const repositoryWithProjectFolders = (): ProjectFoldersRepositoryStub => {
+  const projectFolders = stubProjectFoldersRepository();
+  projectFolders.get.resolves('/tmp/jhlite/1234');
+
+  return projectFolders;
 };

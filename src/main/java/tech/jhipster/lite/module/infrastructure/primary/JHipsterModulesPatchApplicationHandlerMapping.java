@@ -8,6 +8,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
+import tech.jhipster.lite.module.domain.JHipsterProjectFolderFactory;
 
 @Component
 class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMapping {
@@ -17,17 +18,21 @@ class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMa
   public JHipsterModulesPatchApplicationHandlerMapping(
     ObjectMapper json,
     JHipsterModulesResources modulesResources,
-    JHipsterModulesApplicationService modules
+    JHipsterModulesApplicationService modules,
+    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
   ) {
-    controllers = buildControllers(json, modulesResources, modules);
+    controllers = buildControllers(json, modulesResources, modules, jHipsterProjectFolderFactory);
   }
 
   private Map<String, JHipsterModuleApplicationController> buildControllers(
     ObjectMapper json,
     JHipsterModulesResources modulesResources,
-    JHipsterModulesApplicationService modules
+    JHipsterModulesApplicationService modules,
+    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
   ) {
-    return modulesResources.stream().collect(Collectors.toUnmodifiableMap(toApplyUrl(), toApplyerController(json, modules)));
+    return modulesResources
+      .stream()
+      .collect(Collectors.toUnmodifiableMap(toApplyUrl(), toApplyerController(json, modules, jHipsterProjectFolderFactory)));
   }
 
   private Function<JHipsterModuleResource, String> toApplyUrl() {
@@ -36,9 +41,10 @@ class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMa
 
   private Function<JHipsterModuleResource, JHipsterModuleApplicationController> toApplyerController(
     ObjectMapper json,
-    JHipsterModulesApplicationService modules
+    JHipsterModulesApplicationService modules,
+    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
   ) {
-    return module -> new JHipsterModuleApplicationController(json, module, modules);
+    return module -> new JHipsterModuleApplicationController(json, module, modules, jHipsterProjectFolderFactory);
   }
 
   @Override

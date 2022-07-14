@@ -1,8 +1,8 @@
 package tech.jhipster.lite.module.domain;
 
 import java.nio.charset.StandardCharsets;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 class JHipsterFileContent {
 

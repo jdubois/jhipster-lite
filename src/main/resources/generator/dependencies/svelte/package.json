@@ -7,20 +7,20 @@
   },
   "devDependencies": {
     "@babel/preset-env": "7.18.6",
-    "@sveltejs/adapter-static": "1.0.0-next.34",
-    "@sveltejs/kit": "1.0.0-next.361",
+    "@sveltejs/adapter-static": "1.0.0-next.36",
+    "@sveltejs/kit": "1.0.0-next.372",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/svelte": "3.1.3",
-    "@types/jest": "28.1.4",
-    "@typescript-eslint/eslint-plugin": "5.30.5",
-    "@typescript-eslint/parser": "5.30.5",
-    "babel-jest": "28.1.2",
+    "@types/jest": "28.1.5",
+    "@typescript-eslint/eslint-plugin": "5.30.6",
+    "@typescript-eslint/parser": "5.30.6",
+    "babel-jest": "28.1.3",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "eslint": "8.19.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-svelte3": "4.0.0",
-    "jest": "28.1.2",
-    "jest-environment-jsdom": "28.1.2",
+    "jest": "28.1.3",
+    "jest-environment-jsdom": "28.1.3",
     "jest-sonar-reporter": "2.0.0",
     "jest-transform-stub": "2.0.0",
     "prettier": "2.7.1",
@@ -32,6 +32,6 @@
     "ts-jest": "28.0.5",
     "tslib": "2.4.0",
     "typescript": "4.7.4",
-    "vite": "2.9.13"
+    "vite": "2.9.14"
   }
 }

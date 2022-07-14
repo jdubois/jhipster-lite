@@ -16,7 +16,6 @@ import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.generator.server.springboot.database.mariadb.application.MariaDBApplicationService;
 import tech.jhipster.lite.generator.server.springboot.database.mysql.application.MySQLApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
@@ -26,9 +25,6 @@ import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 @IntegrationTest
 @AutoConfigureMockMvc
 class SpringBootUserResourceIT {
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
   private MySQLApplicationService mySQLApplicationService;
@@ -72,7 +68,7 @@ class SpringBootUserResourceIT {
       .projectBaseName("myapp")
       .build();
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(mySQLApplicationService.build(properties)).properties(properties).slug("mysql").apply();
 
     mockMvc
@@ -102,7 +98,7 @@ class SpringBootUserResourceIT {
       .projectBaseName("myapp")
       .build();
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(mariaDBApplicationService.build(properties)).properties(properties).slug("mariadb").apply();
 
     mockMvc

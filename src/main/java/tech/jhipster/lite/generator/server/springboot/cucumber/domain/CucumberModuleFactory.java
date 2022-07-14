@@ -5,7 +5,6 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -54,12 +53,12 @@ public class CucumberModuleFactory {
       .add(SOURCE.file("gitkeep"), to("src/test/features/.gitkeep"))
       .and()
     .javaDependencies()
-      .dependency(cucumberJunitDependency())
-      .dependency(cucumberJavaDependency())
-      .dependency(cucumberSpringDependency())
-      .dependency(junitVintageDependency())
-      .dependency(testNgDependency())
-      .dependency(awaitilityDependency())
+      .addDependency(cucumberJunitDependency())
+      .addDependency(cucumberJavaDependency())
+      .addDependency(cucumberSpringDependency())
+      .addDependency(junitVintageDependency())
+      .addDependency(testNgDependency())
+      .addDependency(awaitilityDependency())
       .and();
     //@formatter:on
 

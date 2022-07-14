@@ -14,15 +14,11 @@ import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class MssqlResourceIT {
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
   private MockMvc mockMvc;
@@ -33,7 +29,7 @@ class MssqlResourceIT {
     Project project = ProjectDTO.toProject(projectDTO);
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mockMvc
       .perform(

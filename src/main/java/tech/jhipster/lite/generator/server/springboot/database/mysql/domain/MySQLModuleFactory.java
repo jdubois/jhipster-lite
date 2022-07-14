@@ -24,7 +24,7 @@ public class MySQLModuleFactory {
 
     return sqlCommonModuleBuilder(properties, DatabaseType.MYSQL, dockerImages.get("mysql"), documentationTitle("MySQL"))
       .javaDependencies()
-      .dependency(groupId("mysql"), artifactId("mysql-connector-java"))
+      .addDependency(groupId("mysql"), artifactId("mysql-connector-java"))
       .and()
       .springMainProperties()
       .set(propertyKey("spring.datasource.url"), propertyValue("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name()))

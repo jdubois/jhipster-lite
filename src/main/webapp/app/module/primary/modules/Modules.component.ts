@@ -8,6 +8,7 @@ import { Modules } from '@/module/domain/Modules';
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 import { ModuleSlug } from '@/module/domain/ModuleSlug';
+import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
 
 export default defineComponent({
   name: 'ModulesVue',
@@ -15,6 +16,7 @@ export default defineComponent({
   setup() {
     const alertBus = inject('alertBus') as AlertBus;
     const modules = inject('modules') as ModulesRepository;
+    const projectFolders = inject('projectFolders') as ProjectFoldersRepository;
 
     const applicationModules = reactive({
       all: Loader.loading<Modules>(),
@@ -32,6 +34,7 @@ export default defineComponent({
         applicationModules.all.loaded(response);
         applicationModules.displayed.loaded(response);
       });
+      projectFolders.get().then(projectFolder => (folderPath.value = projectFolder));
     });
 
     const selectModule = (slug: ModuleSlug): void => {

@@ -7,13 +7,12 @@ import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.domain.replacement.TextMatcher;
+import tech.jhipster.lite.module.domain.replacement.TextReplacer;
 
 public class OAuth2ModuleFactory {
 
@@ -122,10 +121,10 @@ public class OAuth2ModuleFactory {
   private void appendDependencies(JHipsterModuleBuilder builder) {
     builder
       .javaDependencies()
-      .dependency(SPRING_GROUP, artifactId("spring-boot-starter-security"))
-      .dependency(SPRING_GROUP, artifactId("spring-boot-starter-oauth2-client"))
-      .dependency(SPRING_GROUP, artifactId("spring-boot-starter-oauth2-resource-server"))
-      .dependency(springSecurityTest());
+      .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-security"))
+      .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-oauth2-client"))
+      .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-oauth2-resource-server"))
+      .addDependency(springSecurityTest());
   }
 
   private void appendSpringProperties(JHipsterModuleBuilder builder) {
@@ -151,13 +150,13 @@ public class OAuth2ModuleFactory {
 
   private void appendIntegrationTestAnnotationUpdates(JHipsterModuleBuilder builder, JHipsterModuleProperties properties) {
     String baseClass = properties.projectBaseName().capitalized() + "App.class";
-    TextMatcher importNeedle = text(SPRING_BOOT_IMPORT);
+    TextReplacer importNeedle = text(SPRING_BOOT_IMPORT);
 
-    String integrationtTestFile = "src/test/java/" + properties.basePackage().path() + "/IntegrationTest.java";
+    String integrationTestFile = "src/test/java/" + properties.basePackage().path() + "/IntegrationTest.java";
 
     builder
       .mandatoryReplacements()
-      .in(integrationtTestFile)
+      .in(integrationTestFile)
       .add(importNeedle, testSecurityConfigurationImport(properties))
       .add(text(baseClass), baseClass + ", TestSecurityConfiguration.class")
       .add(importNeedle, withMockUserImport())

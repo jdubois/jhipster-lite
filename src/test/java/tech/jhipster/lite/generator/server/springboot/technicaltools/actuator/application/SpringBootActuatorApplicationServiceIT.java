@@ -5,19 +5,11 @@ import static tech.jhipster.lite.TestUtils.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class SpringBootActuatorApplicationServiceIT {
-
-  @Autowired
-  private MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
   private SpringBootActuatorApplicationService springBootActuatorApplicationService;
@@ -26,8 +18,8 @@ class SpringBootActuatorApplicationServiceIT {
   void shouldAddSpringBootActuator() {
     Project project = tmpProject();
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     springBootActuatorApplicationService.addActuator(project);
 

@@ -18,15 +18,11 @@ import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class FlywayResourceIT {
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @SpyBean
   private Clock clock;
@@ -50,7 +46,7 @@ class FlywayResourceIT {
 
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mockMvc
       .perform(
@@ -76,7 +72,7 @@ class FlywayResourceIT {
 
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mockMvc
       .perform(

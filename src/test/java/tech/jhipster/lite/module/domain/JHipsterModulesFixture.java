@@ -9,7 +9,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.jhipster.lite.TestFileUtils;
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javabuild.command.AddDirectJavaDependency;
@@ -17,13 +16,8 @@ import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javabuild.command.RemoveDirectJavaDependency;
 import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
 import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
-import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
-import tech.jhipster.lite.module.domain.javadependency.DependencyId;
-import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.*;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDependencyOptionalValueBuilder;
-import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
-import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
-import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
 import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.packagejson.VersionSource;
@@ -65,18 +59,22 @@ public final class JHipsterModulesFixture {
       .in("src/main/java/com/company/myapp/errors/Assert.java")
         .add(text("Ensure that the given collection is not empty"), "Dummy collection replacement")
         .add(regex("if the collection is [^ ]+ or empty"), "Another dummy collection replacement")
+        .add(lineBeforeRegex("public static class IntegerAsserter\\s*\\{"), "  // Dummy comment")
         .and()
       .in("dummy")
         .add(text("Ensure that the input is not null"), "Dummy replacement")
         .and()
       .and()
     .javaDependencies()
-      .dependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter"))
-      .dependency(groupId("org.zalando"), artifactId("problem-spring-web"), versionSlug("problem-spring"))
-      .dependency(groupId("io.jsonwebtoken"), artifactId("jjwt-api"), versionSlug("jjwt.version"))
-      .dependency(optionalTestDependency())
-      .dependencyManagement(springBootDependencyManagement())
-      .dependencyManagement(springBootDefaultTypeDependencyManagement())
+      .setVersion(javaDependencyVersion("dummy-dependency", "4.5.8"))
+      .removeDependency(dependencyId("net.logstash.logback", "logstash-logback-encoder"))
+      .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter"))
+      .addDependency(groupId("org.zalando"), artifactId("problem-spring-web"), versionSlug("problem-spring"))
+      .addDependency(groupId("io.jsonwebtoken"), artifactId("jjwt-api"), versionSlug("jjwt.version"))
+      .addDependency(optionalTestDependency())
+      .addDependency(springBootStarterWebDependency())
+      .addDependencyManagement(springBootDependencyManagement())
+      .addDependencyManagement(springBootDefaultTypeDependencyManagement())
       .and()
     .javaBuildPlugins()
       .pluginManagement(mavenEnforcerPluginManagement())
@@ -109,6 +107,14 @@ public final class JHipsterModulesFixture {
       .and()
     .build();
     // @formatter:on
+  }
+
+  public static JavaDependency springBootStarterWebDependency() {
+    return javaDependency()
+      .groupId("org.springframework.boot")
+      .artifactId("spring-boot-starter-web")
+      .addExclusion(groupId("org.springframework.boot"), artifactId("spring-boot-starter-tomcat"))
+      .build();
   }
 
   public static JavaDependency springBootDependencyManagement() {

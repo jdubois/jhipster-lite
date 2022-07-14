@@ -160,8 +160,7 @@ class MavenCommandHandlerTest {
 
       new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddJavaDependencyManagement(springBootDependencyManagement()));
 
-      String content = content(pom);
-      assertThat(content)
+      assertThat(content(pom))
         .contains(
           """
                 <dependency>
@@ -170,6 +169,31 @@ class MavenCommandHandlerTest {
                   <version>${spring-boot.version}</version>
                   <scope>import</scope>
                   <type>pom</type>
+                </dependency>
+              </dependencies>
+            </dependencyManagement>
+          """
+        );
+    }
+
+    @Test
+    void shouldAddDependencyManagementWithExclusion() {
+      Path pom = projectWithPom("src/test/resources/projects/maven-empty-dependencies/pom.xml");
+
+      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddJavaDependencyManagement(springBootStarterWebDependency()));
+
+      assertThat(content(pom))
+        .contains(
+          """
+                <dependency>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-web</artifactId>
+                  <exclusions>
+                    <exclusion>
+                      <groupId>org.springframework.boot</groupId>
+                      <artifactId>spring-boot-starter-tomcat</artifactId>
+                    </exclusion>
+                  </exclusions>
                 </dependency>
               </dependencies>
             </dependencyManagement>
@@ -280,6 +304,30 @@ class MavenCommandHandlerTest {
         );
 
       assertThat(Pattern.compile("^ +$", Pattern.MULTILINE).matcher(content).find()).isFalse();
+    }
+
+    @Test
+    void shouldAddDependencyWithExclusion() {
+      Path pom = projectWithPom("src/test/resources/projects/maven/pom.xml");
+
+      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddDirectJavaDependency(springBootStarterWebDependency()));
+
+      String content = content(pom);
+      assertThat(content)
+        .contains(
+          """
+               <dependency>
+                 <groupId>org.springframework.boot</groupId>
+                 <artifactId>spring-boot-starter-web</artifactId>
+                 <exclusions>
+                   <exclusion>
+                     <groupId>org.springframework.boot</groupId>
+                     <artifactId>spring-boot-starter-tomcat</artifactId>
+                   </exclusion>
+                 </exclusions>
+               </dependency>
+           """
+        );
     }
 
     @Test

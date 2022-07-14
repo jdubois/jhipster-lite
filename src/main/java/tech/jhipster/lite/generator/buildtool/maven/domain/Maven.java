@@ -1,14 +1,10 @@
 package tech.jhipster.lite.generator.buildtool.maven.domain;
 
-import static tech.jhipster.lite.common.domain.WordUtils.LF;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import tech.jhipster.lite.common.domain.WordUtils;
 import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Parent;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Plugin;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Repository;
 
 public class Maven {
 
@@ -73,47 +69,6 @@ public class Maven {
   public static final String PLUGIN_REPOSITORY_END = "</pluginRepository>";
 
   private Maven() {}
-
-  public static String getParent(Parent parent) {
-    return getParent(parent, WordUtils.DEFAULT_INDENTATION);
-  }
-
-  public static String getParentHeader(Parent parent) {
-    return getParentHeader(parent, WordUtils.DEFAULT_INDENTATION);
-  }
-
-  public static String getParentHeader(Parent parent, int indentation) {
-    String begin = PARENT_BEGIN + LF;
-
-    String content = new StringBuilder()
-      .append(GROUP_ID_BEGIN)
-      .append(parent.getGroupId())
-      .append(GROUP_ID_END)
-      .append(LF)
-      .append(ARTIFACT_ID_BEGIN)
-      .append(parent.getArtifactId())
-      .append(ARTIFACT_ID_END)
-      .append(LF)
-      .toString()
-      .indent(indentation);
-
-    return begin + content;
-  }
-
-  public static String getParent(Parent parent, int indentation) {
-    String header = getParentHeader(parent, indentation);
-
-    String additionalContent = new StringBuilder()
-      .append(VERSION_BEGIN)
-      .append(parent.getVersion())
-      .append(VERSION_END)
-      .append(LF)
-      .append("<relativePath />")
-      .toString()
-      .indent(indentation);
-
-    return header + additionalContent + PARENT_END;
-  }
 
   public static String getDependency(Dependency dependency, int indentation) {
     return getDependency(dependency, indentation, List.of());
@@ -193,100 +148,7 @@ public class Maven {
     return begin + body + EXCLUSIONS_END;
   }
 
-  public static String getPluginHeader(Plugin plugin, int indentation) {
-    String begin = PLUGIN_BEGIN + LF;
-
-    String content = new StringBuilder()
-      .append(GROUP_ID_BEGIN)
-      .append(plugin.getGroupId())
-      .append(GROUP_ID_END)
-      .append(LF)
-      .append(ARTIFACT_ID_BEGIN)
-      .append(plugin.getArtifactId())
-      .append(ARTIFACT_ID_END)
-      .toString()
-      .indent(indentation);
-
-    return begin + content;
-  }
-
-  public static String getPlugin(Plugin plugin, int indentation) {
-    String header = getPluginHeader(plugin, indentation);
-
-    StringBuilder additionalBodyBuilder = new StringBuilder();
-
-    plugin.getVersion().ifPresent(version -> additionalBodyBuilder.append(VERSION_BEGIN).append(version).append(VERSION_END).append(LF));
-
-    plugin.getAdditionalElements().ifPresent(additionalBodyBuilder::append);
-
-    String additionalBody = additionalBodyBuilder.toString().indent(indentation);
-
-    return header + additionalBody + PLUGIN_END;
-  }
-
   public static String getProperty(String key, String value) {
     return new StringBuilder().append("<").append(key).append(">").append(value).append("</").append(key).append(">").toString();
-  }
-
-  public static String getRepositoryHeader(Repository repository, int indentation) {
-    return getRepositoryHeader(repository, indentation, NEEDLE_REPOSITORY);
-  }
-
-  public static String getRepository(Repository repository, int indentation) {
-    return getRepository(repository, indentation, NEEDLE_REPOSITORY);
-  }
-
-  public static String getPluginRepositoryHeader(Repository repository, int indentation) {
-    return getRepositoryHeader(repository, indentation, NEEDLE_PLUGIN_REPOSITORY);
-  }
-
-  public static String getPluginRepository(Repository repository, int indentation) {
-    return getRepository(repository, indentation, NEEDLE_PLUGIN_REPOSITORY);
-  }
-
-  private static String getRepositoryHeader(Repository repository, int indentation, String needle) {
-    String begin;
-
-    if (NEEDLE_PLUGIN_REPOSITORY.equals(needle)) {
-      begin = new StringBuilder().append(PLUGIN_REPOSITORY_BEGIN).append(LF).toString();
-    } else {
-      begin = new StringBuilder().append(REPOSITORY_BEGIN).append(LF).toString();
-    }
-
-    String content = new StringBuilder()
-      .append(ID_BEGIN)
-      .append(repository.getId())
-      .append(ID_END)
-      .append(LF)
-      .append(URL_BEGIN)
-      .append(repository.getUrl())
-      .append(URL_END)
-      .append(LF)
-      .toString()
-      .indent(indentation);
-
-    return begin + content;
-  }
-
-  private static String getRepository(Repository repository, int indentation, String needle) {
-    String header = getRepositoryHeader(repository, indentation, needle);
-
-    StringBuilder additionalBodyBuilder = new StringBuilder();
-
-    repository.getName().ifPresent(name -> additionalBodyBuilder.append(NAME_BEGIN).append(name).append(NAME_END).append(LF));
-
-    repository.getAdditionalElements().ifPresent(additionalBodyBuilder::append);
-
-    String additionalBody = additionalBodyBuilder.toString().indent(indentation);
-
-    String end;
-
-    if (NEEDLE_PLUGIN_REPOSITORY.equals(needle)) {
-      end = PLUGIN_REPOSITORY_END;
-    } else {
-      end = REPOSITORY_END;
-    }
-
-    return header + additionalBody + end;
   }
 }

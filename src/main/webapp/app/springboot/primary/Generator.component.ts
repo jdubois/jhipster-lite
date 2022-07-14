@@ -16,6 +16,7 @@ import { StoreGeneric } from 'pinia';
 import { SetupGeneratorVue } from '@/springboot/primary/generator/setup-generator';
 import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { FileDownloader } from '@/common/primary/FileDownloader';
+import { ProjectFolderService } from '@/springboot/domain/ProjectFolderService';
 
 export default defineComponent({
   name: 'GeneratorComponent',
@@ -34,6 +35,7 @@ export default defineComponent({
   setup() {
     const projectHistoryService = inject('projectHistoryService') as ProjectHistoryService;
     const projectService = inject('projectService') as ProjectService;
+    const projectFolderService = inject('projectFolderService') as ProjectFolderService;
     const globalWindow = inject('globalWindow') as Window;
     const projectStore = inject('projectStore') as StoreGeneric;
     const selectorPrefix = 'generator';
@@ -55,6 +57,8 @@ export default defineComponent({
       project.value.projectName = state.project.projectName ?? project.value.projectName;
       project.value.serverPort = state.project.serverPort ?? project.value.serverPort;
     });
+
+    projectFolderService.get().then(folderName => (project.value.folder = folderName));
 
     let timeoutId: number | undefined = undefined;
     const getCurrentProjectHistory = (): Promise<History> => projectHistoryService.get(project.value.folder);

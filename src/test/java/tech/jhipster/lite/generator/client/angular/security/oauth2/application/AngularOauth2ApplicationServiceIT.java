@@ -4,6 +4,7 @@ import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJsonComplete;
 import static tech.jhipster.lite.generator.client.angular.security.oauth2.application.AngularOauth2Assert.assertAddedFiles;
 import static tech.jhipster.lite.generator.client.angular.security.oauth2.application.AngularOauth2Assert.assertDependencies;
 import static tech.jhipster.lite.generator.client.angular.security.oauth2.application.AngularOauth2Assert.assertUpdatedFiles;
+import static tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules.applyAngular;
 
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class AngularOauth2ApplicationServiceIT {
   void shouldAddOauth2() throws IOException {
     // Given
     Project project = tmpProjectWithPackageJsonComplete();
-    angularApplicationService.addAngular(project);
+    applyAngular(project);
 
     // When
     angularOauth2ApplicationService.addOauth2(project);

@@ -9,7 +9,11 @@
     },
     "JHIPSTER_LITE_VERSION": {
       "description": "Version of the JHipster Lite to deploy.",
-      "value": "0.10.0"
+      "value": "0.11.0"
+    },
+    "SPRING_PROFILES_ACTIVE": {
+      "description": "Spring Profiles.",
+      "value": "cloud"
     }
   },
   "buildpacks": [{ "url": "heroku/jvm" }, { "url": "https://github.com/jhipster/jhipster-lite-heroku-buildpack" }]

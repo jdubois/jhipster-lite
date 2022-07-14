@@ -12,7 +12,6 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 public class JHipsterModuleContext {
 
   private static final Logger log = LoggerFactory.getLogger(JHipsterModuleContext.class);
-  private static final String IDENTATION_KEY = "prettierDefaultIndent";
 
   private final Map<String, Object> context;
   private final Indentation indentation;
@@ -23,7 +22,7 @@ public class JHipsterModuleContext {
   }
 
   private Indentation loadIndentation() {
-    Object contextIndentation = context.get(IDENTATION_KEY);
+    Object contextIndentation = context.get(JHipsterModuleProperties.INDENTATION_PROPERTY);
 
     if (contextIndentation instanceof Integer integerIndentation) {
       return Indentation.from(integerIndentation);
@@ -60,10 +59,11 @@ public class JHipsterModuleContext {
     private Map<String, Object> initialContext(JHipsterModuleProperties properties) {
       HashMap<String, Object> init = new HashMap<>();
 
-      init.put("baseName", properties.projectBaseName().get());
-      init.put("projectName", properties.projectName().get());
-      init.put("packageName", properties.basePackage().get());
-      init.put(IDENTATION_KEY, properties.indentation().spacesCount());
+      init.put(JHipsterModuleProperties.PROJECT_BASE_NAME_PROPERTY, properties.projectBaseName().get());
+      init.put(JHipsterModuleProperties.PROJECT_NAME_PROPERTY, properties.projectName().get());
+      init.put(JHipsterModuleProperties.BASE_PACKAGE_PROPERTY, properties.basePackage().get());
+      init.put(JHipsterModuleProperties.SERVER_PORT_PROPERTY, properties.serverPort().get());
+      init.put(JHipsterModuleProperties.INDENTATION_PROPERTY, properties.indentation().spacesCount());
 
       return init;
     }

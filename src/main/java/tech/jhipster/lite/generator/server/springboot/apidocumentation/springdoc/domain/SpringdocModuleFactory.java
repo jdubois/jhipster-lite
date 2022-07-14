@@ -1,17 +1,10 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoc.domain;
 
-import static tech.jhipster.lite.module.domain.JHipsterModule.from;
-import static tech.jhipster.lite.module.domain.JHipsterModule.moduleBuilder;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyKey;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyValue;
-import static tech.jhipster.lite.module.domain.JHipsterModule.toSrcMainJava;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import java.util.Map;
-import tech.jhipster.lite.common.domain.WordUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModuleContext;
 import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -41,18 +34,6 @@ public class SpringdocModuleFactory {
     .versionSlug(SPRINGDOC_OPENAPI_VERSION_KEY)
     .build();
 
-  //@formatter:off
-  private static final Map<String, String> DEFAULT_API_CONFIG_MAP = Map.of(
-    "apiTitle", "Project API",
-    "apiDescription", "Project description API",
-    "apiLicenseName", "No license",
-    "apiLicenseUrl", "",
-    "apiExternalDocDescription", "Project Documentation",
-    "apiExternalDocUrl", ""
-  );
-
-  //@formatter:on
-
   public JHipsterModule buildModuleForMvc(JHipsterModuleProperties moduleProperties) {
     return buildModule(moduleProperties, SPRINGDOC_OPENAPI_UI_DEPENDENCY, SPRINGDOC_CONFIG_JAVA_FILE);
   }
@@ -70,25 +51,27 @@ public class SpringdocModuleFactory {
   }
 
   private JHipsterModule buildModule(
-    JHipsterModuleProperties moduleProperties,
+    JHipsterModuleProperties properties,
     JavaDependency springdocJavaDependency,
     String srcSpringdocJavaFile
   ) {
-    Assert.notNull("properties", moduleProperties);
+    Assert.notNull("properties", properties);
 
-    JHipsterDestination mainDestination = toSrcMainJava().append(moduleProperties.basePackage().path()).append(DESTINATION);
-
-    JHipsterModuleContext.JHipsterModuleContextBuilder moduleContextBuilder = moduleBuilder(moduleProperties).context();
-
-    String baseName = moduleProperties.projectBaseName().get();
-    moduleContextBuilder.put("baseNameLowercase", WordUtils.lowerFirst(baseName));
-    DEFAULT_API_CONFIG_MAP.forEach(moduleContextBuilder::put);
+    JHipsterDestination mainDestination = toSrcMainJava().append(properties.basePackage().path()).append(DESTINATION);
 
     //@formatter:off
-    return moduleContextBuilder
+    return moduleBuilder(properties)
+        .context()
+        .put("baseNameLowercase", properties.projectBaseName().uncapitalized())
+        .put("apiTitle", "Project API")
+        .put("apiDescription", "Project description API")
+        .put("apiLicenseName", "No license")
+        .put("apiLicenseUrl", "")
+        .put("apiExternalDocDescription", "Project Documentation")
+        .put("apiExternalDocUrl", "")
         .and()
       .javaDependencies()
-        .dependency(springdocJavaDependency)
+        .addDependency(springdocJavaDependency)
         .and()
       .files()
         .add(SOURCE.template(srcSpringdocJavaFile), mainDestination.append(SPRINGDOC_CONFIG_JAVA_FILE))

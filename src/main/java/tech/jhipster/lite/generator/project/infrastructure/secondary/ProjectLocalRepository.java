@@ -10,10 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.PosixFilePermission;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Consumer;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.stereotype.Repository;
@@ -31,15 +28,6 @@ import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 public class ProjectLocalRepository implements ProjectRepository {
 
   private static final String FILE_SEPARATOR = "/";
-
-  @Override
-  public void create(Project project) {
-    try {
-      FileUtils.createFolder(project.getFolder());
-    } catch (IOException ex) {
-      throw new GeneratorException("The folder can't be created");
-    }
-  }
 
   @Override
   public void add(Collection<ProjectFile> files) {
@@ -109,17 +97,6 @@ public class ProjectLocalRepository implements ProjectRepository {
   }
 
   @Override
-  public String getComputedTemplate(Project project, String source, String sourceFilename) {
-    String filename = MustacheUtils.withExt(sourceFilename);
-    String filePath = getPath(TEMPLATE_FOLDER, source, filename);
-    try {
-      return MustacheUtils.template(filePath, project.getConfig());
-    } catch (IOException e) {
-      throw new GeneratorException("The file " + filePath + " can't be read");
-    }
-  }
-
-  @Override
   public boolean containsRegexp(Project project, String source, String sourceFilename, String regexp) {
     try {
       String text = read(getPath(project.getFolder(), source, sourceFilename));
@@ -134,17 +111,6 @@ public class ProjectLocalRepository implements ProjectRepository {
     try {
       String currentText = read(getPath(project.getFolder(), source, sourceFilename));
       String updatedText = FileUtils.replace(currentText, oldText, newText);
-      write(project, updatedText, source, sourceFilename);
-    } catch (IOException e) {
-      throw new GeneratorException(getErrorWritingMessage(sourceFilename));
-    }
-  }
-
-  @Override
-  public void replaceRegexp(Project project, String source, String sourceFilename, String regexpText, String newText) {
-    try {
-      String sourcePath = getPath(project.getFolder(), source, sourceFilename);
-      String updatedText = FileUtils.replaceInFile(sourcePath, regexpText, newText);
       write(project, updatedText, source, sourceFilename);
     } catch (IOException e) {
       throw new GeneratorException(getErrorWritingMessage(sourceFilename));
@@ -167,41 +133,11 @@ public class ProjectLocalRepository implements ProjectRepository {
   }
 
   @Override
-  public void setExecutable(Project project, String source, String sourceFilename) {
-    if (!FileUtils.isPosix()) {
-      return;
-    }
-    Set<PosixFilePermission> perms = new HashSet<>();
-    perms.add(PosixFilePermission.OWNER_READ);
-    perms.add(PosixFilePermission.OWNER_WRITE);
-    perms.add(PosixFilePermission.OWNER_EXECUTE);
-
-    perms.add(PosixFilePermission.GROUP_READ);
-    perms.add(PosixFilePermission.GROUP_WRITE);
-    perms.add(PosixFilePermission.GROUP_EXECUTE);
-    File file = new File(getPath(project.getFolder(), source, sourceFilename));
-    try {
-      Files.setPosixFilePermissions(file.toPath(), perms);
-    } catch (IOException e) {
-      throw new GeneratorException("Can't change file permission for " + sourceFilename, e);
-    }
-  }
-
-  @Override
   public void gitInit(Project project) {
     try {
       GitUtils.init(project.getFolder());
     } catch (GitAPIException e) {
       throw new GeneratorException("Error when git init", e);
-    }
-  }
-
-  @Override
-  public void gitAddAndCommit(Project project, String message) {
-    try {
-      GitUtils.addAndCommit(project.getFolder(), message);
-    } catch (GitAPIException | IOException e) {
-      throw new GeneratorException("Error when git add and commit", e);
     }
   }
 
@@ -234,11 +170,6 @@ public class ProjectLocalRepository implements ProjectRepository {
     } catch (IOException ioe) {
       throw new GeneratorException("Error when creating ", ioe);
     }
-  }
-
-  @Override
-  public boolean isJHipsterLiteProject(String path) {
-    return FileUtils.exists(getPath(path, JHIPSTER_FOLDER, HISTORY_JSON));
   }
 
   private String getErrorWritingMessage(String filename) {

@@ -38,7 +38,7 @@ class MariaDBModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleOnProjectWithDefaultPom(module)
+    assertThatModuleWithFiles(module, pomFile())
       .createFile("documentation/mariadb.md")
       .and()
       .createPrefixedFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/mariadb", "DatabaseConfiguration.java")

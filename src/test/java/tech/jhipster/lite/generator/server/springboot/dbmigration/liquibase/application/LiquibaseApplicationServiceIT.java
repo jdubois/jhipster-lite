@@ -21,7 +21,6 @@ import tech.jhipster.lite.IntegrationTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.core.domain.SpringBootService;
 import tech.jhipster.lite.generator.server.springboot.database.mariadb.application.MariaDBApplicationService;
 import tech.jhipster.lite.generator.server.springboot.database.mysql.application.MySQLApplicationService;
 import tech.jhipster.lite.generator.server.springboot.database.postgresql.application.PostgresqlApplicationService;
@@ -31,9 +30,6 @@ import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 class LiquibaseApplicationServiceIT {
-
-  @Autowired
-  private SpringBootService springBootService;
 
   @Autowired
   private PostgresqlApplicationService postgresqlApplicationService;
@@ -65,7 +61,7 @@ class LiquibaseApplicationServiceIT {
       .build();
 
     TestJHipsterModules.applyMaven(project);
-    springBootService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
 
     liquibaseApplicationService.init(project);
@@ -156,7 +152,7 @@ class LiquibaseApplicationServiceIT {
       .projectBaseName("myapp")
       .build();
     TestJHipsterModules.applyMaven(project);
-    springBootService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
 
     liquibaseApplicationService.addLoggerInConfiguration(project);
@@ -192,7 +188,7 @@ class LiquibaseApplicationServiceIT {
       .projectBaseName("myapp")
       .build();
     TestJHipsterModules.applyMaven(project);
-    springBootService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
     if (databaseType.equals(DatabaseType.MYSQL)) {
       TestJHipsterModules.applyer().module(mySQLApplicationService.build(properties)).properties(properties).slug("mysql").apply();
     } else {

@@ -14,6 +14,8 @@ import { stubAlertBus } from '../../common/domain/AlertBus.fixture';
 import { AlertBus } from '../../../../../main/webapp/app/common/domain/alert/AlertBus';
 import { FileDownloader } from '@/common/primary/FileDownloader';
 import { stubFileDownloader } from '../../common/primary/FileDownloader.fixture';
+import { stubProjectFolderService } from '../domain/ProjectFolderService.fixture';
+import { ProjectFolderService } from '@/springboot/domain/ProjectFolderService';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -21,6 +23,7 @@ let component: any;
 interface WrapperOptions {
   projectHistoryService: ProjectHistoryService;
   projectService: ProjectService;
+  projectFolderService: ProjectFolderService;
   globalWindow: WindowStub;
   projectStore: ProjectStoreFixture;
   alertBus: AlertBus;
@@ -38,11 +41,23 @@ const stubGlobalWindow = (): WindowStub =>
     setTimeout: sinon.stub(),
   } as WindowStub);
 
+const projectFolderServiceStub = stubProjectFolderService();
+projectFolderServiceStub.get.resolves('');
+
 const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
-  const { projectHistoryService, projectService, globalWindow, projectStore, alertBus, fileDownloader }: WrapperOptions = {
+  const {
+    projectHistoryService,
+    projectService,
+    projectFolderService,
+    globalWindow,
+    projectStore,
+    alertBus,
+    fileDownloader,
+  }: WrapperOptions = {
     projectHistoryService: stubProjectHistoryService(),
     globalWindow: stubGlobalWindow(),
     projectService: stubProjectService(),
+    projectFolderService: projectFolderServiceStub,
     projectStore: stubProjectStore(),
     alertBus: stubAlertBus(),
     fileDownloader: stubFileDownloader(),
@@ -53,6 +68,7 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
       provide: {
         projectHistoryService,
         projectService,
+        projectFolderService,
         globalWindow,
         projectStore,
         alertBus,
@@ -70,10 +86,23 @@ describe('Generator', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
+  it('should init project folder', async () => {
+    const projectFolderService = stubProjectFolderService();
+    projectFolderService.get.resolves('/tmp/jhlite/12345');
+
+    wrap({ projectFolderService });
+
+    await wrapper.vm.$forceUpdate();
+
+    expect(component.project.folder).toBe('/tmp/jhlite/12345');
+  });
+
   it('should get project history and details with current project folder', async () => {
     const projectHistoryService = stubProjectHistoryService();
     const projectService = stubProjectService();
     wrap({ projectHistoryService, projectService });
+
+    await wrapper.vm.$forceUpdate();
 
     const projectPathInput = wrapper.find('#path');
     await projectPathInput.setValue('path');

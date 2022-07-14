@@ -15,15 +15,11 @@ import tech.jhipster.lite.TestUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 class EhcacheResourceIT {
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
 
   @Autowired
   private MockMvc mockMvc;
@@ -38,7 +34,7 @@ class EhcacheResourceIT {
     Project project = ProjectDTO.toProject(projectDTO);
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mockMvc
       .perform(
@@ -61,7 +57,7 @@ class EhcacheResourceIT {
     Project project = ProjectDTO.toProject(projectDTO);
     TestJHipsterModules.applyInit(project);
     TestJHipsterModules.applyMaven(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mockMvc
       .perform(

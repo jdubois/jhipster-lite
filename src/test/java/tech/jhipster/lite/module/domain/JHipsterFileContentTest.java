@@ -9,9 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
-import tech.jhipster.lite.common.infrastructure.secondary.FileSystemProjectFilesReader;
 import tech.jhipster.lite.error.domain.GeneratorException;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
+import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 @UnitTest
 class JHipsterFileContentTest {

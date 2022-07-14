@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/gradleapp",
-  "generator-jhipster": {
-    "projectName": "GradleApp Project",
-    "baseName": "gradleapp",
-    "packageName": "tech.jhipster.gradleapp"
-  }
-}

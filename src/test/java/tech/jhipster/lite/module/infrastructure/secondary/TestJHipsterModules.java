@@ -2,12 +2,15 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 
 import static org.mockito.Mockito.*;
 
-import tech.jhipster.lite.common.infrastructure.secondary.FileSystemProjectFilesReader;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.generator.buildtool.gradle.domain.GradleModuleFactory;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenModuleFactory;
+import tech.jhipster.lite.generator.client.angular.core.domain.AngularModuleFactory;
+import tech.jhipster.lite.generator.client.react.core.domain.ReactCoreModulesFactory;
 import tech.jhipster.lite.generator.init.domain.GitRepository;
 import tech.jhipster.lite.generator.init.domain.InitModuleFactory;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.server.springboot.core.domain.SpringBootCoreModuleFactory;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
@@ -15,11 +18,16 @@ import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.npm.infrastructure.secondary.FileSystemNpmVersions;
+import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 public final class TestJHipsterModules {
 
   private static final InitModuleFactory initModules = new InitModuleFactory(mock(GitRepository.class));
   private static final MavenModuleFactory mavenModules = new MavenModuleFactory();
+  private static final GradleModuleFactory gradleModules = new GradleModuleFactory();
+  private static final AngularModuleFactory angularModules = new AngularModuleFactory();
+  private static final ReactCoreModulesFactory reactModules = new ReactCoreModulesFactory();
+  private static final SpringBootCoreModuleFactory springBootModules = new SpringBootCoreModuleFactory();
 
   private TestJHipsterModules() {}
 
@@ -33,6 +41,30 @@ public final class TestJHipsterModules {
     JHipsterModuleProperties properties = new JHipsterModuleProperties(project.getFolder(), project.getConfig());
 
     applyer().module(mavenModules.buildModule(properties)).properties(properties).slug("maven-java").apply();
+  }
+
+  public static void applyGradle(Project project) {
+    JHipsterModuleProperties properties = new JHipsterModuleProperties(project.getFolder(), project.getConfig());
+
+    applyer().module(gradleModules.buildModule(properties)).properties(properties).slug("gradle").apply();
+  }
+
+  public static void applyAngular(Project project) {
+    JHipsterModuleProperties properties = new JHipsterModuleProperties(project.getFolder(), project.getConfig());
+
+    applyer().module(angularModules.buildModule(properties)).properties(properties).slug("angular").apply();
+  }
+
+  public static void applyReact(Project project) {
+    JHipsterModuleProperties properties = new JHipsterModuleProperties(project.getFolder(), project.getConfig());
+
+    applyer().module(reactModules.buildModuleWithStyle(properties)).properties(properties).slug("react").apply();
+  }
+
+  public static void applySpringBootCore(Project project) {
+    JHipsterModuleProperties properties = new JHipsterModuleProperties(project.getFolder(), project.getConfig());
+
+    applyer().module(springBootModules.buildModule(properties)).properties(properties).slug("springboot").apply();
   }
 
   public static void apply(JHipsterModule module) {

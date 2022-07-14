@@ -25,7 +25,7 @@ class FileSystemJHipsterModulesRepositoryTest {
     JHipsterModule module = module();
 
     // @formatter:off
-    assertThatModuleWithFiles(module, pomFile(), packageJsonFile()) 
+    assertThatModuleWithFiles(module, file("src/test/resources/projects/maven/pom.xml", "pom.xml"), packageJsonFile()) 
       .createFiles(
         "src/main/java/com/company/myapp/MyApp.java",
         "src/main/java/com/company/myapp/errors/Assert.java",
@@ -38,6 +38,13 @@ class FileSystemJHipsterModulesRepositoryTest {
         .containing("com.test.myapp")
         .and()
       .createFile("pom.xml")
+      .containing("<dummy-dependency.version>4.5.8</dummy-dependency.version>")
+      .notContaining("""
+              <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+              </dependency>
+          """)
       .containing(
           """
                 <dependency>
@@ -46,6 +53,19 @@ class FileSystemJHipsterModulesRepositoryTest {
                   <version>${spring-boot.version}</version>
                   <scope>import</scope>
                 </dependency>
+          """)
+      .containing(
+          """
+              <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <exclusions>
+                  <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                  </exclusion>
+                </exclusions>
+              </dependency>
           """)
         .containing(
           """
@@ -169,6 +189,7 @@ class FileSystemJHipsterModulesRepositoryTest {
         .containing("Another dummy replacement")
         .containing("Dummy collection replacement")
         .containing("Another dummy collection replacement")
+        .containing("// Dummy comment\n  public static class IntegerAsserter {")
         .and()
       .createFile("src/main/resources/config/application.properties")
         .containing("springdoc.swagger-ui.operationsSorter=alpha")

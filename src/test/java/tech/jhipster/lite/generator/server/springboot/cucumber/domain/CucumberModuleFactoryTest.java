@@ -24,7 +24,7 @@ class CucumberModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleOnProjectWithDefaultPom(module)
+    assertThatModuleWithFiles(module, pomFile())
       .createPrefixedFiles(
         "src/test/java/com/jhipster/test/cucumber",
         "AsyncElementAsserter.java",
@@ -71,6 +71,6 @@ class CucumberModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleOnProjectWithDefaultPom(module).createFiles("src/test/java/com/jhipster/test/cucumber/CucumberJpaReset.java");
+    assertThatModuleWithFiles(module, pomFile()).createFiles("src/test/java/com/jhipster/test/cucumber/CucumberJpaReset.java");
   }
 }

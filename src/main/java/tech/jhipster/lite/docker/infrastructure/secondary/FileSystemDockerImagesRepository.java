@@ -4,12 +4,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.common.domain.ProjectFilesReader;
 import tech.jhipster.lite.docker.domain.DockerImage;
 import tech.jhipster.lite.docker.domain.DockerImageName;
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.docker.domain.UnknownDockerImageException;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @Repository
 class FileSystemDockerImagesRepository implements DockerImages {

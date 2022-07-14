@@ -3,15 +3,13 @@ package tech.jhipster.lite.generator.server.springboot.database.mssql.applicatio
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
-import static tech.jhipster.lite.generator.server.springboot.core.domain.SpringBoot.*;
+import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
 import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.core.application.SpringBootApplicationService;
 import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 
 @IntegrationTest
@@ -20,18 +18,12 @@ class MssqlApplicationServiceIT {
   @Autowired
   private MssqlApplicationService mssqlApplicationService;
 
-  @Autowired
-  private MavenApplicationService mavenApplicationService;
-
-  @Autowired
-  private SpringBootApplicationService springBootApplicationService;
-
   @Test
   void shouldInit() {
     Project project = tmpProject();
     TestJHipsterModules.applyInit(project);
-    mavenApplicationService.addPomXml(project);
-    springBootApplicationService.init(project);
+    TestJHipsterModules.applyMaven(project);
+    TestJHipsterModules.applySpringBootCore(project);
 
     mssqlApplicationService.init(project);
 

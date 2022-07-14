@@ -1,12 +1,7 @@
 package tech.jhipster.lite.module.domain.replacement;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
-import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplacements {
 
@@ -44,41 +39,37 @@ public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplaceme
     }
 
     @Override
-    protected FileReplacer buildReplacer(String file, ElementMatcher toReplace, String replacement) {
+    protected ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement) {
       return new MandatoryFileReplacer(file, new MandatoryReplacer(toReplace, replacement));
     }
   }
 
-  private static record MandatoryFileReplacer(String file, MandatoryReplacer replacement) implements FileReplacer {
+  private static record MandatoryFileReplacer(String file, MandatoryReplacer replacement) implements ContentReplacement {
     public MandatoryFileReplacer {
       Assert.notNull("file", file);
       Assert.notNull("replacement", replacement);
     }
 
     @Override
-    public void apply(JHipsterProjectFolder folder) {
-      Path filePath = folder.filePath(file());
+    public String apply(String content) {
+      return replacement().apply(content);
+    }
 
-      try {
-        String content = Files.readString(filePath);
-        String updatedContent = replacement().apply(filePath, content);
-
-        Files.writeString(filePath, updatedContent, StandardOpenOption.TRUNCATE_EXISTING);
-      } catch (IOException e) {
-        throw new ReplacementErrorException(filePath, e);
-      }
+    @Override
+    public void handleError(Throwable e) {
+      throw new MandatoryReplacementException(e);
     }
   }
 
-  private static record MandatoryReplacer(ElementMatcher currentValue, String updatedValue) {
+  private static record MandatoryReplacer(ElementReplacer currentValue, String updatedValue) {
     public MandatoryReplacer {
       Assert.notNull("currentValue", currentValue);
       Assert.notNull("updatedValue", updatedValue);
     }
 
-    public String apply(Path file, String content) {
+    public String apply(String content) {
       if (currentValue().notMatchIn(content)) {
-        throw new UnknownCurrentValueException(file, content);
+        throw new UnknownCurrentValueException(currentValue().searchMatcher(), content);
       }
 
       return currentValue().replacer().apply(content, updatedValue());

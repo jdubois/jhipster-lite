@@ -1,8 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.admin.health.application;
 
-import static tech.jhipster.lite.TestUtils.tmpProjectWithPackageJsonComplete;
-import static tech.jhipster.lite.generator.client.angular.admin.health.application.AngularHealthAssert.assertAppHealth;
-import static tech.jhipster.lite.generator.client.angular.admin.health.application.AngularHealthAssert.assertUpdatedFiles;
+import static tech.jhipster.lite.TestUtils.*;
+import static tech.jhipster.lite.generator.client.angular.admin.health.application.AngularHealthAssert.*;
+import static tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules.*;
 
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class AngularHealthApplicationServiceIT {
   void shouldAddHealthAngular() throws IOException {
     Project project = tmpProjectWithPackageJsonComplete();
 
-    angularApplicationService.addAngular(project);
+    applyAngular(project);
     angularHealthApplicationService.addHealthAngular(project);
 
     assertAppHealth(project);

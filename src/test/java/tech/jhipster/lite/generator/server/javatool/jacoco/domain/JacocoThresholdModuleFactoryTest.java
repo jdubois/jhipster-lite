@@ -3,8 +3,6 @@ package tech.jhipster.lite.generator.server.javatool.jacoco.domain;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -17,7 +15,6 @@ class JacocoThresholdModuleFactoryTest {
   private static final JacocoThresholdModuleFactory factory = new JacocoThresholdModuleFactory();
 
   @Test
-  @EnabledOnOs(OS.LINUX)
   void shouldBuildModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
 

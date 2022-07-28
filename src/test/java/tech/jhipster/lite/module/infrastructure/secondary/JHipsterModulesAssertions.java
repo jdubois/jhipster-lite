@@ -31,6 +31,10 @@ public final class JHipsterModulesAssertions {
     return file("src/test/resources/projects/files/application.properties", "src/main/resources/application.properties");
   }
 
+  public static ModuleFile lockbackFile() {
+    return file("src/test/resources/projects/logback/logback.xml", "src/main/resources/logback-spring.xml");
+  }
+
   public static ModuleFile testLockbackFile() {
     return file("src/test/resources/projects/logback/logback.xml", "src/test/resources/logback.xml");
   }
@@ -51,6 +55,14 @@ public final class JHipsterModulesAssertions {
     addFilesToproject(module.projectFolder(), files);
 
     return new ModuleAsserter(module);
+  }
+
+  public static String nodeDependency(String dependency) {
+    return "\"" + dependency + "\": \"";
+  }
+
+  public static String nodeScript(String key, String command) {
+    return "\"" + key + "\": \"" + command + "\"";
   }
 
   private static void addFilesToproject(JHipsterProjectFolder project, ModuleFile... files) {

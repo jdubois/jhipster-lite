@@ -1,45 +1,46 @@
 package tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain;
 
-import static tech.jhipster.lite.common.domain.WordUtils.*;
-import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.docker.domain.DockerImage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
-import tech.jhipster.lite.generator.server.springboot.common.domain.Level;
 import tech.jhipster.lite.module.domain.DocumentationTitle;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
+import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
+import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class SQLCommonModuleBuilder {
 
   private static final String ORG_HIBERNATE = "org.hibernate";
-  private static final String FALSE = "false";
-  private static final String TRUE = "true";
+  private static final PropertyValue FALSE = propertyValue("false");
+  private static final PropertyValue TRUE = propertyValue("true");
 
-  private SQLCommonModuleBuilder() {
-    // Cannot be instantiated
-  }
+  private SQLCommonModuleBuilder() {}
 
   public static JHipsterModuleBuilder sqlCommonModuleBuilder(
     JHipsterModuleProperties properties,
     DatabaseType databaseType,
     DockerImage dockerImage,
-    DocumentationTitle documentationTitle
+    DocumentationTitle documentationTitle,
+    ArtifactId testContainerArtifactId
   ) {
     Assert.notNull("properties", properties);
     Assert.notNull("databaseType", databaseType);
     Assert.notNull("dockerImage", dockerImage);
     Assert.notNull("documentationTitle", documentationTitle);
+    Assert.notNull("testContainerArtifactId", testContainerArtifactId);
 
     String databaseId = databaseType.id();
     JHipsterSource source = from("server/springboot/database/" + databaseType.id());
     JHipsterDestination mainDestination = toSrcMainJava()
-      .append(properties.basePackage().path())
+      .append(properties.packagePath())
       .append("technical/infrastructure/secondary/")
       .append(databaseId);
 
@@ -51,6 +52,7 @@ public class SQLCommonModuleBuilder {
         .put(databaseId + "DockerImageWithVersion", dockerImage.fullName()) // To be used in <databaseId>.yml docker-compose file
         .and()
       .documentation(documentationTitle, source.template(databaseId + ".md"))
+      .startupCommand(startupCommand(databaseId))
       .files()
         .add(source.template("DatabaseConfiguration.java"), mainDestination.append("DatabaseConfiguration.java"))
         .add(source.template(databaseId + ".yml"), toSrcMainDocker().append(databaseId + ".yml"))
@@ -59,13 +61,13 @@ public class SQLCommonModuleBuilder {
         .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-data-jpa"))
         .addDependency(groupId("com.zaxxer"), artifactId("HikariCP"))
         .addDependency(groupId(ORG_HIBERNATE), artifactId("hibernate-core"))
-        .addDependency(testContainer(databaseId))
+        .addDependency(testContainer(testContainerArtifactId))
         .and()
       .springMainProperties()
         .set(propertyKey("spring.datasource.password"), propertyValue(""))
         .set(propertyKey("spring.datasource.type"), propertyValue("com.zaxxer.hikari.HikariDataSource"))
         .set(propertyKey("spring.datasource.hikari.poolName"), propertyValue("Hikari"))
-        .set(propertyKey("spring.datasource.hikari.auto-commit"), propertyValue(FALSE))
+        .set(propertyKey("spring.datasource.hikari.auto-commit"), FALSE)
         .set(propertyKey("spring.data.jpa.repositories.bootstrap-mode"), propertyValue("deferred"))
         .set(propertyKey("spring.jpa.hibernate.ddl-auto"), propertyValue("none"))
         .set(
@@ -76,16 +78,18 @@ public class SQLCommonModuleBuilder {
           propertyKey("spring.jpa.hibernate.naming.physical-strategy"),
           propertyValue("org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy")
         )
-        .set(propertyKey("spring.jpa.open-in-view"), propertyValue(FALSE))
-        .set(propertyKey("spring.jpa.properties.hibernate.connection.provider_disables_autocommit"), propertyValue(TRUE))
-        .set(propertyKey("spring.jpa.properties.hibernate.generate_statistics"), propertyValue(FALSE))
-        .set(propertyKey("spring.jpa.properties.hibernate.id.new_generator_mappings"), propertyValue(TRUE))
+        .set(propertyKey("spring.jpa.open-in-view"), FALSE)
+        .set(propertyKey("spring.jpa.properties.hibernate.cache.use_second_level_cache"), FALSE)
+        .set(propertyKey("spring.jpa.properties.hibernate.cache.use_query_cache"), FALSE)
+        .set(propertyKey("spring.jpa.properties.hibernate.connection.provider_disables_autocommit"), TRUE)
+        .set(propertyKey("spring.jpa.properties.hibernate.generate_statistics"), FALSE)
+        .set(propertyKey("spring.jpa.properties.hibernate.id.new_generator_mappings"), TRUE)
         .set(propertyKey("spring.jpa.properties.hibernate.jdbc.batch_size"), propertyValue("25"))
         .set(propertyKey("spring.jpa.properties.hibernate.jdbc.time_zone"), propertyValue("UTC"))
-        .set(propertyKey("spring.jpa.properties.hibernate.order_inserts"), propertyValue(TRUE))
-        .set(propertyKey("spring.jpa.properties.hibernate.order_updates"), propertyValue(TRUE))
-        .set(propertyKey("spring.jpa.properties.hibernate.query.fail_on_pagination_over_collection_fetch"), propertyValue(TRUE))
-        .set(propertyKey("spring.jpa.properties.hibernate.query.in_clause_parameter_padding"), propertyValue(TRUE))
+        .set(propertyKey("spring.jpa.properties.hibernate.order_inserts"), TRUE)
+        .set(propertyKey("spring.jpa.properties.hibernate.order_updates"), TRUE)
+        .set(propertyKey("spring.jpa.properties.hibernate.query.fail_on_pagination_over_collection_fetch"), TRUE)
+        .set(propertyKey("spring.jpa.properties.hibernate.query.in_clause_parameter_padding"), TRUE)
         .and()
       .springTestProperties()
         .set(
@@ -97,33 +101,27 @@ public class SQLCommonModuleBuilder {
         .set(propertyKey("spring.datasource.driver-class-name"), propertyValue("org.testcontainers.jdbc.ContainerDatabaseDriver"))
         .set(propertyKey("spring.datasource.hikari.maximum-pool-size"), propertyValue("2"))
         .and()
-      .optionalReplacements()
-        .in("src/main/resources/logback-spring.xml")
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("org.hibernate.validator", Level.WARN))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger(ORG_HIBERNATE, Level.WARN))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("org.hibernate.ejb.HibernatePersistence", Level.OFF))
-          .and()
-        .in("src/test/resources/logback.xml")
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("org.hibernate.validator", Level.WARN))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger(ORG_HIBERNATE, Level.WARN))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("org.hibernate.ejb.HibernatePersistence", Level.OFF))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("com.github.dockerjava", Level.WARN))
-          .add(text(NEEDLE_LOGBACK_LOGGER), logger("org.testcontainers", Level.WARN))
-          .and().
-        and();
+      .springMainLogger("org.hibernate.validator", LogLevel.WARN)
+      .springMainLogger(ORG_HIBERNATE, LogLevel.WARN)
+      .springMainLogger("org.hibernate.ejb.HibernatePersistence", LogLevel.OFF)
+      .springTestLogger("org.hibernate.validator", LogLevel.WARN)
+      .springTestLogger(ORG_HIBERNATE, LogLevel.WARN)
+      .springTestLogger("org.hibernate.ejb.HibernatePersistence", LogLevel.OFF)
+      .springTestLogger("com.github.dockerjava", LogLevel.WARN)
+      .springTestLogger("org.testcontainers", LogLevel.WARN);
     //@formatter:on
   }
 
-  private static JavaDependency testContainer(String databaseId) {
+  private static JavaDependency testContainer(ArtifactId testContainerArtifactI) {
     return javaDependency()
       .groupId("org.testcontainers")
-      .artifactId(databaseId)
+      .artifactId(testContainerArtifactI)
       .versionSlug("testcontainers")
       .scope(JavaDependencyScope.TEST)
       .build();
   }
 
-  public static String logger(String loggerName, Level level) {
-    return String.format("<logger name=\"%s\" level=\"%s\" />", loggerName, level.toString()) + LF + "  " + NEEDLE_LOGBACK_LOGGER;
+  private static String startupCommand(String databaseId) {
+    return "docker-compose -f src/main/docker/" + databaseId + ".yml up -d";
   }
 }

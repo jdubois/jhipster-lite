@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
 import static tech.jhipster.lite.common.domain.WordUtils.*;
-import static tech.jhipster.lite.generator.buildtool.gradle.domain.Gradle.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
 
@@ -31,17 +29,6 @@ class GradleDomainServiceTest {
 
   @InjectMocks
   private GradleDomainService gradleDomainService;
-
-  @Test
-  void shouldAddDependency() {
-    Project project = tmpProject();
-    Dependency dependency = Dependency.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter").build();
-
-    gradleDomainService.addDependency(project, dependency);
-
-    String newTextExpected = ("implementation(\"org.springframework.boot:spring-boot-starter\")\n" + GRADLE_NEEDLE_DEPENDENCY).indent(2);
-    verify(projectRepository).replaceText(project, "", "build.gradle.kts", REGEXP_SPACE_STAR + GRADLE_NEEDLE_DEPENDENCY, newTextExpected);
-  }
 
   @Test
   void shouldGetGroup() {

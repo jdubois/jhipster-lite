@@ -1,5 +1,7 @@
 package tech.jhipster.lite.module.domain;
 
+import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
+
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
@@ -161,23 +163,23 @@ public class JHipsterModule {
   }
 
   public static TextReplacer text(String text) {
-    return new TextReplacer(text);
+    return new TextReplacer(always(), text);
   }
 
   public static RegexReplacer regex(String regex) {
-    return new RegexReplacer(regex);
+    return new RegexReplacer(always(), regex);
   }
 
   public static TextNeedleBeforeReplacer lineBeforeText(String needle) {
-    return new TextNeedleBeforeReplacer(needle);
+    return new TextNeedleBeforeReplacer(notContainingReplacement(), needle);
   }
 
   public static RegexNeedleBeforeReplacer lineBeforeRegex(String regex) {
-    return new RegexNeedleBeforeReplacer(Pattern.compile(regex, Pattern.MULTILINE));
+    return new RegexNeedleBeforeReplacer(notContainingReplacement(), Pattern.compile(regex, Pattern.MULTILINE));
   }
 
   public static RegexNeedleAfterReplacer lineAfterRegex(String regex) {
-    return new RegexNeedleAfterReplacer(Pattern.compile(regex, Pattern.MULTILINE));
+    return new RegexNeedleAfterReplacer(notContainingReplacement(), Pattern.compile(regex, Pattern.MULTILINE));
   }
 
   public static PropertyKey propertyKey(String key) {
@@ -257,10 +259,8 @@ public class JHipsterModule {
   public static class JHipsterModuleBuilder {
 
     private static final String PROFILE = "profile";
-    private static final String README = "README.md";
-    private static final String JHIPSTER_DOCUMENTATION_NEEDLE = "<!-- jhipster-needle-documentation -->";
-    private static final String JHIPSTER_README_SECTION_NEEDLE = "<!-- jhipster-needle-readme -->";
 
+    private final JHipsterModuleShortcuts shortcuts;
     private final JHipsterProjectFolder projectFolder;
     private final JHipsterModuleProperties properties;
     private final JHipsterModuleContextBuilder context;
@@ -280,6 +280,7 @@ public class JHipsterModule {
       this.projectFolder = properties.projectFolder();
       this.properties = properties;
       context = JHipsterModuleContext.builder(this);
+      shortcuts = new JHipsterModuleShortcuts(this);
     }
 
     JHipsterModuleProperties properties() {
@@ -287,22 +288,19 @@ public class JHipsterModule {
     }
 
     public JHipsterModuleBuilder documentation(DocumentationTitle title, JHipsterSource source) {
-      Assert.notNull("title", title);
-      Assert.notNull("source", source);
-
-      String target = "documentation/" + title.filename() + source.extension();
-      files().add(source, to(target));
-
-      String markdownLink = "- [" + title.get() + "](" + target + ")";
-      optionalReplacements().in(README).add(lineBeforeText(JHIPSTER_DOCUMENTATION_NEEDLE), markdownLink);
+      shortcuts.documentation(title, source);
 
       return this;
     }
 
     public JHipsterModuleBuilder readmeSection(String section) {
-      Assert.notBlank("section", section);
+      shortcuts.readmeSection(section);
 
-      optionalReplacements().in(README).add(lineBeforeText(JHIPSTER_README_SECTION_NEEDLE), section);
+      return this;
+    }
+
+    public JHipsterModuleBuilder startupCommand(String startupCommand) {
+      shortcuts.startupCommand(startupCommand);
 
       return this;
     }
@@ -317,6 +315,24 @@ public class JHipsterModule {
 
     public JHipsterModuleMandatoryReplacementsBuilder mandatoryReplacements() {
       return mandatoryReplacements;
+    }
+
+    public JHipsterModuleBuilder springTestLogger(String name, LogLevel level) {
+      shortcuts.springTestLogger(name, level);
+
+      return this;
+    }
+
+    public JHipsterModuleBuilder springMainLogger(String name, LogLevel level) {
+      shortcuts.springMainLogger(name, level);
+
+      return this;
+    }
+
+    public JHipsterModuleBuilder integrationTestExtension(String extensionClass) {
+      shortcuts.integrationTestExtension(extensionClass);
+
+      return this;
     }
 
     public JHipsterModuleOptionalReplacementsBuilder optionalReplacements() {
@@ -387,6 +403,14 @@ public class JHipsterModule {
         new PropertiesKey(profile, SpringPropertyType.TEST_PROPERTIES),
         key -> JHipsterModuleSpringProperties.builder(this)
       );
+    }
+
+    String packagePath() {
+      return properties.basePackage().path();
+    }
+
+    Indentation indentation() {
+      return properties.indentation();
     }
 
     public JHipsterModule build() {

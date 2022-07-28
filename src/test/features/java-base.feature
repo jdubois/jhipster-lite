@@ -4,7 +4,6 @@ Feature: Java base
     When I apply legacy module "/api/servers/java/base" to default project
     Then I should have files in "src/main/java/tech/jhipster/chips/error/domain"
       | Assert.java |
-    And I should have history entry for "java-base"
 
   Scenario: Should get java base properties definition
     When I get module "java-base" properties definition
@@ -19,4 +18,3 @@ Feature: Java base
       | baseName    | jhipster            |
     Then I should have files in "src/main/java/tech/jhipster/chips/error/domain"
       | Assert.java |
-    And I should have history entry for "java-base"

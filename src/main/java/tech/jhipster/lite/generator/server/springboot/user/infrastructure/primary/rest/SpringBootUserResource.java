@@ -1,8 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.user.infrastructure.primary.rest;
 
-import static tech.jhipster.lite.generator.project.domain.DatabaseType.MARIADB;
-import static tech.jhipster.lite.generator.project.domain.DatabaseType.MYSQL;
-import static tech.jhipster.lite.generator.project.domain.DatabaseType.POSTGRESQL;
+import static tech.jhipster.lite.generator.project.domain.DatabaseType.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,11 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.lite.generator.project.domain.DatabaseType;
-import tech.jhipster.lite.generator.project.domain.GeneratorAction;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 import tech.jhipster.lite.generator.server.springboot.user.application.SpringBootUserApplicationService;
-import tech.jhipster.lite.technical.infrastructure.primary.annotation.GeneratorStep;
 
 @RestController
 @RequestMapping("/api/servers/spring-boot/features/user")
@@ -35,7 +31,6 @@ class SpringBootUserResource {
     responseCode = "500",
     description = "An error occurred while adding UserEntity, AuthorityEntity and JpaRepository for PostgreSQL"
   )
-  @GeneratorStep(id = GeneratorAction.USER_AND_AUTHORITY_ENTITIES_POSTGRESQL)
   public void addUserAndAuthorityEntitiesForPostgreSQL(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     addUserAndAuthorityEntities(project, POSTGRESQL);
@@ -44,7 +39,6 @@ class SpringBootUserResource {
   @Operation(summary = "Add UserEntity, AuthorityEntity and JpaRepository for MySQL")
   @PostMapping("/mysql")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding UserEntity, AuthorityEntity and JpaRepository for MySQL")
-  @GeneratorStep(id = GeneratorAction.USER_AND_AUTHORITY_ENTITIES_MYSQL)
   public void addUserAndAuthorityEntitiesForMySQL(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     addUserAndAuthorityEntities(project, MYSQL);
@@ -56,7 +50,6 @@ class SpringBootUserResource {
     responseCode = "500",
     description = "An error occurred while adding UserEntity, AuthorityEntity and JpaRepository for MariaDB"
   )
-  @GeneratorStep(id = GeneratorAction.USER_AND_AUTHORITY_ENTITIES_MARIADB)
   public void addUserAndAuthorityEntitiesForMariaDB(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     addUserAndAuthorityEntities(project, MARIADB);

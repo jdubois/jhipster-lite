@@ -1,0 +1,40 @@
+package {{packageName}}.dummy.infrastructure.secondary;
+
+import {{packageName}}.dummy.domain.BeerId;
+import {{packageName}}.dummy.domain.beer.Beer;
+import {{packageName}}.dummy.domain.beer.Beers;
+import {{packageName}}.dummy.domain.beer.BeersRepository;
+import {{packageName}}.error.domain.Assert;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.stereotype.Repository;
+
+@Repository
+class InMemoryBeersRepository implements BeersRepository {
+
+  private final Map<BeerId, Beer> beers = new ConcurrentHashMap<>();
+
+  @Override
+  public void save(Beer beer) {
+    Assert.notNull("beer", beer);
+
+    beers.put(beer.id(), beer);
+  }
+
+  @Override
+  public Beers catalog() {
+    return new Beers(beers.values().stream().filter(Beer::isSold).toList());
+  }
+
+  @Override
+  public Optional<Beer> get(BeerId beer) {
+    Assert.notNull("beer", beer);
+
+    return Optional.ofNullable(beers.get(beer));
+  }
+
+  public void clear() {
+    beers.clear();
+  }
+}

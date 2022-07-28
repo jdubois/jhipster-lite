@@ -1,0 +1,51 @@
+package {{packageName}}.authentication.infrastructure.primary;
+
+import {{packageName}}.error.domain.Assert;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.function.Consumer;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.filter.GenericFilterBean;
+
+class JWTFilter extends GenericFilterBean {
+
+  private static final String TOKEN_PREFIX = "Bearer ";
+
+  private final AuthenticationTokenReader tokens;
+
+  public JWTFilter(AuthenticationTokenReader tokens) {
+    Assert.notNull("tokens", tokens);
+
+    this.tokens = tokens;
+  }
+
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    readToken(request).flatMap(tokens::read).ifPresent(loadAuthentication());
+
+    chain.doFilter(request, response);
+  }
+
+  private Optional<String> readToken(ServletRequest request) {
+    HttpServletRequest httpRequest = (HttpServletRequest) request;
+    String authorization = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+    if (StringUtils.isBlank(authorization) || !authorization.startsWith(TOKEN_PREFIX)) {
+      return Optional.empty();
+    }
+
+    return Optional.of(authorization.substring(TOKEN_PREFIX.length()));
+  }
+
+  private Consumer<Authentication> loadAuthentication() {
+    return authentication -> SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
+}

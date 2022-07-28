@@ -1,13 +1,12 @@
 Feature: MariaDB module
 
   Scenario: Should add MariaDB elements using legacy url
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/databases/mariadb |
+    When I apply modules to default project
+      | maven-java |
+      | springboot |
+      | mariadb    |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "mariadb"
     And I should have files in "documentation"
       | mariadb.md |
     And I should have files in "src/main/docker"
@@ -33,7 +32,6 @@ Feature: MariaDB module
       | baseName    | jhipster            |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "mariadb"
     And I should have files in "documentation"
       | mariadb.md |
     And I should have files in "src/main/docker"

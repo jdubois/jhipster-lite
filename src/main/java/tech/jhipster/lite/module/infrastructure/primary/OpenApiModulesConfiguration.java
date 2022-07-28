@@ -85,15 +85,19 @@ class OpenApiModulesConfiguration {
   }
 
   private Map<String, Schema<?>> moduleApplicationSchemas(JHipsterModulesResources modules) {
-    return modules.stream().collect(Collectors.toMap(module -> schemaName(module.slug()), toModucleApplicationSchema()));
+    return modules.stream().collect(Collectors.toMap(module -> schemaName(module.slug()), toModuleApplicationSchema()));
   }
 
-  private Function<JHipsterModuleResource, Schema<?>> toModucleApplicationSchema() {
+  private Function<JHipsterModuleResource, Schema<?>> toModuleApplicationSchema() {
     return module -> {
       Schema<?> schema = new Schema<>()
         .name(schemaName(module.slug()))
         .type(OBJECT_TYPE)
-        .addProperty("projectFolder", new Schema<>().type(STRING_TYPE).description("Path to the project"));
+        .addProperty("projectFolder", new Schema<>().type(STRING_TYPE).description("Path to the project"))
+        .addProperty(
+          "commit",
+          new Schema<>().type("boolean").description("True to make a git commit after module application, false otherwise")
+        );
 
       appendPropertiesDefinition(module, schema);
 

@@ -5,68 +5,10 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.error.domain.NumberValueTooLowException;
 
 @UnitTest
 class WordUtilsTest {
-
-  @Nested
-  class KebabCaseTest {
-
-    @Test
-    void shouldKebabCase() {
-      assertThat(WordUtils.kebabCase("JhipsterLite")).isEqualTo("jhipster-lite");
-    }
-
-    @Test
-    void shouldKebabCaseWhenStartedWith2UpperCase() {
-      assertThat(WordUtils.kebabCase("JHipsterLite")).isEqualTo("j-hipster-lite");
-    }
-
-    @Test
-    void shouldNotKebabCaseForNull() {
-      assertThatThrownBy(() -> WordUtils.kebabCase(null))
-        .isExactlyInstanceOf(MissingMandatoryValueException.class)
-        .hasMessageContaining("value");
-    }
-
-    @Test
-    void shouldNotKebabForBlank() {
-      assertThatThrownBy(() -> WordUtils.kebabCase(" "))
-        .isExactlyInstanceOf(MissingMandatoryValueException.class)
-        .hasMessageContaining("value");
-    }
-  }
-
-  @Nested
-  class UpperFirstTest {
-
-    @Test
-    void shouldUpperFirst() {
-      assertThat(WordUtils.upperFirst("jhipsterLite")).isEqualTo("JhipsterLite");
-    }
-
-    @Test
-    void shouldUpperFirstOneLetter() {
-      assertThat(WordUtils.upperFirst("j")).isEqualTo("J");
-    }
-
-    @Test
-    void shouldUpperFirstTwoLetters() {
-      assertThat(WordUtils.upperFirst("jh")).isEqualTo("Jh");
-    }
-
-    @Test
-    void shouldNotUpperFirstWithNull() {
-      assertThatThrownBy(() -> WordUtils.upperFirst(null)).isExactlyInstanceOf(MissingMandatoryValueException.class);
-    }
-
-    @Test
-    void shouldNotUpperFirstWithBlank() {
-      assertThatThrownBy(() -> WordUtils.upperFirst(" ")).isExactlyInstanceOf(MissingMandatoryValueException.class);
-    }
-  }
 
   @Nested
   class IndentTest {

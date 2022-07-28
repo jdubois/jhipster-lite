@@ -36,32 +36,6 @@ class FlywayResourceIT {
   }
 
   @Test
-  void shouldInit() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class);
-    if (projectDTO == null) {
-      throw new GeneratorException("Error when reading file");
-    }
-    projectDTO.folder(TestFileUtils.tmpDirForTest());
-    Project project = ProjectDTO.toProject(projectDTO);
-
-    TestJHipsterModules.applyInit(project);
-    TestJHipsterModules.applyMaven(project);
-    TestJHipsterModules.applySpringBootCore(project);
-
-    mockMvc
-      .perform(
-        post("/api/servers/spring-boot/database-migration-tools/flyway")
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(TestUtils.convertObjectToJsonBytes(projectDTO))
-      )
-      .andExpect(status().isOk());
-
-    assertDependencies(project);
-    assertInitSqlFile(project);
-    assertProperties(project);
-  }
-
-  @Test
   void shouldAddUserAndAuthority() throws Exception {
     ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class);
     if (projectDTO == null) {

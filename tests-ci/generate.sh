@@ -42,6 +42,7 @@ springboot_mvc() {
   callApi "/api/servers/java/jacoco-minimum-coverage"
   callApi "/api/servers/spring-boot"
   callApi "/api/servers/spring-boot/web-servers/tomcat"
+  callApi "/api/servers/spring-boot/zalando-problems"
   callApi "/api/servers/spring-boot/technical-tools/actuator"
 }
 
@@ -53,6 +54,7 @@ springboot_undertow() {
   callApi "/api/servers/java/jacoco-minimum-coverage"
   callApi "/api/servers/spring-boot"
   callApi "/api/servers/spring-boot/web-servers/undertow"
+  callApi "/api/servers/spring-boot/zalando-problems"
   callApi "/api/servers/spring-boot/technical-tools/actuator"
 }
 
@@ -101,13 +103,15 @@ elif [[ $application == 'fullapp' ]]; then
   callApi "/api/servers/spring-boot/security-systems/jwt"
   callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
-  callApi "/api/servers/spring-boot/logs-spy"
+  callApi "/api/servers/spring-boot/component-tests/cucumber-jwt-authentication"
   callApi "/api/servers/spring-boot/features/dummy"
   callApi "/api/servers/hexagonal-architecture-documentation"
+  callApi "/api/servers/bean-validation-test"
 
   callApi "/api/servers/spring-boot/databases/postgresql"
   callApi "/api/servers/spring-boot/features/user/postgresql"
   callApi "/api/servers/spring-boot/component-tests/cucumber"
+  callApi "/api/servers/spring-boot/features/dummy"
   callApi "/api/servers/spring-boot/database-migration-tools/liquibase"
   callApi "/api/servers/spring-boot/database-migration-tools/liquibase/user"
 
@@ -121,15 +125,18 @@ elif [[ $application == 'oauth2app' ]]; then
   sonar_back
 
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
+  callApi "/api/servers/spring-boot/component-tests/cucumber"
+  callApi "/api/servers/spring-boot/component-tests/cucumber-oauth2-authentication"
   callApi "/api/servers/spring-boot/security-systems/oauth2"
   callApi "/api/servers/spring-boot/security-systems/oauth2/account"
+  callApi "/api/servers/bean-validation-test"
+  callApi "/api/servers/spring-boot/features/dummy"
 
 elif [[ $application == 'mysqlapp' ]]; then
   springboot_mvc
   sonar_back
 
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-  callApi "/api/servers/spring-boot/features/dummy"
 
   callApi "/api/servers/spring-boot/databases/mysql"
   callApi "/api/servers/spring-boot/features/user/mysql"
@@ -143,7 +150,6 @@ elif [[ $application == 'mariadbapp' ]]; then
   sonar_back
 
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-  callApi "/api/servers/spring-boot/features/dummy"
 
   callApi "/api/servers/spring-boot/databases/mariadb"
   callApi "/api/servers/spring-boot/features/user/mariadb"
@@ -157,7 +163,6 @@ elif [[ $application == 'mssqlapp' ]]; then
   sonar_back
 
   callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-  callApi "/api/servers/spring-boot/features/dummy"
 
   callApi "/api/servers/spring-boot/databases/mssql"
 
@@ -218,6 +223,7 @@ elif [[ $application == 'angularapp' ]]; then
   callApi "/api/clients/angular"
 
   callApi "/api/servers/spring-boot/security-systems/jwt"
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
   callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
   callApi "/api/clients/angular/jwt"
   callApi "/api/clients/angular/admin-pages/health"
@@ -242,6 +248,7 @@ elif [[ $application == 'reactapp' ]]; then
   callApi "/api/clients/cypress"
 
   callApi "/api/servers/spring-boot/security-systems/jwt"
+  callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
   callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
   callApi "/api/clients/react/jwt"
 

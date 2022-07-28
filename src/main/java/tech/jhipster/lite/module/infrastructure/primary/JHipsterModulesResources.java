@@ -9,10 +9,10 @@ record JHipsterModulesResources(Collection<JHipsterModuleResource> modulesResour
   public JHipsterModulesResources {
     Assert.field("modulesResources", modulesResources).noNullElement().notEmpty();
 
-    assertUniqSlugs(modulesResources);
+    assertUniqueSlugs(modulesResources);
   }
 
-  private void assertUniqSlugs(Collection<JHipsterModuleResource> modulesResources) {
+  private void assertUniqueSlugs(Collection<JHipsterModuleResource> modulesResources) {
     if (duplicatedSlug(modulesResources)) {
       throw new DuplicatedSlugException();
     }

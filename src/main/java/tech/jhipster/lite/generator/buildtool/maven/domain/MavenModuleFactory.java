@@ -34,8 +34,8 @@ public class MavenModuleFactory {
         .addExecutable(SOURCE.file("mvnw"), to("mvnw"))
         .addExecutable(SOURCE.file("mvnw.cmd"), to("mvnw.cmd"))
         .batch(SOURCE.append(".mvn/wrapper"), to(".mvn/wrapper"))
-          .file("maven-wrapper.jar")
-          .file("maven-wrapper.properties")
+          .addFile("maven-wrapper.jar")
+          .addFile("maven-wrapper.properties")
           .and()
         .and()
       .javaBuildPlugins()
@@ -57,11 +57,11 @@ public class MavenModuleFactory {
       .versionSlug("compiler-plugin")
       .additionalElements(
         """
-            <configuration>
-              <source>${java.version}</source>
-              <target>${java.version}</target>
-            </configuration>
-            """
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+        """
       )
       .build();
   }

@@ -12,12 +12,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import tech.jhipster.lite.GitTestUtil;
 import tech.jhipster.lite.JsonHelper;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 
@@ -26,33 +28,50 @@ public class ModulesSteps {
   @Autowired
   private TestRestTemplate rest;
 
-  private static final String MODULE_PROPERTIES_TEMPLATE =
+  private static final String MODULE_APPLICATION_TEMPLATE =
+    """
+      {
+      "projectFolder": "{PROJECT_FOLDER}",
+      "properties": {{ PROPERTIES }}
+      }
+      """;
+
+  private static final String MODULE_APPLY_AND_COMMIT_TEMPLATE =
+    """
+      {
+      "projectFolder": "{PROJECT_FOLDER}",
+      "commit": true,
+      "properties": {{ PROPERTIES }}
+      }
+      """;
+
+  private static final String DEFAULT_MODULE_PROPERTIES_TEMPLATE =
     """
       {
         "projectFolder": "{PROJECT_FOLDER}",
-        "properties": {{ PROPERTIES }}
+        "properties": {
+          "projectName": "Chips Project",
+          "baseName": "chips",
+          "packageName": "tech.jhipster.chips",
+          "serverPort": 8080
+        }
       }
       """;
 
   @When("I apply legacy module {string} to default project")
   public void legacyApplyModuleForDefaultProject(String moduleUrl) {
-    legacyApplyModulesForDefaultProject(List.of(moduleUrl));
-  }
-
-  @When("I apply legacy modules to default project")
-  public void legacyApplyModulesForDefaultProject(List<String> modulesUrls) {
     ProjectDTO project = newDefaultProjectDto();
-
-    modulesUrls.forEach(moduleUrl -> post(moduleUrl, JsonHelper.writeAsString(project)));
-  }
-
-  @When("I apply legacy module {string} to default project with maven file")
-  public void legacyApplyModuleForDefaultProjectWithMavenFile(String moduleUrl) {
-    ProjectDTO project = newDefaultProjectDto();
-
-    addPomToProject(project.getFolder());
 
     post(moduleUrl, JsonHelper.writeAsString(project));
+  }
+
+  @When("I apply modules to default project")
+  public void applyModulesForDefaultProject(List<String> modulesSlugs) {
+    String projectFolder = newTestFolder();
+
+    String query = DEFAULT_MODULE_PROPERTIES_TEMPLATE.replace("{PROJECT_FOLDER}", projectFolder);
+
+    modulesSlugs.forEach(slug -> post(applyModuleUrl(slug), query));
   }
 
   @When("I get module {string} properties definition")
@@ -61,7 +80,7 @@ public class ModulesSteps {
   }
 
   @When("I apply {string} module to default project with package json")
-  public void applyModuleForDefaultProjectWithPackageJson(String moduleSlug, Map<String, Object> properties) {
+  public void applyModuleForDefaultProjectWithPackageJson(String moduleSlug, Map<String, String> properties) {
     String projectFolder = newTestFolder();
 
     addPackageJsonToProject(projectFolder);
@@ -89,7 +108,7 @@ public class ModulesSteps {
   }
 
   @When("I apply {string} module to default project with maven file")
-  public void applyModuleForDefaultProjectWithMavenFile(String moduleSlug, Map<String, Object> properties) {
+  public void applyModuleForDefaultProjectWithMavenFile(String moduleSlug, Map<String, String> properties) {
     String projectFolder = newTestFolder();
 
     addPomToProject(projectFolder);
@@ -102,8 +121,31 @@ public class ModulesSteps {
     applyModuleForDefaultProject(moduleSlug, null);
   }
 
+  @When("I apply and commit {string} module to default project")
+  public void applyAndCommitModuleForDefaultProject(String moduleSlug, Map<String, String> properties) throws IOException {
+    String projectFolder = newTestFolder();
+
+    Path projectPath = Paths.get(projectFolder);
+    Files.createDirectories(projectPath);
+
+    loadGitConfig(projectPath);
+
+    String query = MODULE_APPLY_AND_COMMIT_TEMPLATE
+      .replace("{PROJECT_FOLDER}", projectFolder)
+      .replace("{{ PROPERTIES }}", buildModuleProperties(properties));
+
+    post(applyModuleUrl(moduleSlug), query);
+  }
+
+  private void loadGitConfig(Path project) {
+    GitTestUtil.execute(project, "init");
+    GitTestUtil.execute(project, "config", "init.defaultBranch", "main");
+    GitTestUtil.execute(project, "config", "user.email", "\"test@jhipster.com\"");
+    GitTestUtil.execute(project, "config", "user.name", "\"Test\"");
+  }
+
   @When("I apply {string} module to default project")
-  public void applyModuleForDefaultProject(String moduleSlug, Map<String, Object> properties) {
+  public void applyModuleForDefaultProject(String moduleSlug, Map<String, String> properties) {
     String projectFolder = newTestFolder();
 
     post(applyModuleUrl(moduleSlug), buildModuleQuery(projectFolder, properties));
@@ -117,13 +159,13 @@ public class ModulesSteps {
     return "/api/modules/" + moduleSlug;
   }
 
-  private String buildModuleQuery(String projectFolder, Map<String, Object> properties) {
-    return MODULE_PROPERTIES_TEMPLATE
+  private String buildModuleQuery(String projectFolder, Map<String, String> properties) {
+    return MODULE_APPLICATION_TEMPLATE
       .replace("{PROJECT_FOLDER}", projectFolder)
       .replace("{{ PROPERTIES }}", buildModuleProperties(properties));
   }
 
-  private String buildModuleProperties(Map<String, Object> properties) {
+  private String buildModuleProperties(Map<String, String> properties) {
     if (properties == null) {
       return "null";
     }
@@ -135,17 +177,21 @@ public class ModulesSteps {
       .collect(Collectors.joining(",", "{", "}"));
   }
 
-  private String buildPropertyValue(Object value) {
+  private String buildPropertyValue(String value) {
     if (value == null) {
       return "null";
     }
 
-    if (value instanceof Boolean booleanValue) {
-      return Boolean.toString(booleanValue);
+    if ("true".equals(value)) {
+      return "true";
     }
 
-    if (value instanceof Integer integerValue) {
-      return String.valueOf(integerValue);
+    if ("false".equals(value)) {
+      return "false";
+    }
+
+    if (StringUtils.isNumeric(value)) {
+      return String.valueOf(value);
     }
 
     return "\"" + value.toString() + "\"";

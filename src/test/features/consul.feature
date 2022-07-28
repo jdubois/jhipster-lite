@@ -1,10 +1,10 @@
 Feature: Consul
 
   Scenario: Should add consul
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                                           |
-      | /api/servers/spring-boot                                         |
-      | /api/servers/spring-boot/distributed-systems/spring-cloud/consul |
+    When I apply modules to default project
+      | maven-java |
+      | springboot |
+      | consul     |
     Then I should have files in "src/main/docker"
       | consul.yml |
 

@@ -14,6 +14,11 @@ public class SpringdocDomainService {
     new ArtifactId("spring-boot-starter-webflux")
   );
 
+  protected static final DependencyId OAUTH2_DEPENDENCY_ID = new DependencyId(
+    new GroupId("org.springframework.boot"),
+    new ArtifactId("spring-boot-starter-oauth2-client")
+  );
+
   private final ProjectJavaDependenciesRepository projectJavaDependenciesRepository;
   private final SpringdocModuleFactory springdocModuleFactory;
 
@@ -38,5 +43,14 @@ public class SpringdocDomainService {
       .get(WEBFLUX_DEPENDENCY_ID)
       .map(d -> springdocModuleFactory.buildModuleWithSecurityJwtForWebflux(properties))
       .orElse(springdocModuleFactory.buildModuleWithSecurityJwtForMvc(properties));
+  }
+
+  public JHipsterModule buildSpringdocModuleWithSecurityOAuth2(JHipsterModuleProperties properties) {
+    return projectJavaDependenciesRepository
+      .get(properties.projectFolder())
+      .dependencies()
+      .get(OAUTH2_DEPENDENCY_ID)
+      .map(d -> springdocModuleFactory.buildModuleWithSecurityOAuth2ForMvc(properties))
+      .orElse(springdocModuleFactory.buildModuleForMvc(properties));
   }
 }

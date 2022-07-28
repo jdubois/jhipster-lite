@@ -15,6 +15,7 @@ import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.ModuleFile;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)
@@ -38,11 +39,7 @@ class OAuth2ModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(
-      module,
-      pomFile(),
-      file("src/test/resources/projects/files/IntegrationTest.java", "src/test/java/com/jhipster/test/IntegrationTest.java")
-    )
+    assertThatModuleWithFiles(module, pomFile(), integrationTestFile())
       .createPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
       .createPrefixedFiles(
         "src/main/java/com/jhipster/test/authentication/infrastructure/primary",
@@ -108,5 +105,9 @@ class OAuth2ModuleFactoryTest {
       .containing("@WithMockUser")
       .containing("import org.springframework.security.test.context.support.WithMockUser;")
       .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;");
+  }
+
+  private ModuleFile integrationTestFile() {
+    return file("src/test/resources/projects/files/IntegrationTest.java", "src/test/java/com/jhipster/test/IntegrationTest.java");
   }
 }

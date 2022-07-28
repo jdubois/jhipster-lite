@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.lite.generator.client.angular.security.jwt.application.AngularJwtApplicationService;
-import tech.jhipster.lite.generator.project.domain.GeneratorAction;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.technical.infrastructure.primary.annotation.GeneratorStep;
 
 @RestController
 @RequestMapping("/api/clients/angular/jwt")
@@ -27,7 +25,6 @@ class AngularJwtResource {
   @Operation(summary = "Add Angular with authentication JWT")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding Angular with authentication JWT")
   @PostMapping
-  @GeneratorStep(id = GeneratorAction.ANGULAR_JWT)
   public void addJwtAngular(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     angularJwtApplicationService.addJwtAngular(project);

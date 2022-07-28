@@ -109,8 +109,4 @@ class VueModulesFactoryTest {
                 """
       );
   }
-
-  private static String nodeDependency(String dependency) {
-    return "\"" + dependency + "\": \"";
-  }
 }

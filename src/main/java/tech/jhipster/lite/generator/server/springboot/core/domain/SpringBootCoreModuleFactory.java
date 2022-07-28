@@ -12,6 +12,7 @@ import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 
 public class SpringBootCoreModuleFactory {
 
@@ -23,6 +24,11 @@ public class SpringBootCoreModuleFactory {
   private static final String JUNIT_GROUP = "org.junit.jupiter";
   private static final String MOCKITO_GROUP = "org.mockito";
 
+  private static final TextNeedleBeforeReplacer DEFAULT_GOAL_REPLACER = new TextNeedleBeforeReplacer(
+    (contentBeforeReplacement, replacement) -> !contentBeforeReplacement.contains("<defaultGoal>"),
+    "</build>"
+  );
+
   private static final JHipsterDestination MAIN_RESOURCE_DESTINATION = to("src/main/resources");
   private static final JHipsterDestination MAIN_CONFIG_DESTINATION = MAIN_RESOURCE_DESTINATION.append("config");
   private static final JHipsterDestination TEST_RESOURCES_DESTINATION = to("src/test/resources");
@@ -32,7 +38,7 @@ public class SpringBootCoreModuleFactory {
     Assert.notNull("properties", properties);
 
     String mainClassName = properties.projectBaseName().capitalized();
-    String packagePath = properties.basePackage().path();
+    String packagePath = properties.packagePath();
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath);
 
     //@formatter:off
@@ -40,6 +46,7 @@ public class SpringBootCoreModuleFactory {
       .context()
         .put("mainClass", mainClassName)
         .and()
+      .documentation(documentationTitle("Logs spy"), SOURCE.file("logs-spy.md"))
       .javaDependencies()
         .removeDependency(dependencyId(JUNIT_GROUP, "junit-jupiter-engine"))
         .removeDependency(dependencyId(JUNIT_GROUP, "junit-jupiter-params"))
@@ -64,6 +71,12 @@ public class SpringBootCoreModuleFactory {
         .add(SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
         .add(SOURCE.template("logback-spring.xml"), MAIN_RESOURCE_DESTINATION.append("logback-spring.xml"))
         .add(SOURCE.template("logback.xml"), TEST_RESOURCES_DESTINATION.append("logback.xml"))
+        .add(SOURCE.template("LogsSpy.java"), toSrcTestJava().append(properties.packagePath()).append("LogsSpy.java"))
+        .and()
+      .optionalReplacements()
+        .in("pom.xml")
+          .add(DEFAULT_GOAL_REPLACER, properties.indentation().times(2) + "<defaultGoal>spring-boot:run</defaultGoal>")
+          .and()
         .and()
       .build();
     //@formatter:on

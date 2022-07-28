@@ -12,9 +12,4 @@ public interface NpmService {
   void prettify(Project project);
 
   Optional<String> getVersion(String folder, String name);
-  Optional<String> getVersionInCommon(String name);
-  Optional<String> getVersionInReact(String name);
-
-  Optional<String> getName(String folder);
-  Optional<String> getDescription(String folder);
 }

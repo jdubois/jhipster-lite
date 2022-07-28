@@ -10,6 +10,9 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.jose.jws.JwsAlgorithms;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 public final class OAuth2TokenFixture {
 
@@ -42,9 +45,19 @@ public final class OAuth2TokenFixture {
     Instant now = Instant.now();
 
     OidcIdToken token = new OidcIdToken(TOKEN_ID, now, now.plusSeconds(300), claims);
-    List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(Role.ADMIN.key()));
+    List<SimpleGrantedAuthority> authorities = adminAuthorities();
     DefaultOidcUser user = new DefaultOidcUser(authorities, token, new OidcUserInfo(claims), "preferred_username");
 
     return new OAuth2AuthenticationToken(user, authorities, "oidc");
+  }
+
+  public static JwtAuthenticationToken testJwtAuthenticationToken() {
+    Jwt.Builder jwt = Jwt.withTokenValue("token-just-for-drinking-beers").header("alg", JwsAlgorithms.RS256).subject("jhipster");
+    testAuthenticationClaims().forEach(jwt::claim);
+    return new JwtAuthenticationToken(jwt.build(), adminAuthorities());
+  }
+
+  private static List<SimpleGrantedAuthority> adminAuthorities() {
+    return List.of(new SimpleGrantedAuthority(Role.ADMIN.key()));
   }
 }

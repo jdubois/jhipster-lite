@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import org.eclipse.jgit.api.errors.InvalidConfigurationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +23,6 @@ import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -209,49 +207,6 @@ class ProjectLocalRepositoryTest {
   }
 
   @Test
-  void shouldGitInit() {
-    Project project = tmpProject();
-
-    repository.gitInit(project);
-
-    assertFileExist(project, ".git/config");
-  }
-
-  @Test
-  void shouldNotGitInit() {
-    Project project = tmpProject();
-
-    try (MockedStatic<GitUtils> gitUtils = Mockito.mockStatic(GitUtils.class)) {
-      gitUtils.when(() -> GitUtils.init(anyString())).thenThrow(new InvalidConfigurationException("error"));
-
-      assertThatThrownBy(() -> repository.gitInit(project)).isExactlyInstanceOf(GeneratorException.class);
-      assertFileNotExist(project, ".git/config");
-    }
-  }
-
-  @Test
-  void shouldGitApplyPatch() {
-    Project project = tmpProject();
-
-    repository.gitInit(project);
-    repository.gitApplyPatch(project, getPath(TEST_TEMPLATE_RESOURCES, "utils", "example.patch"));
-
-    assertFileExist(project, "example.md");
-  }
-
-  @Test
-  void shouldNotApplyPatch() {
-    Project project = tmpProject();
-
-    try (MockedStatic<GitUtils> gitUtils = Mockito.mockStatic(GitUtils.class)) {
-      gitUtils.when(() -> GitUtils.apply(anyString(), anyString())).thenThrow(new InvalidConfigurationException("error"));
-      String path = getPath(TEST_TEMPLATE_RESOURCES, "utils", "example.patch");
-      assertThatThrownBy(() -> repository.gitApplyPatch(project, path)).isExactlyInstanceOf(GeneratorException.class);
-      assertFileNotExist(project, "example.md");
-    }
-  }
-
-  @Test
   void shouldRename() {
     Project project = tmpProjectWithPomXml();
 
@@ -283,22 +238,5 @@ class ProjectLocalRepositoryTest {
   void shouldNotZipWithNonExistingFolder() {
     Project project = tmpProject();
     assertThatThrownBy(() -> repository.zip(project)).isExactlyInstanceOf(GeneratorException.class);
-  }
-
-  @Test
-  void shouldDownload() {
-    Project project = tmpProjectWithPomXml();
-    assertThat(repository.download(project)).isNotNull();
-  }
-
-  @Test
-  void shouldNotDownload() {
-    Project project = tmpProjectWithPomXml();
-    try (MockedStatic<FileUtils> fileUtils = Mockito.mockStatic(FileUtils.class)) {
-      fileUtils.when(FileUtils::tmpDir).thenCallRealMethod();
-      fileUtils.when(() -> FileUtils.convertFileInTmpToByte(anyString())).thenThrow(new IOException());
-
-      assertThatThrownBy(() -> repository.download(project)).isExactlyInstanceOf(GeneratorException.class);
-    }
   }
 }

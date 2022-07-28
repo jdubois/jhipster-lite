@@ -21,8 +21,8 @@ public class CodespacesModuleFactory {
         .and()
       .files()
         .batch(SOURCE, to(".devcontainer"))
-          .template("devcontainer.json")
-          .file("Dockerfile")
+          .addTemplate("devcontainer.json")
+          .addFile("Dockerfile")
           .and()
         .and()
       .build();

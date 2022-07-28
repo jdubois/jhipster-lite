@@ -32,7 +32,7 @@ class OAuth2AuthenticationReaderTest {
 
     context.setAuthentication(authentication);
 
-    assertThatThrownBy(() -> tokens.authenticatedUserAccount()).isExactlyInstanceOf(UnknownAuthenticationSchemeException.class);
+    assertThatThrownBy(tokens::authenticatedUserAccount).isExactlyInstanceOf(UnknownAuthenticationSchemeException.class);
   }
 
   @Test
@@ -49,6 +49,13 @@ class OAuth2AuthenticationReaderTest {
     claims.put("name", "Paul");
 
     context.setAuthentication(buildToken(claims));
+
+    assertThat(tokens.authenticatedUserAccount().get()).usingRecursiveComparison().isEqualTo(account());
+  }
+
+  @Test
+  void shouldReadJwtAuthentication() {
+    context.setAuthentication(testJwtAuthenticationToken());
 
     assertThat(tokens.authenticatedUserAccount().get()).usingRecursiveComparison().isEqualTo(account());
   }

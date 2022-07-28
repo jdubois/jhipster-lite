@@ -151,6 +151,6 @@ class JHipsterModulePropertiesTest {
   }
 
   private JHipsterModuleProperties properties() {
-    return new JHipsterModuleProperties("/tmp/folder", Map.of("string", "value", "boolean", true, "integer", 42));
+    return new JHipsterModuleProperties("/tmp/folder", false, Map.of("string", "value", "boolean", true, "integer", 42));
   }
 }

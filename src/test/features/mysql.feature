@@ -1,13 +1,12 @@
 Feature: MySQL module
 
   Scenario: Should add MySQL elements using legacy url
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/databases/mysql |
+    When I apply modules to default project
+      | maven-java |
+      | springboot |
+      | mysql      |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "mysql"
     And I should have files in "documentation"
       | mysql.md |
     And I should have files in "src/main/docker"
@@ -33,7 +32,6 @@ Feature: MySQL module
       | baseName    | jhipster            |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "mysql"
     And I should have files in "documentation"
       | mysql.md |
     And I should have files in "src/main/docker"

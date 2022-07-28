@@ -1,16 +1,15 @@
 package {{packageName}}.account.infrastructure.secondary;
 
+import {{packageName}}.account.domain.Account;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
-
-import {{packageName}}.account.domain.Account;
 
 @Service
 class OAuth2AuthenticationReader {
@@ -53,6 +52,10 @@ class OAuth2AuthenticationReader {
   private Map<String, Object> readAttributes(Authentication authentication) {
     if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
       return oauthToken.getPrincipal().getAttributes();
+    }
+
+    if (authentication instanceof JwtAuthenticationToken jwtToken) {
+      return jwtToken.getTokenAttributes();
     }
 
     throw new UnknownAuthenticationSchemeException();

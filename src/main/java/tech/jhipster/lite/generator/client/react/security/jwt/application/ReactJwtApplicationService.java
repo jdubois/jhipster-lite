@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.client.react.security.jwt.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.client.react.security.jwt.domain.ReactJwtService;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.client.react.security.jwt.domain.ReactJwtModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class ReactJwtApplicationService {
 
-  private final ReactJwtService reactJwtService;
+  private final ReactJwtModuleFactory factory;
 
-  public ReactJwtApplicationService(final ReactJwtService reactJwtService) {
-    this.reactJwtService = reactJwtService;
+  public ReactJwtApplicationService() {
+    factory = new ReactJwtModuleFactory();
   }
 
-  public void addLoginReact(final Project project) {
-    reactJwtService.addLoginReact(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

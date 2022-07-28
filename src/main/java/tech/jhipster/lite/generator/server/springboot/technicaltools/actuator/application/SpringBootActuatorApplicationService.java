@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.technicaltools.actuator.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.technicaltools.actuator.domain.SpringBootActuatorService;
+import tech.jhipster.lite.generator.server.springboot.technicaltools.actuator.domain.SpringBootActuatorModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringBootActuatorApplicationService {
 
-  private final SpringBootActuatorService springBootActuatorService;
+  private final SpringBootActuatorModuleFactory springBootActuatorFactory;
 
-  public SpringBootActuatorApplicationService(SpringBootActuatorService springBootActuatorService) {
-    this.springBootActuatorService = springBootActuatorService;
+  public SpringBootActuatorApplicationService() {
+    springBootActuatorFactory = new SpringBootActuatorModuleFactory();
   }
 
-  public void addActuator(Project project) {
-    springBootActuatorService.addActuator(project);
+  public JHipsterModule buildSpringBootActuatorModule(JHipsterModuleProperties properties) {
+    return springBootActuatorFactory.buildModule(properties);
   }
 }

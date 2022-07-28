@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Oauth2AuthService } from '../auth/oauth2-auth.service';
 
 @Component({
-  selector: 'jh-lite-login',
+  selector: 'jhi-login',
   templateUrl: './login.component.html',
   styleUrls: [],
 })

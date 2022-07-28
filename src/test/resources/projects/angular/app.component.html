@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <!-- jhipster-needle-angular-menu -->
+  </mat-menu>
+  <span>JHipster</span>
+  <span class="toolbar-spacer"></span>
+  <img alt="Angular logo" class="angular-logo" src="content/images/AngularLogo.svg" />
+  <span class="space-separator" id="menu-space-separator"></span>
+</mat-toolbar>
+
+<img alt="JHipster logo" class="jhipster-logo" src="../../../../content/images/JHipster-Lite-neon-red.png" />
+
+<router-outlet></router-outlet>
+
+<div id="footer">
+  <h1>JHipster: Angular + TypeScript</h1>
+  <p>
+    Recommended IDE setup:
+    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a>
+  </p>
+  <p>
+    <a href="https://angular.io/tutorial" target="_blank" rel="noopener">Angular Documentation</a>
+    |
+    <a href="https://angular.io/cli" target="_blank" rel="noopener">Angular CLI Documentation</a>
+  </p>
+  <p>
+    Edit
+    <code>app.component.ts</code> to test hot module replacement.
+  </p>
+</div>

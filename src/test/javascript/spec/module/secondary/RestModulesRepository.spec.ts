@@ -1,4 +1,4 @@
-import { RestModules, RestModulesRepository, RestModuleProperties } from '@/module/secondary/RestModulesRepository';
+import { RestModules, RestModulesRepository, RestModuleProperties, RestProjectHistory } from '@/module/secondary/RestModulesRepository';
 import { dataBackendResponse, stubAxiosHttp } from '../../http/AxiosHttpStub';
 import { defaultModules, defaultModuleToApply } from '../domain/Modules.fixture';
 
@@ -33,14 +33,47 @@ describe('Rest modules repository', () => {
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
-  it('Should get applied modules using axios', async () => {
+  it('Should get empty module history using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
-    axiosInstance.get.resolves(dataBackendResponse([{ serviceId: 'spring-cucumber' }]));
+    axiosInstance.get.resolves(dataBackendResponse({}));
 
-    const appliedModules = await repository.appliedModules('test');
+    const appliedModules = await repository.history('test');
 
-    expect(appliedModules).toEqual(['spring-cucumber']);
+    expect(appliedModules).toEqual({
+      modules: [],
+      properties: [],
+    });
+  });
+
+  it('Should get module history using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.get.resolves(dataBackendResponse(restModuleHistory()));
+
+    const appliedModules = await repository.history('test');
+
+    expect(appliedModules).toEqual({
+      modules: ['spring-cucumber'],
+      properties: [
+        {
+          key: 'key',
+          value: 'value',
+        },
+      ],
+    });
+  });
+
+  it('Should download project using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.get.resolves({ headers: { 'x-suggested-filename': 'file.zip' }, data: [1, 2, 3] });
+
+    const project = await repository.download('path/to/project');
+
+    expect(axiosInstance.get.lastCall.args[0]).toBe('/api/projects?path=path/to/project');
+    expect(project.filename).toBe('file.zip');
+    expect(project.content).toEqual([1, 2, 3]);
   });
 });
 
@@ -53,6 +86,7 @@ const restModules = (): RestModules => ({
           slug: 'spring-cucumber',
           description: 'Add cucumber to the application',
           properties: restModuleProperties(),
+          tags: ['server'],
         },
         {
           slug: 'banner',
@@ -76,6 +110,15 @@ const restModulesWithoutProperties = (): RestModules => ({
     },
   ],
 });
+
+const restModuleHistory = (): RestProjectHistory => ({
+  modules: [{ slug: 'spring-cucumber' }],
+  properties: appliedModuleProperties(),
+});
+
+const appliedModuleProperties = (): {} => {
+  return { key: 'value' };
+};
 
 const restModuleProperties = (): RestModuleProperties => ({
   definitions: [

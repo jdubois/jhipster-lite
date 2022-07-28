@@ -48,6 +48,7 @@ describe('Modules', () => {
 
         expect(body).to.deep.equal({
           projectFolder: 'test',
+          commit: true,
           properties: {},
         });
       });
@@ -75,6 +76,7 @@ describe('Modules', () => {
 
         expect(body).to.deep.equal({
           projectFolder: 'test',
+          commit: true,
           properties: {
             baseName: 'jhipster',
             optionalBoolean: true,

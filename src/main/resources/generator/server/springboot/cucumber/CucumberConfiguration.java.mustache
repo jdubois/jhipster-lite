@@ -7,7 +7,9 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -16,9 +18,10 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import {{packageName}}.{{applicationName}}App;
+import {{packageName}}.cucumber.CucumberConfiguration.CucumberRestTemplateConfiguration;
 
 @CucumberContextConfiguration
-@SpringBootTest(classes = { {{applicationName}}App.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { {{applicationName}}App.class, CucumberRestTemplateConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {
 
   @Autowired
@@ -55,5 +58,17 @@ public class CucumberConfiguration {
 
       return response;
     };
+  }
+  
+  @TestConfiguration
+  static class CucumberRestTemplateConfiguration {
+
+    @Autowired
+    private TestRestTemplate rest;
+
+    @Bean
+    CucumberRestTemplate cucumberRestTemplate() {
+      return new CucumberRestTemplate(rest);
+    }
   }
 }

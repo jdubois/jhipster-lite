@@ -19,8 +19,9 @@ public class GatewayModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    JHipsterDestination testDestination = toSrcTestJava().append(properties.basePackage().path()).append(GATEWAY_PACKAGE);
-    JHipsterDestination destination = toSrcMainJava().append(properties.basePackage().path()).append(GATEWAY_PACKAGE);
+    String packagePath = properties.packagePath();
+    JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append(GATEWAY_PACKAGE);
+    JHipsterDestination destination = toSrcMainJava().append(packagePath).append(GATEWAY_PACKAGE);
 
     //@formatter:off
     return moduleBuilder(properties)

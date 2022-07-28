@@ -19,9 +19,8 @@ public class CucumberModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    String packagePath = properties.basePackage().path();
     String applicationName = properties.projectBaseName().capitalized();
-    JHipsterDestination destination = toSrcTestJava().append(packagePath).append("cucumber");
+    JHipsterDestination destination = toSrcTestJava().append(properties.packagePath()).append("cucumber");
 
     //@formatter:off
     JHipsterModuleBuilder builder = moduleBuilder(properties)
@@ -31,24 +30,25 @@ public class CucumberModuleFactory {
     .documentation(documentationTitle("Cucumber"), SOURCE.template("cucumber.md"))
     .files()
       .batch(SOURCE, destination)
-        .template("AsyncElementAsserter.java")
-        .template("AsyncHeaderAsserter.java")
-        .template("AsyncResponseAsserter.java")
-        .template("Awaiter.java")
-        .template("CucumberAssertions.java")
-        .template("CucumberConfiguration.java")
-        .template("CucumberJson.java")
-        .template("CucumberTest.java")
-        .template("CucumberTestContext.java")
-        .template("CucumberTestContextUnitTest.java")
-        .template("ElementAsserter.java")
-        .template("ElementAssertions.java")
-        .template("HeaderAsserter.java")
-        .template("HeaderAssertions.java")
-        .template("ResponseAsserter.java")
-        .template("SyncElementAsserter.java")
-        .template("SyncHeaderAsserter.java")
-        .template("SyncResponseAsserter.java")
+        .addTemplate("AsyncElementAsserter.java")
+        .addTemplate("AsyncHeaderAsserter.java")
+        .addTemplate("AsyncResponseAsserter.java")
+        .addTemplate("Awaiter.java")
+        .addTemplate("CucumberAssertions.java")
+        .addTemplate("CucumberRestTemplate.java")
+        .addTemplate("CucumberConfiguration.java")
+        .addTemplate("CucumberJson.java")
+        .addTemplate("CucumberTest.java")
+        .addTemplate("CucumberTestContext.java")
+        .addTemplate("CucumberTestContextUnitTest.java")
+        .addTemplate("ElementAsserter.java")
+        .addTemplate("ElementAssertions.java")
+        .addTemplate("HeaderAsserter.java")
+        .addTemplate("HeaderAssertions.java")
+        .addTemplate("ResponseAsserter.java")
+        .addTemplate("SyncElementAsserter.java")
+        .addTemplate("SyncHeaderAsserter.java")
+        .addTemplate("SyncResponseAsserter.java")
         .and()
       .add(SOURCE.file("gitkeep"), to("src/test/features/.gitkeep"))
       .and()

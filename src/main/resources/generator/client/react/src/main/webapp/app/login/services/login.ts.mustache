@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { setLocalStorage } from '@/common/services/storage';
 
-const LOGIN_URL = 'http://localhost:8080/api/authenticate';
+const LOGIN_URL = '/api/authenticate';
 
 export const login = ({ username, password, rememberMe, setUsername, setToken }: LoginFunctionType) => {
   return axios

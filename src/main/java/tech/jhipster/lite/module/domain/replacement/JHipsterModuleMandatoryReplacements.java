@@ -39,12 +39,12 @@ public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplaceme
     }
 
     @Override
-    protected ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement) {
+    protected ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement) {
       return new MandatoryFileReplacer(file, new MandatoryReplacer(toReplace, replacement));
     }
   }
 
-  private static record MandatoryFileReplacer(String file, MandatoryReplacer replacement) implements ContentReplacement {
+  private static record MandatoryFileReplacer(String file, MandatoryReplacer replacement) implements ContentReplacer {
     public MandatoryFileReplacer {
       Assert.notNull("file", file);
       Assert.notNull("replacement", replacement);
@@ -61,18 +61,22 @@ public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplaceme
     }
   }
 
-  private static record MandatoryReplacer(ElementReplacer currentValue, String updatedValue) {
+  private static record MandatoryReplacer(ElementReplacer replacer, String updatedValue) {
     public MandatoryReplacer {
-      Assert.notNull("currentValue", currentValue);
+      Assert.notNull("replacer", replacer);
       Assert.notNull("updatedValue", updatedValue);
     }
 
     public String apply(String content) {
-      if (currentValue().notMatchIn(content)) {
-        throw new UnknownCurrentValueException(currentValue().searchMatcher(), content);
+      if (replacer.dontNeedReplacement(content, updatedValue())) {
+        return content;
       }
 
-      return currentValue().replacer().apply(content, updatedValue());
+      if (replacer().notMatchIn(content)) {
+        throw new UnknownCurrentValueException(replacer().searchMatcher(), content);
+      }
+
+      return replacer().replacement().apply(content, updatedValue());
     }
   }
 }

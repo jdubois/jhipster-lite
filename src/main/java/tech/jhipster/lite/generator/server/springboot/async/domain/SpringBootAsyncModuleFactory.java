@@ -16,7 +16,7 @@ public class SpringBootAsyncModuleFactory {
     Assert.notNull("properties", properties);
 
     JHipsterDestination mainDestination = toSrcMainJava()
-      .append(properties.basePackage().path())
+      .append(properties.packagePath())
       .append("technical/infrastructure/secondary/async");
     String baseName = properties.projectBaseName().get();
 

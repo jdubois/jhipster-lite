@@ -21,4 +21,8 @@ public class SpringdocApplicationService {
   public JHipsterModule buildSpringdocModuleWithSecurityJWT(JHipsterModuleProperties properties) {
     return springdocDomainService.buildSpringdocModuleWithSecurityJWT(properties);
   }
+
+  public JHipsterModule buildSpringdocModuleWithSecurityOAuth2(JHipsterModuleProperties properties) {
+    return springdocDomainService.buildSpringdocModuleWithSecurityOAuth2(properties);
+  }
 }

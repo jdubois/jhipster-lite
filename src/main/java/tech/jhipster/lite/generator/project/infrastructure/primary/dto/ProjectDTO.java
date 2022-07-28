@@ -6,8 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.project.infrastructure.primary.JacksonProjectFolderDeserializer;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.technical.infrastructure.primary.jackson.JacksonProjectFolderDeserializer;
 
 @Schema(description = "Project DTO")
 public class ProjectDTO {
@@ -82,6 +82,6 @@ public class ProjectDTO {
   }
 
   public JHipsterModuleProperties toModuleProperties() {
-    return new JHipsterModuleProperties(getFolder(), getGeneratorJhipster());
+    return new JHipsterModuleProperties(getFolder(), false, getGeneratorJhipster());
   }
 }

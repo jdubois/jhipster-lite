@@ -1,0 +1,20 @@
+package {{packageName}}.account.application;
+
+import {{packageName}}.account.domain.AuthenticationQuery;
+import {{packageName}}.account.domain.Token;
+import {{packageName}}.account.domain.TokensRepository;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AccountApplicationService {
+
+  private final TokensRepository tokens;
+
+  public AccountApplicationService(TokensRepository tokens) {
+    this.tokens = tokens;
+  }
+
+  public Token createToken(AuthenticationQuery query) {
+    return tokens.buildToken(query);
+  }
+}

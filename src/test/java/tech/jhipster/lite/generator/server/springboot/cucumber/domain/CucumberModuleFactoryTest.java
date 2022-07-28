@@ -32,6 +32,7 @@ class CucumberModuleFactoryTest {
         "AsyncResponseAsserter.java",
         "Awaiter.java",
         "CucumberAssertions.java",
+        "CucumberRestTemplate.java",
         "CucumberConfiguration.java",
         "CucumberJson.java",
         "CucumberTest.java",

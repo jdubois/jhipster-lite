@@ -16,8 +16,8 @@ public class HexagonalDocumentationModuleFactory {
       .documentation(documentationTitle("Hexagonal architecture"), SOURCE.file("hexagonal-application-service-architecture.md"))
       .files()
         .batch(SOURCE, to("documentation"))
-          .file("hexagonal-flow.png")
-          .file("hexagonal-global-schema.png")
+          .addFile("hexagonal-flow.png")
+          .addFile("hexagonal-global-schema.png")
           .and()
         .and()
       .build();

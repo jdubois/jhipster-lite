@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.dummy.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.mvc.dummy.domain.DummyService;
+import tech.jhipster.lite.generator.server.springboot.mvc.dummy.domain.DummyFeatureModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class DummyApplicationService {
 
-  private final DummyService dummyService;
+  private final DummyFeatureModuleFactory factory;
 
-  public DummyApplicationService(DummyService dummyService) {
-    this.dummyService = dummyService;
+  public DummyApplicationService() {
+    factory = new DummyFeatureModuleFactory();
   }
 
-  public void applyDummyGitPatch(Project project) {
-    dummyService.applyDummyGitPatch(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

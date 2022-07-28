@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
 import static tech.jhipster.lite.module.domain.JHipsterModulesFixture.*;
+import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,12 @@ class FileSystemReplacerTest {
     assertThatThrownBy(() ->
         replacer.handle(
           new JHipsterProjectFolder(path),
-          JHipsterModuleMandatoryReplacements.builder(emptyModuleBuilder()).in("unknown").add(new TextReplacer("old"), "new").and().build()
+          JHipsterModuleMandatoryReplacements
+            .builder(emptyModuleBuilder())
+            .in("unknown")
+            .add(new TextReplacer(always(), "old"), "new")
+            .and()
+            .build()
         )
       )
       .isExactlyInstanceOf(MandatoryReplacementException.class);
@@ -47,7 +53,12 @@ class FileSystemReplacerTest {
     assertThatCode(() ->
         replacer.handle(
           new JHipsterProjectFolder(path),
-          JHipsterModuleOptionalReplacements.builder(emptyModuleBuilder()).in("unknown").add(new TextReplacer("old"), "new").and().build()
+          JHipsterModuleOptionalReplacements
+            .builder(emptyModuleBuilder())
+            .in("unknown")
+            .add(new TextReplacer(always(), "old"), "new")
+            .and()
+            .build()
         )
       )
       .doesNotThrowAnyException();

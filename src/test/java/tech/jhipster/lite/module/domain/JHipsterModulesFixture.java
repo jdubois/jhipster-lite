@@ -41,18 +41,21 @@ public final class JHipsterModulesFixture {
       .add(from("init/gitignore"), to(".gitignore"))
       .addExecutable(from("init/.husky/pre-commit"), to(".husky/pre-commit"))
       .batch(from("server/javatool/base"), to("src/main/java/com/company/myapp/errors"))
-        .template("Assert.java.mustache")
-        .template("AssertionException.java.mustache")
+        .addTemplate("Assert.java.mustache")
+        .addTemplate("AssertionException.java.mustache")
         .and()
         .add(from("server/springboot/core/MainApp.java.mustache"), to("src/main/java/com/company/myapp/MyApp.java"))
       .add(from("init/README.md.mustache"), to("README.md"))
       .and()
     .documentation(documentationTitle("Cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
+    .documentation(documentationTitle("Another cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
     .readmeSection("This is a readme section")
+    .startupCommand("This is a startup section")
     .mandatoryReplacements()
       .in("src/main/java/com/company/myapp/errors/Assert.java")
         .add(text("Ensure that the input is not null"), "Dummy replacement")
         .add(regex("will be displayed in [^ ]+ message"), "Another dummy replacement")
+        .add(lineBeforeText("import java.util.Objects;"), "import java.util.Collection;")
         .and()
       .and()
     .optionalReplacements()
@@ -60,6 +63,7 @@ public final class JHipsterModulesFixture {
         .add(text("Ensure that the given collection is not empty"), "Dummy collection replacement")
         .add(regex("if the collection is [^ ]+ or empty"), "Another dummy collection replacement")
         .add(lineBeforeRegex("public static class IntegerAsserter\\s*\\{"), "  // Dummy comment")
+        .add(lineBeforeText("import java.time.Instant;"), "import java.math.BigDecimal;")
         .and()
       .in("dummy")
         .add(text("Ensure that the input is not null"), "Dummy replacement")
@@ -184,7 +188,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static JHipsterModuleProperties testModuleProperties() {
-    return new JHipsterModuleProperties(new JHipsterProjectFolder(TestFileUtils.tmpDirForTest()), null);
+    return new JHipsterModuleProperties(new JHipsterProjectFolder(TestFileUtils.tmpDirForTest()), false, null);
   }
 
   public static CurrentJavaDependenciesVersions currentJavaDependenciesVersion() {
@@ -206,6 +210,7 @@ public final class JHipsterModulesFixture {
   public static JHipsterModuleProperties allProperties() {
     return new JHipsterModuleProperties(
       new JHipsterProjectFolder("/test"),
+      true,
       Map.of(
         "packageName",
         "tech.jhipster.chips",
@@ -350,7 +355,7 @@ public final class JHipsterModulesFixture {
     }
 
     public JHipsterModuleProperties build() {
-      return new JHipsterModuleProperties(projectFolder, properties);
+      return new JHipsterModuleProperties(projectFolder, false, properties);
     }
   }
 }

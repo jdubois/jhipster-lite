@@ -8,7 +8,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
-import tech.jhipster.lite.module.domain.JHipsterProjectFolderFactory;
+import tech.jhipster.lite.projectfolder.domain.ProjectFolder;
 
 @Component
 class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMapping {
@@ -19,7 +19,7 @@ class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMa
     ObjectMapper json,
     JHipsterModulesResources modulesResources,
     JHipsterModulesApplicationService modules,
-    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
+    ProjectFolder jHipsterProjectFolderFactory
   ) {
     controllers = buildControllers(json, modulesResources, modules, jHipsterProjectFolderFactory);
   }
@@ -28,7 +28,7 @@ class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMa
     ObjectMapper json,
     JHipsterModulesResources modulesResources,
     JHipsterModulesApplicationService modules,
-    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
+    ProjectFolder jHipsterProjectFolderFactory
   ) {
     return modulesResources
       .stream()
@@ -42,7 +42,7 @@ class JHipsterModulesPatchApplicationHandlerMapping extends AbstractUrlHandlerMa
   private Function<JHipsterModuleResource, JHipsterModuleApplicationController> toApplyerController(
     ObjectMapper json,
     JHipsterModulesApplicationService modules,
-    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
+    ProjectFolder jHipsterProjectFolderFactory
   ) {
     return module -> new JHipsterModuleApplicationController(json, module, modules, jHipsterProjectFolderFactory);
   }

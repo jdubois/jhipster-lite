@@ -1,27 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.webflux.web.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.webflux.web.domain.SpringBootWebfluxService;
+import tech.jhipster.lite.generator.server.springboot.webflux.web.domain.SpringBootWebfluxModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringBootWebfluxApplicationService {
 
-  private final SpringBootWebfluxService springBootWebfluxService;
+  private final SpringBootWebfluxModuleFactory factory;
 
-  public SpringBootWebfluxApplicationService(SpringBootWebfluxService springBootWebfluxService) {
-    this.springBootWebfluxService = springBootWebfluxService;
+  public SpringBootWebfluxApplicationService() {
+    factory = new SpringBootWebfluxModuleFactory();
   }
 
-  public void init(Project project) {
-    springBootWebfluxService.init(project);
-  }
-
-  public void addSpringBootWebflux(Project project) {
-    springBootWebfluxService.addSpringBootWebflux(project);
-  }
-
-  public void addExceptionHandler(Project project) {
-    springBootWebfluxService.addExceptionHandler(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

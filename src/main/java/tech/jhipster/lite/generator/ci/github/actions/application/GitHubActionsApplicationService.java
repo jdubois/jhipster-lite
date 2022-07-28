@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.ci.github.actions.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.ci.github.actions.domain.GitHubActionsService;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.ci.github.actions.domain.GitHubActionsModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class GitHubActionsApplicationService {
 
-  private final GitHubActionsService gitHubActionsService;
+  private final GitHubActionsModuleFactory factory;
 
-  public GitHubActionsApplicationService(GitHubActionsService gitHubActionsService) {
-    this.gitHubActionsService = gitHubActionsService;
+  public GitHubActionsApplicationService() {
+    factory = new GitHubActionsModuleFactory();
   }
 
-  public void addGitHubActions(Project project) {
-    gitHubActionsService.addGitHubActions(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

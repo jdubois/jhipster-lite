@@ -3,6 +3,7 @@
   "generator-jhipster": {
     "projectName": "UndertowApp Project",
     "baseName": "undertowapp",
-    "packageName": "tech.jhipster.undertowapp"
+    "packageName": "tech.jhipster.undertowapp",
+    "addFlywayMysql": true
   }
 }

@@ -14,10 +14,6 @@ public class ReactCoreApplicationService {
     factory = new ReactCoreModulesFactory();
   }
 
-  public JHipsterModule buildModuleWithoutStyle(JHipsterModuleProperties properties) {
-    return factory.buildModuleWithoutStyle(properties);
-  }
-
   public JHipsterModule buildModuleWithStyle(JHipsterModuleProperties properties) {
     return factory.buildModuleWithStyle(properties);
   }

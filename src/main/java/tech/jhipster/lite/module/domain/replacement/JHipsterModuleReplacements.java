@@ -8,7 +8,7 @@ import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 
 public abstract class JHipsterModuleReplacements {
 
-  private final Collection<ContentReplacement> replacements;
+  private final Collection<ContentReplacer> replacements;
 
   protected JHipsterModuleReplacements(JHipsterModuleReplacementsBuilder<?, ?> builder) {
     Assert.notNull("builder", builder);
@@ -17,7 +17,7 @@ public abstract class JHipsterModuleReplacements {
     replacements = JHipsterCollections.immutable(builder.replacements);
   }
 
-  public Collection<ContentReplacement> replacements() {
+  public Collection<ContentReplacer> replacements() {
     return replacements;
   }
 
@@ -26,7 +26,7 @@ public abstract class JHipsterModuleReplacements {
   > {
 
     private final JHipsterModuleBuilder module;
-    private final Collection<ContentReplacement> replacements = new ArrayList<>();
+    private final Collection<ContentReplacer> replacements = new ArrayList<>();
 
     protected JHipsterModuleReplacementsBuilder(JHipsterModuleBuilder module) {
       Assert.notNull("module", module);
@@ -38,7 +38,7 @@ public abstract class JHipsterModuleReplacements {
       return module;
     }
 
-    void add(ContentReplacement fileReplacer) {
+    void add(ContentReplacer fileReplacer) {
       Assert.notNull("fileReplacer", fileReplacer);
 
       replacements.add(fileReplacer);
@@ -82,6 +82,6 @@ public abstract class JHipsterModuleReplacements {
       return replacements;
     }
 
-    protected abstract ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement);
+    protected abstract ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement);
   }
 }

@@ -7,8 +7,6 @@ import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
-import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.ModuleAsserter;
 
 @UnitTest
 class ReactCoreModulesFactoryTest {
@@ -16,30 +14,12 @@ class ReactCoreModulesFactoryTest {
   private static final ReactCoreModulesFactory factory = new ReactCoreModulesFactory();
 
   @Test
-  void shouldBuildModuleWithoutStyle() {
-    JHipsterModule module = factory.buildModuleWithoutStyle(properties());
-
-    assertCommonReactModule(module).createFile("src/main/webapp/app/common/primary/app/App.tsx").notContaining("import './App.css';");
-  }
-
-  @Test
   void shouldBuildModuleWithStyle() {
-    JHipsterModule module = factory.buildModuleWithStyle(properties());
+    JHipsterModule module = factory.buildModuleWithStyle(
+      JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).projectBaseName("jhipster").build()
+    );
 
-    assertCommonReactModule(module)
-      .createFile("src/main/webapp/app/common/primary/app/App.tsx")
-      .containing("import './App.css';")
-      .and()
-      .createFiles("src/main/webapp/app/common/primary/app/App.css")
-      .createPrefixedFiles("src/main/webapp/content/images", "ReactLogo.png", "JHipster-Lite-neon-blue.png");
-  }
-
-  private JHipsterModuleProperties properties() {
-    return JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).projectBaseName("jhipster").build();
-  }
-
-  private ModuleAsserter assertCommonReactModule(JHipsterModule module) {
-    return assertThatModuleWithFiles(module, packageJsonFile())
+    assertThatModuleWithFiles(module, packageJsonFile())
       .createFile("package.json")
       .containing(nodeDependency("@testing-library/jest-dom"))
       .containing(nodeDependency("@testing-library/react"))
@@ -74,11 +54,12 @@ class ReactCoreModulesFactoryTest {
       .createFiles("src/main/webapp/index.html")
       .createPrefixedFiles("src/main/webapp/app", "index.css", "index.tsx", "vite-env.d.ts")
       .createFiles("src/test/javascript/spec/common/primary/app/App.spec.tsx")
-      .createFiles("src/main/webapp/config/setupTests.ts");
-  }
-
-  private static String nodeDependency(String dependency) {
-    return "\"" + dependency + "\": \"";
+      .createFiles("src/main/webapp/config/setupTests.ts")
+      .createFile("src/main/webapp/app/common/primary/app/App.tsx")
+      .containing("import './App.css';")
+      .and()
+      .createFiles("src/main/webapp/app/common/primary/app/App.css")
+      .createPrefixedFiles("src/main/webapp/content/images", "ReactLogo.png", "JHipster-Lite-neon-blue.png");
   }
 
   private String nodeScript(String key, String value) {

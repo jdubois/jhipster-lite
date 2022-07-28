@@ -17,6 +17,7 @@ You'll then have to define the glue code:
 ```java
 import static {{packageName}}.cucumber.CucumberAssertions.*;
 
+import {{packageName}}.cucumber.CucumberRestTemplate;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 
 public class SimpleSteps {
   @Autowired
-  private TestRestTemplate rest;
+  private CucumberRestTemplate rest;
 
   @When("I get simple bean {string}")
   public void callSimpleWebService(String bean) {

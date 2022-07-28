@@ -1,5 +1,5 @@
 import { AxiosHttp } from '@/http/AxiosHttp';
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Modules } from '../domain/Modules';
 import { Category } from '../domain/Category';
 import { Module } from '../domain/Module';
@@ -8,6 +8,9 @@ import { ModuleProperty, ModulePropertyType } from '../domain/ModuleProperty';
 import { ModuleToApply } from '../domain/ModuleToApply';
 import { ModuleSlug } from '../domain/ModuleSlug';
 import { ProjectFolder } from '../domain/ProjectFolder';
+import { Project } from '../domain/Project';
+import { ModulePropertyValue, ProjectHistory } from '../domain/ProjectHistory';
+import { ModulePropertyValueType } from '../domain/ModuleProperties';
 
 export interface RestModules {
   categories: RestCategory[];
@@ -22,6 +25,7 @@ export interface RestModule {
   slug: string;
   description: string;
   properties?: RestModuleProperties;
+  tags?: string[];
 }
 
 export interface RestModuleProperties {
@@ -38,11 +42,17 @@ export interface RestModuleProperty {
 
 export interface RestModuleToApply {
   projectFolder: string;
+  commit: boolean;
   properties: {};
 }
 
-interface RestModuleHistory {
-  serviceId: string;
+export interface RestProjectHistory {
+  modules?: RestAppliedModule[];
+  properties?: {};
+}
+
+export interface RestAppliedModule {
+  slug: string;
 }
 
 export class RestModulesRepository implements ModulesRepository {
@@ -56,14 +66,23 @@ export class RestModulesRepository implements ModulesRepository {
     await this.axiosInstance.post<void, RestModuleToApply>(`/api/modules/${module}/apply-patch`, toRestModuleToApply(moduleToApply));
   }
 
-  appliedModules(folder: ProjectFolder): Promise<ModuleSlug[]> {
-    return this.axiosInstance.get<RestModuleHistory[]>(`/api/project-histories?folder=${folder}`).then(mapToAppliedModules);
+  history(folder: ProjectFolder): Promise<ProjectHistory> {
+    return this.axiosInstance.get<RestProjectHistory>(`/api/projects?path=${folder}`).then(mapToModuleHistory);
+  }
+
+  download(folder: string): Promise<Project> {
+    const config: AxiosRequestConfig = {
+      responseType: 'blob',
+      headers: {
+        Accept: 'application/octet-stream',
+      },
+    };
+
+    return this.axiosInstance.get<ArrayBuffer>(`/api/projects?path=${folder}`, config).then(mapToProject);
   }
 }
 
-const mapToModules = (response: AxiosResponse<RestModules>): Modules => ({
-  categories: response.data.categories.map(toCategory),
-});
+const mapToModules = (response: AxiosResponse<RestModules>): Modules => new Modules(response.data.categories.map(toCategory));
 
 const toCategory = (restCategory: RestCategory): Category => ({
   name: restCategory.name,
@@ -74,6 +93,7 @@ const toModule = (restModule: RestModule): Module => ({
   slug: restModule.slug,
   description: restModule.description,
   properties: toProperties(restModule.properties),
+  tags: toTags(restModule.tags),
 });
 
 const toProperties = (restProperties: RestModuleProperties | undefined): ModuleProperty[] => {
@@ -92,9 +112,52 @@ const toProperty = (restProperty: RestModuleProperty): ModuleProperty => ({
   example: restProperty.example,
 });
 
+const toTags = (tags: string[] | undefined): string[] => {
+  if (tags === undefined) {
+    return [];
+  }
+
+  return tags;
+};
+
 const toRestModuleToApply = (moduleToApply: ModuleToApply): RestModuleToApply => ({
   projectFolder: moduleToApply.projectFolder,
+  commit: moduleToApply.commit,
   properties: Object.fromEntries(moduleToApply.properties),
 });
 
-const mapToAppliedModules = (response: AxiosResponse<RestModuleHistory[]>): ModuleSlug[] => response.data.map(module => module.serviceId);
+const mapToModuleHistory = (response: AxiosResponse<RestProjectHistory>): ProjectHistory => {
+  const data = response.data;
+  return {
+    modules: mapAppliedModules(data.modules),
+    properties: mapAppliedProperties(data.properties),
+  };
+};
+
+const mapAppliedModules = (modules: RestAppliedModule[] | undefined): string[] => {
+  if (modules === undefined) {
+    return [];
+  }
+
+  return modules.map(module => module.slug);
+};
+
+function mapAppliedProperties(properties: {} | undefined): ModulePropertyValue[] {
+  if (properties === undefined) {
+    return [];
+  }
+
+  return Object.entries(properties).map(entry => {
+    return {
+      key: entry[0],
+      value: entry[1] as ModulePropertyValueType,
+    };
+  });
+}
+
+const mapToProject = (response: AxiosResponse<ArrayBuffer>): Project => {
+  return {
+    filename: response.headers['x-suggested-filename'],
+    content: response.data,
+  };
+};

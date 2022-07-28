@@ -6,4 +6,3 @@ Feature: Spring boot async
       | baseName    | jhipster            |
     Then I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/secondary/async"
       | AsyncConfiguration.java |
-    And I should have history entry for "springboot-async"

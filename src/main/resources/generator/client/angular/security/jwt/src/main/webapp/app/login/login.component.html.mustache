@@ -22,7 +22,7 @@
         <button type="submit" mat-flat-button color="primary">Sign in</button>
       </form>
       <div *ngSwitchCase="true">
-        <div>You are logged in as user "{{ account?.login }}".</div>
+        <div>You are logged in as user "{{=<% %>=}}{{ account?.login }}<%={{ }}=%>".</div>
         <button (click)="logout()" mat-flat-button color="primary">Logout</button>
       </div>
     </div>

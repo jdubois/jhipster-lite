@@ -139,7 +139,7 @@ public class AngularOauth2DomainService implements AngularOauth2Service {
       project,
       APP_COMPONENT_HTML_FILE_PATH,
       """
-          <jh-lite-login></jh-lite-login>
+          <jhi-login></jhi-login>
         """,
       "(<span.+id=\\\"menu-space-separator\\\".*></span>)"
     );

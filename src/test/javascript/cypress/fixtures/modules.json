@@ -26,7 +26,8 @@
                 "key": "optionalInteger"
               }
             ]
-          }
+          },
+          "tags": ["server"]
         },
         {
           "slug": "spring-test",

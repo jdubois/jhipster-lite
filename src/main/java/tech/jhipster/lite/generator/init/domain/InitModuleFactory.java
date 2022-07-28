@@ -4,6 +4,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import static tech.jhipster.lite.module.domain.packagejson.VersionSource.*;
 
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.git.domain.GitRepository;
 import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterSource;
@@ -11,7 +12,7 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class InitModuleFactory {
 
-  private static final String NODE_VERSION = "16.13.0";
+  private static final String NODE_VERSION = "16.16.0";
   private static final JHipsterSource SOURCE = from("init");
   private static final JHipsterDestination DESTINATION = to(".");
 
@@ -33,10 +34,10 @@ public class InitModuleFactory {
         .and()
       .files()
         .batch(SOURCE, DESTINATION)
-          .file(".lintstagedrc.js")
-          .file(".prettierignore")
-          .template(".prettierrc")
-          .template("package.json")
+          .addFile(".lintstagedrc.js")
+          .addFile(".prettierignore")
+          .addTemplate(".prettierrc")
+          .addTemplate("package.json")
           .and()
         .addExecutable(SOURCE.append(".husky").file("pre-commit"), DESTINATION.append(".husky/pre-commit"))
         .and()
@@ -66,9 +67,9 @@ public class InitModuleFactory {
         .and()
       .files()
         .batch(SOURCE, DESTINATION)
-          .template("README.md")
-          .template(".editorconfig")
-          .file(".eslintignore")
+          .addTemplate("README.md")
+          .addTemplate(".editorconfig")
+          .addFile(".eslintignore")
           .and()
         .add(SOURCE.file("gitignore"), to(".gitignore"))
         .add(SOURCE.file("gitattributes"), to(".gitattributes"))

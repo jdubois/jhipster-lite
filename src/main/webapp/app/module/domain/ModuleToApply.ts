@@ -1,8 +1,8 @@
+import { ModuleProperties } from './ModuleProperties';
 import { ProjectFolder } from './ProjectFolder';
-
-export type ModulePropertiesToApply = Map<string, string | number | boolean>;
 
 export interface ModuleToApply {
   projectFolder: ProjectFolder;
-  properties: ModulePropertiesToApply;
+  commit: boolean;
+  properties: ModuleProperties;
 }

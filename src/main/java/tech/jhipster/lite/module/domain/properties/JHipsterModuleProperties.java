@@ -5,26 +5,51 @@ import tech.jhipster.lite.common.domain.JHipsterCollections;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.Indentation;
 
-public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<String, Object> properties) {
+public class JHipsterModuleProperties {
+
   public static final String BASE_PACKAGE_PROPERTY = "packageName";
   public static final String INDENTATION_PROPERTY = "prettierDefaultIndent";
   public static final String PROJECT_NAME_PROPERTY = "projectName";
   public static final String PROJECT_BASE_NAME_PROPERTY = "baseName";
   public static final String SERVER_PORT_PROPERTY = "serverPort";
 
-  public JHipsterModuleProperties(String projectFolder, Map<String, Object> properties) {
-    this(new JHipsterProjectFolder(projectFolder), properties);
+  private final JHipsterProjectFolder projectFolder;
+  private final boolean commitModule;
+  private final Map<String, Object> properties;
+  private final Indentation indentation;
+  private final JHipsterBasePackage basePackage;
+  private final JHipsterProjectName projectName;
+  private final JHipsterProjectBaseName projectBaseName;
+  private final JHipsterServerPort serverPort;
+
+  public JHipsterModuleProperties(String projectFolder, boolean commitModule, Map<String, Object> properties) {
+    this(new JHipsterProjectFolder(projectFolder), commitModule, properties);
   }
 
-  public JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<String, Object> properties) {
+  public JHipsterModuleProperties(JHipsterProjectFolder projectFolder, boolean commitModule, Map<String, Object> properties) {
     Assert.notNull("projectFolder", projectFolder);
 
     this.projectFolder = projectFolder;
+    this.commitModule = commitModule;
     this.properties = JHipsterCollections.immutable(properties);
+
+    indentation = Indentation.from(getOrDefault(INDENTATION_PROPERTY, null, Integer.class));
+    basePackage = new JHipsterBasePackage(getOrDefault(BASE_PACKAGE_PROPERTY, null, String.class));
+    projectName = new JHipsterProjectName(getOrDefault(PROJECT_NAME_PROPERTY, null, String.class));
+    projectBaseName = new JHipsterProjectBaseName(getOrDefault(PROJECT_BASE_NAME_PROPERTY, null, String.class));
+    serverPort = new JHipsterServerPort(getOrDefault(SERVER_PORT_PROPERTY, null, Integer.class));
   }
 
   public static JHipsterModuleProperties defaultProperties(JHipsterProjectFolder projectFolder) {
-    return new JHipsterModuleProperties(projectFolder, null);
+    return new JHipsterModuleProperties(projectFolder, false, null);
+  }
+
+  public JHipsterProjectFolder projectFolder() {
+    return projectFolder;
+  }
+
+  public boolean commitNeeded() {
+    return commitModule;
   }
 
   public String getString(String key) {
@@ -54,23 +79,27 @@ public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<
   }
 
   public Indentation indentation() {
-    return Indentation.from(getOrDefault(INDENTATION_PROPERTY, null, Integer.class));
+    return indentation;
+  }
+
+  public String packagePath() {
+    return basePackage.path();
   }
 
   public JHipsterBasePackage basePackage() {
-    return new JHipsterBasePackage(getOrDefault(BASE_PACKAGE_PROPERTY, null, String.class));
+    return basePackage;
   }
 
   public JHipsterProjectName projectName() {
-    return new JHipsterProjectName(getOrDefault(PROJECT_NAME_PROPERTY, null, String.class));
+    return projectName;
   }
 
   public JHipsterProjectBaseName projectBaseName() {
-    return new JHipsterProjectBaseName(getOrDefault(PROJECT_BASE_NAME_PROPERTY, null, String.class));
+    return projectBaseName;
   }
 
   public JHipsterServerPort serverPort() {
-    return new JHipsterServerPort(getOrDefault(SERVER_PORT_PROPERTY, null, Integer.class));
+    return serverPort;
   }
 
   private <T> T getOrDefault(String key, T defaultValue, Class<T> clazz) {
@@ -97,5 +126,9 @@ public record JHipsterModuleProperties(JHipsterProjectFolder projectFolder, Map<
     }
 
     throw InvalidPropertyTypeException.builder().key(key).expectedType(clazz).actualType(property.getClass());
+  }
+
+  public Map<String, Object> get() {
+    return properties;
   }
 }

@@ -1,31 +1,24 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.web.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvcService;
+import tech.jhipster.lite.generator.server.springboot.mvc.web.domain.SpringBootMvcsModulesFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringBootMvcApplicationService {
 
-  private final SpringBootMvcService springBootMvcService;
+  private final SpringBootMvcsModulesFactory factory;
 
-  public SpringBootMvcApplicationService(SpringBootMvcService springBootMvcService) {
-    this.springBootMvcService = springBootMvcService;
+  public SpringBootMvcApplicationService() {
+    factory = new SpringBootMvcsModulesFactory();
   }
 
-  public void init(Project project) {
-    this.springBootMvcService.init(project);
+  public JHipsterModule buildTomcatModule(JHipsterModuleProperties properties) {
+    return factory.buildTomcatModule(properties);
   }
 
-  public void addSpringBootMvc(Project project) {
-    springBootMvcService.addSpringBootMvc(project);
-  }
-
-  public void addSpringBootUndertow(Project project) {
-    springBootMvcService.addSpringBootUndertow(project);
-  }
-
-  public void addExceptionHandler(Project project) {
-    springBootMvcService.addExceptionHandler(project);
+  public JHipsterModule buildUndertowModule(JHipsterModuleProperties properties) {
+    return factory.buildUntertowModule(properties);
   }
 }

@@ -5,8 +5,9 @@ import java.util.regex.Pattern;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 
-public record RegexNeedleBeforeReplacer(Pattern pattern) implements ElementReplacer {
+public record RegexNeedleBeforeReplacer(ReplacementCondition condition, Pattern pattern) implements ElementReplacer {
   public RegexNeedleBeforeReplacer {
+    Assert.notNull("condition", condition);
     Assert.notNull("pattern", pattern);
   }
 
@@ -16,7 +17,7 @@ public record RegexNeedleBeforeReplacer(Pattern pattern) implements ElementRepla
   }
 
   @Override
-  public BiFunction<String, String, String> replacer() {
+  public BiFunction<String, String, String> replacement() {
     return (content, replacement) ->
       linePattern().matcher(content).replaceAll(result -> replacement + JHipsterModule.LINE_BREAK + result.group());
   }

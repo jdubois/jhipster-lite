@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.TestUtils.*;
 import static tech.jhipster.lite.common.domain.FileUtils.*;
-import static tech.jhipster.lite.generator.buildtool.maven.domain.Maven.*;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
 
-import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
-import tech.jhipster.lite.generator.buildtool.generic.domain.Dependency;
 import tech.jhipster.lite.generator.buildtool.maven.domain.MavenDomainService;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.domain.ProjectRepository;
@@ -35,64 +32,6 @@ class MavenDomainServiceTest {
   @InjectMocks
   private MavenDomainService mavenDomainService;
 
-  @Test
-  void shouldAddDependency() {
-    Project project = tmpProjectWithPomXml();
-    Dependency dependency = Dependency.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter").build();
-
-    mavenDomainService.addDependency(project, dependency);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddDependencyWithScopeTest() {
-    Project project = tmpProjectWithPomXml();
-    Dependency dependency = Dependency
-      .builder()
-      .groupId("org.springframework.boot")
-      .artifactId("spring-boot-starter-test")
-      .scope("test")
-      .build();
-
-    mavenDomainService.addDependency(project, dependency);
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddDependencyWithExclusions() {
-    Project project = tmpProjectWithPomXml();
-    Dependency dependency = Dependency.builder().groupId("org.springframework.boot").artifactId("spring-boot-starter-web").build();
-    Dependency dependencyToExclude = Dependency
-      .builder()
-      .groupId("org.springframework.boot")
-      .artifactId("spring-boot-starter-tomcat")
-      .build();
-
-    mavenDomainService.addDependency(project, dependency, List.of(dependencyToExclude));
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldAddProperty() {
-    Project project = tmpProjectWithPomXml();
-
-    mavenDomainService.addProperty(project, "testcontainers", "0.0.0");
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
-  @Test
-  void shouldDeleteProperty() {
-    Project project = tmpProjectWithPomXml();
-
-    mavenDomainService.deleteProperty(project, "java");
-
-    verify(projectRepository).replaceText(any(Project.class), anyString(), anyString(), anyString(), anyString());
-  }
-
   @Nested
   class GetGroupIdTest {
 
@@ -102,10 +41,7 @@ class MavenDomainServiceTest {
 
       try (MockedStatic<FileUtils> fileUtilsMock = Mockito.mockStatic(FileUtils.class)) {
         mavenDomainService.getGroupId(project.getFolder());
-        fileUtilsMock.verify(
-          () -> FileUtils.getValueBetween(getPath(project.getFolder(), POM_XML), GROUP_ID_BEGIN, GROUP_ID_END),
-          times(1)
-        );
+        fileUtilsMock.verify(() -> FileUtils.getValueBetween(getPath(project.getFolder(), POM_XML), "<groupId>", "</groupId>"), times(1));
       }
     }
 
@@ -129,7 +65,7 @@ class MavenDomainServiceTest {
 
       try (MockedStatic<FileUtils> fileUtilsMock = Mockito.mockStatic(FileUtils.class)) {
         mavenDomainService.getName(project.getFolder());
-        fileUtilsMock.verify(() -> FileUtils.getValueBetween(getPath(project.getFolder(), POM_XML), NAME_BEGIN, NAME_END), times(1));
+        fileUtilsMock.verify(() -> FileUtils.getValueBetween(getPath(project.getFolder(), POM_XML), "<name>", "</name>"), times(1));
       }
     }
 

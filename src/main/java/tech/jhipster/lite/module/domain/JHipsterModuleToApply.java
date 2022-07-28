@@ -9,4 +9,8 @@ public record JHipsterModuleToApply(JHipsterModuleProperties properties, JHipste
     Assert.notNull("slug", slug);
     Assert.notNull("module", module);
   }
+
+  public boolean commitNeeded() {
+    return properties.commitNeeded();
+  }
 }

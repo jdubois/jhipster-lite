@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.domain.replacement;
 
 import static org.assertj.core.api.Assertions.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
+import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,16 +27,16 @@ class JHipsterModuleMandatoryReplacementsTest {
     JHipsterProjectFolder folder = new JHipsterProjectFolder("src/test/resources/projects");
     JHipsterModuleBuilder module = moduleBuilder(JHipsterModuleProperties.defaultProperties(folder));
 
-    Collection<ContentReplacement> replacements = JHipsterModuleMandatoryReplacements
+    Collection<ContentReplacer> replacements = JHipsterModuleMandatoryReplacements
       .builder(module)
       .in(file)
-      .add(new TextReplacer("old"), "new")
+      .add(new TextReplacer(always(), "old"), "new")
       .and()
       .build()
       .replacements();
 
     String result = readContent(file);
-    for (ContentReplacement replacement : replacements) {
+    for (ContentReplacer replacement : replacements) {
       result = replacement.apply(result);
     }
 

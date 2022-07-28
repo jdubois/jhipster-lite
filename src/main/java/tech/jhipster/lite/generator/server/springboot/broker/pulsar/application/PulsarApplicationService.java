@@ -1,19 +1,21 @@
 package tech.jhipster.lite.generator.server.springboot.broker.pulsar.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.PulsarService;
+import tech.jhipster.lite.docker.domain.DockerImages;
+import tech.jhipster.lite.generator.server.springboot.broker.pulsar.domain.PulsarModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class PulsarApplicationService {
 
-  private final PulsarService pulsarService;
+  private final PulsarModuleFactory factory;
 
-  public PulsarApplicationService(final PulsarService pulsarService) {
-    this.pulsarService = pulsarService;
+  public PulsarApplicationService(DockerImages dockerImages) {
+    factory = new PulsarModuleFactory(dockerImages);
   }
 
-  public void init(final Project project) {
-    pulsarService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

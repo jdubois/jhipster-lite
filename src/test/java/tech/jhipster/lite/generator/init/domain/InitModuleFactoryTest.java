@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.git.domain.GitRepository;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -43,13 +44,9 @@ class InitModuleFactoryTest {
       .containing(nodeDependency("prettier"))
       .containing(nodeDependency("prettier-plugin-java"))
       .containing(nodeDependency("prettier-plugin-packagejson"))
-      .containing("\"prepare\": \"husky install\"")
-      .containing("\"prettier:check\": \"prettier --check \\\"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\\\"\"")
-      .containing("\"prettier:format\": \"prettier --write \\\"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\\\"\"");
-  }
-
-  private String nodeDependency(String packageName) {
-    return "\"" + packageName + "\": \"";
+      .containing(nodeScript("prepare", "husky install"))
+      .containing(nodeScript("prettier:check", "prettier --check \\\"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\\\""))
+      .containing(nodeScript("prettier:format", "prettier --write \\\"{,src/**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}\\\""));
   }
 
   @Test

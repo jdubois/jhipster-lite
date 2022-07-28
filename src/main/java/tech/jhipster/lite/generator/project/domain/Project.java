@@ -39,7 +39,7 @@ public class Project {
     Assert.notNull("config", builder.config);
 
     this.folder = builder.folder;
-    this.endOfLine = Optional.ofNullable(builder.endOfLine).orElseGet(this::detectEndOfLineOrDefault);
+    this.endOfLine = detectEndOfLineOrDefault();
     this.config = builder.config;
     this.remoteUrl = Optional.ofNullable(builder.remoteUrl);
     this.language = Optional.ofNullable(builder.language);
@@ -197,7 +197,7 @@ public class Project {
    * @return "\r\n" if found or "\n" otherwise
    * @see FileUtils#detectEndOfLine(String)
    */
-  public String detectEndOfLineOrDefault() {
+  private String detectEndOfLineOrDefault() {
     Optional<String> eol = Optional.empty();
     try (Stream<Path> paths = Files.list(Path.of(this.folder)).filter(Files::isRegularFile)) {
       List<String> filenames = paths.map(Path::toString).toList();
@@ -216,7 +216,6 @@ public class Project {
   public static class ProjectBuilder {
 
     private String folder;
-    private String endOfLine;
     private Map<String, Object> config = new HashMap<>();
     private String remoteUrl;
     private LanguageType language;
@@ -234,11 +233,6 @@ public class Project {
 
     public ProjectBuilder folder(String folder) {
       this.folder = folder;
-      return this;
-    }
-
-    public ProjectBuilder endOfLine(String endOfLine) {
-      this.endOfLine = endOfLine;
       return this;
     }
 

@@ -1,15 +1,10 @@
 package tech.jhipster.lite.generator.client.angular.security.jwt.domain;
 
-import java.util.List;
 import java.util.Map;
 
 public class AngularJwt {
 
   private AngularJwt() {}
-
-  public static List<String> jwtDependencies() {
-    return List.of("ngx-webstorage");
-  }
 
   public static Map<String, String> angularJwtFiles() {
     String primaryAppAuth = "app/auth";

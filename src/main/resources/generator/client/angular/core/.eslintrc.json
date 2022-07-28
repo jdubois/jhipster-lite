@@ -22,7 +22,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "jhi",
             "style": "kebab-case"
           }
         ]

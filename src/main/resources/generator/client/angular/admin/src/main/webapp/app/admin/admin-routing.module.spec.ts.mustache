@@ -18,5 +18,8 @@ describe('AdminRoutingModule', () => {
     expect(AdminRoutingModule).toBeDefined();
   });
 
+  it('should navigate on health endpoint', () => {
+    router.navigateByUrl('/health');
+  });
   // jhipster-needle-angular-menu
 });

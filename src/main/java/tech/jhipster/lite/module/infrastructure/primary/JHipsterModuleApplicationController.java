@@ -6,19 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.util.StreamUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
-import tech.jhipster.lite.module.domain.JHipsterProjectFolderFactory;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.projectfolder.domain.ProjectFolder;
 
 class JHipsterModuleApplicationController extends JHipsterModuleController {
 
   private final ObjectMapper json;
-  private final JHipsterProjectFolderFactory jHipsterProjectFolderFactory;
+  private final ProjectFolder jHipsterProjectFolderFactory;
 
   public JHipsterModuleApplicationController(
     ObjectMapper json,
     JHipsterModuleResource module,
     JHipsterModulesApplicationService modules,
-    JHipsterProjectFolderFactory jHipsterProjectFolderFactory
+    ProjectFolder jHipsterProjectFolderFactory
   ) {
     super(module, modules);
     Assert.notNull("json", json);

@@ -41,12 +41,12 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
     }
 
     @Override
-    protected ContentReplacement buildReplacer(String file, ElementReplacer toReplace, String replacement) {
+    protected ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement) {
       return new OptionalFileReplacer(file, new OptionalReplacer(toReplace, replacement));
     }
   }
 
-  private static record OptionalFileReplacer(String file, OptionalReplacer replacement) implements ContentReplacement {
+  private static record OptionalFileReplacer(String file, OptionalReplacer replacement) implements ContentReplacer {
     private static final Logger log = LoggerFactory.getLogger(OptionalFileReplacer.class);
 
     public OptionalFileReplacer {
@@ -65,14 +65,18 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
     }
   }
 
-  private static record OptionalReplacer(ElementReplacer currentValue, String updatedValue) {
+  private static record OptionalReplacer(ElementReplacer replacer, String updatedValue) {
     public OptionalReplacer {
-      Assert.notNull("currentValue", currentValue);
+      Assert.notNull("replacer", replacer);
       Assert.notNull("updatedValue", updatedValue);
     }
 
     public String apply(String content) {
-      return currentValue().replacer().apply(content, updatedValue());
+      if (replacer.dontNeedReplacement(content, updatedValue())) {
+        return content;
+      }
+
+      return replacer().replacement().apply(content, updatedValue());
     }
   }
 }

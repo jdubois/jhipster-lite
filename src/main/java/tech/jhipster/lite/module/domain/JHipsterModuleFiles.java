@@ -69,11 +69,11 @@ public class JHipsterModuleFiles {
       this.files = files;
     }
 
-    public JHipsterModuleFileBatchBuilder template(String file) {
+    public JHipsterModuleFileBatchBuilder addTemplate(String file) {
       return add(source.template(file), destination.append(file));
     }
 
-    public JHipsterModuleFileBatchBuilder file(String file) {
+    public JHipsterModuleFileBatchBuilder addFile(String file) {
       return add(source.file(file), destination.append(file));
     }
 

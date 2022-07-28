@@ -8,6 +8,7 @@ import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.ModuleFile;
 
 @UnitTest
 class SpringBootCoreModuleFactoryTest {
@@ -15,12 +16,8 @@ class SpringBootCoreModuleFactoryTest {
   private static final SpringBootCoreModuleFactory factory = new SpringBootCoreModuleFactory();
 
   @Test
-  void shouldBuildModule() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture
-      .propertiesBuilder(TestFileUtils.tmpDirForTest())
-      .basePackage("com.jhipster.test")
-      .projectBaseName("myapp")
-      .build();
+  void shouldBuildModuleOnProjectWithoutDefaultGoal() {
+    JHipsterModuleProperties properties = properties();
 
     JHipsterModule module = factory.buildModule(properties);
 
@@ -138,6 +135,7 @@ class SpringBootCoreModuleFactoryTest {
            </dependency>
        """
       )
+      .containing("    <defaultGoal>spring-boot:run</defaultGoal>")
       .and()
       .createFile("src/main/java/com/jhipster/test/MyappApp.java")
       .containing("class MyappApp")
@@ -148,6 +146,32 @@ class SpringBootCoreModuleFactoryTest {
         "src/main/resources/config/application-local.properties",
         "src/test/resources/config/application.properties"
       )
-      .createFiles("src/test/resources/logback.xml", "src/main/resources/logback-spring.xml");
+      .createFiles("src/test/resources/logback.xml", "src/main/resources/logback-spring.xml")
+      .createFiles("documentation/logs-spy.md")
+      .createJavaTests("com/jhipster/test/LogsSpy.java");
+  }
+
+  @Test
+  void shouldBuildModuleOnProjectWithDefaultGoal() {
+    JHipsterModuleProperties properties = properties();
+
+    JHipsterModule module = factory.buildModule(properties);
+
+    assertThatModuleWithFiles(module, pomWithDefaultGoal())
+      .createFile("pom.xml")
+      .containing("<defaultGoal>dummy</defaultGoal>")
+      .notContaining("<defaultGoal>spring-boot:run</defaultGoal>");
+  }
+
+  private ModuleFile pomWithDefaultGoal() {
+    return file("src/test/resources/projects/maven-with-default-goal/pom.xml", "pom.xml");
+  }
+
+  private JHipsterModuleProperties properties() {
+    return JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myapp")
+      .build();
   }
 }

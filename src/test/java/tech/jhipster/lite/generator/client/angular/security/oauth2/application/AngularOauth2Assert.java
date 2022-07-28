@@ -119,7 +119,7 @@ public class AngularOauth2Assert {
     assertThat(angularJsonTsLines).containsAll(expectedContentLines);
 
     // App.component.html
-    assertFileContent(project, "src/main/webapp/app/app.component.html", "  <jh-lite-login></jh-lite-login>");
+    assertFileContent(project, "src/main/webapp/app/app.component.html", "  <jhi-login></jhi-login>");
 
     // App.component.spec.ts
     List<String> appComponentSpecTsLines = Files.readAllLines(

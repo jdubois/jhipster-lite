@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.client.angular.core.domain;
 
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleWithFiles;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.packageJsonFile;
 
 import org.junit.jupiter.api.Test;
@@ -90,9 +90,5 @@ class AngularModuleFactoryTest {
         "environment.spec.ts"
       )
       .createPrefixedFiles("src/main/webapp", "index.html", "main.ts", "polyfills.ts", "styles.css");
-  }
-
-  private static String nodeDependency(String dependency) {
-    return "\"" + dependency + "\": \"";
   }
 }

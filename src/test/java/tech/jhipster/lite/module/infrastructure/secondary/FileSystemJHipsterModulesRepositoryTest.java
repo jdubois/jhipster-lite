@@ -25,7 +25,7 @@ class FileSystemJHipsterModulesRepositoryTest {
     JHipsterModule module = module();
 
     // @formatter:off
-    assertThatModuleWithFiles(module, file("src/test/resources/projects/maven/pom.xml", "pom.xml"), packageJsonFile()) 
+    assertThatModuleWithFiles(module, file("src/test/resources/projects/maven/pom.xml", "pom.xml"), packageJsonFile())
       .createFiles(
         "src/main/java/com/company/myapp/MyApp.java",
         "src/main/java/com/company/myapp/errors/Assert.java",
@@ -77,7 +77,7 @@ class FileSystemJHipsterModulesRepositoryTest {
                   <type>pom</type>
                 </dependency>
               </dependencies>
-            </dependencyManagement>   
+            </dependencyManagement>
           """
         )
         .containing(
@@ -190,6 +190,14 @@ class FileSystemJHipsterModulesRepositoryTest {
         .containing("Dummy collection replacement")
         .containing("Another dummy collection replacement")
         .containing("// Dummy comment\n  public static class IntegerAsserter {")
+        .notContaining("""
+            import java.math.BigDecimal;
+            import java.math.BigDecimal;
+            """)
+        .notContaining("""
+            import java.util.Collection;
+            import java.util.Collection;
+            """)
         .and()
       .createFile("src/main/resources/config/application.properties")
         .containing("springdoc.swagger-ui.operationsSorter=alpha")
@@ -204,8 +212,15 @@ class FileSystemJHipsterModulesRepositoryTest {
         .containing("springdoc.swagger-ui.tryItOutEnabled=test")
         .and()
       .createFile("README.md")
-        .containing("- [Cucumber integration](documentation/cucumber-integration.md)")
-        .containing("This is a readme section");
+        .containing(
+            """
+           - [Cucumber integration](documentation/cucumber-integration.md)
+           - [Another cucumber integration](documentation/another-cucumber-integration.md)
+
+           <!-- jhipster-needle-documentation -->
+           """)
+        .containing("This is a readme section")
+        .containing("This is a startup section");
     // @formatter:on
 
     assertPreActions();

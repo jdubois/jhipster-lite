@@ -1,10 +1,10 @@
 Feature: Apache Kafka
 
   Scenario: Should apply Apache Kafka init module
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                 |
-      | /api/servers/spring-boot               |
-      | /api/servers/spring-boot/brokers/kafka |
+    When I apply modules to default project
+      | maven-java       |
+      | springboot       |
+      | springboot-kafka |
     Then I should have files in "src/main/docker"
       | kafka.yml |
     Then I should have files in "src/test/java/tech/jhipster/chips"

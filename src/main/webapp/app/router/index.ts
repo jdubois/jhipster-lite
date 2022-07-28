@@ -1,16 +1,10 @@
 import { ModulesVue } from '@/module/primary/modules';
-import { GeneratorVue } from '@/springboot/primary';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
     path: '/',
-    redirect: { name: 'Generator' },
-  },
-  {
-    path: '/generator',
-    name: 'Generator',
-    component: GeneratorVue,
+    redirect: { name: 'Modules' },
   },
   {
     path: '/modules',

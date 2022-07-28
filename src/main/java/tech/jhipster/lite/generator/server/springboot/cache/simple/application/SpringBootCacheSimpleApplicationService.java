@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.cache.simple.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.cache.simple.domain.SpringBootCacheSimpleService;
+import tech.jhipster.lite.generator.server.springboot.cache.simple.domain.SimpleCacheModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class SpringBootCacheSimpleApplicationService {
 
-  private final SpringBootCacheSimpleService springBootCacheSimpleService;
+  private final SimpleCacheModuleFactory factory;
 
-  public SpringBootCacheSimpleApplicationService(SpringBootCacheSimpleService springBootCacheSimpleService) {
-    this.springBootCacheSimpleService = springBootCacheSimpleService;
+  public SpringBootCacheSimpleApplicationService() {
+    factory = new SimpleCacheModuleFactory();
   }
 
-  public void init(Project project) {
-    springBootCacheSimpleService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

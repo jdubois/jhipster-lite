@@ -7,8 +7,9 @@ import java.util.stream.Collectors;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 
-public record TextNeedleBeforeReplacer(String text) implements ElementReplacer {
+public record TextNeedleBeforeReplacer(ReplacementCondition condition, String text) implements ElementReplacer {
   public TextNeedleBeforeReplacer {
+    Assert.notNull("condition", condition);
     Assert.notBlank("text", text);
   }
 
@@ -20,7 +21,7 @@ public record TextNeedleBeforeReplacer(String text) implements ElementReplacer {
   }
 
   @Override
-  public BiFunction<String, String, String> replacer() {
+  public BiFunction<String, String, String> replacement() {
     return (content, replacement) -> {
       List<Integer> needlesLinesIndexes = needlesLinesIndexes(content);
 

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.typescript.domain;
 
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleWithFiles;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.packageJsonFile;
 
 import org.junit.jupiter.api.Test;
@@ -40,9 +40,5 @@ class TypescriptModuleFactoryTest {
       .containing("\"eslint\": \"eslint './**/*.{ts,js}' --fix\"")
       .and()
       .createPrefixedFiles("", ".eslintrc.js", "jest.config.js", "tsconfig.json");
-  }
-
-  private static String nodeDependency(String dependency) {
-    return "\"" + dependency + "\": \"";
   }
 }

@@ -29,10 +29,10 @@ import tech.jhipster.lite.module.infrastructure.secondary.TestJHipsterModules;
 class LiquibaseResourceIT {
 
   @Autowired
-  private PostgresqlApplicationService postgresqlApplicationService;
+  private LiquibaseApplicationService liquibaseService;
 
   @Autowired
-  private LiquibaseApplicationService liquibaseApplicationService;
+  private PostgresqlApplicationService postgresqlApplicationService;
 
   @Autowired
   private MockMvc mockMvc;
@@ -43,38 +43,6 @@ class LiquibaseResourceIT {
   @BeforeEach
   void setUp() {
     initClock(clock);
-  }
-
-  @Test
-  void shouldInit() throws Exception {
-    ProjectDTO projectDTO = TestUtils.readFileToObject("json/chips.json", ProjectDTO.class);
-    if (projectDTO == null) {
-      throw new GeneratorException("Error when reading file");
-    }
-    projectDTO.folder(TestFileUtils.tmpDirForTest());
-    Project project = ProjectDTO.toProject(projectDTO);
-    JHipsterModuleProperties properties = JHipsterModulesFixture
-      .propertiesBuilder(project.getFolder())
-      .basePackage("com.jhipster.test")
-      .projectBaseName("myapp")
-      .build();
-
-    TestJHipsterModules.applyInit(project);
-    TestJHipsterModules.applyMaven(project);
-    TestJHipsterModules.applySpringBootCore(project);
-    TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
-
-    mockMvc
-      .perform(
-        post("/api/servers/spring-boot/database-migration-tools/liquibase")
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(TestUtils.convertObjectToJsonBytes(projectDTO))
-      )
-      .andExpect(status().isOk());
-
-    assertDependencies(project);
-    assertFilesLiquibaseChangelogMasterXml(project);
-    assertFilesLiquibaseJava(project);
   }
 
   @Test
@@ -96,7 +64,7 @@ class LiquibaseResourceIT {
     TestJHipsterModules.applyMaven(project);
     TestJHipsterModules.applySpringBootCore(project);
     TestJHipsterModules.applyer().module(postgresqlApplicationService.build(properties)).properties(properties).slug("postgresql").apply();
-    liquibaseApplicationService.init(project);
+    TestJHipsterModules.applyer().module(liquibaseService.buildModule(properties)).properties(properties).slug("liquibase").apply();
 
     mockMvc
       .perform(

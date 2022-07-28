@@ -12,7 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import tech.jhipster.lite.JsonHelper;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
-import tech.jhipster.lite.module.domain.JHipsterProjectFolderFactory;
+import tech.jhipster.lite.projectfolder.domain.ProjectFolder;
 
 @UnitTest
 class JHipsterModuleApplicationControllerTest {
@@ -21,7 +21,7 @@ class JHipsterModuleApplicationControllerTest {
     JsonHelper.jsonMapper(),
     defaultModuleResource(),
     mock(JHipsterModulesApplicationService.class),
-    mock(JHipsterProjectFolderFactory.class)
+    mock(ProjectFolder.class)
   );
 
   @ParameterizedTest

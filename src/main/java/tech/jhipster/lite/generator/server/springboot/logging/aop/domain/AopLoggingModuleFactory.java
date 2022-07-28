@@ -17,19 +17,21 @@ public class AopLoggingModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
+    String packagePath = properties.packagePath();
+
     //@formatter:off
     return moduleBuilder(properties)
       .javaDependencies()
         .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-aop"))
         .and()
       .files()
-        .batch(SOURCE, toSrcMainJava().append(properties.basePackage().path()).append(AOP_FOLDER))
-          .template("LoggingAspectConfiguration.java")
-          .template("LoggingAspect.java")
+        .batch(SOURCE, toSrcMainJava().append(packagePath).append(AOP_FOLDER))
+          .addTemplate("LoggingAspectConfiguration.java")
+          .addTemplate("LoggingAspect.java")
           .and()
         .add(
           SOURCE.template("LoggingAspectTest.java"),
-          toSrcTestJava().append(properties.basePackage().path()).append(AOP_FOLDER).append("LoggingAspectTest.java")
+          toSrcTestJava().append(packagePath).append(AOP_FOLDER).append("LoggingAspectTest.java")
         )
         .and()
       .springMainProperties()

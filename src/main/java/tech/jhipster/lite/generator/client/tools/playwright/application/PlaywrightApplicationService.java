@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.client.tools.playwright.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.client.tools.playwright.domain.PlaywrightService;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.client.tools.playwright.domain.PlaywrightModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class PlaywrightApplicationService {
 
-  private final PlaywrightService playwrightService;
+  private PlaywrightModuleFactory factory;
 
-  public PlaywrightApplicationService(PlaywrightService playwrightService) {
-    this.playwrightService = playwrightService;
+  public PlaywrightApplicationService() {
+    factory = new PlaywrightModuleFactory();
   }
 
-  public void init(Project project) {
-    playwrightService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

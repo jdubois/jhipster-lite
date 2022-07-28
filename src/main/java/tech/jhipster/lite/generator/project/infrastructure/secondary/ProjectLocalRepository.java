@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.function.Consumer;
-import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.stereotype.Repository;
 import org.zeroturnaround.zip.ZipException;
 import org.zeroturnaround.zip.ZipUtil;
@@ -133,24 +132,6 @@ public class ProjectLocalRepository implements ProjectRepository {
   }
 
   @Override
-  public void gitInit(Project project) {
-    try {
-      GitUtils.init(project.getFolder());
-    } catch (GitAPIException e) {
-      throw new GeneratorException("Error when git init", e);
-    }
-  }
-
-  @Override
-  public void gitApplyPatch(Project project, String patchFilename) {
-    try {
-      GitUtils.apply(project.getFolder(), patchFilename);
-    } catch (GitAPIException | IOException e) {
-      throw new GeneratorException("Error when git apply patch", e);
-    }
-  }
-
-  @Override
   public String zip(Project project) {
     File workingDir = new File(project.getFolder());
     String filename = workingDir.getName() + ".zip";
@@ -159,16 +140,6 @@ public class ProjectLocalRepository implements ProjectRepository {
       return filename;
     } catch (ZipException e) {
       throw new GeneratorException("Error when zipping " + project.getFolder(), e);
-    }
-  }
-
-  @Override
-  public byte[] download(Project project) {
-    String filename = zip(project);
-    try {
-      return FileUtils.convertFileInTmpToByte(filename);
-    } catch (IOException ioe) {
-      throw new GeneratorException("Error when creating ", ioe);
     }
   }
 

@@ -6,9 +6,9 @@ import java.util.regex.PatternSyntaxException;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.error.domain.GeneratorException;
 
-public record RegexReplacer(Pattern pattern) implements ElementReplacer {
-  public RegexReplacer(String regex) {
-    this(buildPattern(regex));
+public record RegexReplacer(ReplacementCondition condition, Pattern pattern) implements ElementReplacer {
+  public RegexReplacer(ReplacementCondition condition, String regex) {
+    this(condition, buildPattern(regex));
   }
 
   private static Pattern buildPattern(String regex) {
@@ -22,6 +22,7 @@ public record RegexReplacer(Pattern pattern) implements ElementReplacer {
   }
 
   public RegexReplacer {
+    Assert.notNull("condition", condition);
     Assert.notNull("pattern", pattern);
   }
 
@@ -31,7 +32,7 @@ public record RegexReplacer(Pattern pattern) implements ElementReplacer {
   }
 
   @Override
-  public BiFunction<String, String, String> replacer() {
+  public BiFunction<String, String, String> replacement() {
     return (content, replacement) -> pattern().matcher(content).replaceAll(replacement);
   }
 

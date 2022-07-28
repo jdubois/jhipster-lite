@@ -5,7 +5,6 @@ import static tech.jhipster.lite.TestUtils.assertFileContent;
 import static tech.jhipster.lite.TestUtils.assertFileExist;
 import static tech.jhipster.lite.common.domain.FileUtils.getPath;
 import static tech.jhipster.lite.generator.project.domain.Constants.*;
-import static tech.jhipster.lite.generator.server.springboot.common.domain.SpringBoot.*;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -96,13 +95,13 @@ public class LiquibaseAssertFiles {
   public static void assertLoggerInConfig(Project project) {
     assertFileContent(
       project,
-      getPath(MAIN_RESOURCES, LOGGING_CONFIGURATION),
+      getPath(MAIN_RESOURCES, "logback-spring.xml"),
       List.of("<logger name=\"liquibase\" level=\"WARN\" />", "<logger name=\"LiquibaseSchemaResolver\" level=\"INFO\" />")
     );
 
     assertFileContent(
       project,
-      getPath(TEST_RESOURCES, LOGGING_TEST_CONFIGURATION),
+      getPath(TEST_RESOURCES, "logback.xml"),
       List.of(
         "<logger name=\"liquibase\" level=\"WARN\" />",
         "<logger name=\"LiquibaseSchemaResolver\" level=\"INFO\" />",

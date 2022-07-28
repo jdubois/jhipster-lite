@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.domain.replacement;
 
 import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
@@ -10,28 +11,28 @@ class TextNeedleBeforeReplacerTest {
 
   @Test
   void shouldNotMatchUnknownText() {
-    assertThat(new TextNeedleBeforeReplacer("unknown").notMatchIn("content")).isTrue();
+    assertThat(new TextNeedleBeforeReplacer(always(), "unknown").notMatchIn("content")).isTrue();
   }
 
   @Test
   void shouldMatchKnownText() {
-    assertThat(new TextNeedleBeforeReplacer("known").notMatchIn("unknown")).isFalse();
+    assertThat(new TextNeedleBeforeReplacer(always(), "known").notMatchIn("unknown")).isFalse();
   }
 
   @Test
   void shouldNotReplaceUnknownNeedle() {
-    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer("<!-- needle !-->");
+    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer(always(), "<!-- needle !-->");
 
-    String updatedContent = replacer.replacer().apply("<root />", "<element />");
+    String updatedContent = replacer.replacement().apply("<root />", "<element />");
 
     assertThat(updatedContent).isEqualTo("<root />");
   }
 
   @Test
   void shouldInsertTextLineBeforeFirstLineNeedle() {
-    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer("<!-- needle !-->");
+    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer(always(), "<!-- needle !-->");
 
-    String updatedContent = replacer.replacer().apply("""
+    String updatedContent = replacer.replacement().apply("""
             <!-- needle !-->
             """, "<element />");
 
@@ -43,10 +44,10 @@ class TextNeedleBeforeReplacerTest {
 
   @Test
   void shouldInsertTextLineBeforeNeedleLine() {
-    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer("<!-- needle !-->");
+    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer(always(), "<!-- needle !-->");
 
     String updatedContent = replacer
-      .replacer()
+      .replacement()
       .apply("""
             <root>
             <!-- needle !-->
@@ -63,39 +64,38 @@ class TextNeedleBeforeReplacerTest {
 
   @Test
   void shouldInsertTextLineBeforeNeedleLinePart() {
-    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer("<!-- needle !-->");
+    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer(always(), "<!-- needle !-->");
 
     String updatedContent = replacer
-      .replacer()
+      .replacement()
       .apply("""
             <root>
               <!-- needle !-->
-              
+
             </root>
             """, "<element />");
 
-    assertThat(updatedContent)
-      .isEqualTo("""
+    assertThat(updatedContent).isEqualTo("""
         <root>
         <element />
           <!-- needle !-->
-          
+
         </root>
         """);
   }
 
   @Test
   void shouldReplaceMultipleNeedles() {
-    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer("<!-- needle !-->");
+    TextNeedleBeforeReplacer replacer = new TextNeedleBeforeReplacer(always(), "<!-- needle !-->");
 
     String updatedContent = replacer
-      .replacer()
+      .replacement()
       .apply(
         """
             <root>
               <!-- needle !-->
-              
-              
+
+
               <!-- needle !-->
               <!-- needle !--> with trailling text
             </root>
@@ -109,8 +109,8 @@ class TextNeedleBeforeReplacerTest {
         <root>
         <element />
           <!-- needle !-->
-          
-          
+
+
         <element />
           <!-- needle !-->
         <element />
@@ -122,6 +122,6 @@ class TextNeedleBeforeReplacerTest {
 
   @Test
   void shouldGetTextAsMatcher() {
-    assertThat(new TextNeedleBeforeReplacer("known").searchMatcher()).isEqualTo("known");
+    assertThat(new TextNeedleBeforeReplacer(always(), "known").searchMatcher()).isEqualTo("known");
   }
 }

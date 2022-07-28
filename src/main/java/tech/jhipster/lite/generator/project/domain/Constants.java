@@ -26,8 +26,6 @@ public class Constants {
   public static final String PACKAGE_JSON = "package.json";
   public static final String DOCKERFILE = "Dockerfile";
   public static final String INTEGRATION_TEST = "IntegrationTest.java";
-  public static final String JHIPSTER_FOLDER = ".jhipster";
-  public static final String HISTORY_JSON = "history.json";
   public static final String TSCONFIG_JSON = "tsconfig.json";
   public static final String README_MD = "README.md";
 

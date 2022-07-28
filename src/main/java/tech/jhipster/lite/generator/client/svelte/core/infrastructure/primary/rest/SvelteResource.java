@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.lite.generator.client.svelte.core.application.SvelteApplicationService;
-import tech.jhipster.lite.generator.project.domain.GeneratorAction;
 import tech.jhipster.lite.generator.project.domain.Project;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
-import tech.jhipster.lite.technical.infrastructure.primary.annotation.GeneratorStep;
 
 @RestController
 @RequestMapping("/api/clients/svelte")
@@ -27,7 +25,6 @@ class SvelteResource {
   @Operation(summary = "Add Svelte", description = "Add Svelte")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding Svelte")
   @PostMapping
-  @GeneratorStep(id = GeneratorAction.SVELTE)
   public void addSvelte(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     svelteApplicationService.addSvelte(project);
@@ -36,7 +33,6 @@ class SvelteResource {
   @Operation(summary = "Add SvelteKit with minimal CSS")
   @ApiResponse(responseCode = "500", description = "An error occurred while adding SvelteKit with minimal CSS")
   @PostMapping("/styles")
-  @GeneratorStep(id = GeneratorAction.SVEKTEKIT_STYLE)
   public void addStyledSvelteKit(@RequestBody ProjectDTO projectDTO) {
     Project project = ProjectDTO.toProject(projectDTO);
     svelteApplicationService.addStyledSvelteKit(project);

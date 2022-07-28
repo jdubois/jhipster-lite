@@ -25,4 +25,8 @@ public class JHipsterServerPort {
   public int get() {
     return serverPort;
   }
+
+  public String stringValue() {
+    return String.valueOf(serverPort);
+  }
 }

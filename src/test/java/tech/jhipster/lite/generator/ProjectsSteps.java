@@ -1,25 +1,37 @@
 package tech.jhipster.lite.generator;
 
 import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.cucumber.CucumberAssertions.*;
 
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import org.assertj.core.api.SoftAssertions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import tech.jhipster.lite.GitTestUtil;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.TestUtils;
-import tech.jhipster.lite.cucumber.CucumberAssertions;
 import tech.jhipster.lite.generator.project.infrastructure.primary.dto.ProjectDTO;
 
 public class ProjectsSteps {
 
   private static String lastProjectFolder;
+
+  @Autowired
+  private TestRestTemplate rest;
 
   public static ProjectDTO newDefaultProjectDto() {
     newTestFolder();
@@ -35,9 +47,37 @@ public class ProjectsSteps {
     return lastProjectFolder;
   }
 
+  @When("I download the created project")
+  public void downloadCreatedProject() {
+    rest.exchange("/api/projects?path=" + lastProjectFolder, HttpMethod.GET, new HttpEntity<>(octetsHeaders()), Void.class);
+  }
+
+  private HttpHeaders octetsHeaders() {
+    HttpHeaders headers = new HttpHeaders();
+
+    headers.setAccept(List.of(MediaType.APPLICATION_OCTET_STREAM));
+    headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+    return headers;
+  }
+
+  @When("I get the created project information")
+  public void getCreatedProjectInformation() {
+    rest.exchange("/api/projects?path=" + lastProjectFolder, HttpMethod.GET, new HttpEntity<>(jsonHeaders()), Void.class);
+  }
+
+  private HttpHeaders jsonHeaders() {
+    HttpHeaders headers = new HttpHeaders();
+
+    headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+    return headers;
+  }
+
   @Then("I should have files in {string}")
   public void shouldHaveFiles(String basePath, List<String> files) {
-    CucumberAssertions.assertThatLastResponse().hasOkStatus();
+    assertThatLastResponse().hasOkStatus();
 
     SoftAssertions assertions = new SoftAssertions();
 
@@ -56,7 +96,7 @@ public class ProjectsSteps {
 
   @Then("I should not have files in {string}")
   public void shouldNotHaveFiles(String basePath, List<String> files) {
-    CucumberAssertions.assertThatLastResponse().hasHttpStatusIn(200, 201);
+    assertThatLastResponse().hasHttpStatusIn(200, 201);
 
     SoftAssertions assertions = new SoftAssertions();
 
@@ -81,18 +121,58 @@ public class ProjectsSteps {
     }
   }
 
-  @Then("I should have history entry for {string}")
-  public void shouldHaveHistoryEntry(String slug) throws IOException {
-    assertThat(Files.readString(Paths.get(lastProjectFolder, ".jhipster/history", "history.json"))).contains(slug);
-  }
-
   @Then("I should have {string} in {string}")
   public void shouldHaveFileContent(String content, String file) throws IOException {
+    assertThatLastResponse().hasHttpStatusIn(200, 201);
+
     assertThat(Files.readString(Paths.get(lastProjectFolder, file))).contains(content);
   }
 
   @Then("I should not have {string} in {string}")
   public void shouldNotHaveFileContent(String content, String file) throws IOException {
+    assertThatLastResponse().hasHttpStatusIn(200, 201);
+
     assertThat(Files.readString(Paths.get(lastProjectFolder, file))).doesNotContain(content);
+  }
+
+  @Then("I should have entries in {string}")
+  public void shouldHaveStringsInFile(String file, List<String> values) throws IOException {
+    assertThatLastResponse().hasHttpStatusIn(200, 201);
+    assertThat(Files.readString(Paths.get(lastProjectFolder, file))).contains(values);
+  }
+
+  @Then("I should have {string} project")
+  public void shouldHaveProjectFile(String file) {
+    assertThatLastResponse()
+      .hasOkStatus()
+      .hasHeader(HttpHeaders.CONTENT_DISPOSITION)
+      .containing("attachment; filename=" + file)
+      .and()
+      .hasHeader("X-Suggested-Filename")
+      .containing(file);
+  }
+
+  @Then("I should have modules")
+  public void shouldHaveModules(List<Map<String, String>> modules) {
+    assertThatLastResponse().hasOkStatus().hasElement("$.modules").containingExactly(modules);
+  }
+
+  @Then("I should have properties")
+  public void shouldHaveProperties(Map<String, Object> properties) {
+    assertThatLastResponse().hasOkStatus().hasElement("$.properties").containing(properties).withElementsCount(properties.size());
+  }
+
+  @Then("I should have commit {string}")
+  public void shouldHaveCommit(String commitMessage) throws IOException {
+    assertThatLastResponse().hasOkStatus();
+
+    assertThat(GitTestUtil.getCommits(Paths.get(lastProjectFolder))).contains(commitMessage);
+  }
+
+  @Then("I should not have any commit")
+  public void shouldNotHaveCommits() throws IOException {
+    assertThatLastResponse().hasOkStatus();
+
+    assertThat(GitTestUtil.getCommits(Paths.get(lastProjectFolder))).isEmpty();
   }
 }

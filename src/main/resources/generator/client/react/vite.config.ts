@@ -14,6 +14,12 @@ export default defineConfig({
   server: {
     port: 9000,
     hmr: { overlay: false },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
   },
   define: {
     'process.env': {},

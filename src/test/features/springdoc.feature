@@ -1,14 +1,13 @@
 Feature: Springdoc modules
 
   Scenario: Should add Springdoc for MVC
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/api-documentations/springdoc/init |
+    When I apply modules to default project
+      | maven-java        |
+      | springboot        |
+      | springdoc-openapi |
     Then I should have files in ""
       | pom.xml |
     And I should have "springdoc-openapi-ui" in "pom.xml"
-    And I should have history entry for "springdoc-openapi"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should not have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
@@ -18,15 +17,14 @@ Feature: Springdoc modules
       | application.properties |
 
   Scenario: Should add Springdoc for Webflux
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/reactive-servers/netty |
-      | /api/servers/spring-boot/api-documentations/springdoc/init |
+    When I apply modules to default project
+      | maven-java               |
+      | springboot               |
+      | springboot-webflux-netty |
+      | springdoc-openapi        |
     Then I should have files in ""
       | pom.xml |
     And I should have "springdoc-openapi-webflux-ui" in "pom.xml"
-    And I should have history entry for "springdoc-openapi"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should not have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
@@ -49,21 +47,19 @@ Feature: Springdoc modules
       | baseName    | jhipster            |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "springdoc-openapi"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should have files in "src/main/resources/config"
       | application.properties |
 
   Scenario: Should add Springdoc for MVC with JWT Security
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt |
+    When I apply modules to default project
+      | maven-java                          |
+      | springboot                          |
+      | springdoc-openapi-with-security-jwt |
     Then I should have files in ""
       | pom.xml |
     And I should have "springdoc-openapi-ui" in "pom.xml"
-    And I should have history entry for "springdoc-openapi-with-security-jwt"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
@@ -72,16 +68,32 @@ Feature: Springdoc modules
     And I should have files in "src/test/resources/config"
       | application.properties |
 
+  Scenario: Should add Springdoc for MVC with OAuth2 Security
+    When I apply modules to default project
+      | maven-java                             |
+      | springboot                             |
+      | springboot-oauth2                      |
+      | springdoc-openapi-with-security-oauth2 |
+    Then I should have files in ""
+      | pom.xml |
+    And I should have "springdoc-openapi-ui" in "pom.xml"
+    And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
+      | SpringdocConfiguration.java |
+    And I should have "OAUTH2" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
+    And I should have files in "src/main/resources/config"
+      | application.properties |
+    And I should have files in "src/test/resources/config"
+      | application.properties |
+
   Scenario: Should add Springdoc for Webflux with JWT Security
-    When I apply legacy modules to default project
-      | /api/build-tools/maven                     |
-      | /api/servers/spring-boot                   |
-      | /api/servers/spring-boot/reactive-servers/netty |
-      | /api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt |
+    When I apply modules to default project
+      | maven-java                          |
+      | springboot                          |
+      | springboot-webflux-netty            |
+      | springdoc-openapi-with-security-jwt |
     Then I should have files in ""
       | pom.xml |
     And I should have "springdoc-openapi-webflux-ui" in "pom.xml"
-    And I should have history entry for "springdoc-openapi-with-security-jwt"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
@@ -104,7 +116,6 @@ Feature: Springdoc modules
       | baseName    | jhipster            |
     Then I should have files in ""
       | pom.xml |
-    And I should have history entry for "springdoc-openapi-with-security-jwt"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should have files in "src/main/resources/config"

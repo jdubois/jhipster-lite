@@ -1,17 +1,12 @@
 package tech.jhipster.lite.generator.packagemanager.npm.domain;
 
-import static tech.jhipster.lite.common.domain.FileUtils.getPath;
-import static tech.jhipster.lite.common.domain.WordUtils.CB;
-import static tech.jhipster.lite.common.domain.WordUtils.DQ;
-import static tech.jhipster.lite.common.domain.WordUtils.LF;
-import static tech.jhipster.lite.common.domain.WordUtils.OB;
-import static tech.jhipster.lite.common.domain.WordUtils.indent;
-import static tech.jhipster.lite.generator.project.domain.Constants.DEPENDENCIES_FOLDER;
-import static tech.jhipster.lite.generator.project.domain.Constants.PACKAGE_JSON;
-import static tech.jhipster.lite.generator.project.domain.Constants.TEMPLATE_FOLDER;
-import static tech.jhipster.lite.generator.project.domain.DefaultConfig.PRETTIER_DEFAULT_INDENT;
+import static tech.jhipster.lite.common.domain.FileUtils.*;
+import static tech.jhipster.lite.common.domain.WordUtils.*;
+import static tech.jhipster.lite.generator.project.domain.Constants.*;
+import static tech.jhipster.lite.generator.project.domain.DefaultConfig.*;
 
 import java.util.Optional;
+import java.util.function.Function;
 import tech.jhipster.lite.common.domain.FileUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.project.domain.Project;
@@ -79,40 +74,20 @@ public class NpmDomainService implements NpmService {
   }
 
   @Override
-  public Optional<String> getVersionInCommon(String name) {
-    return getVersion("common", name);
-  }
-
-  @Override
   public Optional<String> getVersion(String folder, String name) {
     assertFolder(folder);
     Assert.notBlank("name", name);
     return FileUtils
       .readLineInClasspath(getPath(TEMPLATE_FOLDER, DEPENDENCIES_FOLDER, folder, PACKAGE_JSON), DQ + name + DQ)
-      .map(readValue -> {
-        String[] result = readValue.split(":");
-        if (result.length == 2) {
-          return result[1].replace(",", "").replace(DQ, "").replace(" ", "");
-        }
-        return null;
-      });
+      .map(toProperty());
   }
 
-  @Override
-  public Optional<String> getVersionInReact(String name) {
-    return getVersion("react", name);
-  }
+  private Function<String, String> toProperty() {
+    return readValue -> {
+      String[] result = readValue.split(":");
 
-  @Override
-  public Optional<String> getName(String folder) {
-    assertFolder(folder);
-    return FileUtils.getValueBetween(getPath(folder, PACKAGE_JSON), NAME + ": " + DQ, DQ);
-  }
-
-  @Override
-  public Optional<String> getDescription(String folder) {
-    assertFolder(folder);
-    return FileUtils.getValueBetween(getPath(folder, PACKAGE_JSON), DESCRIPTION + ": " + DQ, DQ);
+      return result[1].replace(",", "").replace(DQ, "").replace(" ", "");
+    };
   }
 
   private void assertFolder(String folder) {

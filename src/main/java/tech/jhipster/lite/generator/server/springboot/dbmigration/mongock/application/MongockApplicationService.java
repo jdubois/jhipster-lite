@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.mongock.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.project.domain.Project;
-import tech.jhipster.lite.generator.server.springboot.dbmigration.mongock.domain.MongockService;
+import tech.jhipster.lite.generator.server.springboot.dbmigration.mongock.domain.MongockModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class MongockApplicationService {
 
-  private final MongockService mongockService;
+  private final MongockModuleFactory factory;
 
-  public MongockApplicationService(MongockService mongockService) {
-    this.mongockService = mongockService;
+  public MongockApplicationService() {
+    factory = new MongockModuleFactory();
   }
 
-  public void init(Project project) {
-    mongockService.init(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

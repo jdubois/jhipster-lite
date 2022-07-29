@@ -29,8 +29,19 @@
 
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
           <li class="nav-item col-6 col-md-auto">
+            <a
+              class="nav-link p-2"
+              href="https://github.com/jhipster/jhipster-lite/blob/main/documentation/guides.md"
+              target="_blank"
+              rel="noopener"
+            >
+              <IconVue name="book-half" aria-label="Documentation" title="JHLite usage documentation" />
+              <small class="d-md-none ms-2">Documentation</small>
+            </a>
+          </li>
+          <li class="nav-item col-6 col-md-auto">
             <a class="nav-link p-2" href="./swagger-ui.html" target="_blank" rel="noopener">
-              <IconVue :name="'book-half'" :aria-label="'API'" :title="'The Swagger-ui'" />
+              <IconVue name="binoculars" aria-label="API" title="The Swagger-ui" />
               <small class="d-md-none ms-2">API</small>
             </a>
           </li>

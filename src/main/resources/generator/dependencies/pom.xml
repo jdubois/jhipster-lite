@@ -32,7 +32,7 @@
     <flyway.version>8.5.13</flyway.version>
     <mongock.version>5.0.41</mongock.version>
     <archunit-junit5.version>0.23.1</archunit-junit5.version>
-    <cucumber.version>7.4.1</cucumber.version>
+    <cucumber.version>7.5.0</cucumber.version>
     <testng.version>7.6.1</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
     <liquibase.version>4.14.0</liquibase.version>

@@ -15,11 +15,11 @@ import tech.jhipster.lite.generator.server.springboot.mvc.zalandoproblem.domain.
 import tech.jhipster.lite.git.domain.GitRepository;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.npm.infrastructure.secondary.FileSystemNpmVersions;
+import tech.jhipster.lite.project.infrastructure.primary.JavaProjects;
 import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 public final class TestJHipsterModules {
@@ -117,12 +117,12 @@ public final class TestJHipsterModules {
 
       FileSystemJHipsterModulesRepository modulesRepository = new FileSystemJHipsterModulesRepository(
         filesReader,
-        new FileSystemNpmVersions(filesReader)
+        new FileSystemNpmVersions(filesReader),
+        mock(JavaProjects.class)
       );
 
       return new JHipsterModulesApplicationService(
         modulesRepository,
-        mock(JHipsterModuleEvents.class),
         new FileSystemCurrentJavaDependenciesVersionsRepository(filesReader),
         new FileSystemProjectJavaDependenciesRepository(),
         mock(GitRepository.class)

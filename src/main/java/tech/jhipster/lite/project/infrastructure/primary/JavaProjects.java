@@ -1,26 +1,26 @@
 package tech.jhipster.lite.project.infrastructure.primary;
 
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.PayloadApplicationEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleApplied;
 import tech.jhipster.lite.project.application.ProjectsApplicationService;
 import tech.jhipster.lite.project.domain.ProjectPath;
 import tech.jhipster.lite.project.domain.history.ProjectAction;
 import tech.jhipster.lite.project.domain.history.ProjectActionToAppend;
 
-@Component("ProjectSpringJHipsterModuleAppliedListener")
-class SpringJHipsterModuleAppliedListener implements ApplicationListener<PayloadApplicationEvent<JHipsterModuleApplied>> {
+@Service
+public class JavaProjects {
 
   private final ProjectsApplicationService projects;
 
-  public SpringJHipsterModuleAppliedListener(ProjectsApplicationService projects) {
+  public JavaProjects(ProjectsApplicationService projects) {
     this.projects = projects;
   }
 
-  @Override
-  public void onApplicationEvent(PayloadApplicationEvent<JHipsterModuleApplied> event) {
-    projects.append(projectActionToAdd(event.getPayload()));
+  public void moduleApplied(JHipsterModuleApplied moduleApplied) {
+    Assert.notNull("moduleApplied", moduleApplied);
+
+    projects.append(projectActionToAdd(moduleApplied));
   }
 
   private static ProjectActionToAppend projectActionToAdd(JHipsterModuleApplied moduleApplied) {

@@ -1,5 +1,6 @@
 package tech.jhipster.lite.module.domain;
 
+import java.time.Instant;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.git.domain.GitRepository;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
@@ -46,6 +47,8 @@ public class JHipsterModulesApplyer {
       .springProperties(module.springProperties());
 
     modules.apply(changes);
+
+    modules.applied(new JHipsterModuleApplied(moduleToApply.properties(), moduleToApply.slug(), Instant.now()));
 
     commitIfNeeded(moduleToApply);
   }

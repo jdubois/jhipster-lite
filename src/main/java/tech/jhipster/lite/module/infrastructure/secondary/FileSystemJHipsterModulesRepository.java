@@ -2,10 +2,12 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 
 import org.springframework.stereotype.Repository;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.module.domain.JHipsterModuleApplied;
 import tech.jhipster.lite.module.domain.JHipsterModuleChanges;
 import tech.jhipster.lite.module.domain.JHipsterModulesRepository;
 import tech.jhipster.lite.module.domain.postaction.JHipsterModuleExecutionContext;
 import tech.jhipster.lite.npm.domain.NpmVersions;
+import tech.jhipster.lite.project.infrastructure.primary.JavaProjects;
 import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @Repository
@@ -16,13 +18,15 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
   private final FileSystemSpringPropertiesCommandsHandler springProperties;
   private final FileSystemPackageJsonHandler packageJson;
   private final FileSystemReplacer replacer;
+  private final JavaProjects projects;
 
-  public FileSystemJHipsterModulesRepository(ProjectFilesReader filesReader, NpmVersions npmVersions) {
+  public FileSystemJHipsterModulesRepository(ProjectFilesReader filesReader, NpmVersions npmVersions, JavaProjects projects) {
     files = new FileSystemJHipsterModuleFiles(filesReader);
     javaBuild = new FileSystemJavaBuildCommandsHandler();
     springProperties = new FileSystemSpringPropertiesCommandsHandler();
     packageJson = new FileSystemPackageJsonHandler(npmVersions);
     replacer = new FileSystemReplacer();
+    this.projects = projects;
   }
 
   @Override
@@ -39,5 +43,10 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     replacer.handle(changes.projectFolder(), changes.optionalReplacements());
 
     changes.postActions().run(new JHipsterModuleExecutionContext(changes.projectFolder()));
+  }
+
+  @Override
+  public void applied(JHipsterModuleApplied moduleApplied) {
+    projects.moduleApplied(moduleApplied);
   }
 }

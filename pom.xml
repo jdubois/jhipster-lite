@@ -57,7 +57,7 @@
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <zt-zip.version>1.15</zt-zip.version>
     <apache-commons-io.version>2.11.0</apache-commons-io.version>
-    <cucumber.version>7.4.1</cucumber.version>
+    <cucumber.version>7.5.0</cucumber.version>
     <testng.version>7.6.1</testng.version>
     <maven-model.version>3.8.6</maven-model.version>
     <joox.version>1.6.2</joox.version>

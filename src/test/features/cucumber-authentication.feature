@@ -4,7 +4,7 @@ Feature: Cucumber authentication
     When I apply modules to default project
       | maven-java                     |
       | springboot-cucumber            |
-      | cucumber-oauth2-authentication |
+      | springboot-cucumber-oauth2-authentication |
     Then I should have files in "src/test/java/tech/jhipster/chips/authentication/infrastructure/primary"
       | AuthenticationSteps.java |
 
@@ -12,6 +12,6 @@ Feature: Cucumber authentication
     When I apply modules to default project
       | maven-java                  |
       | springboot-cucumber         |
-      | cucumber-jwt-authentication |
+      | springboot-cucumber-jwt-authentication |
     Then I should have files in "src/test/java/tech/jhipster/chips/authentication/infrastructure/primary"
       | AuthenticationSteps.java |

@@ -3,6 +3,7 @@ package tech.jhipster.lite.generator.server.springboot.broker.kafka.infrastructu
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.application.KafkaApplicationService;
+import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleResource;
 
@@ -21,7 +22,7 @@ class KafkaModuleConfiguration {
       .builder()
       .legacyUrl("/api/servers/spring-boot/brokers/kafka")
       .slug("springboot-kafka")
-      .withoutProperties()
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc(new JHipsterModuleApiDoc(TAG, "Add Kafka dependencies, with testcontainers"))
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::init);
@@ -33,7 +34,7 @@ class KafkaModuleConfiguration {
       .builder()
       .legacyUrl("/api/servers/spring-boot/brokers/kafka/dummy-producer-consumer")
       .slug("springboot-kafka-dummy-producer-consumer")
-      .withoutProperties()
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc(new JHipsterModuleApiDoc(TAG, "Add dummy Kafka producer and consumer"))
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::addDummyProducerConsumer);
@@ -45,7 +46,7 @@ class KafkaModuleConfiguration {
       .builder()
       .legacyUrl("/api/servers/spring-boot/brokers/kafka/akhq")
       .slug("springboot-kafka-akhq")
-      .withoutProperties()
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().build())
       .apiDoc(new JHipsterModuleApiDoc(TAG, "Add AKHQ"))
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::addAkhq);

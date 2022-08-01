@@ -17,7 +17,7 @@ class BeanValidationTestModuleConfiguration {
       .legacyUrl("/api/servers/bean-validation-test")
       .slug("bean-validation-test")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot", "Add test tools for bean validation"))
+      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add test tools for bean validation"))
       .tags("server", "spring", "spring-boot", "validation")
       .factory(beanValidationTest::buildModule);
   }

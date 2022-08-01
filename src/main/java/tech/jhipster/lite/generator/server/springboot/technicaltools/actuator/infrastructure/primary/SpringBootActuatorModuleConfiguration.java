@@ -17,7 +17,7 @@ class SpringBootActuatorModuleConfiguration {
       .legacyUrl("/api/servers/spring-boot/technical-tools/actuator")
       .slug("springboot-actuator")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().build())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Technical tools", "Add a spring-boot actuator to the project"))
+      .apiDoc(new JHipsterModuleApiDoc("Spring Boot", "Add Spring Boot Actuator to the project"))
       .tags("server", "spring", "spring-boot")
       .factory(actuatorModule::buildSpringBootActuatorModule);
   }

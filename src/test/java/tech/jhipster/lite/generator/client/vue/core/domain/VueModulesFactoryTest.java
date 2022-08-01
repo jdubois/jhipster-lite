@@ -99,8 +99,8 @@ class VueModulesFactoryTest {
       .containing(nodeDependency("@pinia/testing"))
       .and()
       .createFile("src/main/webapp/app/main.ts")
-      .containing("import {createPinia} from 'pinia';")
-      .containing("import piniaPersist from 'pinia-plugin-persist'")
+      .containing("import { createPinia } from 'pinia';")
+      .containing("import piniaPersist from 'pinia-plugin-persist';")
       .containing(
         """
                 const pinia = createPinia();

@@ -9,7 +9,7 @@ import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleResource;
 @Configuration
 class BannerModuleConfiguration {
 
-  private static final String TAG = "Spring Boot";
+  private static final String TAG = "Spring Boot - Banner";
   public static final String SERVER = "server";
   public static final String SPRING = "spring";
   public static final String SPRING_BOOT = "spring-boot";

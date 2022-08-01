@@ -41,7 +41,7 @@ public class CucumberAuthenticationModuleFactory {
       .mandatoryReplacements()
         .in("src/test/java/" + packagePath + "/cucumber/CucumberConfiguration.java")
           .add(text(cucumberConfigurationNeedle), cucumberTestClasses(cucumberConfigurationNeedle))
-          .add(text(importNeedle), securityConfigurationImport(importNeedle, properties))
+          .add(lineBeforeText(importNeedle), securityConfigurationImport(properties))
           .and()
         .and()
       .files()
@@ -62,14 +62,8 @@ public class CucumberAuthenticationModuleFactory {
     return cucumberConfigurationNeedle + ", TestSecurityConfiguration.class, CucumberAuthenticationConfiguration.class";
   }
 
-  private String securityConfigurationImport(String importNeedle, JHipsterModuleProperties properties) {
-    return (
-      importNeedle +
-      JHipsterModule.LINE_BREAK +
-      "import " +
-      properties.basePackage().get() +
-      ".authentication.infrastructure.primary.TestSecurityConfiguration;"
-    );
+  private String securityConfigurationImport(JHipsterModuleProperties properties) {
+    return ("import " + properties.basePackage().get() + ".authentication.infrastructure.primary.TestSecurityConfiguration;");
   }
 
   private JavaDependency jsonWebTokenDependency(String artifactId) {

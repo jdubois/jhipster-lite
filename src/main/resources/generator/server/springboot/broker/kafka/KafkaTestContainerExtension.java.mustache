@@ -8,14 +8,13 @@ import org.testcontainers.utility.DockerImageName;
 
 public class KafkaTestContainerExtension implements BeforeAllCallback {
 
-  private AtomicBoolean kafkaContainerStarted = new AtomicBoolean(false);
+  protected static AtomicBoolean kafkaContainerStarted = new AtomicBoolean(false);
+  public static KafkaContainer kafkaContainer;
 
   @Override
   public void beforeAll(final ExtensionContext context) {
     if (!kafkaContainerStarted.get()) {
-      // TODO: withNetwork will need to be removed soon
-      // See discussion at https://github.com/jhipster/generator-jhipster/issues/11544#issuecomment-609065206
-      final KafkaContainer kafkaContainer = new KafkaContainer(DockerImageName.parse("{{kafkaDockerImage}}")).withNetwork(null);
+      kafkaContainer = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.1.1")).withNetwork(null);
       kafkaContainer.start();
       kafkaContainerStarted.set(true);
       System.setProperty("kafka.bootstrap.servers", kafkaContainer.getBootstrapServers());

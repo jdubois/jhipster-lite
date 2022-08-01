@@ -20,7 +20,9 @@ module.exports = {
     },
   },
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: `<rootDir>/${baseUrl}/` }),
+  testEnvironmentOptions: {
+    url: 'http://localhost/',
+  },
   testMatch: ['<rootDir>/src/main/webapp/environments/**/@(*.)@(spec.ts)', '<rootDir>/src/main/webapp/app/**/@(*.)@(spec.ts)'],
   testResultsProcessor: 'jest-sonar-reporter',
-  testURL: 'http://localhost/',
 };

@@ -18,7 +18,7 @@ class LiquibaseModuleConfiguration {
       .slug("liquibase")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().addBasePackage().build())
       .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Database Migration", "Add Liquibase"))
-      .tags("server", "database", "miigration", "liquibase")
+      .tags("server", "spring", "spring-boot", "database", "migration", "liquibase")
       .factory(liquibase::buildModule);
   }
 }

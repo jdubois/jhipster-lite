@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   account: Account | null = null;
 
-  loginForm = this.fb.group({
+  loginForm = this.fb.nonNullable.group({
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   login(): void {
     this.loginService
       .login({
-        username: this.loginForm.get('username')!.value,
-        password: this.loginForm.get('password')!.value,
+        username: this.loginForm.value.username!,
+        password: this.loginForm.value.password!,
       })
       .subscribe();
   }

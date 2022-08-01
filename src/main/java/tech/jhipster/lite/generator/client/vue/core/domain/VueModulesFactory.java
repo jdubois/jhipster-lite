@@ -128,8 +128,8 @@ public class VueModulesFactory {
 
   private String piniaImports() {
     return """
-        import {createPinia} from 'pinia';
-        import piniaPersist from 'pinia-plugin-persist'
+        import { createPinia } from 'pinia';
+        import piniaPersist from 'pinia-plugin-persist';
         """;
   }
 

@@ -52,9 +52,6 @@ describe('Account Service', () => {
       // THEN
       expect(userIdentity).toBeNull();
       expect(service.isAuthenticated()).toBe(false);
-
-      // service.identity(false).subscribe(result => 1);
-      // expect(service.identity(false)).toBe(of(null));
     });
 
     it('authenticationState should emit the same account as was in input parameter', () => {

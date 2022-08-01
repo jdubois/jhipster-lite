@@ -194,7 +194,7 @@ public class ModulesSteps {
       return String.valueOf(value);
     }
 
-    return "\"" + value.toString() + "\"";
+    return "\"" + value + "\"";
   }
 
   private static void addPackageJsonToProject(String folder) {

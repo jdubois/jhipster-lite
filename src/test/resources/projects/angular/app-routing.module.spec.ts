@@ -10,7 +10,7 @@ describe('AppRoutingModule', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes)],
     }).compileComponents();
-    router = TestBed.get(Router);
+    router = TestBed.inject(Router);
     router.initialNavigation();
   });
 

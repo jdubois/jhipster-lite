@@ -18,7 +18,7 @@ class TypescriptModuleFactoryTest {
   void shouldCreateTypescriptModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
 
-    JHipsterModule module = factory.buildTypescriptModule(properties);
+    JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile())
       .createFile("package.json")

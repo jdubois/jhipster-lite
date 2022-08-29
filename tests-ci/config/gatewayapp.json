@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/gatewayapp",
-  "generator-jhipster": {
-    "projectName": "GatewayApp Project",
-    "baseName": "gatewayapp",
-    "packageName": "tech.jhipster.gatewayapp"
-  }
-}

@@ -5,9 +5,9 @@ import static tech.jhipster.lite.module.domain.packagejson.VersionSource.*;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.client.common.domain.ClientsModulesFactory;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class VueModulesFactory {
@@ -36,9 +36,9 @@ public class VueModulesFactory {
         .addDevDependency(packageName("@typescript-eslint/parser"), VUE)
         .addDevDependency(packageName("@vitejs/plugin-vue"), VUE)
         .addDevDependency(packageName("@vue/eslint-config-typescript"), VUE)
+        .addDevDependency(packageName("@vue/eslint-config-prettier"), VUE)
         .addDevDependency(packageName("@vue/test-utils"), VUE)
         .addDevDependency(packageName("eslint"), VUE)
-        .addDevDependency(packageName("eslint-config-prettier"), VUE)
         .addDevDependency(packageName("eslint-plugin-vue"), VUE)
         .addDevDependency(packageName("jest"), VUE)
         .addDevDependency(packageName("jest-sonar-reporter"), VUE)
@@ -50,7 +50,7 @@ public class VueModulesFactory {
         .addDevDependency(packageName("vue-tsc"), VUE)
         .addDevDependency(packageName("@types/sinon"), VUE)
         .addDevDependency(packageName("sinon"), VUE)
-        .addScript(scriptKey("build"), scriptCommand("vue-tsc --noEmit && vite build --emptyOutDir"))
+        .addScript(scriptKey("build"), scriptCommand("vue-tsc -p tsconfig.build.json --noEmit && vite build --emptyOutDir"))
         .addScript(scriptKey("dev"), scriptCommand("vite"))
         .addScript(scriptKey("jest"), scriptCommand("jest src/test/javascript/spec --logHeapUsage --maxWorkers=2 --no-cache"))
         .addScript(scriptKey("preview"), scriptCommand("vite preview"))
@@ -62,6 +62,7 @@ public class VueModulesFactory {
         .add(SOURCE.file(".eslintrc.js"), to(".eslintrc.js"))
         .add(SOURCE.file("jest.config.js"), to("jest.config.js"))
         .add(SOURCE.file("tsconfig.json"), to("tsconfig.json"))
+        .add(SOURCE.file("tsconfig.build.json"), to("tsconfig.build.json"))
         .add(SOURCE.file("vite.config.ts"), to("vite.config.ts"))
         .add(SOURCE.template("webapp/app/http/AxiosHttp.ts.mustache"), MAIN_DESTINATION.append("http/AxiosHttp.ts"))
         .batch(SOURCE.file("test/spec/http"), to("src/test/javascript/spec/http"))

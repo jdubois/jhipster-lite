@@ -53,7 +53,7 @@ class SecurityConfigurationTest {
     try (MockedStatic<JwtDecoders> jwtDecoders = Mockito.mockStatic(JwtDecoders.class)) {
       NimbusJwtDecoder jwtDecoder = new NimbusJwtDecoder(withoutSigning());
       jwtDecoders.when(JwtDecoders.fromOidcIssuerLocation(anyString())).thenReturn(jwtDecoder);
-      ReflectionTestUtils.setField(securityConfiguration, "issuerUri", "http://DO_NOT_CALL:9080/auth/realms/jhipster");
+      ReflectionTestUtils.setField(securityConfiguration, "issuerUri", "http://DO_NOT_CALL:9080/realms/jhipster");
 
       ApplicationSecurityProperties.OAuth2 oauth2 = new ApplicationSecurityProperties.OAuth2();
       oauth2.setAudience(List.of("account", "api://default"));

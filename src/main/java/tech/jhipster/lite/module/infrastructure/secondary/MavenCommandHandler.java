@@ -183,7 +183,7 @@ class MavenCommandHandler {
       .append(LINE_BREAK)
       .append(indentation.times(2))
       .append(
-        $("depdendencies")
+        $(DEPENDENCIES)
           .append(LINE_BREAK)
           .append(indentation.times(3))
           .append(dependencyNode(command, 3))

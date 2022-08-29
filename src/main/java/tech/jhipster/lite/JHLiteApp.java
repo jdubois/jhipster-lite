@@ -9,9 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.core.env.Environment;
+import tech.jhipster.lite.common.domain.Generated;
 
-@SpringBootApplication
+@Generated(reason = "Not interesting and hard to test")
+@SpringBootApplication(exclude = { MongoAutoConfiguration.class, MongoDataAutoConfiguration.class })
 public class JHLiteApp {
 
   private static final Logger log = LoggerFactory.getLogger(JHLiteApp.class);
@@ -45,44 +49,44 @@ public class JHLiteApp {
     log.info(welcomeMessage);
   }
 
-  public static String applicationRunning(String value) {
+  private static String applicationRunning(String value) {
     return String.format("  Application '%s' is running!", value) + LF;
   }
 
-  public static String accessUrlLocal(String protocol, String serverPort, String contextPath) {
+  private static String accessUrlLocal(String protocol, String serverPort, String contextPath) {
     if (StringUtils.isBlank(serverPort)) {
       return "";
     }
     return String.format("  Local: \t%s://localhost:%s%s", protocol, serverPort, contextPath) + LF;
   }
 
-  public static String accessUrlExternal(String protocol, String hostAddress, String serverPort, String contextPath) {
+  private static String accessUrlExternal(String protocol, String hostAddress, String serverPort, String contextPath) {
     if (StringUtils.isBlank(serverPort)) {
       return "";
     }
     return String.format("  External: \t%s://%s:%s%s", protocol, hostAddress, serverPort, contextPath) + LF;
   }
 
-  public static String profile(String profiles) {
+  private static String profile(String profiles) {
     return String.format("  Profile(s): \t%s", profiles) + LF;
   }
 
-  public static String configServer(String configServerStatus) {
+  private static String configServer(String configServerStatus) {
     if (StringUtils.isBlank(configServerStatus)) {
       return "";
     }
     return LF + String.format("  Config Server: %s", configServerStatus) + LF + SEPARATOR + LF;
   }
 
-  public static String getProtocol(String value) {
+  private static String getProtocol(String value) {
     return Optional.ofNullable(value).map(key -> "https").orElse("http");
   }
 
-  public static String getContextPath(String value) {
+  private static String getContextPath(String value) {
     return Optional.ofNullable(value).filter(StringUtils::isNotBlank).orElse("/");
   }
 
-  public static String getHostAddress() {
+  private static String getHostAddress() {
     String hostAddress = "localhost";
     try {
       hostAddress = InetAddress.getLocalHost().getHostAddress();

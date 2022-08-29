@@ -85,7 +85,10 @@ class SpringBootMvcsModulesFactoryTest {
   }
 
   private ModuleAsserter assertMvcModule(JHipsterModule module) {
-    return assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile())
+    return assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile(), readmeFile())
+      .createFile("README.md")
+      .containing("- [Local server](http://localhost:9000)")
+      .and()
       .createFiles("documentation/cors-configuration.md")
       .createFile("src/main/resources/config/application.properties")
       .containing("server.port=9000")

@@ -19,11 +19,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.common.domain.Enums;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
-import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertyDefinition;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyExample;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyKey;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertyDefinition;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 
 @Configuration
 class OpenApiModulesConfiguration {
@@ -33,7 +36,6 @@ class OpenApiModulesConfiguration {
   private static final String MODULE_PROPERTY_DEFINITION_SCHEMA_NAME = "JHipsterModulePropertiesDefinition";
   private static final String MODULE_PROPERTIES_DEFINITION_SCHEMA_NAME = "JHipsterModulePropertyDefinition";
 
-  private static final Schema<?> PROJECT_DTO_SCHEMA = new Schema<>().$ref("#/components/schemas/ProjectDTO");
   private static final Schema<?> MODULE_PROPERTY_DEFINITION_SCHEMA = new Schema<>()
     .$ref("#/components/schemas/" + MODULE_PROPERTY_DEFINITION_SCHEMA_NAME);
   private static final Schema<?> MODULE_PROPERTIES_DEFINITION_SCHEMA = new Schema<>()
@@ -148,25 +150,10 @@ class OpenApiModulesConfiguration {
   private Paths buildJHipsterModulesPaths(JHipsterModulesResources modules) {
     Paths paths = new Paths();
 
-    paths.putAll(legacyModules(modules));
     paths.putAll(modulesPropertiesDefinitions(modules));
     paths.putAll(modulesApplications(modules));
 
     return paths;
-  }
-
-  private Map<String, PathItem> legacyModules(JHipsterModulesResources modules) {
-    return modules.stream().collect(Collectors.toMap(JHipsterModuleResource::legacyUrl, module -> legacyModuleApiDoc(module.apiDoc())));
-  }
-
-  private PathItem legacyModuleApiDoc(JHipsterModuleApiDoc apiDoc) {
-    RequestBody requestBody = new RequestBody()
-      .required(true)
-      .content(new Content().addMediaType(JSON_MEDIA_TYPE, new MediaType().schema(PROJECT_DTO_SCHEMA)));
-
-    Operation postOperation = new Operation().summary(apiDoc.operation()).tags(List.of(apiDoc.tag())).requestBody(requestBody);
-
-    return new PathItem().post(postOperation);
   }
 
   private Map<String, PathItem> modulesPropertiesDefinitions(JHipsterModulesResources modules) {
@@ -179,7 +166,7 @@ class OpenApiModulesConfiguration {
     Operation getOpetation = new Operation()
       .operationId(slug.get() + "-properties-definition")
       .summary("Get " + slug.get() + " properties definitions")
-      .tags(List.of(apiDoc.tag()))
+      .tags(apiDoc.group().list())
       .responses(
         new ApiResponses()
           .addApiResponse(
@@ -207,8 +194,8 @@ class OpenApiModulesConfiguration {
   private PathItem moduleApplicationDefinition(JHipsterModuleApiDoc apiDoc, JHipsterModuleSlug slug) {
     Operation postOperation = new Operation()
       .operationId(slug.get() + "-application")
-      .summary(apiDoc.operation())
-      .tags(List.of(apiDoc.tag()))
+      .summary(apiDoc.operation().get())
+      .tags(apiDoc.group().list())
       .requestBody(
         new RequestBody()
           .required(true)

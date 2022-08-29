@@ -12,6 +12,6 @@ class JHipsterModuleSlugTest {
   @ParameterizedTest
   @ValueSource(strings = { "Invalid", "this is invalid" })
   void shouldNotBuildInvalidSlug(String slug) {
-    assertThatThrownBy(() -> new JHipsterModuleSlug(slug)).isExactlyInstanceOf(InvalidJHipsterModuleSlugException.class);
+    assertThatThrownBy(() -> new JHipsterModuleSlug(slug)).isExactlyInstanceOf(InvalidJHipsterSlugException.class);
   }
 }

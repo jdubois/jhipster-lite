@@ -21,9 +21,15 @@ import org.reflections.util.FilterBuilder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
+@UnitTest
 class BeanValidationTest {
+
   private static final String ROOT_PACKAGE = "{{packageName}}";
-  private static final Set<String> EXCLUDED_CONTROLLERS = Set.of("ExceptionTranslatorTestController", "AuthenticationResource", "DummyResource");
+  private static final Set<String> EXCLUDED_CONTROLLERS = Set.of(
+    "ExceptionTranslatorTestController",
+    "AuthenticationResource",
+    "DummyResource"
+  );
   private static final Set<Method> OBJECT_METHODS = Arrays.stream(Object.class.getMethods()).collect(Collectors.toUnmodifiableSet());
   private static final Set<Class<?>> controllers = new Reflections(
     new ConfigurationBuilder()
@@ -32,6 +38,7 @@ class BeanValidationTest {
       .filterInputsBy(new FilterBuilder().includePackage(ROOT_PACKAGE))
   )
     .getTypesAnnotatedWith(RestController.class);
+
   @Test
   void shouldHaveValidatedAnnotationForAllParameters() {
     controllers

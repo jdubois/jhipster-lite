@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/eurekaapp",
-  "generator-jhipster": {
-    "projectName": "EurekaApp Project",
-    "baseName": "eurekaapp",
-    "packageName": "tech.jhipster.eurekaapp"
-  }
-}

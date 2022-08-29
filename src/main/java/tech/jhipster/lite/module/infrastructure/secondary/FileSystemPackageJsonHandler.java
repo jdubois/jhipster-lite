@@ -203,6 +203,7 @@ class FileSystemPackageJsonHandler {
       return Pattern.compile("(\"" + blocName + "\"\\s*:\\s*\\{)").matcher(result);
     }
 
+    @Generated(reason = "Combiner can't be tested and an implementation detail")
     private String removeExistingEntries() {
       return entries
         .stream()

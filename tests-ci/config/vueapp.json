@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/vueapp",
-  "generator-jhipster": {
-    "projectName": "VueApp Project",
-    "baseName": "vueapp",
-    "packageName": "tech.jhipster.vueapp"
-  }
-}

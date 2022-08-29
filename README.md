@@ -156,23 +156,7 @@ npm run e2e:headless
 
 ## Generate your project
 
-Go to http://localhost:7471, select your option and generate the code you want, step by step, and only what you need.
-
-If needed more advanced features, go to http://localhost:7471/swagger-ui.html and use your own JSON to generate the code you want. Here an example:
-
-<!-- prettier-ignore-start -->
-```yaml
-{
-  "folder": "/tmp/beer",
-  "generator-jhipster": {
-    "baseName": "beer",
-    "projectName": "Beer Project",
-    "packageName": "tech.jhipster.beer",
-    "serverPort": 8080
-  }
-}
-```
-<!-- prettier-ignore-end -->
+Once started, go to http://localhost:7471, select your option and generate the code you want, step by step, and only what you need.
 
 [jhipster-lite-release-version]: https://img.shields.io/github/v/release/jhipster/jhipster-lite
 [jhipster-lite-release-url]: https://github.com/jhipster/jhipster-lite/releases
@@ -190,5 +174,3 @@ If needed more advanced features, go to http://localhost:7471/swagger-ui.html an
 [sonarcloud-security]: https://sonarcloud.io/api/project_badges/measure?project=jhipster_jhipster-lite&metric=security_rating
 [sonarcloud-code-smells]: https://sonarcloud.io/api/project_badges/measure?project=jhipster_jhipster-lite&metric=code_smells
 [sonarcloud-coverage]: https://sonarcloud.io/api/project_badges/measure?project=jhipster_jhipster-lite&metric=coverage
-
-<!-- jhipster-needle-readme -->

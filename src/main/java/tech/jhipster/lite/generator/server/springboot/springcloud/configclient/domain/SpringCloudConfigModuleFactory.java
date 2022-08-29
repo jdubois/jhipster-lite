@@ -3,11 +3,11 @@ package tech.jhipster.lite.generator.server.springboot.springcloud.configclient.
 import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.generator.base64.domain.Base64Utils;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties.JHipsterModuleSpringPropertiesBuilder;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;

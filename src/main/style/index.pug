@@ -1,0 +1,29 @@
+extends /layout-documentation
+
+block title
+  title Tikui
+
+block content
+  .tikui-vertical-spacing.-s32
+    .tikui-vertical-spacing--line
+      h1.tikui-title-main Tikui pattern library
+    .tikui-vertical-spacing--line
+      .tikui-vertical-spacing.-s24
+        .tikui-vertical-spacing--line
+          h2.tikui-title-section About
+        .tikui-vertical-spacing--line
+          p.tikui-paragraph The style is embedded under #[strong #{'<link href="/style/tikui.css" rel="stylesheet" />'}].
+        .tikui-vertical-spacing--line
+          h2.tikui-title-section Documentation
+        .tikui-vertical-spacing--line
+          p.tikui-paragraph The Style have an #[a.tikui-link(href='http://atomicdesign.bradfrost.com' target='_blank') Atomic Design] organization.
+        .tikui-vertical-spacing--line
+          ul.tikui-list
+            li
+              a.tikui-link(href='[[TIKUI_BASEPATH]]atom/atom.html') Atoms
+            li
+              a.tikui-link(href='[[TIKUI_BASEPATH]]molecule/molecule.html') Molecules
+            li
+              a.tikui-link(href='[[TIKUI_BASEPATH]]organism/organism.html') Organisms
+            li
+              a.tikui-link(href='[[TIKUI_BASEPATH]]template/template.html') Templates

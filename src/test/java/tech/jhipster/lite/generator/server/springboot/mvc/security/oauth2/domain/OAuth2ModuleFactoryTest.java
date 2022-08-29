@@ -34,11 +34,11 @@ class OAuth2ModuleFactoryTest {
       .projectBaseName("myapp")
       .build();
 
-    when(dockerImages.get("jboss/keycloak")).thenReturn(new DockerImage("jboss/keycloak", "1.1.1"));
+    when(dockerImages.get("quay.io/keycloak/keycloak")).thenReturn(new DockerImage("quay.io/keycloak/keycloak", "1.1.1"));
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, pomFile(), integrationTestFile())
+    assertThatModuleWithFiles(module, pomFile(), integrationTestFile(), readmeFile())
       .createPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
       .createPrefixedFiles(
         "src/main/java/com/jhipster/test/authentication/infrastructure/primary",
@@ -73,12 +73,10 @@ class OAuth2ModuleFactoryTest {
         "WithUnauthenticatedMockUser.java"
       )
       .createFile("src/main/docker/keycloak.yml")
-      .containing("jboss/keycloak:1.1.1")
+      .containing("quay.io/keycloak/keycloak:1.1.1")
       .and()
       .createFile("src/main/docker/keycloak-realm-config/jhipster-realm.json")
       .containing("1.1.1")
-      .and()
-      .createFile("src/main/docker/keycloak-realm-config/jhipster-users-0.json")
       .and()
       .createFile("src/main/java/com/jhipster/test/authentication/package-info.java")
       .and()
@@ -89,7 +87,7 @@ class OAuth2ModuleFactoryTest {
       .containing("spring-boot-starter-oauth2-resource-server")
       .and()
       .createFile("src/main/resources/config/application.properties")
-      .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://localhost:9080/auth/realms/jhipster")
+      .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://localhost:9080/realms/jhipster")
       .containing("spring.security.oauth2.client.registration.oidc.client-id=web_app")
       .containing("spring.security.oauth2.client.registration.oidc.client-secret=web_app")
       .containing("spring.security.oauth2.client.registration.oidc.scope=openid,profile,email")
@@ -97,13 +95,16 @@ class OAuth2ModuleFactoryTest {
       .and()
       .createFile("src/test/resources/config/application.properties")
       .containing("spring.main.allow-bean-definition-overriding=true")
-      .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://DO_NOT_CALL:9080/auth/realms/jhipster")
+      .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://DO_NOT_CALL:9080/realms/jhipster")
       .and()
       .createFile("src/test/java/com/jhipster/test/IntegrationTest.java")
       .containing("@SpringBootTest(classes = { MyappApp.class, TestSecurityConfiguration.class })")
       .containing("@WithMockUser")
       .containing("import org.springframework.security.test.context.support.WithMockUser;")
-      .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;");
+      .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;")
+      .and()
+      .createFile("README.md")
+      .containing("docker-compose -f src/main/docker/keycloak.yml up -d");
   }
 
   private ModuleFile integrationTestFile() {

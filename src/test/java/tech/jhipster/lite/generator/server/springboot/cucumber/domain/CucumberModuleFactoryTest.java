@@ -15,14 +15,14 @@ class CucumberModuleFactoryTest {
   private static final CucumberModuleFactory factory = new CucumberModuleFactory();
 
   @Test
-  void shouldCreateModule() {
+  void shouldBuildInitialModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
       .projectBaseName("myapp")
       .build();
 
-    JHipsterModule module = factory.buildModule(properties);
+    JHipsterModule module = factory.buildInitializationModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
       .createPrefixedFiles(
@@ -62,15 +62,13 @@ class CucumberModuleFactoryTest {
   }
 
   @Test
-  void shouldAddDataResetWithSelectedOption() {
+  void shouldBuildJpaResetModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
-      .projectBaseName("myapp")
-      .put("jpaReset", true)
       .build();
 
-    JHipsterModule module = factory.buildModule(properties);
+    JHipsterModule module = factory.buildJpaResetModule(properties);
 
     assertThatModuleWithFiles(module, pomFile()).createFiles("src/test/java/com/jhipster/test/cucumber/CucumberJpaReset.java");
   }

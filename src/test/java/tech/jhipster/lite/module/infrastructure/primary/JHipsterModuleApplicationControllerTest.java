@@ -2,7 +2,7 @@ package tech.jhipster.lite.module.infrastructure.primary;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static tech.jhipster.lite.module.infrastructure.primary.JHipsterModulesResourceFixture.*;
+import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

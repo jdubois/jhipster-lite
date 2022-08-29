@@ -1,10 +1,12 @@
 package tech.jhipster.lite.module.infrastructure.primary;
 
-import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertyDefinition;
+import io.swagger.v3.oas.annotations.media.Schema;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyExample;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertyDefinition;
 
+@Schema(name = "JHipsterModulePropertyDefinition", description = "Definition for a given property")
 class RestJHipsterModulePropertyDefinition {
 
   private final JHipsterPropertyType type;
@@ -12,6 +14,7 @@ class RestJHipsterModulePropertyDefinition {
   private final String key;
   private final String description;
   private final String example;
+  private final int order;
 
   private RestJHipsterModulePropertyDefinition(RestJHipsterModulePropertyDefinitionBuilder builder) {
     type = builder.type;
@@ -19,6 +22,7 @@ class RestJHipsterModulePropertyDefinition {
     key = builder.key;
     description = builder.description;
     example = builder.example;
+    order = builder.order;
   }
 
   static RestJHipsterModulePropertyDefinition from(JHipsterModulePropertyDefinition propertyDefinition) {
@@ -28,27 +32,38 @@ class RestJHipsterModulePropertyDefinition {
       .key(propertyDefinition.key().get())
       .description(propertyDefinition.description().map(JHipsterPropertyDescription::get).orElse(null))
       .example(propertyDefinition.example().map(JHipsterPropertyExample::get).orElse(null))
+      .order(propertyDefinition.order())
       .build();
   }
 
+  @Schema(description = "Type of this property", required = true)
   public JHipsterPropertyType getType() {
     return type;
   }
 
+  @Schema(description = "True if this property is mandatory, false otherwise", required = true)
   public boolean isMandatory() {
     return mandatory;
   }
 
+  @Schema(description = "Key of this property", required = true)
   public String getKey() {
     return key;
   }
 
+  @Schema(description = "Full text description of this property")
   public String getDescription() {
     return description;
   }
 
+  @Schema(description = "Example value for this property")
   public String getExample() {
     return example;
+  }
+
+  @Schema(description = "Order (sort in natural int sorting) for this property", required = true)
+  public int getOrder() {
+    return order;
   }
 
   private static class RestJHipsterModulePropertyDefinitionBuilder {
@@ -58,6 +73,7 @@ class RestJHipsterModulePropertyDefinition {
     private String key;
     private String description;
     private String example;
+    private int order;
 
     public RestJHipsterModulePropertyDefinitionBuilder type(JHipsterPropertyType type) {
       this.type = type;
@@ -85,6 +101,12 @@ class RestJHipsterModulePropertyDefinition {
 
     public RestJHipsterModulePropertyDefinitionBuilder example(String example) {
       this.example = example;
+
+      return this;
+    }
+
+    public RestJHipsterModulePropertyDefinitionBuilder order(int order) {
+      this.order = order;
 
       return this;
     }

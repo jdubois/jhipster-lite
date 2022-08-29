@@ -30,7 +30,7 @@ public class JavaProjects {
       .builder()
       .module(moduleApplied.slug().get())
       .date(moduleApplied.time())
-      .properties(moduleApplied.properties().get());
+      .parameters(moduleApplied.properties().getParameters());
 
     return new ProjectActionToAppend(path, action);
   }

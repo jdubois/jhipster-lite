@@ -4,14 +4,15 @@ import org.springframework.stereotype.Service;
 import tech.jhipster.lite.generator.server.javatool.frontendmaven.domain.FrontendMavenModuleFactory;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.npm.domain.NpmVersions;
 
 @Service
 public class FrontendMavenApplicationService {
 
   private final FrontendMavenModuleFactory factory;
 
-  public FrontendMavenApplicationService() {
-    factory = new FrontendMavenModuleFactory();
+  public FrontendMavenApplicationService(NpmVersions npmVersions) {
+    factory = new FrontendMavenModuleFactory(npmVersions);
   }
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {

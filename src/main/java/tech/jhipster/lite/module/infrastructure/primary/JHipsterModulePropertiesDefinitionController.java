@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 class JHipsterModulePropertiesDefinitionController implements Controller {
 

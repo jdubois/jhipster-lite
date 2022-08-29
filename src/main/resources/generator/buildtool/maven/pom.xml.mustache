@@ -13,16 +13,6 @@
   <description>{{projectName}}</description>
   <packaging>jar</packaging>
 
-  <!-- jhipster-needle-maven-parent -->
-
-  <repositories>
-    <!-- jhipster-needle-maven-repository -->
-  </repositories>
-
-  <pluginRepositories>
-    <!-- jhipster-needle-maven-plugin-repository -->
-  </pluginRepositories>
-
   <properties>
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,17 +23,9 @@
     <junit-jupiter.version>5.8.2</junit-jupiter.version>
     <assertj.version>3.22.0</assertj.version>
     <mockito.version>4.2.0</mockito.version>
-    <!-- jhipster-needle-maven-property -->
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <!-- jhipster-needle-maven-add-dependency-management -->
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
-    <!-- jhipster-needle-maven-add-dependency -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
@@ -74,7 +56,6 @@
       <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- jhipster-needle-maven-add-dependency-test -->
   </dependencies>
 
   <build>
@@ -93,13 +74,5 @@
         </excludes>
       </resource>
     </resources>
-    <plugins>
-      <!-- jhipster-needle-maven-add-plugin -->
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <!-- jhipster-needle-maven-add-plugin-management -->
-      </plugins>
-    </pluginManagement>
   </build>
 </project>

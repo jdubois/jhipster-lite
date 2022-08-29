@@ -1,0 +1,9 @@
+{
+  "projectFolder": "/tmp/jhlite/APP_NAME",
+  "commit": true,
+  "parameters": {
+    "projectName": "Chips Project",
+    "baseName": "APP_NAME",
+    "packageName": "tech.jhipster.APP_NAME"
+  }
+}

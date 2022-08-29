@@ -4,7 +4,7 @@ Feature: Modules
     When I apply and commit "init" module to default project
       | projectName | Test project |
     Then I should have commit "Apply init module"
-    
+
   Scenario: Should apply module without commit
     When I apply "init" module to default project
       | projectName | Test project |
@@ -13,5 +13,12 @@ Feature: Modules
   Scenario: Should get modules list
     When I get modules list
     Then I should have category "Spring Boot - Component Tests" with module
-      | Slug        | springboot-cucumber                 |
+      | Slug        | spring-boot-cucumber                |
       | Description | Add cucumber integration to project |
+
+  Scenario: Should get modules landscape
+    When I get modules landscape
+    Then I should have landscape level 0 with elements
+      | Type    | Slug               |
+      | MODULE  | infinitest-filters |
+      | MODULE  | init               |

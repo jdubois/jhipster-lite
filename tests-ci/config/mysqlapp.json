@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/mysqlapp",
-  "generator-jhipster": {
-    "projectName": "MySQL Project",
-    "baseName": "mysqlapp",
-    "packageName": "tech.jhipster.mysqlapp"
-  }
-}

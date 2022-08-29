@@ -1,0 +1,19 @@
+<button
+  tabindex="5"
+  class="bi bi-bricks jhipster-modules-actions--format-project"
+  @click="formatProject()"
+  :disabled="disabledActions()"
+  data-selector="format-button"
+>
+  Format
+</button>
+
+<button
+  tabindex="5"
+  class="bi bi-file-earmark-arrow-down jhipster-modules-actions--download-project"
+  @click="downloadProject()"
+  :disabled="disabledActions()"
+  data-selector="download-button"
+>
+  Download
+</button>

@@ -1,6 +1,20 @@
-import { RestModules, RestModulesRepository, RestModuleProperties, RestProjectHistory } from '@/module/secondary/RestModulesRepository';
+import { RestModulesRepository } from '@/module/secondary/RestModulesRepository';
+import { RestProjectHistory } from '@/module/secondary/RestProjectHistory';
+import { RestModulePropertiesDefinitions } from '@/module/secondary/RestModulePropertiesDefinitions';
+import { RestModules } from '@/module/secondary/RestModules';
 import { dataBackendResponse, stubAxiosHttp } from '../../http/AxiosHttpStub';
-import { defaultModules, defaultModuleToApply } from '../domain/Modules.fixture';
+import {
+  defaultLandscape,
+  defaultModules,
+  defaultModulesToApply,
+  defaultModuleToApply,
+  defaultProjectHistory,
+} from '../domain/Modules.fixture';
+import { RestLandscape } from '@/module/secondary/RestLandscape';
+import { RestLandscapeDependency, RestLandscapeModule } from '@/module/secondary/RestLandscapeModule';
+import { RestLandscapeFeature } from '@/module/secondary/RestLandscapeFeature';
+import { ModuleSlug } from '@/module/domain/ModuleSlug';
+import { RestModulePropertyDefinition } from '@/module/secondary/RestModulePropertyDefinition';
 
 describe('Rest modules repository', () => {
   it('Should list modules using axios', async () => {
@@ -13,7 +27,7 @@ describe('Rest modules repository', () => {
     expect(modules).toEqual(defaultModules());
   });
 
-  it('Should get module without properties', async () => {
+  it('Should list module without properties', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restModulesWithoutProperties()));
@@ -23,12 +37,32 @@ describe('Rest modules repository', () => {
     expect(modules.categories[0].modules[0].properties).toEqual([]);
   });
 
+  it('Should get landscape using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.get.resolves(dataBackendResponse(restLandscape()));
+
+    const landscape = await repository.landscape();
+
+    expect(landscape).toEqual(defaultLandscape());
+  });
+
   it('Should apply modules using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.post.resolves(dataBackendResponse(null));
 
-    await repository.apply('module', defaultModuleToApply());
+    await repository.apply(new ModuleSlug('module'), defaultModuleToApply());
+
+    expect(axiosInstance.post.calledOnce).toBe(true);
+  });
+
+  it('Should apply all modules using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.post.resolves(dataBackendResponse(null));
+
+    await repository.applyAll(defaultModulesToApply());
 
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
@@ -53,15 +87,17 @@ describe('Rest modules repository', () => {
 
     const appliedModules = await repository.history('test');
 
-    expect(appliedModules).toEqual({
-      modules: ['spring-cucumber'],
-      properties: [
-        {
-          key: 'key',
-          value: 'value',
-        },
-      ],
-    });
+    expect(appliedModules).toEqual(defaultProjectHistory());
+  });
+
+  it('Should format project using axios', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.post.resolves(dataBackendResponse(null));
+
+    await repository.format('path/to/project');
+
+    expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
   it('Should download project using axios', async () => {
@@ -111,33 +147,129 @@ const restModulesWithoutProperties = (): RestModules => ({
   ],
 });
 
+const restLandscape = (): RestLandscape => ({
+  levels: [
+    {
+      elements: [
+        landscapeModule('infinitest', 'Add infinitest filters', applicationBaseNameProperties()),
+        landscapeModule('init', 'Add some initial tools', applicationBaseNameProperties()),
+      ],
+    },
+    {
+      elements: [
+        landscapeFeature('client', [
+          landscapeModule('vue', 'Add vue', emptyProperties(), [moduleDependency('init')]),
+          landscapeModule('react', 'Add react', emptyProperties(), [moduleDependency('init')]),
+          landscapeModule('angular', 'Add angular', emptyProperties(), [moduleDependency('init')]),
+        ]),
+        landscapeFeature('java-build-tools', [
+          landscapeModule('maven', 'Add maven', optionalBooleanProperties(), [moduleDependency('init')]),
+          landscapeModule('gradle', 'Add gradle', emptyProperties(), [moduleDependency('init')]),
+        ]),
+      ],
+    },
+    {
+      elements: [
+        landscapeModule('java-base', 'Add base java classes', emptyProperties(), [featureDependency('java-build-tools')]),
+        landscapeModule('spring-boot', 'Add spring boot core', emptyProperties(), [featureDependency('java-build-tools')]),
+        landscapeFeature('ci', [
+          landscapeModule('gitlab-maven', 'Add simple gitlab ci for maven', emptyProperties(), [moduleDependency('maven')]),
+          landscapeModule('gitlab-gradle', 'Add simple gitlab ci for gradle', emptyProperties(), [moduleDependency('gradle')]),
+        ]),
+      ],
+    },
+    {
+      elements: [
+        landscapeFeature('jpa', [landscapeModule('postgresql', 'Add PostGreSQL', emptyProperties(), [moduleDependency('spring-boot')])]),
+        landscapeFeature('spring-mvc', [
+          landscapeModule('spring-boot-tomcat', 'Add Tomcat', emptyProperties(), [moduleDependency('spring-boot')]),
+          landscapeModule('spring-boot-undertow', 'Add Undertow', emptyProperties(), [moduleDependency('spring-boot')]),
+        ]),
+        landscapeModule('bean-validation-test', 'Add bean validation test tools', emptyProperties(), [moduleDependency('spring-boot')]),
+        landscapeModule('build', 'Add build information', emptyProperties(), [featureDependency('ci')]),
+      ],
+    },
+    {
+      elements: [
+        landscapeModule('dummy-feature', 'Add dummy feature', emptyProperties(), [
+          featureDependency('spring-mvc'),
+          moduleDependency('bean-validation-test'),
+        ]),
+        landscapeModule('liquibase', 'Add liquibase', emptyProperties(), [featureDependency('jpa')]),
+      ],
+    },
+  ],
+});
+
+const emptyProperties = (): RestModulePropertiesDefinitions => ({ definitions: [] });
+
+const landscapeModule = (
+  slug: string,
+  operation: string,
+  properties: RestModulePropertiesDefinitions,
+  dependencies?: RestLandscapeDependency[]
+): RestLandscapeModule => ({
+  type: 'MODULE',
+  slug,
+  operation,
+  properties,
+  dependencies,
+});
+
+const landscapeFeature = (slug: string, modules: RestLandscapeModule[]): RestLandscapeFeature => ({
+  type: 'FEATURE',
+  slug,
+  modules,
+});
+
+const moduleDependency = (slug: string): RestLandscapeDependency => ({ type: 'MODULE', slug });
+const featureDependency = (slug: string): RestLandscapeDependency => ({ type: 'FEATURE', slug });
+
 const restModuleHistory = (): RestProjectHistory => ({
   modules: [{ slug: 'spring-cucumber' }],
   properties: appliedModuleProperties(),
 });
 
-const appliedModuleProperties = (): {} => {
-  return { key: 'value' };
-};
+const appliedModuleProperties = (): {} => ({ baseName: 'settedbase' });
 
-const restModuleProperties = (): RestModuleProperties => ({
+const restModuleProperties = (): RestModulePropertiesDefinitions => ({
   definitions: [
-    {
-      type: 'STRING',
-      mandatory: true,
-      key: 'baseName',
-      description: 'Application base name',
-      example: 'jhipster',
-    },
+    applicationBaseNameProperty(),
     {
       type: 'BOOLEAN',
       mandatory: false,
       key: 'optionalBoolean',
+      order: -200,
     },
     {
       type: 'INTEGER',
       mandatory: false,
       key: 'optionalInteger',
+      order: 100,
     },
   ],
+});
+
+const applicationBaseNameProperties = (): RestModulePropertiesDefinitions => ({
+  definitions: [applicationBaseNameProperty()],
+});
+
+const optionalBooleanProperties = (): RestModulePropertiesDefinitions => ({
+  definitions: [optionalBooleanProperty()],
+});
+
+const applicationBaseNameProperty = (): RestModulePropertyDefinition => ({
+  type: 'STRING',
+  mandatory: true,
+  key: 'baseName',
+  description: 'Application base name',
+  example: 'jhipster',
+  order: -300,
+});
+
+const optionalBooleanProperty = (): RestModulePropertyDefinition => ({
+  type: 'BOOLEAN',
+  mandatory: false,
+  key: 'optionalBoolean',
+  order: -200,
 });

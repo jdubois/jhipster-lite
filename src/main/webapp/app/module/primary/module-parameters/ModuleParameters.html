@@ -1,0 +1,27 @@
+<div
+  v-if="propertiesDefinitions.length !== 0"
+  class="jhipster-module-parameters"
+  :class="stateClass()"
+  :data-selector="`module-${moduleSlug}-${propertiesType}-parameters`"
+>
+  <div class="jhipster-module-parameters--type" :class="stateClass()">
+    <div class="jhipster-module-parameters--type-title" :class="stateClass()">{{ typeLabel() }}</div>
+    <div
+      :data-selector="`module-${moduleSlug}-${propertiesType}-parameters-stats`"
+      class="jhipster-module-parameters--type-stats"
+      :class="stateClass()"
+    >
+      {{ parametersStats() }}
+    </div>
+  </div>
+  <div v-for="propertyDefinition in propertiesDefinitions" class="jhipster-module-parameters--parameter" :class="stateClass()">
+    <div class="jhipster-module-parameters--parameter-key" :class="stateClass()">{{ propertyDefinition.key }}</div>
+    <div
+      class="jhipster-module-parameters--parameter-value"
+      :class="stateClass()"
+      :data-selector="`module-${moduleSlug}-${propertyDefinition.key}-parameter-value`"
+    >
+      {{ moduleParameters.get(propertyDefinition.key) }}
+    </div>
+  </div>
+</div>

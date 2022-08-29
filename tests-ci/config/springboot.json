@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/springboot",
-  "generator-jhipster": {
-    "projectName": "Spring Boot Project",
-    "baseName": "springbootapp",
-    "packageName": "tech.jhipster.springbootapp"
-  }
-}

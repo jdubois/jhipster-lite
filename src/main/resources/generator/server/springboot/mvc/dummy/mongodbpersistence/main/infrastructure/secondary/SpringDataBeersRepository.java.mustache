@@ -1,0 +1,39 @@
+package {{packageName}}.dummy.infrastructure.secondary;
+
+import {{packageName}}.dummy.domain.BeerId;
+import {{packageName}}.dummy.domain.beer.Beer;
+import {{packageName}}.dummy.domain.beer.BeerSellingState;
+import {{packageName}}.dummy.domain.beer.Beers;
+import {{packageName}}.dummy.domain.beer.BeersRepository;
+import {{packageName}}.error.domain.Assert;
+import java.util.Optional;
+import org.springframework.stereotype.Repository;
+
+@Repository
+class SpringDataBeersRepository implements BeersRepository {
+
+  private final MongoDBBeersRepository beers;
+
+  public SpringDataBeersRepository(MongoDBBeersRepository beers) {
+    this.beers = beers;
+  }
+
+  @Override
+  public void save(Beer beer) {
+    Assert.notNull("beer", beer);
+
+    beers.save(BeerDocument.from(beer));
+  }
+
+  @Override
+  public Beers catalog() {
+    return new Beers(beers.findBySellingState(BeerSellingState.SOLD).stream().map(BeerDocument::toDomain).toList());
+  }
+
+  @Override
+  public Optional<Beer> get(BeerId beer) {
+    Assert.notNull("beer", beer);
+
+    return beers.findById(beer.get()).map(BeerDocument::toDomain);
+  }
+}

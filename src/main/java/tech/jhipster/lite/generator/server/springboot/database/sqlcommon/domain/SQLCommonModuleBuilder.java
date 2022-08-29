@@ -4,11 +4,11 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.docker.domain.DockerImage;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.generator.project.domain.DatabaseType;
+import tech.jhipster.lite.generator.server.springboot.database.common.domain.DatabaseType;
 import tech.jhipster.lite.module.domain.DocumentationTitle;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
-import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -99,6 +99,9 @@ public class SQLCommonModuleBuilder {
         .set(propertyKey("spring.datasource.password"), propertyValue(""))
         .set(propertyKey("spring.datasource.driver-class-name"), propertyValue("org.testcontainers.jdbc.ContainerDatabaseDriver"))
         .set(propertyKey("spring.datasource.hikari.maximum-pool-size"), propertyValue("2"))
+        .set(propertyKey("spring.jpa.open-in-view"), FALSE)
+        .set(propertyKey("spring.jpa.properties.hibernate.connection.provider_disables_autocommit"), TRUE)
+        .set(propertyKey("spring.datasource.hikari.auto-commit"), FALSE)
         .and()
       .springMainLogger("org.hibernate.validator", LogLevel.WARN)
       .springMainLogger(ORG_HIBERNATE, LogLevel.WARN)

@@ -60,7 +60,7 @@ describe('Login Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.appName).toEqual('angularapp');
+      expect(comp.appName).toEqual('{{baseName}}');
       expect(mockAccountService.getAuthenticationState).toHaveBeenCalled();
 
       // THEN

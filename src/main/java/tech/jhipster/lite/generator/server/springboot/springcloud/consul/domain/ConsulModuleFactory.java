@@ -2,12 +2,12 @@ package tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.common.domain.Base64Utils;
 import tech.jhipster.lite.docker.domain.DockerImage;
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.generator.base64.domain.Base64Utils;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
@@ -37,7 +37,7 @@ public class ConsulModuleFactory {
     DockerImage dockerImageConsul = dockerImages.get(DOCKER_IMAGE_CONSUL);
     DockerImage dockerImageConfigLoader = dockerImages.get(DOCKER_IMAGE_CONFIG_LOADER);
 
-    // prettier-ignore
+    //@formatter:off
     JHipsterModuleBuilder builder = moduleBuilder(properties)
       .context()
         .put("dockerImageConsul", dockerImageConsul.fullName())
@@ -77,6 +77,7 @@ public class ConsulModuleFactory {
         .set(propertyKey("spring.cloud.consul.enabled"), FALSE_VALUE)
         .set(propertyKey("spring.cloud.compatibility-verifier.enabled"), FALSE_VALUE)
         .and();
+    //@formatter:on
 
     return builder.build();
   }

@@ -11,6 +11,7 @@
   <property name="clobType" value="longvarchar" dbms="h2" />
   <property name="clobType" value="clob" dbms="mysql, oracle, mssql, mariadb, postgresql" />
   <property name="uuidType" value="uuid" dbms="h2, postgresql" />
+  <property name="uuidType" value="binary(16)" dbms="mysql, oracle, mssql, mariadb" />
   <property name="datetimeType" value="datetime(6)" dbms="mysql, mariadb" />
   <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2" />
 

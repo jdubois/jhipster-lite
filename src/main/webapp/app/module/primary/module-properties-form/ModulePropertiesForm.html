@@ -1,0 +1,79 @@
+<div class="jhipster-modules-properties-form--fields">
+  <h2 class="jhipster-modules-properties-form--properties-title">Properties</h2>
+  <div class="jhipster-modules-properties-form--commit-modules">
+    <input
+      type="checkbox"
+      id="commit-modules"
+      @click="updateModuleCommit($event.target.checked)"
+      data-selector="commit-module-application"
+      checked="checked"
+    />
+    <label for="commit-modules" class="jhipster-modules-properties-form--commit-modules-label">Commit module application</label>
+  </div>
+  <div class="jhipster-modules-properties-form--field-line">
+    <label for="folder-path" class="jhipster-modules-properties-form--field-label">Project folder</label>
+
+    <input
+      tabindex="1"
+      type="text"
+      id="folder-path"
+      class="jhipster-modules-properties-form--field"
+      data-selector="folder-path-field"
+      :value="folderPath"
+      @input="updateFolderPath($event.target.value)"
+      @blur="folderPathSelected()"
+    />
+  </div>
+
+  <div class="jhipster-modules-properties-form--field-line" v-for="property in properties">
+    <label :for="`module-parameter-${property.key}`" class="jhipster-modules-properties-form--field-label">
+      <span class="jhipster-modules-properties-form--field-description">{{ property.description }}</span>
+      <span class="jhipster-modules-properties-form--field-key"> -&nbsp;{{ property.key }}</span>
+    </label>
+
+    <input
+      tabindex="2"
+      type="text"
+      class="jhipster-modules-properties-form--field"
+      :id="`module-parameter-${property.key}`"
+      :placeholder="property.example"
+      @input="setStringProperty(property.key, $event.target.value)"
+      :value="parameters.get(property.key)"
+      :data-selector="`parameter-${property.key}-field`"
+      v-if="property.type === 'STRING'"
+    />
+
+    <input
+      tabindex="2"
+      type="number"
+      class="jhipster-modules-properties-form--field"
+      :id="`module-parameter-${property.key}`"
+      :placeholder="property.example"
+      @input="setNumberProperty(property.key, $event.target.value)"
+      :value="parameters.get(property.key)"
+      :data-selector="`parameter-${property.key}-field`"
+      v-if="property.type === 'INTEGER'"
+    />
+
+    <select
+      tabindex="2"
+      class="jhipster-modules-properties-form--field"
+      :id="`module-parameter-${property.key}`"
+      @change="setBooleanProperty(property.key, $event.target.value)"
+      :data-selector="`parameter-${property.key}-field`"
+      v-if="property.type === 'BOOLEAN'"
+    >
+      <option value="" :selected="parameters.get(property.key) === undefined"></option>
+      <option value="true" :selected="parameters.get(property.key) === true">Yes</option>
+      <option value="false" :selected="parameters.get(property.key) === false">No</option>
+    </select>
+
+    <div
+      class="jhipster-modules-properties-form--field-optional-marker"
+      :data-selector="`parameter-${property.key}-optional-marker`"
+      v-if="!property.mandatory"
+    >
+      Optional
+    </div>
+  </div>
+</div>

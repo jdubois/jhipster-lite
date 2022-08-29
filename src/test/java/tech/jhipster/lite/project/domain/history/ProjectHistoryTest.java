@@ -25,7 +25,7 @@ class ProjectHistoryTest {
   void shouldGetMergedProperties() {
     ProjectHistory history = new ProjectHistory(projectPath(), List.of(firstAction(), projectAction()));
 
-    ModuleProperties properties = history.latestProperties();
+    ModuleParameters properties = history.latestProperties();
 
     assertThat(properties.get()).containsExactlyInAnyOrderEntriesOf(Map.of("key", "value", "port", 8080));
   }
@@ -35,6 +35,6 @@ class ProjectHistoryTest {
       .builder()
       .module("test-module")
       .date(Instant.parse("2020-12-03T10:16:30.00Z"))
-      .properties(Map.of("key", "old-value", "port", 8080));
+      .parameters(Map.of("key", "old-value", "port", 8080));
   }
 }

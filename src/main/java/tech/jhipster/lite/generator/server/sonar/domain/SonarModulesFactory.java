@@ -4,9 +4,9 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
@@ -43,9 +43,12 @@ public class SonarModulesFactory {
     return moduleBuilder(properties)
       .context()
       .put("sonarqubeDockerImage", dockerImages.get("sonarqube").fullName())
-      .put("srcMainDocker", "src/main/docker")
       .and()
       .documentation(documentationTitle("sonar"), SOURCE.template("sonar.md"))
+      .startupCommand("""
+        docker-compose -f src/main/docker/sonar.yml up -d
+        ./mvnw clean verify sonar:sonar
+        """)
       .javaBuildPlugins()
       .plugin(propertiesPlugin())
       .pluginManagement(sonarPlugin())

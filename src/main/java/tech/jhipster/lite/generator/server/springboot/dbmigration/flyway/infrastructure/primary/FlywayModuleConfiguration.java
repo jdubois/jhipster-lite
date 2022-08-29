@@ -3,34 +3,35 @@ package tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.infras
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.application.FlywayApplicationService;
-import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertiesDefinition;
-import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertyDefinition;
-import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleApiDoc;
-import tech.jhipster.lite.module.infrastructure.primary.JHipsterModuleResource;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 @Configuration
 class FlywayModuleConfiguration {
 
   @Bean
-  JHipsterModuleResource flywwayModule(FlywayApplicationService flyway) {
+  JHipsterModuleResource flywayInitializationModule(FlywayApplicationService flyway) {
     return JHipsterModuleResource
       .builder()
-      .legacyUrl("/api/servers/spring-boot/database-migration-tools/flyway")
       .slug("flyway")
-      .propertiesDefinition(properties())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Database Migration", "Add Flyway"))
+      .organization(JHipsterModuleOrganization.builder().feature("database-migration").addFeatureDependency("jpa-persistence").build())
       .tags("server", "spring", "spring-boot", "database", "migration")
-      .factory(flyway::buildModule);
+      .factory(flyway::buildInitializationModule);
   }
 
-  private JHipsterModulePropertiesDefinition properties() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().add(addFlywayMysqlProperty()).build();
-  }
-
-  private JHipsterModulePropertyDefinition addFlywayMysqlProperty() {
-    return JHipsterModulePropertyDefinition
-      .mandatoryBooleanProperty("addFlywayMysql")
-      .description("Add Flyway MySQL (or maria) dependency")
-      .build();
+  @Bean
+  JHipsterModuleResource flywayMysqlModule(FlywayApplicationService flyway) {
+    return JHipsterModuleResource
+      .builder()
+      .slug("flyway-mysql")
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Database Migration", "Add Flyway mysql"))
+      .organization(JHipsterModuleOrganization.builder().addModuleDependency("flyway").addModuleDependency("mysql").build())
+      .tags("server", "spring", "spring-boot", "database", "migration")
+      .factory(flyway::buildMysqlDependencyModule);
   }
 }

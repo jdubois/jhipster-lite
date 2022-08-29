@@ -8,6 +8,6 @@ Feature: Spring boot docker
       | entrypoint.sh |
 
    Scenario: Should apply dockerfile module
-    When I apply "dockerfile" module to default project without properties
+    When I apply "dockerfile" module to default project without parameters
     Then I should have files in "."
       | Dockerfile |

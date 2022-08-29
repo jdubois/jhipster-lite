@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 
 @Schema(name = "JHipsterModules", description = "Available modules")
 class RestJHipsterModules {
@@ -29,7 +30,7 @@ class RestJHipsterModules {
   private static List<RestJHipsterModuleCategory> buildCategories(JHipsterModulesResources modulesResources) {
     return modulesResources
       .stream()
-      .collect(Collectors.groupingBy(module -> module.apiDoc().tag()))
+      .collect(Collectors.groupingBy(module -> module.apiDoc().group().get()))
       .entrySet()
       .stream()
       .map(entry -> RestJHipsterModuleCategory.from(entry.getKey(), entry.getValue()))

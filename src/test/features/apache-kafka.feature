@@ -3,8 +3,8 @@ Feature: Apache Kafka
   Scenario: Should apply Apache Kafka init module
     When I apply modules to default project
       | maven-java       |
-      | springboot       |
-      | springboot-kafka |
+      | spring-boot       |
+      | spring-boot-kafka |
     Then I should have files in "src/main/docker"
       | kafka.yml |
     Then I should have files in "src/test/java/tech/jhipster/chips"
@@ -16,7 +16,7 @@ Feature: Apache Kafka
       | KafkaConfiguration.java |
 
   Scenario: Should apply Apache Kafka dummy producer consumer module
-    When I apply "springboot-kafka-dummy-producer-consumer" module to default project with maven file
+    When I apply "spring-boot-kafka-dummy-producer-consumer" module to default project with maven file
       | packageName | tech.jhipster.chips |
       | baseName    | jhipster            |
     Then I should have files in "src/main/java/tech/jhipster/chips/dummy/infrastructure/secondary/kafka/producer"
@@ -32,7 +32,7 @@ Feature: Apache Kafka
       | DummyConsumerTest.java |
 
   Scenario: Should apply Apache Kafka AKHQ module
-    When I apply "springboot-kafka-akhq" module to default project with maven file
+    When I apply "spring-boot-kafka-akhq" module to default project with maven file
       | packageName | tech.jhipster.chips |
       | baseName    | jhipster            |
     Then I should have files in "src/main/docker"

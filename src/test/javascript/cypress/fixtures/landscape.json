@@ -1,0 +1,25 @@
+{
+  "levels": [
+    {
+      "elements": [
+        {
+          "type": "MODULE",
+          "slug": "init",
+          "operation": "Init a simple application",
+          "properties": {
+            "definitions": [
+              {
+                "type": "STRING",
+                "mandatory": "true",
+                "key": "packageName",
+                "description": "Base package name",
+                "example": "tech.jhipster.beer",
+                "order": -300
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

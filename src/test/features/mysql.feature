@@ -3,7 +3,7 @@ Feature: MySQL module
   Scenario: Should add MySQL elements using legacy url
     When I apply modules to default project
       | maven-java |
-      | springboot |
+      | spring-boot |
       | mysql      |
     Then I should have files in ""
       | pom.xml |
@@ -21,10 +21,10 @@ Feature: MySQL module
   Scenario: Should get MySQL module properties definition
     When I get module "mysql" properties definition
     Then I should have properties definitions
-      | Key                   | Type    | Mandatory |
-      | packageName           | STRING  | true      |
-      | baseName              | STRING  | true      |
-      | prettierDefaultIndent | INTEGER | false     |
+      | Key         | Type    | Mandatory |
+      | packageName | STRING  | true      |
+      | baseName    | STRING  | true      |
+      | indentSize  | INTEGER | false     |
 
   Scenario: Should add MySQL elements using module url
     When I apply "mysql" module to default project with maven file

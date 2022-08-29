@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/reactiveapp",
-  "generator-jhipster": {
-    "projectName": "Reactive App Project",
-    "baseName": "reactiveapp",
-    "packageName": "tech.jhipster.reactiveapp"
-  }
-}

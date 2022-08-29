@@ -8,7 +8,7 @@ import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class BadRequestAlertException extends AbstractThrowableProblem {
+class BadRequestAlertException extends AbstractThrowableProblem {
 
   @Serial
   private static final long serialVersionUID = 1L;

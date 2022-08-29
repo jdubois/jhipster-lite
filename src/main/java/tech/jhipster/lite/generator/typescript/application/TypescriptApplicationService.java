@@ -15,6 +15,6 @@ public class TypescriptApplicationService {
   }
 
   public JHipsterModule buildModule(JHipsterModuleProperties project) {
-    return factory.buildTypescriptModule(project);
+    return factory.buildModule(project);
   }
 }

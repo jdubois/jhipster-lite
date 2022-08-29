@@ -16,6 +16,12 @@
       "@/*": ["src/main/webapp/app/*"]
     }
   },
-  "include": ["src/main/webapp/**/*.ts", "src/main/webapp/**/*.d.ts", "src/main/webapp/**/*.tsx", "src/main/webapp/**/*.vue"],
+  "include": [
+    "src/main/webapp/**/*.ts",
+    "src/main/webapp/**/*.d.ts",
+    "src/main/webapp/**/*.tsx",
+    "src/main/webapp/**/*.vue",
+    "src/test/javascript/spec/**/*.ts"
+  ],
   "exclude": ["./node_modules"]
 }

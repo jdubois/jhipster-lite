@@ -3,12 +3,16 @@ package tech.jhipster.lite.module.domain;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 
 final class JHipsterModuleShortcuts {
 
   private static final String README = "README.md";
   private static final TextNeedleBeforeReplacer JHIPSTER_DOCUMENTATION_NEEDLE = lineBeforeText("\n<!-- jhipster-needle-documentation -->");
+  private static final TextNeedleBeforeReplacer JHIPSTER_LOCAL_ENVIRONMENT_NEEDLE = lineBeforeText(
+    "\n<!-- jhipster-needle-localEnvironment -->"
+  );
   private static final TextNeedleBeforeReplacer JHIPSTER_README_SECTION_NEEDLE = lineBeforeText("\n<!-- jhipster-needle-readme -->");
   private static final TextNeedleBeforeReplacer JHIPSTER_STARTUP_COMMAND_SECTION_NEEDLE = lineBeforeText(
     "\n<!-- jhipster-needle-startupCommand -->"
@@ -41,6 +45,12 @@ final class JHipsterModuleShortcuts {
 
     String markdownLink = "- [" + title.get() + "](" + target + ")";
     builder.optionalReplacements().in(README).add(JHIPSTER_DOCUMENTATION_NEEDLE, markdownLink);
+  }
+
+  void localEnvironment(LocalEnvironment localEnvironment) {
+    Assert.notNull("localEnvironment", localEnvironment);
+
+    builder.optionalReplacements().in(README).add(JHIPSTER_LOCAL_ENVIRONMENT_NEEDLE, localEnvironment.get());
   }
 
   void readmeSection(String section) {

@@ -17,11 +17,11 @@
     }
   },
   "include": [
-    "src/test/javascript/spec/**/*.ts",
     "src/main/webapp/**/*.ts",
     "src/main/webapp/**/*.d.ts",
     "src/main/webapp/**/*.tsx",
-    "src/main/webapp/**/*.vue"
+    "src/main/webapp/**/*.vue",
+    "src/test/javascript/spec/**/*.ts"
   ],
   "exclude": ["./node_modules", "src/test/javascript/cypress/**/*.ts"]
 }

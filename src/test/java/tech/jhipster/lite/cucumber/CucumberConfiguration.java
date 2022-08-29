@@ -16,9 +16,10 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import tech.jhipster.lite.JHLiteApp;
+import tech.jhipster.lite.project.infrastructure.secondary.MockedProjeftFormatterConfiguration;
 
 @CucumberContextConfiguration
-@SpringBootTest(classes = { JHLiteApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { JHLiteApp.class, MockedProjeftFormatterConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {
 
   @Autowired

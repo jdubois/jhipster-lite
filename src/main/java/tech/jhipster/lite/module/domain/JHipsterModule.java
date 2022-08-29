@@ -3,7 +3,6 @@ package tech.jhipster.lite.module.domain;
 import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +12,15 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleContext.JHipsterModuleContextBuilder;
-import tech.jhipster.lite.module.domain.JHipsterModuleFiles.JHipsterModuleFilesBuilder;
 import tech.jhipster.lite.module.domain.JHipsterModulePreActions.JHipsterModulePreActionsBuilder;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterFilesToDelete;
+import tech.jhipster.lite.module.domain.file.JHipsterFilesToMove;
+import tech.jhipster.lite.module.domain.file.JHipsterModuleFiles;
+import tech.jhipster.lite.module.domain.file.JHipsterModuleFiles.JHipsterModuleFilesBuilder;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterTemplatedFile;
+import tech.jhipster.lite.module.domain.file.JHipsterTemplatedFiles;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
@@ -45,6 +51,7 @@ import tech.jhipster.lite.module.domain.postaction.JHipsterModulePostActions;
 import tech.jhipster.lite.module.domain.postaction.JHipsterModulePostActions.JHipsterModulePostActionsBuilder;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
+import tech.jhipster.lite.module.domain.replacement.FileStartReplacer;
 import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements;
 import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements.JHipsterModuleMandatoryReplacementsBuilder;
 import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacements;
@@ -59,8 +66,8 @@ public class JHipsterModule {
 
   public static final String LINE_BREAK = "\n";
 
-  private final JHipsterProjectFolder projectFolder;
-  private final Collection<JHipsterModuleFile> files;
+  private final JHipsterModuleProperties properties;
+  private final JHipsterModuleFiles files;
   private final JHipsterModuleMandatoryReplacements mandatoryReplacements;
   private final JHipsterModuleOptionalReplacements optionalReplacements;
   private final JHipsterModuleContext context;
@@ -72,9 +79,9 @@ public class JHipsterModule {
   private final SpringProperties springProperties;
 
   private JHipsterModule(JHipsterModuleBuilder builder) {
-    projectFolder = builder.projectFolder;
+    properties = builder.properties;
 
-    files = builder.files.build().get();
+    files = builder.files.build();
     mandatoryReplacements = builder.mandatoryReplacements.build();
     optionalReplacements = builder.optionalReplacements.build();
     context = builder.context.build();
@@ -87,24 +94,22 @@ public class JHipsterModule {
   }
 
   private SpringProperties buildSpringProperties(JHipsterModuleBuilder builder) {
-    List<SpringProperty> properties = builder.springProperties.entrySet().stream().flatMap(toProperties()).toList();
-
-    return new SpringProperties(properties);
+    return new SpringProperties(builder.springProperties.entrySet().stream().flatMap(toSpringProperties()).toList());
   }
 
-  private Function<Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder>, Stream<SpringProperty>> toProperties() {
-    return properties -> properties.getValue().build().properties().entrySet().stream().map(toProperty(properties));
+  private Function<Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder>, Stream<SpringProperty>> toSpringProperties() {
+    return inputProperties -> inputProperties.getValue().build().properties().entrySet().stream().map(toSpringProperty(inputProperties));
   }
 
-  private Function<Entry<PropertyKey, PropertyValue>, SpringProperty> toProperty(
-    Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder> properties
+  private Function<Entry<PropertyKey, PropertyValue>, SpringProperty> toSpringProperty(
+    Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder> inputProperties
   ) {
     return property ->
       SpringProperty
-        .builder(properties.getKey().type())
+        .builder(inputProperties.getKey().type())
         .key(property.getKey())
         .value(property.getValue())
-        .profile(properties.getKey().profile())
+        .profile(inputProperties.getKey().profile())
         .build();
   }
 
@@ -132,6 +137,10 @@ public class JHipsterModule {
     Assert.notBlank("source", source);
 
     return new JHipsterSource(Paths.get("/generator", source));
+  }
+
+  public static JHipsterProjectFilePath path(String path) {
+    return new JHipsterProjectFilePath(path);
   }
 
   public static JHipsterDestination to(String destination) {
@@ -170,6 +179,10 @@ public class JHipsterModule {
     return new RegexReplacer(always(), regex);
   }
 
+  public static FileStartReplacer fileStart() {
+    return new FileStartReplacer(notContainingReplacement());
+  }
+
   public static TextNeedleBeforeReplacer lineBeforeText(String needle) {
     return new TextNeedleBeforeReplacer(notContainingReplacement(), needle);
   }
@@ -198,6 +211,10 @@ public class JHipsterModule {
     return new DocumentationTitle(title);
   }
 
+  public static LocalEnvironment localEnvironment(String localEnvironment) {
+    return new LocalEnvironment(localEnvironment);
+  }
+
   public static ScriptKey scriptKey(String key) {
     return new ScriptKey(key);
   }
@@ -211,17 +228,33 @@ public class JHipsterModule {
   }
 
   public JHipsterProjectFolder projectFolder() {
-    return projectFolder;
+    return properties.projectFolder();
+  }
+
+  public JHipsterModuleProperties properties() {
+    return properties;
   }
 
   public Indentation indentation() {
-    return context.indentation();
+    return properties.indentation();
   }
 
-  public TemplatedFiles templatedFiles() {
-    List<TemplatedFile> templatedFiles = files.stream().map(file -> TemplatedFile.builder().file(file).context(context).build()).toList();
+  public JHipsterTemplatedFiles templatedFiles() {
+    List<JHipsterTemplatedFile> templatedFiles = files
+      .filesToAdd()
+      .stream()
+      .map(file -> JHipsterTemplatedFile.builder().file(file).context(context).build())
+      .toList();
 
-    return new TemplatedFiles(templatedFiles);
+    return new JHipsterTemplatedFiles(templatedFiles);
+  }
+
+  public JHipsterFilesToMove filesToMove() {
+    return files.filesToMove();
+  }
+
+  public JHipsterFilesToDelete filesToDelete() {
+    return files.filesToDelete();
   }
 
   public JHipsterModuleMandatoryReplacements mandatoryReplacements() {
@@ -261,7 +294,6 @@ public class JHipsterModule {
     private static final String PROFILE = "profile";
 
     private final JHipsterModuleShortcuts shortcuts;
-    private final JHipsterProjectFolder projectFolder;
     private final JHipsterModuleProperties properties;
     private final JHipsterModuleContextBuilder context;
     private final JHipsterModuleFilesBuilder files = JHipsterModuleFiles.builder(this);
@@ -277,7 +309,6 @@ public class JHipsterModule {
     private JHipsterModuleBuilder(JHipsterModuleProperties properties) {
       Assert.notNull("properties", properties);
 
-      this.projectFolder = properties.projectFolder();
       this.properties = properties;
       context = JHipsterModuleContext.builder(this);
       shortcuts = new JHipsterModuleShortcuts(this);
@@ -289,6 +320,12 @@ public class JHipsterModule {
 
     public JHipsterModuleBuilder documentation(DocumentationTitle title, JHipsterSource source) {
       shortcuts.documentation(title, source);
+
+      return this;
+    }
+
+    public JHipsterModuleBuilder localEnvironment(LocalEnvironment localEnvironment) {
+      shortcuts.localEnvironment(localEnvironment);
 
       return this;
     }

@@ -1,7 +1,6 @@
 package tech.jhipster.lite.module.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
-import static tech.jhipster.lite.module.domain.properties.JHipsterModulePropertyDefinition.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +15,17 @@ import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javabuild.command.RemoveDirectJavaDependency;
 import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
 import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
-import tech.jhipster.lite.module.domain.javadependency.*;
+import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
+import tech.jhipster.lite.module.domain.javadependency.DependencyId;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDependencyOptionalValueBuilder;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
 import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.packagejson.VersionSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.domain.properties.JHipsterModulePropertiesDefinition;
-import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public final class JHipsterModulesFixture {
 
@@ -39,13 +41,14 @@ public final class JHipsterModulesFixture {
       .and()
     .files()
       .add(from("init/gitignore"), to(".gitignore"))
-      .addExecutable(from("init/.husky/pre-commit"), to(".husky/pre-commit"))
+      .addExecutable(from("prettier/.husky/pre-commit"), to(".husky/pre-commit"))
       .batch(from("server/javatool/base"), to("src/main/java/com/company/myapp/errors"))
         .addTemplate("Assert.java.mustache")
         .addTemplate("AssertionException.java.mustache")
         .and()
         .add(from("server/springboot/core/MainApp.java.mustache"), to("src/main/java/com/company/myapp/MyApp.java"))
       .add(from("init/README.md.mustache"), to("README.md"))
+      .move(path("dummy.txt"), to("dummy.json"))
       .and()
     .documentation(documentationTitle("Cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
     .documentation(documentationTitle("Another cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
@@ -188,7 +191,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static JHipsterModuleProperties testModuleProperties() {
-    return new JHipsterModuleProperties(new JHipsterProjectFolder(TestFileUtils.tmpDirForTest()), false, null);
+    return new JHipsterModuleProperties(TestFileUtils.tmpDirForTest(), true, null);
   }
 
   public static CurrentJavaDependenciesVersions currentJavaDependenciesVersion() {
@@ -209,12 +212,12 @@ public final class JHipsterModulesFixture {
 
   public static JHipsterModuleProperties allProperties() {
     return new JHipsterModuleProperties(
-      new JHipsterProjectFolder("/test"),
+      "/test",
       true,
       Map.of(
         "packageName",
         "tech.jhipster.chips",
-        "prettierDefaultIndent",
+        "indentSize",
         2,
         "projectName",
         "JHipster project",
@@ -230,20 +233,6 @@ public final class JHipsterModulesFixture {
         true
       )
     );
-  }
-
-  public static JHipsterModulePropertiesDefinition propertiesDefinition() {
-    return JHipsterModulePropertiesDefinition
-      .builder()
-      .addBasePackage()
-      .addIndentation()
-      .addProjectName()
-      .addProjectBaseName()
-      .add(optionalStringProperty("optionalString").build())
-      .add(mandatoryIntegerProperty("mandatoryInteger").build())
-      .add(mandatoryBooleanProperty("mandatoryBoolean").build())
-      .add(optionalBooleanProperty("optionalBoolean").build())
-      .build();
   }
 
   public static JHipsterModulePropertiesBuilder propertiesBuilder(String projectFolder) {
@@ -321,13 +310,40 @@ public final class JHipsterModulesFixture {
     return javaBuildPlugin().groupId("org.apache.maven.plugins").artifactId("maven-enforcer-plugin").build();
   }
 
+  public static JHipsterModulesToApply modulesToApply() {
+    return new JHipsterModulesToApply(
+      List.of(moduleSlug("maven-java"), moduleSlug("init")),
+      propertiesBuilder("/dummy")
+        .projectName("Chips Project")
+        .basePackage("tech.jhipster.chips")
+        .put("baseName", "chips")
+        .put("serverPort", 8080)
+        .build()
+    );
+  }
+
+  public static JHipsterModuleSlug moduleSlug(String slug) {
+    return new JHipsterModuleSlug(slug);
+  }
+
+  public static JHipsterFeatureSlug featureSlug(String slug) {
+    return new JHipsterFeatureSlug(slug);
+  }
+
   public static class JHipsterModulePropertiesBuilder {
 
+    private boolean commitModules = false;
     private final String projectFolder;
     private final Map<String, Object> properties = new HashMap<>();
 
     private JHipsterModulePropertiesBuilder(String projectFolder) {
       this.projectFolder = projectFolder;
+    }
+
+    public JHipsterModulePropertiesBuilder commitModules() {
+      commitModules = true;
+
+      return this;
     }
 
     public JHipsterModulePropertiesBuilder basePackage(String basePackage) {
@@ -355,7 +371,7 @@ public final class JHipsterModulesFixture {
     }
 
     public JHipsterModuleProperties build() {
-      return new JHipsterModuleProperties(projectFolder, false, properties);
+      return new JHipsterModuleProperties(projectFolder, commitModules, properties);
     }
   }
 }

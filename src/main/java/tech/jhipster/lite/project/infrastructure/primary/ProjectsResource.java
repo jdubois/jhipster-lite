@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ import tech.jhipster.lite.project.domain.download.Project;
 
 @RestController
 @Tag(name = "Project")
-@RequestMapping("/api/projects")
+@RequestMapping("/api")
 class ProjectsResource {
 
   private final ProjectsApplicationService projects;
@@ -27,8 +28,14 @@ class ProjectsResource {
     this.projects = projects;
   }
 
+  @PostMapping(path = "/format-project")
+  @Operation(summary = "Format the project")
+  void formatProject(@Schema(description = "Path of the project to format") @RequestParam("path") String path) {
+    projects.format(new ProjectPath(path));
+  }
+
   @Operation(summary = "Download the project")
-  @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+  @GetMapping(path = "/projects", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   ResponseEntity<Resource> downloadProject(@Schema(description = "Path of the project to download") @RequestParam("path") String path) {
     Project project = projects.get(new ProjectPath(path));
     String filename = project.name().filename();
@@ -43,7 +50,7 @@ class ProjectsResource {
   }
 
   @Operation(summary = "Get project information")
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(path = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<RestProjectHistory> getprojectHistory(
     @Schema(description = "Path of the project to get information for") @RequestParam("path") String path
   ) {

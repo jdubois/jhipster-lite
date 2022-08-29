@@ -1,9 +1,0 @@
-{
-  "folder": "/tmp/jhlite/undertowapp",
-  "generator-jhipster": {
-    "projectName": "UndertowApp Project",
-    "baseName": "undertowapp",
-    "packageName": "tech.jhipster.undertowapp",
-    "addFlywayMysql": true
-  }
-}

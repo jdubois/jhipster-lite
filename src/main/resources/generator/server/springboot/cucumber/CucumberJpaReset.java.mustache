@@ -1,24 +1,21 @@
 package {{packageName}}.cucumber;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import java.util.Collection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public class CucumberJpaReset {
 
   @Autowired
-  private Map<String, JpaRepository<?, ?>> repositories;
+  private Collection<JpaRepository<?, ?>> repositories;
 
   @After
   @Before
+  @Transactional
   public void wipeData() {
-    repositories.entrySet()
-        .stream()
-        .map(Map.Entry::getValue)
-        .forEach(JpaRepository::deleteAllInBatch);
+    repositories.forEach(JpaRepository::deleteAllInBatch);
   }
 }

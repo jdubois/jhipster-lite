@@ -8,6 +8,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 import tech.jhipster.lite.projectfolder.domain.ProjectFolder;
 
 @Component

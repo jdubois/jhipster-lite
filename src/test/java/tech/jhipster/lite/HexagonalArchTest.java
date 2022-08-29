@@ -175,6 +175,18 @@ class HexagonalArchTest {
   }
 
   @Test
+  void shouldNotHaveExternalDependenciesFromDomain() {
+    classes()
+      .that()
+      .resideInAnyPackage("..domain..")
+      .should()
+      .onlyDependOnClassesThat()
+      .resideInAnyPackage("tech.jhipster.lite..", "java..", ""/* primitives */, "org.slf4j", "org.apache.commons..")
+      .because("Domain should not depend on external dependencies")
+      .check(classes);
+  }
+
+  @Test
   void shouldNotHaveContextDependenciesForSharedKernels() {
     sharedKernelsPackages.forEach(kernel ->
       noClasses()

@@ -14,7 +14,11 @@ public class CucumberApplicationService {
     factory = new CucumberModuleFactory();
   }
 
-  public JHipsterModule build(JHipsterModuleProperties properties) {
-    return factory.buildModule(properties);
+  public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties) {
+    return factory.buildInitializationModule(properties);
+  }
+
+  public JHipsterModule buildJpaResetModule(JHipsterModuleProperties properties) {
+    return factory.buildJpaResetModule(properties);
   }
 }

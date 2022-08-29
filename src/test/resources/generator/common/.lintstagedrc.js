@@ -1,3 +1,4 @@
 module.exports = {
-  '{,src/**/,webpack/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java,xml}': ['prettier --write'],
+  '{,src/**/}*.{js,ts,tsx,vue}': ['eslint --fix'],
+  '{,src/**/}*.{md,json,yml,html,css,scss,java,xml}': ['prettier --write'],
 };

@@ -1,0 +1,57 @@
+package tech.jhipster.lite.module.domain;
+
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.error.domain.Assert;
+
+public abstract sealed class JHipsterSlug permits JHipsterModuleSlug, JHipsterFeatureSlug {
+
+  private static final Pattern SLUG_FORMAT = Pattern.compile("^[a-z1-9-]+$");
+
+  private final String slug;
+
+  protected JHipsterSlug(String slug) {
+    Assert.notBlank("slug", slug);
+
+    assertFormat(slug);
+
+    this.slug = slug;
+  }
+
+  private static void assertFormat(String slug) {
+    if (invalidFormat(slug)) {
+      throw new InvalidJHipsterSlugException(slug);
+    }
+  }
+
+  private static boolean invalidFormat(String slug) {
+    return !SLUG_FORMAT.matcher(slug).matches();
+  }
+
+  public String get() {
+    return slug;
+  }
+
+  @Override
+  @Generated
+  public int hashCode() {
+    return new HashCodeBuilder().append(slug).hashCode();
+  }
+
+  @Override
+  @Generated
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+
+    JHipsterSlug other = (JHipsterSlug) obj;
+    return new EqualsBuilder().append(slug, other.slug).isEquals();
+  }
+}

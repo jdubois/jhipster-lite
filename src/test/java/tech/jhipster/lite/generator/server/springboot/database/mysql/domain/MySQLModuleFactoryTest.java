@@ -85,6 +85,9 @@ class MySQLModuleFactoryTest {
       .containing("spring.datasource.username=myapp")
       .containing("spring.datasource.password=")
       .containing("spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver")
-      .containing("spring.datasource.hikari.maximum-pool-size=2");
+      .containing("spring.datasource.hikari.maximum-pool-size=2")
+      .containing("spring.jpa.open-in-view=false")
+      .containing("spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true")
+      .containing("spring.datasource.hikari.auto-commit=false");
   }
 }

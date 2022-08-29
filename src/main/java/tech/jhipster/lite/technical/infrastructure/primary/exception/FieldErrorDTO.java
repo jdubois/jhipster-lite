@@ -3,7 +3,7 @@ package tech.jhipster.lite.technical.infrastructure.primary.exception;
 import java.io.Serial;
 import java.io.Serializable;
 
-public class FieldErrorDTO implements Serializable {
+class FieldErrorDTO implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 1L;

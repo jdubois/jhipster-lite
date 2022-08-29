@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.Collection;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterModuleTag;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleTag;
 
 @Schema(name = "JHipsterModule", description = "Information for a JHipster module")
 class RestJHipsterModule {
@@ -24,7 +25,7 @@ class RestJHipsterModule {
   static RestJHipsterModule from(JHipsterModuleResource moduleResource) {
     return new RestJHipsterModuleBuilder()
       .slug(moduleResource.slug().get())
-      .description(moduleResource.apiDoc().operation())
+      .description(moduleResource.apiDoc().operation().get())
       .properties(RestJHipsterModulePropertiesDefinition.from(moduleResource.propertiesDefinition()))
       .tags(moduleResource.tags().get().stream().map(JHipsterModuleTag::tag).toList())
       .build();

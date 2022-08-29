@@ -13,7 +13,7 @@ public record RegexNeedleBeforeReplacer(ReplacementCondition condition, Pattern 
 
   @Override
   public boolean notMatchIn(String content) {
-    return !pattern().matcher(content).find();
+    return !linePattern().matcher(content).find();
   }
 
   @Override

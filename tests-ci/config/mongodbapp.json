@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/mongodbapp",
-  "generator-jhipster": {
-    "projectName": "MongoDB App Project",
-    "baseName": "mongodbapp",
-    "packageName": "tech.jhipster.mongodbapp"
-  }
-}

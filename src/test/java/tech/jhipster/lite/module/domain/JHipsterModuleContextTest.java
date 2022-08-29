@@ -21,12 +21,8 @@ class JHipsterModuleContextTest {
   }
 
   @Test
-  void shouldGetDefaultIndentationFromInvalidIndentation() {
-    Indentation indentation = JHipsterModuleContext
-      .builder(emptyModuleBuilder())
-      .put("prettierDefaultIndent", "dummy")
-      .build()
-      .indentation();
+  void shouldGetIndentSizeationFromInvalidIndentation() {
+    Indentation indentation = JHipsterModuleContext.builder(emptyModuleBuilder()).put("indentSize", "dummy").build().indentation();
 
     logs.shouldHave(Level.INFO, "invalid indentation, using default");
     assertThat(indentation).isEqualTo(Indentation.DEFAULT);
@@ -43,7 +39,7 @@ class JHipsterModuleContextTest {
         entry("projectName", "JHipster Project"),
         entry("packageName", "com.mycompany.myapp"),
         entry("serverPort", 8080),
-        entry("prettierDefaultIndent", 2)
+        entry("indentSize", 2)
       );
   }
 }

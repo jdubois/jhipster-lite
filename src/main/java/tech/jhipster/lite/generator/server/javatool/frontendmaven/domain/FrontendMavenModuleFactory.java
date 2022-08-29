@@ -4,9 +4,11 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.npm.domain.NpmVersionSource;
+import tech.jhipster.lite.npm.domain.NpmVersions;
 
 public class FrontendMavenModuleFactory {
 
@@ -16,8 +18,11 @@ public class FrontendMavenModuleFactory {
 
   private static final String REDIRECTION_PRIMARY = "technical/infrastructure/primary/redirection";
 
-  private static final String NODE_VERSION = "v16.16.0";
-  private static final String NPM_VERSION = "8.14.0";
+  private final NpmVersions npmVersions;
+
+  public FrontendMavenModuleFactory(NpmVersions npmVersions) {
+    this.npmVersions = npmVersions;
+  }
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
@@ -27,8 +32,8 @@ public class FrontendMavenModuleFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .javaDependencies()
-        .setVersion(javaDependencyVersion("node", NODE_VERSION))
-        .setVersion(javaDependencyVersion("npm", NPM_VERSION))
+        .setVersion(javaDependencyVersion("node", "v" + npmVersions.get("node", NpmVersionSource.COMMON).get()))
+        .setVersion(javaDependencyVersion("npm", npmVersions.get("npm", NpmVersionSource.COMMON).get()))
         .and()
       .javaBuildPlugins()
         .plugin(checksumPlugin())

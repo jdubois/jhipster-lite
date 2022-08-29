@@ -3,6 +3,7 @@ package tech.jhipster.lite.module.infrastructure.primary;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Collection;
 import java.util.Comparator;
+import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 @Schema(name = "JHipsterModuleCategory", description = "Information for a module category")
 class RestJHipsterModuleCategory {

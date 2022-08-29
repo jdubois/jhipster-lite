@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/fullapp",
-  "generator-jhipster": {
-    "projectName": "Fullapp Project",
-    "baseName": "fullapp",
-    "packageName": "tech.jhipster.fullapp"
-  }
-}

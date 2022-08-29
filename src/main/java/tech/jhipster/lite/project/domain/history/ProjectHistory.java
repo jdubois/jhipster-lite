@@ -38,7 +38,7 @@ public class ProjectHistory {
     return actions;
   }
 
-  public ModuleProperties latestProperties() {
-    return actions.stream().map(ProjectAction::properties).reduce(ModuleProperties.EMPTY, ModuleProperties::merge);
+  public ModuleParameters latestProperties() {
+    return actions.stream().map(ProjectAction::parameters).reduce(ModuleParameters.EMPTY, ModuleParameters::merge);
   }
 }

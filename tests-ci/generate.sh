@@ -11,283 +11,324 @@ fi
 
 application=$1
 
-if test -f config/"$application".json; then
-  filename=config/"$application".json
-elif test -f tests-ci/config/"$application".json; then
-  filename=tests-ci/config/"$application".json
-else
-  echo "The application" "$application" "does not exist!"
-  exit 1
-fi
+applyModules() {
+  for module in $@
+  do
+    local payload="$(sed "s/APP_NAME/$application/g" modulePayload.json)"
+    local api="/api/modules/$module/apply-patch"
 
-callApi() {
-  local api="$1"
-  status_code=$(curl -o /dev/null -s -w "%{http_code}\n" \
-    -X POST \
-    -H "accept: */*" \
-    -H "Content-Type: application/json" -d @"$filename" \
-    "http://localhost:7471""$api")
+    echo "curl -o /dev/null -s -w "%{http_code}\n" \
+      -X POST \
+      -H "accept: */*" \
+      -H "Content-Type: application/json" \
+      -d "$payload" \
+      "http://localhost:7471""$api""
 
-  if [[ $status_code == '40'* || $status_code == '50'* ]]; then
-    echo "Error when calling API:" "$status_code" "$api"
-    exit 1
-  fi;
+    local status_code=$(curl -o /dev/null -s -w "%{http_code}\n" \
+      -X POST \
+      -H "accept: */*" \
+      -H "Content-Type: application/json" \
+      -d "$payload" \
+      "http://localhost:7471""$api")
+
+    if [[ $status_code == '40'* || $status_code == '50'* ]]; then
+      echo "Error when calling API:" "$status_code" "$api"
+      exit 1
+    fi;
+  done
 }
 
-springboot_mvc() {
-  callApi "/api/inits/full"
-  callApi "/api/build-tools/maven"
-  callApi "/api/developer-tools/github-actions"
-  callApi "/api/servers/java/base"
-  callApi "/api/servers/java/jacoco-minimum-coverage"
-  callApi "/api/servers/spring-boot"
-  callApi "/api/servers/spring-boot/web-servers/tomcat"
-  callApi "/api/servers/spring-boot/zalando-problems"
-  callApi "/api/servers/spring-boot/technical-tools/actuator"
+spring_boot_mvc() {
+  spring_boot
+
+  applyModules \
+  "spring-boot-tomcat" \
+  "zalando-problems"
 }
 
-springboot_undertow() {
-  callApi "/api/inits/full"
-  callApi "/api/build-tools/maven"
-  callApi "/api/developer-tools/github-actions"
-  callApi "/api/servers/java/base"
-  callApi "/api/servers/java/jacoco-minimum-coverage"
-  callApi "/api/servers/spring-boot"
-  callApi "/api/servers/spring-boot/web-servers/undertow"
-  callApi "/api/servers/spring-boot/zalando-problems"
-  callApi "/api/servers/spring-boot/technical-tools/actuator"
+spring_boot_undertow() {
+  applyModules \
+  "init" \
+  "maven-java" \
+  "github-actions" \
+  "java-base" \
+  "jacoco-check-min-coverage" \
+  "spring-boot" \
+  "spring-boot-undertow" \
+  "zalando-problems" \
+  "spring-boot-actuator"
 }
 
-springboot() {
-  callApi "/api/inits/full"
-  callApi "/api/build-tools/maven"
-  callApi "/api/developer-tools/github-actions"
-  callApi "/api/servers/java/base"
-  callApi "/api/servers/java/jacoco-minimum-coverage"
-  callApi "/api/servers/spring-boot"
-  callApi "/api/servers/spring-boot/technical-tools/actuator"
+spring_boot() {
+  applyModules \
+  "init" \
+  "maven-java" \
+  "github-actions" \
+  "java-base" \
+  "jacoco-check-min-coverage" \
+  "spring-boot" \
+  "spring-boot-actuator"
 }
 
 sonar_back() {
-  callApi "/api/developer-tools/sonar/java-backend"
+  applyModules "sonar-java-backend"
 }
 
 sonar_back_front() {
-  callApi "/api/developer-tools/sonar/java-backend-and-frontend"
+  applyModules "sonar-java-backend-and-frontend"
 }
 
-if [[ $application == 'springboot' ]]; then
-  springboot_mvc
+cucumber_with_jwt() {
+  applyModules \
+  "spring-boot-jwt" \
+  "spring-boot-jwt-basic-auth" \
+  "springdoc-mvc-openapi-with-security-jwt" \
+  "spring-boot-cucumber" \
+  "spring-boot-cucumber-jwt-authentication"
+}
+
+if [[ $application == 'spring-boot' ]]; then
+  spring_boot_mvc
   sonar_back
 
 elif [[ $application == 'fullstack' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
 elif [[ $application == 'fullapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/infinitest-filters"
-  callApi "/api/servers/spring-boot/async"
-  callApi "/api/servers/spring-boot/technical-tools/devtools"
-  callApi "/api/servers/spring-boot/log-tools/aop"
-  callApi "/api/servers/spring-boot/log-tools/logstash"
-  callApi "/api/servers/spring-boot/banners/jhipster-v7"
-  callApi "/api/servers/spring-boot/containers/docker/jib"
-  callApi "/api/servers/spring-boot/containers/docker/dockerfile"
-  callApi "/api/servers/java/arch"
-  callApi "/api/developer-tools/codespaces"
-  callApi "/api/developer-tools/gitpod"
+  applyModules \
+  "infinitest-filters" \
+  "spring-boot-async" \
+  "spring-boot-devtools" \
+  "logstash" \
+  "banner-jhipster-v7" \
+  "jib" \
+  "dockerfile" \
+  "java-archunit" \
+  "github-codespaces" \
+  "gitpod"
 
-  callApi "/api/servers/spring-boot/security-systems/jwt"
-  callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
-  callApi "/api/servers/spring-boot/component-tests/cucumber"
-  callApi "/api/servers/spring-boot/component-tests/cucumber-jwt-authentication"
-  callApi "/api/servers/spring-boot/features/dummy"
-  callApi "/api/servers/hexagonal-architecture-documentation"
-  callApi "/api/servers/bean-validation-test"
+  cucumber_with_jwt
 
-  callApi "/api/servers/spring-boot/databases/postgresql"
-  callApi "/api/servers/spring-boot/features/user/postgresql"
-  callApi "/api/servers/spring-boot/features/dummy"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase/user"
+  applyModules "spring-boot-cucumber-jpa-reset"
+  applyModules "application-service-hexagonal-architecture-documentation"
 
-  callApi "/api/servers/spring-boot/caches/ehcache/java-configuration"
+  applyModules "postgresql" "liquibase"
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/vue"
+  applyModules \
+  "bean-validation-test" \
+  "dummy-feature" \
+  "dummy-jpa-persistence" \
+  "dummy-liquibase-changelog" \
+
+  applyModules "ehcache-with-java-config"
+
+  applyModules "frontend-maven-plugin" "vue-core"
 
 elif [[ $application == 'oauth2app' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-  callApi "/api/servers/spring-boot/security-systems/oauth2"
-  callApi "/api/servers/spring-boot/security-systems/oauth2/account"
-  callApi "/api/servers/spring-boot/component-tests/cucumber"
-  callApi "/api/servers/spring-boot/component-tests/cucumber-oauth2-authentication"
-  callApi "/api/servers/bean-validation-test"
-  callApi "/api/servers/spring-boot/features/dummy"
+  applyModules \
+  "spring-boot-oauth2" \
+  "spring-boot-oauth2-account" \
+  "springdoc-mvc-openapi-with-security-oauth2"
+
+  applyModules \
+  "spring-boot-cucumber" \
+  "spring-boot-cucumber-oauth2-authentication" \
+  "bean-validation-test" \
+  "dummy-feature"
 
 elif [[ $application == 'mysqlapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
+  applyModules "mysql" "liquibase"
 
-  callApi "/api/servers/spring-boot/databases/mysql"
-  callApi "/api/servers/spring-boot/features/user/mysql"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase/user"
+  cucumber_with_jwt
 
-  callApi "/api/servers/spring-boot/caches/ehcache/xml-configuration"
+  applyModules "spring-boot-cucumber-jpa-reset"
+
+  applyModules \
+  "bean-validation-test" \
+  "dummy-feature" \
+  "dummy-jpa-persistence" \
+  "dummy-liquibase-changelog" \
+
+  applyModules "ehcache-with-xml-config"
 
 elif [[ $application == 'mariadbapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-
-  callApi "/api/servers/spring-boot/databases/mariadb"
-  callApi "/api/servers/spring-boot/features/user/mariadb"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase"
-  callApi "/api/servers/spring-boot/database-migration-tools/liquibase/user"
-
-  callApi "/api/servers/spring-boot/caches/ehcache/xml-configuration"
+  applyModules "springdoc-mvc-openapi"
+  applyModules "mariadb" "liquibase"
+  applyModules "ehcache-with-xml-config"
 
 elif [[ $application == 'mssqlapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-
-  callApi "/api/servers/spring-boot/databases/mssql"
+  applyModules "springdoc-mvc-openapi"
+  applyModules "mssql"
 
 elif [[ $application == 'flywayapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/databases/postgresql"
-  callApi "/api/servers/spring-boot/features/user/postgresql"
-  callApi "/api/servers/spring-boot/database-migration-tools/flyway"
-  callApi "/api/servers/spring-boot/database-migration-tools/flyway/user"
+  applyModules "postgresql" "flyway"
+
+  cucumber_with_jwt
+
+  applyModules "spring-boot-cucumber-jpa-reset"
+
+  applyModules \
+  "bean-validation-test" \
+  "dummy-feature" \
+  "dummy-jpa-persistence" \
+  "dummy-postgresql-flyway-changelog" \
 
 elif [[ $application == 'undertowapp' ]]; then
-  springboot_undertow
+  spring_boot_undertow
   sonar_back
 
-  callApi "/api/servers/spring-boot/databases/mysql"
-  callApi "/api/servers/spring-boot/features/user/mysql"
-  callApi "/api/servers/spring-boot/database-migration-tools/flyway"
-  callApi "/api/servers/spring-boot/database-migration-tools/flyway/user"
+  applyModules \
+  "mysql" \
+  "flyway" \
+  "flyway-mysql"
 
-  callApi "/api/servers/spring-boot/caches/simple"
+  cucumber_with_jwt
+  applyModules "spring-boot-cucumber-jpa-reset"
+
+  applyModules \
+  "bean-validation-test" \
+  "dummy-feature" \
+  "dummy-jpa-persistence" \
+  "dummy-not-postgresql-flyway-changelog" \
+
+  applyModules "spring-boot-cache"
 
 elif [[ $application == 'eurekaapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/eureka-client"
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/config-client"
+  applyModules \
+  "eureka-client" \
+  "spring-cloud" \
 
 elif [[ $application == 'consulapp' ]]; then
-  springboot_undertow
+  spring_boot_undertow
   sonar_back
 
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/consul"
+  applyModules "consul"
 
 elif [[ $application == 'gatewayapp' ]]; then
-  springboot
+  spring_boot
   sonar_back
 
-  callApi "/api/servers/spring-boot/reactive-servers/netty"
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/eureka-client"
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/config-client"
-  callApi "/api/servers/spring-boot/distributed-systems/spring-cloud/gateway"
+  applyModules \
+  "spring-boot-webflux-netty" \
+  "eureka-client" \
+  "spring-cloud" \
+  "gateway"
 
 elif [[ $application == 'mongodbapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/databases/mongodb"
-  callApi "/api/servers/spring-boot/database-migration-tools/mongock"
+  applyModules "mongodb" "mongock"
+
+  cucumber_with_jwt
+
+  applyModules \
+  "bean-validation-test" \
+  "dummy-feature" \
+  "dummy-mongodb-persistence"
 
 elif [[ $application == 'angularapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/angular"
+  applyModules \
+  "frontend-maven-plugin" \
+  "angular-core" \
 
-  callApi "/api/servers/spring-boot/security-systems/jwt"
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
-  callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
-  callApi "/api/clients/angular/jwt"
-  callApi "/api/clients/angular/admin-pages/health"
+  cucumber_with_jwt
+
+  applyModules "angular-jwt" "angular-health"
 
 elif [[ $application == 'angularoauth2app' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/angular"
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
-  callApi "/api/clients/angular/oauth2"
-  callApi "/api/servers/spring-boot/security-systems/oauth2"
-  callApi "/api/servers/spring-boot/security-systems/oauth2/account"
+  applyModules \
+  "frontend-maven-plugin" \
+  "angular-core" \
+  "cypress"
+
+  applyModules \
+  "spring-boot-oauth2" \
+  "spring-boot-oauth2-account" \
+  "springdoc-mvc-openapi-with-security-oauth2"
+
+  applyModules "angular-oauth2"
 
 elif [[ $application == 'reactapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/react/styles"
-  callApi "/api/clients/cypress"
+  applyModules \
+  "frontend-maven-plugin" \
+  "react-core" \
+  "cypress"
 
-  callApi "/api/servers/spring-boot/security-systems/jwt"
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init-with-security-jwt"
-  callApi "/api/servers/spring-boot/security-systems/jwt/basic-auth"
-  callApi "/api/clients/react/jwt"
+  cucumber_with_jwt
+
+  applyModules "react-jwt"
 
 elif [[ $application == 'vueapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/vue"
-  callApi "/api/clients/vue/stores/pinia"
-  callApi "/api/clients/cypress"
+  applyModules \
+  "frontend-maven-plugin" \
+  "vue-core" \
+  "vue-pinia" \
+  "cypress"
 
 elif [[ $application == 'svelteapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back_front
 
-  callApi "/api/developer-tools/frontend-maven-plugin"
-  callApi "/api/clients/svelte/styles"
+  applyModules \
+  "frontend-maven-plugin" \
+  "prettier" \
+  "svelte"
 
 elif [[ $application == 'kafkaapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/brokers/kafka"
-  callApi "/api/servers/spring-boot/brokers/kafka/akhq"
+   applyModules "spring-boot-kafka" "spring-boot-kafka-akhq"
 
 elif [[ $application == 'pulsarapp' ]]; then
-  springboot_mvc
+  spring_boot_mvc
   sonar_back
 
-  callApi "/api/servers/spring-boot/brokers/pulsar"
+  applyModules "spring-boot-pulsar"
 
 elif [[ $application == 'reactiveapp' ]]; then
-  springboot
+  spring_boot
   sonar_back
 
-  callApi "/api/servers/spring-boot/reactive-servers/netty"
-  callApi "/api/servers/spring-boot/technical-tools/actuator"
-  callApi "/api/servers/spring-boot/api-documentations/springdoc/init"
+  applyModules \
+  "spring-boot-webflux-netty" \
+  "spring-boot-actuator" \
+  "springdoc-webflux-openapi"
 
 else
   echo "*** Unknown configuration..."

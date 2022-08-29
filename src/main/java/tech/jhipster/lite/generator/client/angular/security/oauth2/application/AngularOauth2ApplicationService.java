@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.client.angular.security.oauth2.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.client.angular.security.oauth2.domain.AngularOauth2Service;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.client.angular.security.oauth2.domain.AngularOauth2ModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class AngularOauth2ApplicationService {
 
-  private final AngularOauth2Service angularOauth2Service;
+  private final AngularOauth2ModuleFactory factory;
 
-  public AngularOauth2ApplicationService(AngularOauth2Service angularOauth2Service) {
-    this.angularOauth2Service = angularOauth2Service;
+  public AngularOauth2ApplicationService() {
+    factory = new AngularOauth2ModuleFactory();
   }
 
-  public void addOauth2(Project project) {
-    angularOauth2Service.addOauth2(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

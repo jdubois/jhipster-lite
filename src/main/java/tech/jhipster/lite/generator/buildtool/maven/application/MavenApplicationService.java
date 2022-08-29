@@ -14,7 +14,7 @@ public class MavenApplicationService {
     factory = new MavenModuleFactory();
   }
 
-  public JHipsterModule buildInitModule(JHipsterModuleProperties properties) {
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     return factory.buildModule(properties);
   }
 }

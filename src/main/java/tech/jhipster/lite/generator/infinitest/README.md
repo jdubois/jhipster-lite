@@ -2,7 +2,7 @@
 
 ## Description
 
-This module adds [inifitest](https://infinitest.github.io/) filters to the project
+This module adds [infinitest](https://infinitest.github.io/) filters to the project
 
 ## Maintainers
 

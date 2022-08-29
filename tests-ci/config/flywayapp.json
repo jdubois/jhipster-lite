@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/flywayapp",
-  "generator-jhipster": {
-    "projectName": "Flyway App",
-    "baseName": "flywayapp",
-    "packageName": "tech.jhipster.flywayapp"
-  }
-}

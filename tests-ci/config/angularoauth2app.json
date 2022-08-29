@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/angularoauth2app",
-  "generator-jhipster": {
-    "projectName": "Angular + Oauth2 app Project",
-    "baseName": "angularoauth2app",
-    "packageName": "tech.jhipster.angularoauth2app"
-  }
-}

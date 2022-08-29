@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
-public class CorsProperties {
+class CorsProperties {
 
   @Bean
   @ConfigurationProperties(prefix = "application.cors", ignoreUnknownFields = false)

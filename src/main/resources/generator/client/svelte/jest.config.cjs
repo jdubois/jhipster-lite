@@ -13,7 +13,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/main/webapp/**/*.{js,ts,svelte}',
     '!src/main/webapp/jest-setup.ts',
-    '!src/main/webapp/routes/index.svelte',
+    '!src/main/webapp/routes/+page.svelte',
     '!**/*.d.ts',
   ],
   coverageReporters: ['html', 'json-summary', 'text-summary', 'lcov', 'clover'],

@@ -3,8 +3,8 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.common.domai
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -44,6 +44,7 @@ public final class AuthenticationModulesFactory {
       .context()
         .put("applicationName", properties.projectBaseName().capitalized())
         .and()
+      .startupCommand("docker-compose -f src/main/docker/keycloak.yml up -d")
       .javaDependencies()
         .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-security"))
         .addDependency(springSecurityTest())

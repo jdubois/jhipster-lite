@@ -13,7 +13,7 @@ import tech.jhipster.lite.projectfolder.domain.ProjectFolder;
 @UnitTest
 class RestJHipsterModulePropertiesTest {
 
-  private final ProjectFolder jHipsterProjectFolderFactory = mock(ProjectFolder.class);
+  private static final ProjectFolder jHipsterProjectFolderFactory = mock(ProjectFolder.class);
 
   @Test
   void shouldNotConvertToPropertiesWithInvalidProjectFolder() {
@@ -35,9 +35,9 @@ class RestJHipsterModulePropertiesTest {
         {
           "projectFolder": "/test",
           "commit": true,
-          "properties": {
+          "parameters": {
             "packageName": "tech.jhipster.chips",
-            "prettierDefaultIndent": 2,
+            "indentSize": 2,
             "projectName": "JHipster project",
             "baseName": "jhipster",
             "optionalString": "optional",

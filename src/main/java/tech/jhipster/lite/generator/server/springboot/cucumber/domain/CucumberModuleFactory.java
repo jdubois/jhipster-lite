@@ -3,9 +3,9 @@ package tech.jhipster.lite.generator.server.springboot.cucumber.domain;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -16,7 +16,7 @@ public class CucumberModuleFactory {
   private static final String CUCUMBER_GROUP_ID = "io.cucumber";
   private static final String CUCUMBER_VERSION = "cucumber.version";
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+  public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
     String applicationName = properties.projectBaseName().capitalized();
@@ -61,10 +61,6 @@ public class CucumberModuleFactory {
       .addDependency(awaitilityDependency())
       .and();
     //@formatter:on
-
-    if (needJpaReset(properties)) {
-      builder.files().add(SOURCE.template("CucumberJpaReset.java"), destination.append("CucumberJpaReset.java"));
-    }
 
     return builder.build();
   }
@@ -113,7 +109,16 @@ public class CucumberModuleFactory {
     return javaDependency().groupId("org.awaitility").artifactId("awaitility").scope(JavaDependencyScope.TEST).build();
   }
 
-  private boolean needJpaReset(JHipsterModuleProperties properties) {
-    return properties.getOrDefaultBoolean("jpaReset", false);
+  public JHipsterModule buildJpaResetModule(JHipsterModuleProperties properties) {
+    Assert.notNull("properties", properties);
+
+    return moduleBuilder(properties)
+      .files()
+      .add(
+        SOURCE.template("CucumberJpaReset.java"),
+        toSrcTestJava().append(properties.packagePath()).append("cucumber").append("CucumberJpaReset.java")
+      )
+      .and()
+      .build();
   }
 }

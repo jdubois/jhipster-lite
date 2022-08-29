@@ -6,7 +6,7 @@ import org.zalando.problem.jackson.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
 @Configuration
-public class ProblemConfiguration {
+class ProblemConfiguration {
 
   /*
    * Module for serialization/deserialization of RFC7807 Problem.

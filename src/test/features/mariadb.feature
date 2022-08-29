@@ -2,9 +2,9 @@ Feature: MariaDB module
 
   Scenario: Should add MariaDB elements using legacy url
     When I apply modules to default project
-      | maven-java |
-      | springboot |
-      | mariadb    |
+      | maven-java  |
+      | spring-boot |
+      | mariadb     |
     Then I should have files in ""
       | pom.xml |
     And I should have files in "documentation"
@@ -21,10 +21,10 @@ Feature: MariaDB module
   Scenario: Should get MariaDB module properties definition
     When I get module "mariadb" properties definition
     Then I should have properties definitions
-      | Key                   | Type    | Mandatory |
-      | packageName           | STRING  | true      |
-      | baseName              | STRING  | true      |
-      | prettierDefaultIndent | INTEGER | false     |
+      | Key         | Type    | Mandatory |
+      | packageName | STRING  | true      |
+      | baseName    | STRING  | true      |
+      | indentSize  | INTEGER | false     |
 
   Scenario: Should add MariaDB elements using module url
     When I apply "mariadb" module to default project with maven file

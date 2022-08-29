@@ -1,18 +1,31 @@
 package tech.jhipster.lite.generator.server.javatool.frontendmaven.domain;
 
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.npm.domain.NpmVersion;
+import tech.jhipster.lite.npm.domain.NpmVersionSource;
+import tech.jhipster.lite.npm.domain.NpmVersions;
 
 @UnitTest
+@ExtendWith(MockitoExtension.class)
 class FrontendMavenModuleFactoryTest {
 
-  private static final FrontendMavenModuleFactory factory = new FrontendMavenModuleFactory();
+  @Mock
+  private NpmVersions npmVersions;
+
+  @InjectMocks
+  private FrontendMavenModuleFactory factory;
 
   @Test
   void shouldBuildModule() {
@@ -22,12 +35,15 @@ class FrontendMavenModuleFactoryTest {
       .projectBaseName("myapp")
       .build();
 
+    when(npmVersions.get("npm", NpmVersionSource.COMMON)).thenReturn(new NpmVersion("4.0.0"));
+    when(npmVersions.get("node", NpmVersionSource.COMMON)).thenReturn(new NpmVersion("16.0.0"));
+
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
       .createFile("pom.xml")
-      .containing("    <node.version>")
-      .containing("    <npm.version>")
+      .containing("    <node.version>v16.0.0</node.version>")
+      .containing("    <npm.version>4.0.0</npm.version>")
       .containing(
         """
               <plugin>

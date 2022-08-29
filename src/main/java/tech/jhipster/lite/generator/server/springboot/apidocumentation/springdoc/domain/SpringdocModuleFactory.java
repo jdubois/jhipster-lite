@@ -3,9 +3,9 @@ package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdo
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
@@ -58,9 +58,9 @@ public class SpringdocModuleFactory {
     return buildModule(moduleProperties, SPRINGDOC_OPENAPI_WEBFLUX_UI_DEPENDENCY, SPRINGDOC_CONFIG_SECURITY_JWT_JAVA_FILE).build();
   }
 
-  public JHipsterModule buildModuleWithSecurityOAuth2ForMvc(JHipsterModuleProperties moduleProperties) {
-    // prettier-ignore
-    return buildModule(moduleProperties, SPRINGDOC_OPENAPI_UI_DEPENDENCY, SPRINGDOC_CONFIG_SECURITY_OAUTH2_JAVA_FILE)
+  public JHipsterModule buildModuleWithSecurityOAuth2ForMvc(JHipsterModuleProperties properties) {
+    //@formatter:off
+    return buildModule(properties, SPRINGDOC_OPENAPI_UI_DEPENDENCY, SPRINGDOC_CONFIG_SECURITY_OAUTH2_JAVA_FILE)
       .javaDependencies()
         .addDependency(SPRINGDOC_OPENAPI_SECURITY_DEPENDENCY)
         .and()
@@ -69,7 +69,7 @@ public class SpringdocModuleFactory {
         .set(propertyKey("springdoc.swagger-ui.oauth.realm"), propertyValue("jhipster"))
         .set(
           propertyKey("springdoc.oauth2.authorization-url"),
-          propertyValue("http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/auth")
+          propertyValue("http://localhost:9080/realms/jhipster/protocol/openid-connect/auth")
         )
         .and()
       .springTestProperties()
@@ -77,10 +77,11 @@ public class SpringdocModuleFactory {
         .set(propertyKey("springdoc.swagger-ui.oauth.realm"), propertyValue("jhipster"))
         .set(
           propertyKey("springdoc.oauth2.authorization-url"),
-          propertyValue("http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/auth")
+          propertyValue("http://localhost:9080/realms/jhipster/protocol/openid-connect/auth")
         )
         .and()
       .build();
+    //@formatter:on
   }
 
   private JHipsterModuleBuilder buildModule(
@@ -94,7 +95,8 @@ public class SpringdocModuleFactory {
 
     //@formatter:off
     return moduleBuilder(properties)
-        .context()
+      .localEnvironment(localEnvironment("- [Local API doc](http://localhost:" + properties.serverPort().get() + "/swagger-ui/index.html)"))
+      .context()
         .put("baseNameLowercase", properties.projectBaseName().uncapitalized())
         .put("apiTitle", "Project API")
         .put("apiDescription", "Project description API")

@@ -2,6 +2,7 @@ package tech.jhipster.lite.git.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
 
+import ch.qos.logback.classic.Level;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,15 +14,23 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
-import tech.jhipster.lite.GitTestUtil;
+import org.junit.jupiter.api.extension.ExtendWith;
+import tech.jhipster.lite.LogsSpy;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
+@ExtendWith(LogsSpy.class)
 class JGitGitRepositoryTest {
 
   private static final JGitGitRepository git = new JGitGitRepository();
+
+  private final LogsSpy logs;
+
+  public JGitGitRepositoryTest(LogsSpy logs) {
+    this.logs = logs;
+  }
 
   @Nested
   @DisplayName("init")
@@ -51,6 +60,15 @@ class JGitGitRepositoryTest {
 
       assertThat(Files.isDirectory(path.resolve(".git"))).isTrue();
     }
+
+    @Test
+    void shouldNotInitAlreadyInitializedProject() throws IOException {
+      Path path = gitInit();
+
+      git.init(new JHipsterProjectFolder(path.toString()));
+
+      logs.shouldHave(Level.DEBUG, "already");
+    }
   }
 
   @Nested
@@ -71,6 +89,7 @@ class JGitGitRepositoryTest {
       git.commitAll(new JHipsterProjectFolder(path.toString()), "Add application.properties");
 
       assertThat(GitTestUtil.getCommits(path)).contains("Add application.properties");
+      assertThat(GitTestUtil.getCurrentBranch(path)).contains("main");
     }
   }
 

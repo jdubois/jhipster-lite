@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite-test/chips",
-  "generator-jhipster": {
-    "projectName": "Chips Project",
-    "baseName": "chips",
-    "packageName": "tech.jhipster.chips"
-  }
-}

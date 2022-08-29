@@ -10,37 +10,37 @@ Or, you can start JHipster Lite locally. Clone the project and in the `jhipster-
 
 ### Project folder
 
-First, you need to fill the `Project folder`:
+First, you need to fill the `Project folder`.
 
 ![fill_information](01-fill_information.png)
 
 ### Init
 
-Select the `init` module, fill the different fields, then, you'll be able to apply the module: you project will be initialized, with Git configuration, the IDE configuration, a simple `package.json`, etc.
+Select the `init` module, fill the different fields, then, you'll be able to apply the module: your project will be initialized, with Git configuration, the IDE configuration, a simple `package.json`, etc.
 
 ![init](02-init.png)
 
 ### Maven
 
-Search the `maven` module, select it, then, you need to fill the `packageName` before applying this module. It will generate a Maven project, by adding a Maven wrapper and a default `pom.xml`:
+Search the `maven` module, select it, then, you need to fill the `packageName` before applying this module. It will generate a Maven project, by adding a Maven wrapper and a default `pom.xml`.
 
 ![maven](03-maven.png)
 
 ### Java base
 
-Search the `java base` module and select it. It will add the Java base and all important asserts classes, used in project with Hexagonal Architecture:
+Search the `java base` module and select it. It will add the Java base and all important asserts classes, used in project with Hexagonal Architecture.
 
 ![java_base](04-java_base.png)
 
 ### Spring Boot
 
-Search the `spring boot` module, select the simple `spring boot` module, and apply it. It will add a Main Class, the spring boot dependencies, the spring boot properties.  
+Search the `spring boot` module, select the simple `spring boot` module, and apply it. It will add a Main Class, the Spring Boot dependencies, the Spring Boot properties.  
 
 ![spring_boot_section](05-spring_boot.png)
 
 ### Spring Boot MVC with Tomcat
 
-Search the `tomcat` module, select it, fill the `serverPort` property and apply it. It will add `Spring Boot MVC dependencies with Tomcat`, so your project will be an application server, using Tomcat:
+Search the `tomcat` module, select it, fill the `serverPort` property and apply it. It will add `Spring Boot MVC dependencies with Tomcat`, so your project will be an application server, using Tomcat.
 
 ![spring_boot_mvc](06-spring_boot_mvc.png)
 
@@ -50,19 +50,19 @@ Search the `zalando` module, select it and apply it.
 
 ### Vue
 
-Search the `vue` module, select it and apply it. It will add a simple front-end, using Vue 3:
+Search the `vue` module, select it and apply it. It will add a simple front-end, using Vue 3.
 
 ![vue](08-vue.png)
 
 ### Frontend Maven Plugin
 
-To make the front-end work with the back-end, you need to add the `Frontend Maven Plugin module:
+To make the front-end work with the back-end, you need to add the Frontend Maven Plugin module.
 
 ![frontend-maven-plugin](09-frontend_maven_plugin.png)
 
 ### Download
 
-Finally, you can download the project:
+Finally, you can download the project.
 
 ![download](10-download.png)
 
@@ -74,7 +74,7 @@ You should be able to access to your project at [http://localhost:8080](http://l
 
 ## Simple Java library
 
-You can use the following modules, applying by respecting this order:
+You can use the following modules, by respecting this order:
 
 - init
 - maven
@@ -90,18 +90,27 @@ You can use all the following modules:
 - maven
 - java-base
 - jacoco-check-min-coverage
-- springboot
-- springboot-tomcat
+- spring-boot
+- spring-boot-tomcat
 - zalando-problems
 - bean-validation-test
 - java-archunit
-- springboot-jwt
-- springboot-jwt-basic-auth
+- spring-boot-jwt
+- spring-boot-jwt-basic-auth
 - springdoc-openapi-with-security-jwt
-- springboot-cucumber
-- cucumber-jwt-authentication
+- spring-boot-cucumber
+- spring-boot-cucumber-jwt-authentication
 - dummy-feature
 - vue
 - frontend-maven-plugin
 
-You'll be able to access to [swagger ui](http://localhost:8080/swagger-ui/index.html)
+You'll be able to access to [Swagger UI](http://localhost:8080/swagger-ui/index.html)
+
+## Typescript project
+
+Use the following modules:
+
+- init
+- typescript
+
+Then, you can start to code in `src/` folder.

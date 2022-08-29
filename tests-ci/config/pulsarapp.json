@@ -1,8 +1,0 @@
-{
-  "folder": "/tmp/jhlite/pulsarapp",
-  "generator-jhipster": {
-    "projectName": "PulsarApp Project",
-    "baseName": "pulsarapp",
-    "packageName": "tech.jhipster.pulsarapp"
-  }
-}

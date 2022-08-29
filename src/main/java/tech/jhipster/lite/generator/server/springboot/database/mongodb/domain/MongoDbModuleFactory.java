@@ -5,8 +5,8 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -51,15 +51,15 @@ public class MongoDbModuleFactory {
               SOURCE.template("JSR310DateConvertersTest.java"),
               toSrcTestJava().append(packagePath).append(MONGO_SECONDARY).append("JSR310DateConvertersTest.java")
             )
-        .batch(SOURCE, toSrcTestJava().append(packagePath))
-          .addTemplate("MongodbTestContainerExtension.java")
-          .addTemplate("TestContainersSpringContextCustomizerFactory.java")
-          .and()
+        .add(SOURCE.template("TestMongoDBManager.java"), toSrcTestJava().append(packagePath).append("TestMongoDBManager.java"))
         .add(SOURCE.template("spring.factories"), to("src/test/resources/META-INF/spring.factories"))
         .and()
       .springMainProperties()
         .set(propertyKey("spring.data.mongodb.database"), propertyValue(properties.basePackage().get()))
         .set(propertyKey("spring.data.mongodb.uri"), propertyValue("mongodb://localhost:27017"))
+        .and()
+      .springTestProperties()
+        .set(propertyKey("spring.data.mongodb.uri"), propertyValue("${TEST_MONGODB_URI}"))
         .and()
       .springMainLogger("org.reflections", LogLevel.WARN)
       .springMainLogger("org.mongodb.driver", LogLevel.WARN)
@@ -67,7 +67,6 @@ public class MongoDbModuleFactory {
       .springTestLogger("org.mongodb.driver", LogLevel.WARN)
       .springTestLogger("com.github.dockerjava", LogLevel.WARN)
       .springTestLogger("org.testcontainers", LogLevel.WARN)
-      .integrationTestExtension("MongodbTestContainerExtension")
       .build();
     //@formatter:on
   }

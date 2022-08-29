@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindingResult;
@@ -29,8 +30,9 @@ import tech.jhipster.lite.error.domain.GeneratorException;
  * Controller advice to translate the server side exceptions to client-friendly json structures.
  * The error response follows RFC7807 - Problem Details for HTTP APIs (https://tools.ietf.org/html/rfc7807).
  */
+@Order(100)
 @ControllerAdvice
-public class ExceptionTranslator implements ProblemHandling {
+class ExceptionTranslator implements ProblemHandling {
 
   private static final String FIELD_ERRORS_KEY = "fieldErrors";
   private static final String MESSAGE_KEY = "message";
@@ -118,8 +120,6 @@ public class ExceptionTranslator implements ProblemHandling {
     Problem problem = Problem.builder().withStatus(Status.BAD_REQUEST).withTitle(ex.getMessage()).build();
     return create(ex, problem, request);
   }
-
-  // jhipster-needle-exception-translator
 
   @Override
   public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {

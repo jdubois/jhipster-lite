@@ -3,7 +3,7 @@ Feature: postgreSQL module
   Scenario: Should add postgreSQL elements using legacy url
     When I apply modules to default project
       | maven-java |
-      | springboot |
+      | spring-boot |
       | postgresql |
     Then I should have files in ""
       | pom.xml |
@@ -24,10 +24,10 @@ Feature: postgreSQL module
   Scenario: Should get postgreSQL module properties definition
     When I get module "postgresql" properties definition
     Then I should have properties definitions
-      | Key                   | Type    | Mandatory |
-      | packageName           | STRING  | true      |
-      | baseName              | STRING  | true      |
-      | prettierDefaultIndent | INTEGER | false     |
+      | Key         | Type    | Mandatory |
+      | packageName | STRING  | true      |
+      | baseName    | STRING  | true      |
+      | indentSize  | INTEGER | false     |
 
   Scenario: Should add postgreSQL elements using module url
     When I apply "postgresql" module to default project with maven file

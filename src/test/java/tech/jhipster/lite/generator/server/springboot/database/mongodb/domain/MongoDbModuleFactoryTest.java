@@ -37,7 +37,7 @@ class MongoDbModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile(), integrationTestAnnotation(), readmeFile())
+    assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile(), readmeFile())
       .createFiles("documentation/mongo-db.md")
       .createFile("README.md")
       .containing("""
@@ -83,17 +83,16 @@ class MongoDbModuleFactoryTest {
         "JSR310DateConverters.java"
       )
       .createFiles("src/test/java/com/jhipster/test/technical/infrastructure/secondary/mongodb/JSR310DateConvertersTest.java")
-      .createPrefixedFiles(
-        "src/test/java/com/jhipster/test",
-        "MongodbTestContainerExtension.java",
-        "TestContainersSpringContextCustomizerFactory.java"
-      )
+      .createFiles("src/test/java/com/jhipster/test/TestMongoDBManager.java")
       .createFile("src/test/resources/META-INF/spring.factories")
-      .containing("org.springframework.test.context.ContextCustomizerFactory=com.jhipster.test")
+      .containing("org.springframework.context.ApplicationListener=com.jhipster.test")
       .and()
       .createFile("src/main/resources/config/application.properties")
       .containing("spring.data.mongodb.database=com.jhipster.test")
       .containing("spring.data.mongodb.uri=mongodb://localhost:27017")
+      .and()
+      .createFile("src/test/resources/config/application.properties")
+      .containing("spring.data.mongodb.uri=${TEST_MONGODB_URI}")
       .and()
       .createFile("src/main/resources/logback-spring.xml")
       .containing("<logger name=\"org.reflections\" level=\"WARN\" />")
@@ -103,14 +102,6 @@ class MongoDbModuleFactoryTest {
       .containing("<logger name=\"org.reflections\" level=\"WARN\" />")
       .containing("<logger name=\"org.mongodb.driver\" level=\"WARN\" />")
       .containing("<logger name=\"com.github.dockerjava\" level=\"WARN\" />")
-      .containing("<logger name=\"org.testcontainers\" level=\"WARN\" />")
-      .and()
-      .createFile("src/test/java/com/jhipster/test/IntegrationTest.java")
-      .containing("import org.junit.jupiter.api.extension.ExtendWith;")
-      .containing("@ExtendWith(MongodbTestContainerExtension.class)");
-  }
-
-  private ModuleFile integrationTestAnnotation() {
-    return file("src/test/resources/projects/files/IntegrationTest.java", "src/test/java/com/jhipster/test/IntegrationTest.java");
+      .containing("<logger name=\"org.testcontainers\" level=\"WARN\" />");
   }
 }

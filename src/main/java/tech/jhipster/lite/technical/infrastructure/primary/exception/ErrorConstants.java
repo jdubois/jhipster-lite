@@ -2,7 +2,7 @@ package tech.jhipster.lite.technical.infrastructure.primary.exception;
 
 import java.net.URI;
 
-public final class ErrorConstants {
+final class ErrorConstants {
 
   public static final String ERR_VALIDATION = "error.validation";
   public static final String PROBLEM_BASE_URL = "https://www.jhipster.tech/problem";

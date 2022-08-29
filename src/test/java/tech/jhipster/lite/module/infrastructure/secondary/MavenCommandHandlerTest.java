@@ -140,7 +140,7 @@ class MavenCommandHandlerTest {
         .contains(
           """
             <dependencyManagement>
-              <depdendencies>
+              <dependencies>
                 <dependency>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-dependencies</artifactId>
@@ -148,7 +148,7 @@ class MavenCommandHandlerTest {
                   <scope>import</scope>
                   <type>pom</type>
                 </dependency>
-              </depdendencies>
+              </dependencies>
             </dependencyManagement>
           """
         );

@@ -5,10 +5,10 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.JHipsterDestination;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.file.JHipsterDestination;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -31,6 +31,7 @@ public class ArchUnitModuleFactory {
         .and()
       .files()
         .add(SOURCE.template("archunit.properties"), to("src/test/resources/archunit.properties"))
+        .add(SOURCE.template("AnnotationArchTest.java"), testDestination.append("AnnotationArchTest.java"))
         .add(SOURCE.template("HexagonalArchTest.java"), testDestination.append("HexagonalArchTest.java"))
         .and()
       .javaDependencies()

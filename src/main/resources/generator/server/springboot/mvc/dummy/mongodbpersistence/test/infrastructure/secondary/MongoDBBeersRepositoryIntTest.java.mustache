@@ -1,0 +1,23 @@
+package {{packageName}}.dummy.infrastructure.secondary;
+
+import static {{packageName}}.dummy.domain.BeersIdentityFixture.*;
+import static {{packageName}}.dummy.domain.beer.BeersFixture.*;
+import static org.assertj.core.api.Assertions.*;
+
+import {{packageName}}.IntegrationTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@IntegrationTest
+class MongoDBBeersRepositoryIntTest {
+
+  @Autowired
+  private MongoDBBeersRepository beers;
+
+  @Test
+  void shouldSaveAndGetBeer() {
+    beers.save(BeerDocument.from(beer()));
+
+    assertThat(beers.findById(cloackOfFeathersId().get()).get().toDomain()).usingRecursiveComparison().isEqualTo(beer());
+  }
+}

@@ -1,19 +1,20 @@
 package tech.jhipster.lite.generator.client.angular.security.jwt.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.client.angular.security.jwt.domain.AngularJwtService;
-import tech.jhipster.lite.generator.project.domain.Project;
+import tech.jhipster.lite.generator.client.angular.security.jwt.domain.AngularJwtModuleFactory;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service
 public class AngularJwtApplicationService {
 
-  private final AngularJwtService angularJwtService;
+  private AngularJwtModuleFactory factory;
 
-  public AngularJwtApplicationService(AngularJwtService angularJwtService) {
-    this.angularJwtService = angularJwtService;
+  public AngularJwtApplicationService() {
+    factory = new AngularJwtModuleFactory();
   }
 
-  public void addJwtAngular(Project project) {
-    angularJwtService.addJwtAngular(project);
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+    return factory.buildModule(properties);
   }
 }

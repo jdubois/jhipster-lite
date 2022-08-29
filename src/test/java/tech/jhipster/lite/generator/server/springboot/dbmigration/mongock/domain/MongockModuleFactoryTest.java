@@ -24,6 +24,7 @@ class MongockModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
+      .createFiles("documentation/mongock.md")
       .createFile("pom.xml")
       .containing(
         """
@@ -53,16 +54,11 @@ class MongockModuleFactoryTest {
         """
       )
       .and()
-      .createPrefixedFiles(
-        "src/main/java/com/jhipster/test/technical/infrastructure/secondary/mongock",
-        "MongockDatabaseConfiguration.java",
-        "dbmigration/InitialMigrationSetup.java"
-      )
-      .createJavaTests("com/jhipster/test/technical/infrastructure/secondary/mongock/dbmigration/InitialMigrationSetupTest.java")
+      .createFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/mongock/MongockDatabaseConfiguration.java")
       .createFile("src/main/resources/config/application.properties")
-      .containing("mongock.migration-scan-package=com.jhipster.test.technical.infrastructure.secondary.mongock.dbmigration")
+      .containing("mongock.migration-scan-package=com.jhipster.test")
       .and()
       .createFile("src/test/resources/config/application.properties")
-      .containing("mongock.enabled=false");
+      .containing("mongock.migration-scan-package=com.jhipster.test");
   }
 }

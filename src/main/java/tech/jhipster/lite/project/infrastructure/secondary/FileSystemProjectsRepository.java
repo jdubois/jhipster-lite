@@ -18,21 +18,35 @@ import tech.jhipster.lite.project.domain.history.ProjectHistory;
 @Repository
 class FileSystemProjectsRepository implements ProjectsRepository {
 
+  private static final String PATH_PARAMETER = "path";
+
   private static final String HISTORY_FOLDER = ".jhipster/modules";
   private static final String HISTORY_FILE = "history.json";
 
   private final ObjectMapper json;
+  private final ProjectFormatter formatter;
   private final ObjectWriter writer;
   private final FileSystemProjectDownloader downloader;
 
-  public FileSystemProjectsRepository(ObjectMapper json) {
+  public FileSystemProjectsRepository(ObjectMapper json, ProjectFormatter formatter) {
     this.json = json;
-    this.writer = json.writerWithDefaultPrettyPrinter();
-    this.downloader = new FileSystemProjectDownloader();
+    this.formatter = formatter;
+
+    writer = json.writerWithDefaultPrettyPrinter();
+    downloader = new FileSystemProjectDownloader();
+  }
+
+  @Override
+  public void format(ProjectPath path) {
+    Assert.notNull(PATH_PARAMETER, path);
+
+    formatter.format(path);
   }
 
   @Override
   public Optional<Project> get(ProjectPath path) {
+    Assert.notNull(PATH_PARAMETER, path);
+
     return downloader.download(path);
   }
 
@@ -52,7 +66,7 @@ class FileSystemProjectsRepository implements ProjectsRepository {
 
   @Override
   public ProjectHistory getHistory(ProjectPath path) {
-    Assert.notNull("path", path);
+    Assert.notNull(PATH_PARAMETER, path);
 
     Path historyFilePath = historyFilePath(path);
 

@@ -25,7 +25,7 @@ class MavenModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module)
+    assertThatModuleWithFiles(module, readmeFile())
       .createFile("pom.xml")
       .containing("<groupId>com.jhipster.test</groupId>")
       .containing("<artifactId>my-app</artifactId>")
@@ -174,6 +174,8 @@ class MavenModuleFactoryTest {
       )
       .and()
       .createExecutableFiles("mvnw", "mvnw.cmd")
-      .createPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties");
+      .createPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties")
+      .createFile("README.md")
+      .containing("./mvnw");
   }
 }

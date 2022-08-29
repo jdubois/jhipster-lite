@@ -192,10 +192,7 @@ jobs:
         working-directory: /tmp/jhlite/${{ matrix.app }}/
         run: |
           if [ -f 'mvnw' ]; then
-            chmod +x mvnw
             ./mvnw clean verify sonar:sonar
-          elif [ -f 'gradlew' ]; then
-            ./gradlew check
           fi
       - name: 'Test: check local Sonar Analysis'
         run: |

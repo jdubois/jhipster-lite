@@ -14,6 +14,7 @@ import '../content/css/custom.css';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 import { RestModulesRepository } from './module/secondary/RestModulesRepository';
 import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFoldersRepository';
+import { WindowApplicationListener } from './common/primary/applicationlistener/WindowApplicationListener';
 
 const app = createApp(App);
 
@@ -24,6 +25,7 @@ const axiosHttp = new AxiosHttp(axios.create({ baseURL: '' }));
 const consoleLogger = new ConsoleLogger(console);
 const modulesRepository = new RestModulesRepository(axiosHttp);
 const projectFoldersRepository = new RestProjectFoldersRepository(axiosHttp);
+const applicationListener = new WindowApplicationListener(window);
 
 app.provide('alertBus', alertBus);
 app.provide('alertListener', alertListener);
@@ -31,6 +33,7 @@ app.provide('globalWindow', window);
 app.provide('logger', consoleLogger);
 app.provide('modules', modulesRepository);
 app.provide('projectFolders', projectFoldersRepository);
+app.provide('applicationListener', applicationListener);
 app.use(router);
 
 app.mount('#app');

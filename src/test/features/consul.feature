@@ -3,7 +3,7 @@ Feature: Consul
   Scenario: Should add consul
     When I apply modules to default project
       | maven-java |
-      | springboot |
+      | spring-boot |
       | consul     |
     Then I should have files in "src/main/docker"
       | consul.yml |

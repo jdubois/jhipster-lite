@@ -4,8 +4,8 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterSource;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
@@ -62,6 +62,7 @@ public class SpringBootMvcsModulesFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .documentation(documentationTitle("CORS configuration"), SOURCE.file("cors-configuration.md"))
+      .localEnvironment(localEnvironment("- [Local server](http://localhost:"+properties.serverPort().get()+")"))
       .javaDependencies()
         .addDependency(SPRING_BOOT_GROUP, artifactId("spring-boot-starter-validation"))
         .and()

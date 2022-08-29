@@ -67,12 +67,12 @@ javac 17.0.1
 
 ```
 $ node -v
-v16.14.0
+v16.17.0
 ```
 
 ```
 $ npm -v
-8.5.0
+8.11.0
 ```
 
 #### Docker and Docker-compose

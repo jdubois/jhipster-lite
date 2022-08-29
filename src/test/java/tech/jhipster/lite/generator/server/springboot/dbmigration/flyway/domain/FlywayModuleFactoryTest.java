@@ -18,60 +18,21 @@ class FlywayModuleFactoryTest {
   private static final FlywayModuleFactory factory = new FlywayModuleFactory();
 
   @Test
-  void shouldBuildModuleWithoutMysqlDependency() {
+  void shouldBuildModuleInitializationModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
-      .put("addFlywayMysql", false)
       .build();
 
-    JHipsterModule module = factory.buildModule(properties, INVOCATION_DATE);
+    JHipsterModule module = factory.buildInitializationModule(properties, INVOCATION_DATE);
 
-    defaultFlywayModuleAsserter(module)
-      .createFile("pom.xml")
-      .notContaining(
-        """
-            <dependency>
-              <groupId>org.flywaydb</groupId>
-              <artifactId>flyway-mysql</artifactId>
-              <version>${flyway.version}</version>
-            </dependency>
-        """
-      );
-  }
-
-  @Test
-  void shouldBuildModuleWithMysqlDependency() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture
-      .propertiesBuilder(TestFileUtils.tmpDirForTest())
-      .basePackage("com.jhipster.test")
-      .put("addFlywayMysql", true)
-      .build();
-
-    JHipsterModule module = factory.buildModule(properties, INVOCATION_DATE);
-
-    defaultFlywayModuleAsserter(module)
-      .createFile("pom.xml")
-      .containing(
-        """
-            <dependency>
-              <groupId>org.flywaydb</groupId>
-              <artifactId>flyway-mysql</artifactId>
-              <version>${flyway.version}</version>
-            </dependency>
-        """
-      );
-  }
-
-  private ModuleAsserter defaultFlywayModuleAsserter(JHipsterModule module) {
-    return assertThatModuleWithFiles(module, pomFile())
+    assertThatModuleWithFiles(module, pomFile())
       .createFile("pom.xml")
       .containing(
         """
             <dependency>
               <groupId>org.flywaydb</groupId>
               <artifactId>flyway-core</artifactId>
-              <version>${flyway.version}</version>
             </dependency>
         """
       )
@@ -79,7 +40,24 @@ class FlywayModuleFactoryTest {
       .createFiles("src/main/resources/db/migration/V20071203101530__init.sql")
       .createFile("src/main/resources/config/application.properties")
       .containing("spring.flyway.enabled=true")
-      .containing("spring.flyway.locations=classpath:db/migration")
-      .and();
+      .containing("spring.flyway.locations=classpath:db/migration");
+  }
+
+  @Test
+  void shouldBuildMysqlDependencyModule() {
+    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+
+    JHipsterModule module = factory.buildMysqlDependencyModule(properties);
+
+    assertThatModuleWithFiles(module, pomFile())
+      .createFile("pom.xml")
+      .containing(
+        """
+                <dependency>
+                  <groupId>org.flywaydb</groupId>
+                  <artifactId>flyway-mysql</artifactId>
+                </dependency>
+            """
+      );
   }
 }

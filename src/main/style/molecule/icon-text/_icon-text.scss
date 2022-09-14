@@ -1,0 +1,21 @@
+.jhlite-icon-text {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+
+  &--icon {
+    font-size: 1.5rem;
+  }
+
+  &--text {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  .jhlite-icon-text {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}

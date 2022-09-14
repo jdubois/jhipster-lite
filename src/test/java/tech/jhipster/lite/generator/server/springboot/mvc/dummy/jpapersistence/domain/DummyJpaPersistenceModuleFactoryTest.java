@@ -24,18 +24,18 @@ class DummyJpaPersistenceModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, beersApplicationService(), dummyInMemoryRepository(), inMemoryBeersReseter())
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerEntity.java",
         "JpaBeersRepository.java",
         "SpringDataBeersRepository.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerEntityTest.java",
         "JpaBeersRepositoryIntTest.java"
       )
-      .createFile("src/main/java/com/jhipster/test/dummy/application/BeersApplicationService.java")
+      .hasFile("src/main/java/com/jhipster/test/dummy/application/BeersApplicationService.java")
       .containing("import org.springframework.transaction.annotation.Transactional;")
       .containing("""
             @Transactional(readOnly = true)
@@ -56,7 +56,7 @@ class DummyJpaPersistenceModuleFactoryTest {
             """
       )
       .and()
-      .doNotCreateFiles(
+      .doNotHaveFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersRepository.java",
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
       );

@@ -41,11 +41,7 @@ public class JwtAuthenticationModulesConfiguration {
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC - Security", "Add Basic Auth for Spring Security JWT"))
       .organization(
-        JHipsterModuleOrganization
-          .builder()
-          .addModuleDependency("spring-boot-jwt")
-          .addModuleDependency("springdoc-mvc-openapi-with-security-jwt")
-          .build()
+        JHipsterModuleOrganization.builder().addModuleDependency("spring-boot-jwt").addModuleDependency("springdoc-jwt").build()
       )
       .tags("server", "spring", "spring-boot", AUTHENTICATION)
       .factory(jwtAuthentications::buildBasicAuthModule);

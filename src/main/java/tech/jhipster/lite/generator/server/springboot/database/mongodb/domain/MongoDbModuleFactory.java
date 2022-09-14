@@ -16,7 +16,7 @@ public class MongoDbModuleFactory {
   private static final JHipsterSource SOURCE = from("server/springboot/database/mongodb");
 
   private static final String MONGO_SECONDARY = "technical/infrastructure/secondary/mongodb";
-  public static final String DOCKER_COMPOSE_COMMAND = "docker-compose -f src/main/docker/mongodb.yml up -d";
+  public static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/mongodb.yml up -d";
 
   private final DockerImages dockerImages;
 

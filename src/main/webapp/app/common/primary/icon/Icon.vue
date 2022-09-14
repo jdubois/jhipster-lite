@@ -1,8 +1,8 @@
 <template>
   <em
     role="img"
-    class="bi"
-    :class="`bi-${name}`"
+    class="jhlite-icon"
+    :class="`jhlite-icon-${name}`"
     :aria-hidden="ariaHidden"
     :aria-label="!ariaHidden ? ariaLabel : undefined"
     :title="title"

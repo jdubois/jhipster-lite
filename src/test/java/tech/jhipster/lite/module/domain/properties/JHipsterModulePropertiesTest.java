@@ -51,6 +51,11 @@ class JHipsterModulePropertiesTest {
     }
 
     @Test
+    void shouldGetDefaultForBlankValue() {
+      assertThat(properties().getOrDefaultString("blank", "default")).isEqualTo("default");
+    }
+
+    @Test
     void shouldGetProperty() {
       assertThat(properties().getOrDefaultString("string", "default")).isEqualTo("value");
     }
@@ -151,6 +156,6 @@ class JHipsterModulePropertiesTest {
   }
 
   private JHipsterModuleProperties properties() {
-    return new JHipsterModuleProperties("/tmp/folder", false, Map.of("string", "value", "boolean", true, "integer", 42));
+    return new JHipsterModuleProperties("/tmp/folder", false, Map.of("string", "value", "boolean", true, "integer", 42, "blank", " "));
   }
 }

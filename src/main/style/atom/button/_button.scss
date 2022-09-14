@@ -1,0 +1,30 @@
+$jhlite-button-color-background: $jhlite-global-color-fill-primary-dark;
+$jhlite-button-color-text: $jhlite-global-color-text-light;
+
+$jhlite-button-hover-color-background: $jhlite-global-color-fill-primary-darker;
+
+$jhlite-button-focus-color-outline: $jhlite-global-color-fill-primary-darker;
+
+$jhlite-button-disabled-color-background: $jhlite-global-color-fill-disabled-dark;
+
+.jhlite-button {
+  @include jhlite-q-field;
+
+  background-color: $jhlite-button-color-background;
+  color: $jhlite-button-color-text;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background-color: $jhlite-button-hover-color-background;
+  }
+
+  &:disabled {
+    background-color: $jhlite-button-disabled-color-background;
+  }
+
+  &.-block {
+    display: block;
+    width: 100%;
+  }
+}

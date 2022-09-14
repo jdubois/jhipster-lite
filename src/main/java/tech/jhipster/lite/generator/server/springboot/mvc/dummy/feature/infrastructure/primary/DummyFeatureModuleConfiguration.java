@@ -25,7 +25,6 @@ class DummyFeatureModuleConfiguration {
           .addFeatureDependency("web-error-management")
           .addFeatureDependency("springdoc")
           .addModuleDependency("java-base")
-          .addModuleDependency("bean-validation-test")
           .build()
       )
       .tags("server")

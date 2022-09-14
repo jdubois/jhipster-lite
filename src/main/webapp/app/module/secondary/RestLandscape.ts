@@ -7,4 +7,4 @@ export interface RestLandscape {
 }
 
 export const mapToLandscape = (response: AxiosResponse<RestLandscape>): Landscape =>
-  new Landscape(response.data.levels.map(toLandscapeLevel));
+  Landscape.initialState(response.data.levels.map(toLandscapeLevel));

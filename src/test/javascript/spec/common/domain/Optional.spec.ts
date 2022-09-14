@@ -11,6 +11,16 @@ describe('Optional', () => {
     });
   });
 
+  describe('Is present', () => {
+    it('Should not be present for empty optional', () => {
+      expect(Optional.empty().isPresent()).toBe(false);
+    });
+
+    it('Should be present for valuated optional', () => {
+      expect(Optional.of('value').isPresent()).toBe(true);
+    });
+  });
+
   describe('Map', () => {
     it('Should map empty optional to empty', () => {
       expect(
@@ -29,9 +39,55 @@ describe('Optional', () => {
     });
   });
 
+  describe('Filter', () => {
+    it('Should filter empty optional to empty', () => {
+      expect(
+        Optional.empty()
+          .filter(() => true)
+          .isEmpty()
+      ).toBe(true);
+    });
+
+    it('Should filter valuated optional with matching filter', () => {
+      expect(
+        Optional.of('value')
+          .filter(value => value.indexOf('v') !== -1)
+          .orElse('dummy')
+      ).toBe('value');
+    });
+
+    it('Should filter valudated optional with unmatching filter', () => {
+      expect(
+        Optional.of('value')
+          .filter(() => false)
+          .orElse('other')
+      ).toBe('other');
+    });
+  });
+
   describe('Or else', () => {
     it('Should get alternative from empty optional', () => {
       expect(Optional.empty().orElse('beer')).toBe('beer');
+    });
+  });
+
+  describe('Or else get', () => {
+    it('Should get alternative from empty optional', () => {
+      expect(Optional.empty().orElseGet(() => 'beer')).toBe('beer');
+    });
+
+    it('Should get initial value from empty optional', () => {
+      expect(Optional.of('cheese').orElseGet(() => 'beer')).toBe('cheese');
+    });
+  });
+
+  describe('Or else throw', () => {
+    it('Should throw erroer for empty optional', () => {
+      expect(() => Optional.empty().orElseThrow()).toThrowError();
+    });
+
+    it('Should get value for valuated optional', () => {
+      expect(Optional.of('value').orElseThrow()).toBe('value');
     });
   });
 
@@ -78,6 +134,16 @@ describe('Optional', () => {
       Optional.of(12).ifPresent(v => (value = value + v));
 
       expect(value).toBe(42 + 12);
+    });
+  });
+
+  describe('To array', () => {
+    it('Should get empty array from empty optional', () => {
+      expect(Optional.empty().toArray()).toEqual([]);
+    });
+
+    it('Should get array with value for valuated optional', () => {
+      expect(Optional.of('value').toArray()).toEqual(['value']);
     });
   });
 });

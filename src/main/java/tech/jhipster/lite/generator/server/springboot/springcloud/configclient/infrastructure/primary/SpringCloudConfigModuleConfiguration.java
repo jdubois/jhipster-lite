@@ -18,7 +18,7 @@ class SpringCloudConfigModuleConfiguration {
       .slug("spring-cloud")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addProjectBaseName().build())
       .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Spring Cloud", "Add Spring Cloud Config Client"))
-      .organization(JHipsterModuleOrganization.SPRINGBOOT_DEPENDENCY)
+      .organization(JHipsterModuleOrganization.builder().feature("service-discovery").addModuleDependency("spring-boot-actuator").build())
       .tags("server", "spring", "spring-boot", "cloud")
       .factory(cloudConfigs::buildModule);
   }

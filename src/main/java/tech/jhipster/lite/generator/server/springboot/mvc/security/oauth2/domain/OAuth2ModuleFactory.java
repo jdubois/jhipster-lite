@@ -68,6 +68,7 @@ public class OAuth2ModuleFactory {
 
     //@formatter:off
     builder
+    .startupCommand("docker compose -f src/main/docker/keycloak.yml up -d")
     .files()
       .batch(MAIN_SOURCE.append(PRIMARY), mainDestination.append(PRIMARY))
         .addTemplate("ApplicationSecurityProperties.java")
@@ -85,11 +86,10 @@ public class OAuth2ModuleFactory {
         .addTemplate("AuthenticatedUserTest.java")
 
         .addTemplate("ClaimsTest.java")
-        .addTemplate("CustomClaimConverterIT.java")
+        .addTemplate("CustomClaimConverterTest.java")
         .addTemplate("FakeRequestAttributes.java")
         .addTemplate("JwtGrantedAuthorityConverterTest.java")
         .addTemplate("SecurityConfigurationIT.java")
-        .addTemplate("SecurityConfigurationTest.java")
         .addTemplate("TestSecurityConfiguration.java")
         .addTemplate("WithUnauthenticatedMockUser.java");
     //@formatter:on

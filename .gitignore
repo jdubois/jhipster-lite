@@ -33,7 +33,12 @@ npm-debug.log.*
 ######################
 # Tikui cache
 ######################
-/cache
+/.tikui-cache/
+
+######################
+# Fontello
+######################
+/.fontello-session
 
 ######################
 # Eclipse

@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 class SecurityConfigurationIT {
 
   @Autowired
-  GrantedAuthoritiesMapper grantedAuthoritiesMapper;
+  private GrantedAuthoritiesMapper grantedAuthoritiesMapper;
 
   @Test
   void shouldUserAuthoritiesMapperWithOidcUserAuthority() {

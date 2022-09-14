@@ -24,7 +24,7 @@ class SimpleCacheModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
              <dependency>
@@ -34,6 +34,6 @@ class SimpleCacheModuleFactoryTest {
          """
       )
       .and()
-      .createJavaSources("com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java");
+      .hasJavaSources("com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java");
   }
 }

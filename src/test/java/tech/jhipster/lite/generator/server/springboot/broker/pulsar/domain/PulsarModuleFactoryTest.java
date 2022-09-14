@@ -38,7 +38,7 @@ class PulsarModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile(), integrationTestAnnotation())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -59,29 +59,29 @@ class PulsarModuleFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/docker/pulsar.yml")
+      .hasFile("src/main/docker/pulsar.yml")
       .containing("apachepulsar/pulsar:1.1.1")
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("pulsar.client.service-url=pulsar://localhost:6650")
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("pulsar.client.num-io-threads=8")
       .containing("pulsar.producer.topic-name=test-topic")
       .containing("pulsar.consumer.topic-names[0]=test-topic")
       .containing("pulsar.consumer.subscription-name=test-subscription")
       .and()
-      .createJavaTests("com/jhipster/test/PulsarTestContainerExtension.java")
-      .createFile("src/test/java/com/jhipster/test/IntegrationTest.java")
+      .hasJavaTests("com/jhipster/test/PulsarTestContainerExtension.java")
+      .hasFile("src/test/java/com/jhipster/test/IntegrationTest.java")
       .containing("import org.junit.jupiter.api.extension.ExtendWith;")
       .containing("@ExtendWith(PulsarTestContainerExtension.class)")
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/config/pulsar",
         "PulsarProperties.java",
         "PulsarConfiguration.java"
       )
-      .createFiles("src/test/java/com/jhipster/test/technical/infrastructure/config/pulsar/PulsarConfigurationIT.java");
+      .hasFiles("src/test/java/com/jhipster/test/technical/infrastructure/config/pulsar/PulsarConfigurationIT.java");
   }
 
   private ModuleFile integrationTestAnnotation() {

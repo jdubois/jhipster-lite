@@ -22,7 +22,7 @@ class CypressModuleFactoryTest {
   @Test
   void shouldBuildModuleOnProjectWithEmptyTsConfig() {
     assertCypressModule(packageJsonFile(), file("src/test/resources/projects/empty-ts-config/tsconfig.json", "tsconfig.json"))
-      .createFile("tsconfig.json")
+      .hasFile("tsconfig.json")
       .containing("},\n  \"exclude\": [\"src/test/javascript/integration/**/*.ts\"]\n}");
   }
 
@@ -32,14 +32,14 @@ class CypressModuleFactoryTest {
       packageJsonFile(),
       file("src/test/resources/projects/ts-config-with-empty-exclusions/tsconfig.json", "tsconfig.json")
     )
-      .createFile("tsconfig.json")
+      .hasFile("tsconfig.json")
       .containing("\"exclude\": [\"src/test/javascript/integration/**/*.ts\"]");
   }
 
   @Test
   void shouldBuildModuleOnProjectWithTsConfigWithExistingExclusions() {
     assertCypressModule(packageJsonFile(), file("src/test/resources/projects/ts-config-with-exclusions/tsconfig.json", "tsconfig.json"))
-      .createFile("tsconfig.json")
+      .hasFile("tsconfig.json")
       .containing(
         "  \"exclude\": [\"src/test/javascript/integration/**/*spec.ts\", \"node_modules\", \"src/test/javascript/integration/**/*.ts\"]"
       );
@@ -51,13 +51,13 @@ class CypressModuleFactoryTest {
       packageJsonFile(),
       file("src/test/resources/projects/ts-config-with-cypress-exclusions/tsconfig.json", "tsconfig.json")
     )
-      .createFile("tsconfig.json")
+      .hasFile("tsconfig.json")
       .containing(
         "  \"exclude\": [\"src/test/javascript/integration/**/*spec.ts\", \"node_modules\", \"src/test/javascript/integration/**/*.ts\"]"
       );
   }
 
-  private static ModuleAsserter assertCypressModule(ModuleFile... files) {
+  private static JHipsterModuleAsserter assertCypressModule(ModuleFile... files) {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .put("serverPort", 9000)
@@ -66,7 +66,7 @@ class CypressModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     return assertThatModuleWithFiles(module, files)
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("cypress"))
       .containing(nodeDependency("eslint-plugin-cypress"))
       .containing(nodeScript("e2e", "npm run test:component"))
@@ -76,10 +76,10 @@ class CypressModuleFactoryTest {
         nodeScript("test:component:headless", "cypress run --headless --config-file src/test/javascript/integration/cypress-config.ts")
       )
       .and()
-      .createFile("src/test/javascript/integration/cypress-config.ts")
+      .hasFile("src/test/javascript/integration/cypress-config.ts")
       .containing("baseUrl: 'http://localhost:9000',")
       .and()
-      .createPrefixedFiles("src/test/javascript/integration", ".eslintrc.js", "tsconfig.json")
-      .createFiles("src/test/javascript/integration/common/primary/app/Home.spec.ts");
+      .hasPrefixedFiles("src/test/javascript/integration", ".eslintrc.js", "tsconfig.json")
+      .hasFiles("src/test/javascript/integration/common/primary/app/Home.spec.ts");
   }
 }

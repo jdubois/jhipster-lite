@@ -1,0 +1,9 @@
+include /atom/input/input-text/input-text.mixin.pug
+
+include field.mixin.pug
+
++jhlite-field('Field name', {forId:'field-name'})
+  +jhlite-input-text({id:'field-name', value: 'Field value'})
+
++jhlite-field('Field optional', {forId:'field-optional', optional: true})
+  +jhlite-input-text({id: 'field-optional'})

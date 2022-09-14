@@ -5,10 +5,6 @@ import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, ref } fr
 import { LandscapeModuleVue } from '../landscape-module';
 import { buildConnector, LandscapeConnector } from './LandscapeConnector';
 import { DisplayMode } from './DisplayMode';
-import { ComponentLandscape } from './ComponentLandscape';
-import { ComponentLandscapeModule } from './ComponentLandscapeModule';
-import { ComponentLandscapeElement } from './ComponentLandscapeElement';
-import { Optional } from '@/common/domain/Optional';
 import { emptyLandscapeSize, LandscapeConnectorsSize } from './LandscapeConnectorsSize';
 import { ModulePropertiesFormVue } from '../module-properties-form';
 import { ModulePropertyDefinition } from '@/module/domain/ModulePropertyDefinition';
@@ -20,10 +16,19 @@ import { empty } from '../PropertyValue';
 import { ModuleParameterType } from '@/module/domain/ModuleParameters';
 import { ModuleParameter } from '@/module/domain/ModuleParameter';
 import { Landscape } from '@/module/domain/landscape/Landscape';
+import { IconVue } from '@/common/primary/icon';
+import { ModuleSlug } from '@/module/domain/ModuleSlug';
+import { LandscapeLevel } from '@/module/domain/landscape/LandscapeLevel';
+import { LandscapeModule } from '@/module/domain/landscape/LandscapeModule';
+import { LandscapeSelectionElement } from '@/module/domain/landscape/LandscapeSelectionElement';
+import { LandscapeElement } from '@/module/domain/landscape/LandscapeElement';
+import { LandscapeFeature } from '@/module/domain/landscape/LandscapeFeature';
+import { LandscapeElementId } from '@/module/domain/landscape/LandscapeElementId';
+import { LandscapeFeatureSlug } from '@/module/domain/landscape/LandscapeFeatureSlug';
 
 export default defineComponent({
   name: 'LandscapeVue',
-  components: { LandscapeModuleVue, ModulePropertiesFormVue, ProjectActionsVue },
+  components: { LandscapeModuleVue, ModulePropertiesFormVue, ProjectActionsVue, IconVue },
   setup() {
     const alertBus = inject('alertBus') as AlertBus;
     const modules = inject('modules') as ModulesRepository;
@@ -32,14 +37,15 @@ export default defineComponent({
 
     const selectedMode = ref<DisplayMode>('COMPACTED');
 
-    const landscape = ref(Loader.loading<ComponentLandscape>());
+    const landscape = ref(Loader.loading<Landscape>());
+    const levels = ref(Loader.loading<LandscapeLevel[]>());
 
     const landscapeContainer = ref<HTMLElement>();
     const landscapeConnectors = ref<LandscapeConnector[]>([]);
     const landscapeSize = ref<LandscapeConnectorsSize>(emptyLandscapeSize());
     const landscapeElements = ref(new Map<string, HTMLElement>());
 
-    const emphasizedModule = ref<string>();
+    const emphasizedModule = ref<ModuleSlug>();
 
     const folderPath = ref('');
     const valuatedModuleParameters = ref(new Map<string, ModuleParameterType>());
@@ -49,13 +55,14 @@ export default defineComponent({
     const operationInProgress = ref(false);
 
     onMounted(() => {
-      modules.landscape().then(response => loadModules(response));
+      modules.landscape().then(response => loadLandscape(response));
 
       projectFolders.get().then(projectFolder => (folderPath.value = projectFolder));
     });
 
-    const loadModules = (response: Landscape): void => {
-      landscape.value.loaded(ComponentLandscape.from(response));
+    const loadLandscape = (response: Landscape): void => {
+      landscape.value.loaded(response);
+      levels.value.loaded(response.standaloneLevels());
 
       nextTick(() => {
         updateConnectors();
@@ -69,25 +76,24 @@ export default defineComponent({
     });
 
     const updateConnectors = (): void => {
-      landscapeConnectors.value = landscape.value
+      landscapeConnectors.value = levels.value
         .value()
-        .levels.flatMap(level => level.elements)
+        .flatMap(level => level.elements)
         .flatMap(element => element.allModules())
         .flatMap(toConnectors);
 
       landscapeSize.value = buildConnectorsSize();
     };
 
-    const toConnectors = (module: ComponentLandscapeModule): LandscapeConnector[] => {
-      const dependantElement = landscapeElements.value.get(module.slug)!.getBoundingClientRect();
+    const toConnectors = (module: LandscapeModule): LandscapeConnector[] => {
+      const dependantElement = landscapeElements.value.get(module.slug().get())!;
 
-      return module.dependencies.flatMap(dependency =>
+      return module.dependencies().flatMap(dependency =>
         buildConnector({
-          dependantElement: dependantElement,
-          dependantElementSlug: module.slug,
-          dependencyElement: landscapeElements.value.get(dependency)!,
+          dependantElement,
+          dependantElementSlug: module.slug(),
+          dependencyElement: landscapeElements.value.get(dependency.get())!,
           dependencyElementSlug: dependency,
-          container: landscapeContainer.value!,
         })
       );
     };
@@ -103,8 +109,8 @@ export default defineComponent({
       ),
     });
 
-    const isFeature = (element: ComponentLandscapeElement): boolean => {
-      return element.isFeature();
+    const isFeature = (element: LandscapeElement): boolean => {
+      return element instanceof LandscapeFeature;
     };
 
     const modeSwitchClass = (mode: DisplayMode): string => {
@@ -123,9 +129,14 @@ export default defineComponent({
       });
     };
 
-    const elementFlavor = (module: string): string => {
+    const elementFlavor = (module: LandscapeElementId): string => {
       return (
-        operationInProgressClass() + highlightClass(module) + unselectionHighlightClass(module) + selectionClass(module) + flavorClass()
+        operationInProgressClass() +
+        selectionHighlightClass(module) +
+        unselectionHighlightClass(module) +
+        selectionClass(module) +
+        applicationClass(module) +
+        flavorClass()
       );
     };
 
@@ -137,44 +148,64 @@ export default defineComponent({
       return '';
     };
 
-    const highlightClass = (module: string): string => {
-      if (isHighlighted(module)) {
-        if (isSelectable(module)) {
-          return ' -selectable-highlighted';
-        }
-
-        return ' -not-selectable-highlighted';
+    const toHighlightSelectionClass = (selection: LandscapeSelectionElement): string => {
+      if (selection.selectable) {
+        return ' -selectable-highlighted';
       }
 
-      return '';
+      return ' -not-selectable-highlighted';
     };
 
-    const isHighlighted = (module: string): boolean => {
+    const selectionHighlightClass = (module: LandscapeElementId): string => {
       if (emphasizedModule.value === undefined) {
-        return false;
+        return '';
       }
 
-      return emphasizedModule.value === module || landscapeValue().moduleSelectionTree(emphasizedModule.value).includes(module);
+      return landscapeValue().selectionTreeFor(emphasizedModule.value).find(module).map(toHighlightSelectionClass).orElse('');
     };
 
-    const unselectionHighlightClass = (module: string): string => {
-      if (isUnselectedByEmphasizedModule(module)) {
+    const unselectionHighlightClass = (element: LandscapeElementId): string => {
+      if (isUnselectedByEmphasizedModule(element)) {
         return ' -highlighted-unselection';
       }
 
       return '';
     };
 
-    const selectionClass = (module: string): string => {
-      if (isSelected(module)) {
+    const isUnselectedByEmphasizedModule = (element: LandscapeElementId): boolean => {
+      if (emphasizedModule.value === undefined) {
+        return false;
+      }
+
+      return landscapeValue().unselectionTreeFor(emphasizedModule.value).includes(element);
+    };
+
+    const selectionClass = (element: LandscapeElementId): string => {
+      if (element instanceof LandscapeFeatureSlug) {
+        return '';
+      }
+
+      if (isSelected(element)) {
         return ' -selected';
       }
 
-      if (isSelectable(module)) {
+      if (isSelectable(element)) {
         return ' -selectable';
       }
 
       return ' -not-selectable';
+    };
+
+    const applicationClass = (element: LandscapeElementId): string => {
+      if (element instanceof LandscapeFeatureSlug) {
+        return '';
+      }
+
+      if (landscapeValue().isApplied(element)) {
+        return ' -applied';
+      }
+
+      return '';
     };
 
     const flavorClass = (): string => {
@@ -190,7 +221,7 @@ export default defineComponent({
       }
     };
 
-    const emphasizeModule = (module: string): void => {
+    const emphasizeModule = (module: ModuleSlug): void => {
       emphasizedModule.value = module;
     };
 
@@ -198,76 +229,24 @@ export default defineComponent({
       emphasizedModule.value = undefined;
     };
 
-    const connectorClass = (startingElement: string): string => {
-      if (emphasizedDependency(startingElement)) {
-        if (isSelectable(startingElement)) {
-          return '-selectable-highlighted';
-        }
-
-        return '-not-selectable-highlighted';
-      }
-
-      if (isUnselectedByEmphasizedModule(startingElement)) {
-        return '-highlighted-unselection';
-      }
-
-      if (isSelected(startingElement)) {
-        return '-selected';
-      }
-
-      return '';
+    const isSelected = (element: LandscapeElementId): boolean => {
+      return landscapeValue().isSelected(element);
     };
 
-    const emphasizedDependency = (startingElement: string): boolean => {
-      if (emphasizedModule.value === undefined) {
-        return false;
-      }
-
-      const currentElementEmphasized = emphasizedModule.value === startingElement;
-      const dependencyEmphasized = landscapeValue().moduleSelectionTree(emphasizedModule.value).includes(startingElement);
-
-      return currentElementEmphasized || dependencyEmphasized;
+    const toggleModule = (module: ModuleSlug): void => {
+      landscape.value.loaded(landscapeValue().toggle(module));
     };
 
-    const isUnselectedByEmphasizedModule = (module: string): boolean => {
-      if (emphasizedModule.value === undefined) {
-        return false;
-      }
-
-      if (!isSelected(module)) {
-        return false;
-      }
-
-      return isDependantOfEmphasizedModule(module) || isDependantOfAFeatureSelectedModule(module);
+    const isSelectable = (module: ModuleSlug): boolean => {
+      return landscapeValue().isSelectable(module);
     };
 
-    const isDependantOfEmphasizedModule = (module: string): boolean => {
-      return landscapeValue().dependantSelectedModules(emphasizedModule.value!).includes(module);
+    const disabledNewApplication = (): boolean => {
+      return disabledApplication() || landscapeValue().noNotAppliedSelectedModule();
     };
 
-    const isDependantOfAFeatureSelectedModule = (module: string): boolean => {
-      return landscapeValue()
-        .moduleFeature(emphasizedModule.value!)
-        .flatMap(feature => Optional.ofUndefinable(feature.moduleSlugs.find(featureModule => landscapeValue().isSelected(featureModule))))
-        .map(selectedModule => {
-          const moduleDependsOnSelectedModule = landscapeValue().dependantSelectedModules(selectedModule).includes(module);
-          const moduleDontDependOnEmphasizedModule = !landscapeValue().modulesToUnselect(emphasizedModule.value!).includes(module);
-
-          return moduleDependsOnSelectedModule && moduleDontDependOnEmphasizedModule;
-        })
-        .orElse(false);
-    };
-
-    const isSelected = (module: string): boolean => {
-      return landscapeValue().isSelected(module);
-    };
-
-    const toggleModule = (module: string): void => {
-      landscapeValue().toggleModule(module);
-    };
-
-    const isSelectable = (element: string): boolean => {
-      return landscapeValue().isSelectable(element);
+    const disabledAllApplication = (): boolean => {
+      return disabledApplication();
     };
 
     const disabledApplication = (): boolean => {
@@ -288,6 +267,14 @@ export default defineComponent({
       }
 
       return false;
+    };
+
+    const selectedNewModulesCount = (): number => {
+      return landscapeValue().notAppliedSelectedModulesCount();
+    };
+
+    const selectedModulesCount = (): number => {
+      return landscapeValue().selectedModulesCount();
     };
 
     const missingMandatoryProperty = () => {
@@ -316,7 +303,7 @@ export default defineComponent({
     };
 
     const loadProjectHistory = (projectHistory: ProjectHistory): void => {
-      projectHistory.modules.forEach(module => landscapeValue().selectModule(module.get()));
+      landscape.value.loaded(landscapeValue().resetAppliedModules(projectHistory.modules));
 
       projectHistory.properties.forEach(property => {
         if (unknownProperty(property.key)) {
@@ -337,22 +324,27 @@ export default defineComponent({
       valuatedModuleParameters.value.delete(key);
     };
 
-    const landscapeValue = (): ComponentLandscape => {
-      return landscape.value.value();
+    const applyNewModules = (): void => {
+      applyModules(landscapeValue().notAppliedSelectedModules());
     };
 
-    const applyModules = (): void => {
+    const applyAllModules = (): void => {
+      applyModules(landscapeValue().selectedModules());
+    };
+
+    const applyModules = (modulesToApply: ModuleSlug[]): void => {
       operationStarted();
 
       modules
         .applyAll({
-          modules: landscapeValue().selectedModulesSlugs(),
+          modules: modulesToApply,
           projectFolder: folderPath.value,
           commit: commitModule,
           parameters: valuatedModuleParameters.value,
         })
         .then(() => {
           operationEnded();
+          landscape.value.loaded(landscapeValue().appliedModules(modulesToApply));
 
           alertBus.success('Modules applied');
         })
@@ -361,6 +353,10 @@ export default defineComponent({
 
           alertBus.error('Modules not applied');
         });
+    };
+
+    const landscapeValue = (): Landscape => {
+      return landscape.value.value();
     };
 
     const operationStarted = (): void => {
@@ -372,7 +368,7 @@ export default defineComponent({
     };
 
     return {
-      landscape,
+      levels,
       isFeature,
       landscapeConnectors,
       landscapeSize,
@@ -383,10 +379,12 @@ export default defineComponent({
       modeClass,
       emphasizeModule,
       deEmphasizeModule,
-      connectorClass,
       elementFlavor,
       toggleModule,
-      disabledApplication,
+      disabledNewApplication,
+      disabledAllApplication,
+      selectedNewModulesCount,
+      selectedModulesCount,
       folderPath,
       selectedModulesProperties,
       valuatedModuleParameters,
@@ -395,7 +393,8 @@ export default defineComponent({
       projectFolderUpdated,
       updateProperty,
       deleteProperty,
-      applyModules,
+      applyAllModules,
+      applyNewModules,
       operationStarted,
       operationEnded,
     };

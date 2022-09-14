@@ -13,8 +13,4 @@ export class Memoizer<Key, Value> {
 
     return value;
   }
-
-  clear() {
-    this.memoizedValues.clear();
-  }
 }

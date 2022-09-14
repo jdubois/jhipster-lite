@@ -15,12 +15,12 @@ class ReactCoreModulesFactoryTest {
 
   @Test
   void shouldBuildModuleWithStyle() {
-    JHipsterModule module = factory.buildModuleWithStyle(
+    JHipsterModule module = factory.buildModule(
       JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).projectBaseName("jhipster").build()
     );
 
     assertThatModuleWithFiles(module, packageJsonFile())
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("@testing-library/jest-dom"))
       .containing(nodeDependency("@testing-library/react"))
       .containing(nodeDependency("@testing-library/user-event"))
@@ -50,16 +50,16 @@ class ReactCoreModulesFactoryTest {
         "  \"jestSonar\": {\n    \"reportPath\": \"target/test-results/jest\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },"
       )
       .and()
-      .createFiles("tsconfig.json", "vite.config.ts", "jest.config.ts")
-      .createFiles("src/main/webapp/index.html")
-      .createPrefixedFiles("src/main/webapp/app", "index.css", "index.tsx", "vite-env.d.ts")
-      .createFiles("src/test/javascript/spec/common/primary/app/App.spec.tsx")
-      .createFiles("src/main/webapp/config/setupTests.ts")
-      .createFile("src/main/webapp/app/common/primary/app/App.tsx")
+      .hasFiles("tsconfig.json", "vite.config.ts", "jest.config.ts")
+      .hasFiles("src/main/webapp/index.html")
+      .hasPrefixedFiles("src/main/webapp/app", "index.css", "index.tsx", "vite-env.d.ts")
+      .hasFiles("src/test/javascript/spec/common/primary/app/App.spec.tsx")
+      .hasFiles("src/main/webapp/config/setupTests.ts")
+      .hasFile("src/main/webapp/app/common/primary/app/App.tsx")
       .containing("import './App.css';")
       .and()
-      .createFiles("src/main/webapp/app/common/primary/app/App.css")
-      .createPrefixedFiles("src/main/webapp/content/images", "ReactLogo.png", "JHipster-Lite-neon-blue.png");
+      .hasFiles("src/main/webapp/app/common/primary/app/App.css")
+      .hasPrefixedFiles("src/main/webapp/content/images", "ReactLogo.png", "JHipster-Lite-neon-blue.png");
   }
 
   private String nodeScript(String key, String value) {

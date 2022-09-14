@@ -1,0 +1,7 @@
+.jhlite-vertical-space {
+  display: flex;
+  flex-direction: column;
+  &.-paragraph {
+    gap: 0.5rem;
+  }
+}

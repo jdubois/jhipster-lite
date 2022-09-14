@@ -38,11 +38,6 @@ public class BannerModuleFactory {
     return buildModuleBanner(properties, "banner-jhipster-v3.txt");
   }
 
-  public JHipsterModule buildModuleBannerIppon(JHipsterModuleProperties properties) {
-    Assert.notNull(PROPERTIES, properties);
-    return buildModuleBanner(properties, "banner-ippon.txt");
-  }
-
   private JHipsterModule buildModuleBanner(JHipsterModuleProperties properties, String file) {
     // @formatter:off
     return JHipsterModule

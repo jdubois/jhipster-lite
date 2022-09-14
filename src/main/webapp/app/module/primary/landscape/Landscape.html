@@ -1,4 +1,4 @@
-<div class="jhipster-landscape" v-if="landscape.isLoading()" data-selector="landscape-loader">Loading</div>
+<div class="jhipster-landscape" v-if="levels.isLoading()" data-selector="landscape-loader">Loading</div>
 <div class="jhipster-landscape" v-else data-selector="landscape">
   <div class="jhipster-landscape-modes-selection">
     <div class="jhipster-landscape-modes-selection--modes">
@@ -22,53 +22,72 @@
   </div>
 
   <div class="jhipster-side-form">
-    <ModulePropertiesFormVue
-      :folderPath="folderPath"
-      :properties="selectedModulesProperties()"
-      :parameters="valuatedModuleParameters"
-      @moduleCommitUpdated="updateModuleCommit"
-      @folderPathUpdated="updateFolderPath"
-      @folderPathSelected="projectFolderUpdated"
-      @propertyUpdated="updateProperty"
-      @propertyDeleted="deleteProperty"
-    />
+    <div class="jhlite-vertical-space -paragraph">
+      <div class="jhlite-vertical-space--slot">
+        <ModulePropertiesFormVue
+          :folderPath="folderPath"
+          :properties="selectedModulesProperties()"
+          :parameters="valuatedModuleParameters"
+          @moduleCommitUpdated="updateModuleCommit"
+          @folderPathUpdated="updateFolderPath"
+          @folderPathSelected="projectFolderUpdated"
+          @propertyUpdated="updateProperty"
+          @propertyDeleted="deleteProperty"
+        />
+      </div>
+      <div class="jhlite-vertical-space--slot">
+        <ProjectActionsVue :folderPath="folderPath" @operationStarted="operationStarted()" @operationEnded="operationEnded()">
+          <div class="jhlite-vertical-space--slot">
+            <button
+              class="jhlite-button -block"
+              data-selector="modules-apply-new-button"
+              :disabled="disabledNewApplication()"
+              tabindex="5"
+              @click="applyNewModules"
+            >
+              <IconVue name="play-circled" aria-label="Icon play circled" />
+              Apply new ({{selectedNewModulesCount()}})
+            </button>
+          </div>
 
-    <div class="jhipster-side-form--actions">
-      <button
-        class="bi bi-arrow-right-circle modules-application-button"
-        data-selector="modules-application-button"
-        :disabled="disabledApplication()"
-        tabindex="5"
-        @click="applyModules"
-      >
-        Apply
-      </button>
-
-      <ProjectActionsVue :folderPath="folderPath" @operationStarted="operationStarted()" @operationEnded="operationEnded()" />
+          <div class="jhlite-vertical-space--slot">
+            <button
+              class="jhlite-button -block"
+              data-selector="modules-apply-all-button"
+              :disabled="disabledAllApplication()"
+              tabindex="5"
+              @click="applyAllModules"
+            >
+              <IconVue name="play-circled" aria-label="Icon play circled" />
+              Apply selected ({{selectedModulesCount()}})
+            </button>
+          </div>
+        </ProjectActionsVue>
+      </div>
     </div>
   </div>
 
   <div class="jhipster-landscape-map" ref="landscapeContainer">
     <div class="jhipster-landscape-levels">
-      <ul class="jhipster-landscape-levels--level" :class="modeClass()" v-for="level in landscape.value().levels">
+      <ul class="jhipster-landscape-levels--level" :class="modeClass()" v-for="level in levels.value()">
         <li class="jhipster-landscape-element" v-for="element in level.elements" :class="modeClass()">
           <div
             class="jhipster-landscape-feature"
-            :class="elementFlavor(element.slug)"
-            :data-selector="`${element.slug}-feature`"
+            :class="elementFlavor(element.slug())"
+            :data-selector="`${element.slugString()}-feature`"
             v-if="isFeature(element)"
-            :ref="el => landscapeElements.set(element.slug, el)"
+            :ref="el => landscapeElements.set(element.slugString(), el)"
           >
-            <h2 class="jhipster-landscape-feature--title" :class="modeClass()">{{ element.slug }}</h2>
+            <h2 class="jhipster-landscape-feature--title" :class="modeClass()">{{ element.slugString() }}</h2>
             <ul class="jhipster-landscape-feature--modules">
               <li class="jhipster-landscape-feature--module" v-for="module in element.modules">
                 <LandscapeModuleVue
                   :module="module"
                   :landscapeElements="landscapeElements"
-                  :moduleFlavor="elementFlavor(module.slug)"
-                  @over="emphasizeModule(module.slug)"
+                  :moduleFlavor="elementFlavor(module.slug())"
+                  @over="emphasizeModule(module.slug())"
                   @out="deEmphasizeModule()"
-                  @clicked="toggleModule(module.slug)"
+                  @clicked="toggleModule(module.slug())"
                 />
               </li>
             </ul>
@@ -77,10 +96,10 @@
           <LandscapeModuleVue
             :module="element"
             :landscapeElements="landscapeElements"
-            :moduleFlavor="elementFlavor(element.slug)"
-            @over="emphasizeModule(element.slug)"
+            :moduleFlavor="elementFlavor(element.slug())"
+            @over="emphasizeModule(element.slug())"
             @out="deEmphasizeModule()"
-            @clicked="toggleModule(element.slug)"
+            @clicked="toggleModule(element.slug())"
             v-else
           />
         </li>
@@ -95,7 +114,7 @@
       <polyline
         v-for="connector in landscapeConnectors"
         class="jhipster-landscape-connectors--line"
-        :class="connectorClass(connector.startingElement)"
+        :class="elementFlavor(connector.startingElement)"
         :points="connector.points"
       />
     </svg>

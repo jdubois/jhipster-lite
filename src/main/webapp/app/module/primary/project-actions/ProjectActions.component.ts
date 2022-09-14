@@ -2,9 +2,13 @@ import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { Project } from '@/module/domain/Project';
 import { defineComponent, inject, ref } from 'vue';
+import { IconVue } from '@/common/primary/icon';
 
 export default defineComponent({
   name: 'ProjectActionsVue',
+  components: {
+    IconVue,
+  },
   props: {
     folderPath: {
       type: String,

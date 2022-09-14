@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.error.domain.Assert;
 
-public abstract sealed class JHipsterSlug permits JHipsterModuleSlug, JHipsterFeatureSlug {
+public abstract sealed class JHipsterSlug implements Comparable<JHipsterSlug> permits JHipsterModuleSlug, JHipsterFeatureSlug {
 
   private static final Pattern SLUG_FORMAT = Pattern.compile("^[a-z1-9-]+$");
 
@@ -32,6 +32,23 @@ public abstract sealed class JHipsterSlug permits JHipsterModuleSlug, JHipsterFe
 
   public String get() {
     return slug;
+  }
+
+  @Override
+  public int compareTo(JHipsterSlug other) {
+    if (isInit()) {
+      return -1;
+    }
+
+    if (other.isInit()) {
+      return 1;
+    }
+
+    return get().compareTo(other.get());
+  }
+
+  private boolean isInit() {
+    return get().equals("init");
   }
 
   @Override

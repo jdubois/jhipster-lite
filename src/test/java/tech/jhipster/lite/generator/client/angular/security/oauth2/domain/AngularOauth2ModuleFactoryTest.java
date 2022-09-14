@@ -17,7 +17,7 @@ class AngularOauth2ModuleFactoryTest {
   @Test
   void shouldBuildModuleWithEmptyAngularFile() {
     assertAngularOAuthModule(appModuleFile(), emptyAngularJsonFile())
-      .createFile("angular.json")
+      .hasFile("angular.json")
       .containing("\"allowedCommonJsDependencies\": [\"keycloak-js\"]");
   }
 
@@ -27,7 +27,7 @@ class AngularOauth2ModuleFactoryTest {
       file("src/test/resources/projects/angular/app.module-with-providers.ts", "src/main/webapp/app/app.module.ts"),
       emptyAngularJsonFile()
     )
-      .createFile("src/main/webapp/app/app.module.ts")
+      .hasFile("src/main/webapp/app/app.module.ts")
       .containing(
         """
                   providers: [
@@ -41,11 +41,11 @@ class AngularOauth2ModuleFactoryTest {
   @Test
   void shouldBuildModuleWithAngularFileWithAllowedDependencies() {
     assertAngularOAuthModule(appModuleFile(), angularJsonFile())
-      .createFile("angular.json")
+      .hasFile("angular.json")
       .containing("\"allowedCommonJsDependencies\": [\"dummy.js\", \"keycloak-js\"]");
   }
 
-  private static ModuleAsserter assertAngularOAuthModule(ModuleFile moduleFile, ModuleFile angularJson) {
+  private static JHipsterModuleAsserter assertAngularOAuthModule(ModuleFile moduleFile, ModuleFile angularJson) {
     JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
 
     JHipsterModule module = factory.buildModule(properties);
@@ -60,18 +60,18 @@ class AngularOauth2ModuleFactoryTest {
       appComponentFile(),
       appComponentSpecFile()
     )
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("keycloak-js"))
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/webapp/app/auth",
         "oauth2-auth.service.ts",
         "oauth2-auth.service.spec.ts",
         "http-auth.interceptor.ts",
         "http-auth.interceptor.spec.ts"
       )
-      .createPrefixedFiles("src/main/webapp/app/login", "login.component.html", "login.component.ts", "login.component.spec.ts")
-      .createFile("src/main/webapp/app/app.module.ts")
+      .hasPrefixedFiles("src/main/webapp/app/login", "login.component.html", "login.component.ts", "login.component.spec.ts")
+      .hasFile("src/main/webapp/app/app.module.ts")
       .containing(
         """
                 import { LoginComponent } from './login/login.component';
@@ -97,7 +97,7 @@ class AngularOauth2ModuleFactoryTest {
       .containing("LoginComponent,")
       .containing("APP_INITIALIZER")
       .and()
-      .createFile("src/main/webapp/environments/environment.ts")
+      .hasFile("src/main/webapp/environments/environment.ts")
       .containing(
         """
                   keycloak: {
@@ -108,7 +108,7 @@ class AngularOauth2ModuleFactoryTest {
                 """
       )
       .and()
-      .createFile("src/main/webapp/environments/environment.prod.ts")
+      .hasFile("src/main/webapp/environments/environment.prod.ts")
       .containing(
         """
                   keycloak: {
@@ -119,10 +119,10 @@ class AngularOauth2ModuleFactoryTest {
                 """
       )
       .and()
-      .createFile("src/main/webapp/app/app.component.html")
+      .hasFile("src/main/webapp/app/app.component.html")
       .containing("<jhi-login></jhi-login>")
       .and()
-      .createFile("src/main/webapp/app/app.component.spec.ts")
+      .hasFile("src/main/webapp/app/app.component.spec.ts")
       .containing("import { By } from '@angular/platform-browser';")
       .containing("import { LoginComponent } from './login/login.component';")
       .containing("LoginComponent")

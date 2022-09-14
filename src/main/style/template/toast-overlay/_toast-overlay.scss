@@ -1,0 +1,20 @@
+$jhlite-toast-overlay-padding: 2vw;
+$jhlite-toast-overlay-medium-padding: 20px;
+
+.jhlite-toast-overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 2vw;
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  .jhlite-toast-overlay {
+    bottom: 0;
+    top: auto;
+    right: auto;
+    padding: 20px;
+  }
+}

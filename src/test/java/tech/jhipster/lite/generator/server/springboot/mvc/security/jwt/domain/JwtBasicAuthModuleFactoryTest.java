@@ -25,8 +25,8 @@ class JwtBasicAuthModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFiles("documentation/jwt-basic-auth.md")
-      .createFile("src/main/resources/config/application.properties")
+      .hasFiles("documentation/jwt-basic-auth.md")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("application.security.token-validity=P1D")
       .containing("application.security.remember-me-token-validity=P365D")
       .containing("spring.security.user.name=admin")
@@ -43,7 +43,7 @@ class JwtBasicAuthModuleFactoryTest {
         """
       )
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("application.security.token-validity=P1D")
       .containing("application.security.remember-me-token-validity=P365D")
       .containing("spring.security.user.name=admin")
@@ -60,15 +60,10 @@ class JwtBasicAuthModuleFactoryTest {
         """
       )
       .and()
-      .createFiles("src/main/java/com/jhipster/test/account/package-info.java")
-      .createFiles("src/main/java/com/jhipster/test/account/application/AccountApplicationService.java")
-      .createPrefixedFiles(
-        "src/main/java/com/jhipster/test/account/domain",
-        "AuthenticationQuery.java",
-        "Token.java",
-        "TokensRepository.java"
-      )
-      .createPrefixedFiles(
+      .hasFiles("src/main/java/com/jhipster/test/account/package-info.java")
+      .hasFiles("src/main/java/com/jhipster/test/account/application/AccountApplicationService.java")
+      .hasPrefixedFiles("src/main/java/com/jhipster/test/account/domain", "AuthenticationQuery.java", "Token.java", "TokensRepository.java")
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/account/infrastructure/primary",
         "AccountResource.java",
         "AuthenticationResource.java",
@@ -77,14 +72,14 @@ class JwtBasicAuthModuleFactoryTest {
         "RestAuthenticationQuery.java",
         "RestToken.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/account/infrastructure/secondary",
         "JwtTokensConfiguration.java",
         "JwtTokensProperties.java",
         "JwtTokensRepository.java"
       )
-      .createFiles("src/test/java/com/jhipster/test/account/domain/TokensFixture.java")
-      .createPrefixedFiles(
+      .hasFiles("src/test/java/com/jhipster/test/account/domain/TokensFixture.java")
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/account/infrastructure/primary",
         "AccountResourceIT.java",
         "AuthenticationResourceIT.java",

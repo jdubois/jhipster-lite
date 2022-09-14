@@ -45,7 +45,7 @@ public class ExceptionTranslator implements ProblemHandling {
 
   @ExceptionHandler
   public Mono<ResponseEntity<Problem>> handleBadRequestAlertException(BadRequestAlertException ex, ServerWebExchange request) {
-    return create(ex, request, HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
+    return create(ex, request, HeaderUtil.createFailureAlert(applicationName, ex.getEntityName(), ex.getErrorKey()));
   }
 
   @Override

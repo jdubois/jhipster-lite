@@ -1,0 +1,25 @@
+.jhlite-logo {
+  @include jhlite-q-link-light;
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  text-decoration: none;
+
+  &--icon {
+    width: 2.5rem;
+  }
+
+  &--text {
+    font-family: Pacifico, cursive;
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  .jhlite-logo {
+    &--icon {
+      width: 48px;
+    }
+  }
+}

@@ -83,7 +83,7 @@ public class SvelteModuleFactory {
         .add(SOURCE.file("jest.config.cjs"), to("jest.config.cjs"))
         .add(SOURCE.file("vite.config.js"), to("vite.config.js"))
         .add(SOURCE.append("src/main/webapp/routes").template("+page.svelte"), to("src/main/webapp/routes/+page.svelte"))
-        .add(PRIMARY_MAIN_SOURCE.template("StyledApp.svelte"), PRIMARY_MAIN_DESTINATION.append("App.svelte"))
+        .add(PRIMARY_MAIN_SOURCE.template("App.svelte"), PRIMARY_MAIN_DESTINATION.append("App.svelte"))
         .add(PRIMARY_TEST_SOURCE.template("App.spec.ts"), PRIMARY_TEST_DESTINATION.append("App.spec.ts"))
         .move(path(".lintstagedrc.js"), to(".lintstagedrc.cjs"))
         .batch(SOURCE.file("src/main/webapp"), to("src/main/webapp"))

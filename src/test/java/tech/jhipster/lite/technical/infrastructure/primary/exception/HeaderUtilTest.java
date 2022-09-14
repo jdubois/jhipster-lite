@@ -11,15 +11,9 @@ class HeaderUtilTest {
 
   @Test
   void shouldCreateFailureAlertWithTranslation() {
-    HttpHeaders headers = HeaderUtil.createFailureAlert("myApp", true, "User", "404", "Failed to find user");
-    assertThat(headers.getFirst("X-myApp-error")).isEqualTo("error.404");
-    assertThat(headers.getFirst("X-myApp-params")).isEqualTo("User");
-  }
+    HttpHeaders headers = HeaderUtil.createFailureAlert("myApp", "User", "404");
 
-  @Test
-  void shouldCreateFailureAlertNoTranslation() {
-    HttpHeaders headers = HeaderUtil.createFailureAlert("myApp", false, "User", "404", "Failed to find user");
-    assertThat(headers.getFirst("X-myApp-error")).isEqualTo("Failed to find user");
+    assertThat(headers.getFirst("X-myApp-error")).isEqualTo("error.404");
     assertThat(headers.getFirst("X-myApp-params")).isEqualTo("User");
   }
 }

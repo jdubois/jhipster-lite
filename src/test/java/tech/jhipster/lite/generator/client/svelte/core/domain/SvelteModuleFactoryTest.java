@@ -22,7 +22,7 @@ class SvelteModuleFactoryTest {
     JHipsterModule module = factory.buildSvelteModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile(), lintstagedFile())
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("svelte-navigator"))
       .containing(nodeDependency("@babel/preset-env"))
       .containing(nodeDependency("@sveltejs/adapter-static"))
@@ -66,15 +66,15 @@ class SvelteModuleFactoryTest {
       )
       .containing("\"type\": \"module\"")
       .and()
-      .createFiles(".eslintrc.cjs", "tsconfig.json", "svelte.config.js", "jest.config.cjs", "vite.config.js")
-      .createPrefixedFiles("src/main/webapp", "app.html", "app.d.ts", "jest-setup.ts")
-      .createPrefixedFiles("src/main/webapp/routes", "+page.svelte")
-      .createPrefixedFiles("src/test/javascript/spec/common/primary/app", "App.spec.ts")
-      .createPrefixedFiles("src/main/webapp/app/common/primary/app", "App.svelte")
-      .createPrefixedFiles("src/main/webapp/assets", "JHipster-Lite-neon-orange.png")
-      .createPrefixedFiles("src/main/webapp/assets", "svelte-logo.png")
-      .createFiles(".lintstagedrc.cjs")
-      .doNotCreateFiles(".lintstagedrc.js");
+      .hasFiles(".eslintrc.cjs", "tsconfig.json", "svelte.config.js", "jest.config.cjs", "vite.config.js")
+      .hasPrefixedFiles("src/main/webapp", "app.html", "app.d.ts", "jest-setup.ts")
+      .hasPrefixedFiles("src/main/webapp/routes", "+page.svelte")
+      .hasPrefixedFiles("src/test/javascript/spec/common/primary/app", "App.spec.ts")
+      .hasPrefixedFiles("src/main/webapp/app/common/primary/app", "App.svelte")
+      .hasPrefixedFiles("src/main/webapp/assets", "JHipster-Lite-neon-orange.png")
+      .hasPrefixedFiles("src/main/webapp/assets", "svelte-logo.png")
+      .hasFiles(".lintstagedrc.cjs")
+      .doNotHaveFiles(".lintstagedrc.js");
   }
 
   private ModuleFile lintstagedFile() {

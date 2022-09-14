@@ -21,7 +21,7 @@ class TypescriptModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile())
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("typescript"))
       .containing(nodeDependency("@typescript-eslint/eslint-plugin"))
       .containing(nodeDependency("@typescript-eslint/parser"))
@@ -38,6 +38,6 @@ class TypescriptModuleFactoryTest {
       .containing("\"eslint:ci\": \"eslint './**/*.{ts,js}'\"")
       .containing("\"eslint\": \"eslint './**/*.{ts,js}' --fix\"")
       .and()
-      .createPrefixedFiles("", ".eslintrc.js", "jest.config.js", "tsconfig.json");
+      .hasPrefixedFiles("", ".eslintrc.js", "jest.config.js", "tsconfig.json");
   }
 }

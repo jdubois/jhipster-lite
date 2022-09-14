@@ -14,7 +14,7 @@ class ReactCoreModulesConfiguration {
   public static final String REACT = "react";
 
   @Bean
-  JHipsterModuleResource styledReactCoreModule(ReactCoreApplicationService react) {
+  JHipsterModuleResource reactCoreModule(ReactCoreApplicationService react) {
     return JHipsterModuleResource
       .builder()
       .slug("react-core")
@@ -22,7 +22,7 @@ class ReactCoreModulesConfiguration {
       .apiDoc(new JHipsterModuleApiDoc("React", "Add React+Vite with minimal CSS"))
       .organization(JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").build())
       .tags("client", REACT)
-      .factory(react::buildModuleWithStyle);
+      .factory(react::buildModule);
   }
 
   private JHipsterModulePropertiesDefinition properties() {

@@ -3,18 +3,13 @@ import { RestProjectHistory } from '@/module/secondary/RestProjectHistory';
 import { RestModulePropertiesDefinitions } from '@/module/secondary/RestModulePropertiesDefinitions';
 import { RestModules } from '@/module/secondary/RestModules';
 import { dataBackendResponse, stubAxiosHttp } from '../../http/AxiosHttpStub';
-import {
-  defaultLandscape,
-  defaultModules,
-  defaultModulesToApply,
-  defaultModuleToApply,
-  defaultProjectHistory,
-} from '../domain/Modules.fixture';
+import { defaultModules, defaultModulesToApply, defaultModuleToApply, defaultProjectHistory } from '../domain/Modules.fixture';
 import { RestLandscape } from '@/module/secondary/RestLandscape';
 import { RestLandscapeDependency, RestLandscapeModule } from '@/module/secondary/RestLandscapeModule';
 import { RestLandscapeFeature } from '@/module/secondary/RestLandscapeFeature';
 import { ModuleSlug } from '@/module/domain/ModuleSlug';
 import { RestModulePropertyDefinition } from '@/module/secondary/RestModulePropertyDefinition';
+import { defaultLandscape } from '../domain/landscape/Landscape.fixture';
 
 describe('Rest modules repository', () => {
   it('Should list modules using axios', async () => {

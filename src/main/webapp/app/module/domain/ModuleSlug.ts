@@ -1,11 +1,11 @@
 export class ModuleSlug {
   constructor(private readonly slug: string) {}
 
-  get(): string {
+  public get(): string {
     return this.slug;
   }
 
-  normalized(): string {
+  public normalized(): string {
     return this.slug.toLowerCase();
   }
 }

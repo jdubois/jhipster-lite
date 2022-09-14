@@ -24,7 +24,7 @@ class ZalandoProblemsModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -35,14 +35,14 @@ class ZalandoProblemsModuleFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("application.exception.details=false")
       .containing("application.exception.package=org.,java.,net.,javax.,com.,io.,de.,com.jhipster.test")
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("application.exception.package=org.,java.")
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/primary/exception",
         "BadRequestAlertException.java",
         "ErrorConstants.java",
@@ -51,7 +51,7 @@ class ZalandoProblemsModuleFactoryTest {
         "HeaderUtil.java",
         "ProblemConfiguration.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/technical/infrastructure/primary/exception",
         "BadRequestAlertExceptionTest.java",
         "ExceptionTranslatorIT.java",
@@ -59,6 +59,6 @@ class ZalandoProblemsModuleFactoryTest {
         "FieldErrorDTOTest.java",
         "HeaderUtilTest.java"
       )
-      .createJavaTests("com/jhipster/test/TestUtil.java");
+      .hasJavaTests("com/jhipster/test/TestUtil.java");
   }
 }

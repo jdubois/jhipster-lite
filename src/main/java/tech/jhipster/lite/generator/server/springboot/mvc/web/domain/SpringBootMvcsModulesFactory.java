@@ -9,6 +9,7 @@ import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
@@ -35,7 +36,7 @@ public class SpringBootMvcsModulesFactory {
     //@formatter:on
   }
 
-  public JHipsterModule buildUntertowModule(JHipsterModuleProperties properties) {
+  public JHipsterModule buildUndertowModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
     //@formatter:off
@@ -65,6 +66,7 @@ public class SpringBootMvcsModulesFactory {
       .localEnvironment(localEnvironment("- [Local server](http://localhost:"+properties.serverPort().get()+")"))
       .javaDependencies()
         .addDependency(SPRING_BOOT_GROUP, artifactId("spring-boot-starter-validation"))
+        .addDependency(reflectionsDependency())
         .and()
       .springMainProperties()
         .set(SERVER_PORT, propertyValue(properties.serverPort().stringValue()))
@@ -82,9 +84,22 @@ public class SpringBootMvcsModulesFactory {
           toSrcTestJava().append(packagePath).append(CORS_PRIMARY).append("CorsFilterConfigurationIT.java")
         )
         .add(SOURCE.append("test").template("JsonHelper.java"), toSrcTestJava().append(packagePath).append("JsonHelper.java"))
+        .batch(SOURCE.append("test"), toSrcTestJava().append(properties.packagePath()))
+          .addTemplate("BeanValidationAssertions.java")
+          .addTemplate("BeanValidationTest.java")
         .and()
+      .and()
       .springTestLogger(loggerName, logLevel)
       .springMainLogger(loggerName, logLevel);
     //@formatter:on
+  }
+
+  private JavaDependency reflectionsDependency() {
+    return javaDependency()
+      .groupId("org.reflections")
+      .artifactId("reflections")
+      .versionSlug("reflections")
+      .scope(JavaDependencyScope.TEST)
+      .build();
   }
 }

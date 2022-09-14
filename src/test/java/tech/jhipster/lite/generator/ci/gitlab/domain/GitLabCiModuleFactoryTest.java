@@ -20,6 +20,6 @@ class GitLabCiModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module).createFiles(".gitlab-ci.yml");
+    assertThatModule(module).hasFiles(".gitlab-ci.yml");
   }
 }

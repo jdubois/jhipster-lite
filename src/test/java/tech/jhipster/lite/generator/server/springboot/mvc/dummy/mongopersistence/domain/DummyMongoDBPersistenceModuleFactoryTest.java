@@ -24,20 +24,20 @@ class DummyMongoDBPersistenceModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, dummyInMemoryRepository(), inMemoryBeersReseter())
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerDocument.java",
         "MongoDBBeersRepository.java",
         "SpringDataBeersRepository.java",
         "BeersCollectionChangeUnit.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerDocumentTest.java",
         "MongoDBBeersRepositoryIntTest.java",
         "MongoDBBeersReseter.java"
       )
-      .doNotCreateFiles(
+      .doNotHaveFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersRepository.java",
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
       );

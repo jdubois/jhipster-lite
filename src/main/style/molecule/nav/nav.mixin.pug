@@ -1,0 +1,18 @@
+include /atom/nav-item/nav-item.mixin.pug
+include /molecule/icon-text/icon-text.mixin.pug
+
+mixin jhlite-nav
+  nav
+    ul.jhlite-nav
+      li.jhlite-nav--item
+        +jhlite-nav-item({current: true})
+          +jhlite-icon-text('puzzle') Modules
+      li.jhlite-nav--item
+        +jhlite-nav-item
+          +jhlite-icon-text('map') Landscape
+      li.jhlite-nav--item
+        +jhlite-nav-item
+          +jhlite-icon-text('book') Documentation
+      li.jhlite-nav--item
+        +jhlite-nav-item
+          +jhlite-icon-text('binoculars') Swagger UI

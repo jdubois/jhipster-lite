@@ -27,7 +27,7 @@ class FlywayModuleFactoryTest {
     JHipsterModule module = factory.buildInitializationModule(properties, INVOCATION_DATE);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -37,8 +37,8 @@ class FlywayModuleFactoryTest {
         """
       )
       .and()
-      .createFiles("src/main/resources/db/migration/V20071203101530__init.sql")
-      .createFile("src/main/resources/config/application.properties")
+      .hasFiles("src/main/resources/db/migration/V20071203101530__init.sql")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("spring.flyway.enabled=true")
       .containing("spring.flyway.locations=classpath:db/migration");
   }
@@ -50,7 +50,7 @@ class FlywayModuleFactoryTest {
     JHipsterModule module = factory.buildMysqlDependencyModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
                 <dependency>

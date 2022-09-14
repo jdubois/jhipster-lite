@@ -1,0 +1,5 @@
+mixin jhlite-button(opts)
+  -const {block: isBlock, disabled} = opts || {};
+  -const blockClass = isBlock ? '-block' : null;
+  button.jhlite-button(class=blockClass disabled=disabled)
+    block

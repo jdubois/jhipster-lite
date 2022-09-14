@@ -3,26 +3,29 @@
 <script lang="ts" src="./Landscape.component.ts"></script>
 
 <style lang="scss">
+$jhipster-landscape-padding: 20px;
+
 .jhipster-landscape {
+  position: relative;
   font-family: $jhipster-lite-font-family;
   color: $jhipster-lite-primary-text-color;
   background-color: $jhipster-lite-secondary-color;
   display: flex;
   flex-direction: row-reverse;
-  height: calc(100vh - $jhipster-lite-header-height);
+  height: 100%;
 }
 
 .jhipster-landscape-map {
-  padding-top: 20px;
+  padding: $jhipster-landscape-padding;
   position: relative;
   flex-grow: 1;
   overflow: auto;
 }
 
 .jhipster-landscape-modes-selection {
-  left: 15px;
-  top: 15px + $jhipster-lite-header-height;
-  position: fixed;
+  top: $jhipster-landscape-padding;
+  left: $jhipster-landscape-padding;
+  position: absolute;
   z-index: 3;
   background: rgba($color: $jhipster-lite-secondary-color, $alpha: 0.7);
   padding: 10px;
@@ -49,25 +52,27 @@
 
 .jhipster-landscape-connectors {
   position: absolute;
-  top: -$jhipster-lite-header-height;
-  left: 0;
+  top: $jhipster-landscape-padding;
+  left: $jhipster-landscape-padding;
   z-index: 1;
 
   &--line {
     stroke: $jhipster-lite-line-color;
+    stroke-opacity: 0.7;
     stroke-width: 1px;
     stroke-dasharray: 2 2;
     fill: none;
 
     &.-selectable-highlighted,
     &.-not-selectable-highlighted,
-    &.-highlighted-unselection {
+    &.-highlighted-unselection,
+    &.-selected {
       stroke-dasharray: none;
       stroke-width: 3px;
+      stroke-opacity: 1;
     }
 
     &.-selected {
-      stroke-dasharray: none;
       stroke: $jhipster-lite-primary-color;
     }
 
@@ -89,18 +94,17 @@
   place-items: center;
 
   &--level {
-    width: 250px;
     grid-row: 1;
     padding: 0;
 
     &.-compacted {
-      width: 200px;
-      margin-right: 40px;
+      min-width: 150px;
+      margin-right: 20px;
     }
 
     &.-extended {
-      width: 250px;
-      margin-right: 70px;
+      min-width: 250px;
+      margin-right: 30px;
     }
   }
 }
@@ -116,7 +120,7 @@
     font-weight: bold;
 
     &.-extended {
-      margin: 7px;
+      margin: 5px;
     }
 
     &.-compacted {
@@ -133,7 +137,7 @@
   }
 
   &.-extended {
-    padding: 10px 10px 0 10px;
+    padding: 10px 5px 0 5px;
   }
 
   &.-compacted {
@@ -144,7 +148,8 @@
     animation: $jhipster-lite-selectable-highlight-animation;
   }
 
-  &.-not-selectable-highlighted {
+  &.-not-selectable-highlighted,
+  &.-highlighted-unselection {
     animation: $jhipster-lite-not-selectable-highlight-animation;
   }
 }

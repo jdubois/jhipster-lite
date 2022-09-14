@@ -24,7 +24,7 @@ class AngularJwtModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, appRoutingFile(), appModuleFile())
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/webapp/app/auth",
         "account.model.ts",
         "account.model.spec.ts",
@@ -34,7 +34,7 @@ class AngularJwtModuleFactoryTest {
         "auth.interceptor.spec.ts",
         "auth-jwt.service.spec.ts"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/webapp/app/login",
         "login.service.ts",
         "login.service.spec.ts",
@@ -45,10 +45,10 @@ class AngularJwtModuleFactoryTest {
         "login.module.ts",
         "login.route.ts"
       )
-      .createFile("src/main/webapp/app/login/login.component.spec.ts")
+      .hasFile("src/main/webapp/app/login/login.component.spec.ts")
       .containing(".toEqual('jhipster')")
       .and()
-      .createFile("src/main/webapp/app/app-routing.module.ts")
+      .hasFile("src/main/webapp/app/app-routing.module.ts")
       .containing(
         """
               {
@@ -58,7 +58,7 @@ class AngularJwtModuleFactoryTest {
             """
       )
       .and()
-      .createFile("src/main/webapp/app/app.module.ts")
+      .hasFile("src/main/webapp/app/app.module.ts")
       .containing("import { ReactiveFormsModule } from '@angular/forms';")
       .containing("import { AuthInterceptor } from './auth/auth.interceptor'")
       .containing(", ReactiveFormsModule]")

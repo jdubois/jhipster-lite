@@ -24,7 +24,7 @@ class LogstashModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile(), testLockbackFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
                 <dependency>
@@ -35,27 +35,27 @@ class LogstashModuleFactoryTest {
             """
       )
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/secondary/logstash",
         "LogstashTcpConfiguration.java",
         "LogstashTcpLifeCycle.java",
         "LogstashTcpProperties.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/technical/infrastructure/secondary/logstash",
         "LogstashTcpConfigurationIT.java",
         "LogstashTcpConfigurationTest.java",
         "LogstashTcpLifeCycleTest.java",
         "LogstashTcpPropertiesTest.java"
       )
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("application.logging.logstash.tcp.enabled=false")
       .containing("application.logging.logstash.tcp.host=localhost")
       .containing("application.logging.logstash.tcp.port=5000")
       .containing("application.logging.logstash.tcp.ring-buffer-size=8192")
       .containing("application.logging.logstash.tcp.shutdown_grace_period=PT1M")
       .and()
-      .createFile("src/test/resources/logback.xml")
+      .hasFile("src/test/resources/logback.xml")
       .containing("<logger name=\"net.logstash.logback\" level=\"ERROR\" />")
       .containing("<logger name=\"org.jboss.logging\" level=\"WARN\" />");
   }

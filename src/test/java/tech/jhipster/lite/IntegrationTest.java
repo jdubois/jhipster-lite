@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@DisplayNameGeneration(ReplaceCamelCase.class)
-@Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { JHLiteApp.class })
 @Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@DisplayNameGeneration(ReplaceCamelCase.class)
+@SpringBootTest(classes = { JHLiteApp.class })
 public @interface IntegrationTest {
   String[] properties() default {};
 }

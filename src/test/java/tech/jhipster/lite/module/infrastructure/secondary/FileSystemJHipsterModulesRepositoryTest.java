@@ -25,22 +25,22 @@ class FileSystemJHipsterModulesRepositoryTest {
     JHipsterModule module = module();
 
     // @formatter:off
-    assertThatModuleWithFiles(module, 
+    assertThatModuleWithFiles(module,
         file("src/test/resources/projects/maven/pom.xml", "pom.xml"),
-        packageJsonFile(), 
+        packageJsonFile(),
         file("src/test/resources/projects/files/dummy.txt", "dummy.txt"))
-      .createFiles(
+      .hasFiles(
         "src/main/java/com/company/myapp/MyApp.java",
         "src/main/java/com/company/myapp/errors/Assert.java",
         "src/main/java/com/company/myapp/errors/AssertionException.java",
         "documentation/cucumber-integration.md",
         ".gitignore"
       )
-      .createExecutableFiles(".husky/pre-commit")
-      .createFile("src/main/java/com/company/myapp/MyApp.java")
+      .hasExecutableFiles(".husky/pre-commit")
+      .hasFile("src/main/java/com/company/myapp/MyApp.java")
         .containing("com.test.myapp")
         .and()
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing("<dummy-dependency.version>4.5.8</dummy-dependency.version>")
       .notContaining("""
               <dependency>
@@ -182,12 +182,12 @@ class FileSystemJHipsterModulesRepositoryTest {
             """
           )
         .and()
-      .createFile("package.json")
+      .hasFile("package.json")
         .containing("\"scripts\": {\n    \"serve\": \"tikui-core serve\"")
         .containing("\"dependencies\": {\n    \"@angular/animations\": \"")
         .containing("\"devDependencies\": {\n    \"@playwright/test\": \"")
         .and()
-      .createFile("src/main/java/com/company/myapp/errors/Assert.java")
+      .hasFile("src/main/java/com/company/myapp/errors/Assert.java")
         .containing("Dummy replacement")
         .containing("Another dummy replacement")
         .containing("Dummy collection replacement")
@@ -202,19 +202,19 @@ class FileSystemJHipsterModulesRepositoryTest {
             import java.util.Collection;
             """)
         .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
         .containing("springdoc.swagger-ui.operationsSorter=alpha")
         .and()
-      .createFile("src/main/resources/config/application-local.properties")
+      .hasFile("src/main/resources/config/application-local.properties")
         .containing("springdoc.swagger-ui.tryItOutEnabled=false")
         .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
         .containing("springdoc.swagger-ui.operationsSorter=test")
         .and()
-      .createFile("src/test/resources/config/application-local.properties")
+      .hasFile("src/test/resources/config/application-local.properties")
         .containing("springdoc.swagger-ui.tryItOutEnabled=test")
         .and()
-      .createFile("README.md")
+      .hasFile("README.md")
         .containing(
             """
            - [Cucumber integration](documentation/cucumber-integration.md)
@@ -225,9 +225,9 @@ class FileSystemJHipsterModulesRepositoryTest {
         .containing("This is a readme section")
         .containing("This is a startup section")
       .and()
-      .createPrefixedFiles(".git", "config", "HEAD")
-      .doNotCreateFiles("dummy.txt")
-      .createFiles("dummy.json");
+      .hasPrefixedFiles(".git", "config", "HEAD")
+      .doNotHaveFiles("dummy.txt")
+      .hasFiles("dummy.json");
     // @formatter:on
 
     assertPreActions();

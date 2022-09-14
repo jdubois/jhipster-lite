@@ -46,7 +46,7 @@ public class SonarModulesFactory {
       .and()
       .documentation(documentationTitle("sonar"), SOURCE.template("sonar.md"))
       .startupCommand("""
-        docker-compose -f src/main/docker/sonar.yml up -d
+        docker compose -f src/main/docker/sonar.yml up -d
         ./mvnw clean verify sonar:sonar
         """)
       .javaBuildPlugins()

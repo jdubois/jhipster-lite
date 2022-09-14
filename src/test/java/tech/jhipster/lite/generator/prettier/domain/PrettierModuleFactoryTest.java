@@ -27,13 +27,13 @@ class PrettierModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile())
-      .createFiles(".lintstagedrc.js", ".prettierignore")
-      .createFile(".prettierrc")
+      .hasFiles(".lintstagedrc.js", ".prettierignore")
+      .hasFile(".prettierrc")
       .containing("tabWidth: 4")
       .containing("endOfLine: \"crlf\"")
       .and()
-      .createExecutableFiles(".husky/pre-commit")
-      .createFile("package.json")
+      .hasExecutableFiles(".husky/pre-commit")
+      .hasFile("package.json")
       .containing(nodeDependency("@prettier/plugin-xml"))
       .containing(nodeDependency("husky"))
       .containing(nodeDependency("lint-staged"))

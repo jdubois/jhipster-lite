@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.domain.properties;
 
 import java.util.Map;
+import java.util.function.Predicate;
 import tech.jhipster.lite.common.domain.JHipsterCollections;
 import tech.jhipster.lite.error.domain.Assert;
 
@@ -10,13 +11,23 @@ record JHipsterModuleParameters(Map<String, Object> parameters) {
   }
 
   <T> T getOrDefault(String key, T defaultValue, Class<T> clazz) {
+    return getOrDefault(key, defaultValue, clazz, t -> false);
+  }
+
+  <T> T getOrDefault(String key, T defaultValue, Class<T> clazz, Predicate<T> isEmpty) {
     Assert.notBlank("key", key);
 
     if (!parameters.containsKey(key)) {
       return defaultValue;
     }
 
-    return get(key, clazz);
+    T value = get(key, clazz);
+
+    if (isEmpty.test(value)) {
+      return defaultValue;
+    }
+
+    return value;
   }
 
   <T> T get(String key, Class<T> clazz) {

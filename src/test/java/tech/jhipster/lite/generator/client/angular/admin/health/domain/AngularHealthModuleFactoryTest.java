@@ -21,9 +21,9 @@ class AngularHealthModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, appRouting(), appComponent(), appRoutingSpec())
-      .createPrefixedFiles("src/main/webapp/app/admin", "admin-routing.module.ts", "admin-routing.module.spec.ts")
-      .createPrefixedFiles("src/main/webapp/app/config", "application-config.service.spec.ts", "application-config.service.ts")
-      .createPrefixedFiles(
+      .hasPrefixedFiles("src/main/webapp/app/admin", "admin-routing.module.ts", "admin-routing.module.spec.ts")
+      .hasPrefixedFiles("src/main/webapp/app/config", "application-config.service.spec.ts", "application-config.service.ts")
+      .hasPrefixedFiles(
         "src/main/webapp/app/admin/health",
         "health.component.css",
         "health.component.html",
@@ -35,14 +35,14 @@ class AngularHealthModuleFactoryTest {
         "health.service.spec.ts",
         "health.service.ts"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/webapp/app/admin/health/modal",
         "health-modal.component.css",
         "health-modal.component.html",
         "health-modal.component.ts",
         "health-modal.component.spec.ts"
       )
-      .createFile("src/main/webapp/app/app-routing.module.ts")
+      .hasFile("src/main/webapp/app/app-routing.module.ts")
       .containing(
         """
         {
@@ -52,10 +52,10 @@ class AngularHealthModuleFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/webapp/app/app.component.html")
+      .hasFile("src/main/webapp/app/app.component.html")
       .containing("<a routerLink=\"admin/health\" mat-menu-item><span>Health</span></a>")
       .and()
-      .createFile("src/main/webapp/app/app-routing.module.spec.ts")
+      .hasFile("src/main/webapp/app/app-routing.module.spec.ts")
       .containing(
         """
           it('should navigate on admin endpoint', () => {

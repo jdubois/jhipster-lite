@@ -25,12 +25,12 @@ class CucumberAuthenticationModuleFactoryTest {
     JHipsterModule module = factory.buildOauth2Module(properties);
 
     assertThatModuleWithFiles(module, pomFile(), cucumberConfiguration())
-      .createFiles("documentation/cucumber-authentication.md")
-      .createFile("src/test/java/com/jhipster/test/cucumber/CucumberConfiguration.java")
+      .hasFiles("documentation/cucumber-authentication.md")
+      .hasFile("src/test/java/com/jhipster/test/cucumber/CucumberConfiguration.java")
       .containing("classes = { MyappApp.class, TestSecurityConfiguration.class, CucumberAuthenticationConfiguration.class")
       .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;")
       .and()
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -62,8 +62,8 @@ class CucumberAuthenticationModuleFactoryTest {
         """
       )
       .and()
-      .createJavaTests("com/jhipster/test/cucumber/CucumberAuthenticationConfiguration.java")
-      .createJavaTests("com/jhipster/test/authentication/infrastructure/primary/AuthenticationSteps.java");
+      .hasJavaTests("com/jhipster/test/cucumber/CucumberAuthenticationConfiguration.java")
+      .hasJavaTests("com/jhipster/test/authentication/infrastructure/primary/AuthenticationSteps.java");
   }
 
   private ModuleFile cucumberConfiguration() {
@@ -84,7 +84,7 @@ class CucumberAuthenticationModuleFactoryTest {
     JHipsterModule module = factory.buildJWTModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFiles("documentation/cucumber-authentication.md")
-      .createJavaTests("com/jhipster/test/authentication/infrastructure/primary/AuthenticationSteps.java");
+      .hasFiles("documentation/cucumber-authentication.md")
+      .hasJavaTests("com/jhipster/test/authentication/infrastructure/primary/AuthenticationSteps.java");
   }
 }

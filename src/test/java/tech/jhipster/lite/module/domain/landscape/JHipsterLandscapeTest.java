@@ -209,4 +209,14 @@ class JHipsterLandscapeTest {
     assertThat(landscape.sort(List.of(moduleSlug("second"), moduleSlug("first"))))
       .containsExactly(moduleSlug("first"), moduleSlug("second"));
   }
+
+  @Test
+  void shouldSortInitAsFirstModule() {
+    JHipsterModuleResource init = defaultModuleResourceBuilder().slug("init").build();
+    JHipsterModuleResource root = defaultModuleResourceBuilder().slug("root").build();
+
+    JHipsterLandscape landscape = JHipsterLandscape.from(moduleResources(root, init));
+
+    assertThat(landscape.sort(List.of(moduleSlug("root"), moduleSlug("init")))).containsExactly(moduleSlug("init"), moduleSlug("root"));
+  }
 }

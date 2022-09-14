@@ -24,14 +24,14 @@ class PlaywrightModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile())
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("@playwright/test"))
       .containing("\"e2e\": \"npx playwright test --headed\"")
       .containing("\"e2e:headless\": \"npx playwright test\"")
       .and()
-      .createFile("playwright.config.ts")
+      .hasFile("playwright.config.ts")
       .containing("baseURL: process.env.URL || 'http://localhost:9000',")
       .and()
-      .createPrefixedFiles("src/test/javascript/integration/common/primary/app", "Home.spec.ts", "Home-Page.ts");
+      .hasPrefixedFiles("src/test/javascript/integration/common/primary/app", "Home.spec.ts", "Home-Page.ts");
   }
 }

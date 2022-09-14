@@ -41,7 +41,7 @@ class FrontendMavenModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing("    <node.version>v16.0.0</node.version>")
       .containing("    <npm.version>4.0.0</npm.version>")
       .containing(
@@ -177,7 +177,7 @@ class FrontendMavenModuleFactoryTest {
         """
       )
       .and()
-      .createJavaSources("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResource.java")
-      .createJavaTests("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResourceIT.java");
+      .hasJavaSources("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResource.java")
+      .hasJavaTests("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResourceIT.java");
   }
 }

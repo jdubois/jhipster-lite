@@ -112,7 +112,7 @@ class ExceptionTranslator implements ProblemHandling {
 
   @ExceptionHandler
   public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
-    return create(ex, request, HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));
+    return create(ex, request, HeaderUtil.createFailureAlert(applicationName, ex.getEntityName(), ex.getErrorKey()));
   }
 
   @ExceptionHandler

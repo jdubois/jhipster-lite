@@ -19,12 +19,12 @@ export interface RestLandscapeDependency {
 }
 
 export const toLandscapeModule = (module: RestLandscapeModule): LandscapeModule =>
-  new LandscapeModule(
-    new ModuleSlug(module.slug),
-    module.operation,
-    toPropertiesDefinitions(module.properties),
-    toModuleDependencies(module.dependencies)
-  );
+  LandscapeModule.initialState({
+    slug: new ModuleSlug(module.slug),
+    operation: module.operation,
+    properties: toPropertiesDefinitions(module.properties),
+    dependencies: toModuleDependencies(module.dependencies),
+  });
 
 const toModuleDependencies = (dependencies: RestLandscapeDependency[] | undefined): LandscapeElementId[] => {
   if (dependencies === undefined) {

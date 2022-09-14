@@ -62,5 +62,13 @@
     cursor: pointer;
     background-color: $jhipster-lite-primary-color;
   }
+
+  &.-applied::before {
+    margin: 2px 0 0 3px;
+    float: left;
+    color: #4aaa2d;
+    font-family: 'jhlite-icons';
+    content: '\e807';
+  }
 }
 </style>

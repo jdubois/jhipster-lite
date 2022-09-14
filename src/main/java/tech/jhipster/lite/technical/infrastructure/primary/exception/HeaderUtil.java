@@ -17,26 +17,18 @@ final class HeaderUtil {
    * <p>createFailureAlert.</p>
    *
    * @param applicationName a {@link String} object.
-   * @param enableTranslation a boolean.
    * @param entityName a {@link String} object.
    * @param errorKey a {@link String} object.
-   * @param defaultMessage a {@link String} object.
    * @return a {@link HttpHeaders} object.
    */
-  public static HttpHeaders createFailureAlert(
-    String applicationName,
-    boolean enableTranslation,
-    String entityName,
-    String errorKey,
-    String defaultMessage
-  ) {
-    log.error("Entity processing failed, {}", defaultMessage);
-
-    String message = enableTranslation ? "error." + errorKey : defaultMessage;
+  public static HttpHeaders createFailureAlert(String applicationName, String entityName, String errorKey) {
+    String message = "error." + errorKey;
+    log.error("Entity processing failed, {}", message);
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("X-" + applicationName + "-error", message);
     headers.add("X-" + applicationName + "-params", entityName);
+
     return headers;
   }
 }

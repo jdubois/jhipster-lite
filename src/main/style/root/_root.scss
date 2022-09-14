@@ -1,0 +1,10 @@
+:root {
+  font-family: $jhlite-global-font-primary-family;
+  font-size: $jhlite-global-font-text-size;
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  :root {
+    font-size: $jhlite-global-font-text-desktop-size;
+  }
+}

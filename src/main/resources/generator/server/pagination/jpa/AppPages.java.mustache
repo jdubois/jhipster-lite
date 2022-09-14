@@ -1,0 +1,40 @@
+package {{packageName}}.pagination.infrastructure.secondary;
+
+import java.util.function.Function;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import {{packageName}}.error.domain.Assert;
+import {{packageName}}.pagination.domain.{{baseName}}Page;
+import {{packageName}}.pagination.domain.{{baseName}}Pageable;
+
+public final class {{baseName}}Pages {
+
+  private {{baseName}}Pages() {}
+
+  public static Pageable from({{baseName}}Pageable pagination) {
+    return from(pagination, Sort.unsorted());
+  }
+
+  public static Pageable from({{baseName}}Pageable pagination, Sort sort) {
+    Assert.notNull("pagination", pagination);
+    Assert.notNull("sort", sort);
+
+    return PageRequest.of(pagination.page(), pagination.pageSize(), sort);
+  }
+
+  public static <S, T> {{baseName}}Page<T> from(Page<S> springPage, Function<S, T> mapper) {
+    Assert.notNull("springPage", springPage);
+    Assert.notNull("mapper", mapper);
+
+    return {{baseName}}Page
+      .builder(springPage.getContent().parallelStream().map(mapper).toList())
+      .currentPage(springPage.getNumber())
+      .pageSize(springPage.getSize())
+      .totalElementsCount(springPage.getTotalElements())
+      .build();
+  }
+}

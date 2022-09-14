@@ -76,18 +76,6 @@ class BannerModuleConfiguration {
       .factory(banners::buildJHipsterV3Banner);
   }
 
-  @Bean
-  JHipsterModuleResource jhipsterIpponBannerResource(BannerApplicationService banners) {
-    return JHipsterModuleResource
-      .builder()
-      .slug("banner-ippon")
-      .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner for Ippon applications"))
-      .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
-      .factory(banners::buildIpponBanner);
-  }
-
   private JHipsterModuleOrganization organization() {
     return JHipsterModuleOrganization.builder().feature(BANNER).addModuleDependency(SPRING_BOOT).build();
   }

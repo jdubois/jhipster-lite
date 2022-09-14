@@ -1,0 +1,57 @@
+$jhlite-toast-gap: 1vw;
+$jhlite-toast-padding: 2vw;
+$jhlite-toast-radius: 2vw;
+
+$jhlite-toast-medium-gap: 10px;
+$jhlite-toast-medium-padding: 10px 20px;
+$jhlite-toast-medium-radius: 20px;
+
+$jhlite-toast-color-text: $jhlite-global-color-text-light;
+$jhlite-toast-success-color-background: $jhlite-global-color-success;
+$jhlite-toast-error-color-background: $jhlite-global-color-error;
+
+.jhlite-toast {
+  padding: $jhlite-toast-padding;
+  display: flex;
+  gap: $jhlite-toast-gap;
+  border-radius: $jhlite-toast-radius;
+  align-items: center;
+  font-size: 1.5rem;
+  color: $jhlite-toast-color-text;
+
+  &.-success {
+    background-color: $jhlite-toast-success-color-background;
+  }
+
+  &.-error {
+    background-color: $jhlite-toast-error-color-background;
+  }
+
+  &--message {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+
+  &--action {
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+    background: none;
+    border: 0;
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  .jhlite-toast {
+    gap: $jhlite-toast-medium-gap;
+    padding: $jhlite-toast-medium-padding;
+    border-radius: $jhlite-toast-medium-radius;
+  }
+}

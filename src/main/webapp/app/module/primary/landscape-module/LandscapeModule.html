@@ -1,12 +1,12 @@
 <div
   class="jhipster-landscape-module"
   :class="moduleClass()"
-  :ref="el => landscapeElements.set(module.slug, el)"
-  :data-selector="`${module.slug}-module`"
+  :ref="el => landscapeElements.set(module.slugString(), el)"
+  :data-selector="`${module.slugString()}-module`"
   @mouseover="emphasisizeModule()"
   @mouseleave="deEmphasisizeModule()"
   @click="clickedModule()"
 >
-  <div class="jhipster-landscape-module--slug" :class="moduleClass()">{{ module.slug }}</div>
-  <div class="jhipster-landscape-module--operation" :class="moduleClass()">{{ module.operation }}</div>
+  <div class="jhipster-landscape-module--slug" :class="moduleClass()">{{ module.slugString() }}</div>
+  <div class="jhipster-landscape-module--operation" :class="moduleClass()">{{ module.operation() }}</div>
 </div>

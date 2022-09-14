@@ -19,6 +19,6 @@ public class SpringBootMvcApplicationService {
   }
 
   public JHipsterModule buildUndertowModule(JHipsterModuleProperties properties) {
-    return factory.buildUntertowModule(properties);
+    return factory.buildUndertowModule(properties);
   }
 }

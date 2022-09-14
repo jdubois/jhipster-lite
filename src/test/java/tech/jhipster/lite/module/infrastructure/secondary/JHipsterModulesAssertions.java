@@ -19,8 +19,8 @@ public final class JHipsterModulesAssertions {
 
   private JHipsterModulesAssertions() {}
 
-  public static ModuleAsserter assertThatModule(JHipsterModule module) {
-    return new ModuleAsserter(module);
+  public static JHipsterModuleAsserter assertThatModule(JHipsterModule module) {
+    return new JHipsterModuleAsserter(module);
   }
 
   public static ModuleFile pomFile() {
@@ -51,10 +51,10 @@ public final class JHipsterModulesAssertions {
     return new ModuleFile(source, destination);
   }
 
-  public static ModuleAsserter assertThatModuleWithFiles(JHipsterModule module, ModuleFile... files) {
+  public static JHipsterModuleAsserter assertThatModuleWithFiles(JHipsterModule module, ModuleFile... files) {
     addFilesToproject(module.projectFolder(), files);
 
-    return new ModuleAsserter(module);
+    return new JHipsterModuleAsserter(module);
   }
 
   public static String nodeDependency(String dependency) {
@@ -85,40 +85,40 @@ public final class JHipsterModulesAssertions {
       });
   }
 
-  public static class ModuleAsserter {
+  public static class JHipsterModuleAsserter {
 
     private static final String SLASH = "/";
 
     private final JHipsterProjectFolder projectFolder;
 
-    private ModuleAsserter(JHipsterModule module) {
+    private JHipsterModuleAsserter(JHipsterModule module) {
       assertThat(module).as("Can't make assertions on a module without module").isNotNull();
 
       TestJHipsterModules.apply(module);
       projectFolder = module.projectFolder();
     }
 
-    public ModuleAsserter createJavaSources(String... files) {
-      return createPrefixedFiles("src/main/java", files);
+    public JHipsterModuleAsserter hasJavaSources(String... files) {
+      return hasPrefixedFiles("src/main/java", files);
     }
 
-    public ModuleAsserter createJavaTests(String... files) {
-      return createPrefixedFiles("src/test/java", files);
+    public JHipsterModuleAsserter hasJavaTests(String... files) {
+      return hasPrefixedFiles("src/test/java", files);
     }
 
-    public ModuleAsserter createPrefixedFiles(String prefix, String... files) {
+    public JHipsterModuleAsserter hasPrefixedFiles(String prefix, String... files) {
       assertThat(files).as("Can't check null files for a module").isNotNull();
 
       String[] sourceFiles = Stream.of(files).map(file -> prefix + SLASH + file).toArray(String[]::new);
 
-      return createFiles(sourceFiles);
+      return hasFiles(sourceFiles);
     }
 
-    public ModuleAsserter createFiles(String... files) {
+    public JHipsterModuleAsserter hasFiles(String... files) {
       assertThat(files).as("Can't check null files for a module").isNotNull();
 
       SoftAssertions assertions = new SoftAssertions();
-      Stream.of(files).map(file -> projectFolder.filePath(file)).forEach(assertFileExist(assertions));
+      Stream.of(files).map(projectFolder::filePath).forEach(assertFileExist(assertions));
       assertions.assertAll();
 
       return this;
@@ -128,11 +128,11 @@ public final class JHipsterModulesAssertions {
       return path -> assertions.assertThat(Files.exists(path)).as(fileNotFoundMessage(path, projectFolder)).isTrue();
     }
 
-    public ModuleAsserter createExecutableFiles(String... files) {
+    public JHipsterModuleAsserter hasExecutableFiles(String... files) {
       assertThat(files).as("Can't check null files for a module").isNotNull();
 
       SoftAssertions assertions = new SoftAssertions();
-      Stream.of(files).map(file -> projectFolder.filePath(file)).forEach(assertFileIsExecutable(assertions));
+      Stream.of(files).map(projectFolder::filePath).forEach(assertFileIsExecutable(assertions));
       assertions.assertAll();
 
       return this;
@@ -146,11 +146,11 @@ public final class JHipsterModulesAssertions {
           .isTrue();
     }
 
-    public ModuleAsserter doNotCreateFiles(String... files) {
+    public JHipsterModuleAsserter doNotHaveFiles(String... files) {
       assertThat(files).as("Can't check null files as not created for a module").isNotNull();
 
       SoftAssertions assertions = new SoftAssertions();
-      Stream.of(files).map(file -> projectFolder.filePath(file)).forEach(assertFileNotExist(assertions));
+      Stream.of(files).map(projectFolder::filePath).forEach(assertFileNotExist(assertions));
       assertions.assertAll();
 
       return this;
@@ -160,17 +160,17 @@ public final class JHipsterModulesAssertions {
       return path -> assertions.assertThat(Files.notExists(path)).as(fileFoundMessage(path, projectFolder)).isTrue();
     }
 
-    public ModuleFileAsserter createFile(String file) {
-      return new ModuleFileAsserter(this, file);
+    public JHipsterModuleFileAsserter hasFile(String file) {
+      return new JHipsterModuleFileAsserter(this, file);
     }
   }
 
-  public static class ModuleFileAsserter {
+  public static class JHipsterModuleFileAsserter {
 
-    private final ModuleAsserter moduleAsserter;
+    private final JHipsterModuleAsserter moduleAsserter;
     private final String file;
 
-    private ModuleFileAsserter(ModuleAsserter moduleAsserter, String file) {
+    private JHipsterModuleFileAsserter(JHipsterModuleAsserter moduleAsserter, String file) {
       assertThat(file).as("Can't check file without file path").isNotBlank();
 
       this.moduleAsserter = moduleAsserter;
@@ -184,7 +184,7 @@ public final class JHipsterModulesAssertions {
       assertThat(Files.exists(path)).as(fileNotFoundMessage(path, moduleAsserter.projectFolder)).isTrue();
     }
 
-    public ModuleFileAsserter containing(String content) {
+    public JHipsterModuleFileAsserter containing(String content) {
       assertThat(content).as("Can't check blank content").isNotBlank();
 
       try {
@@ -198,7 +198,7 @@ public final class JHipsterModulesAssertions {
       return this;
     }
 
-    public ModuleFileAsserter notContaining(String content) {
+    public JHipsterModuleFileAsserter notContaining(String content) {
       assertThat(content).as("Can't check blank content").isNotBlank();
 
       try {
@@ -212,7 +212,7 @@ public final class JHipsterModulesAssertions {
       return this;
     }
 
-    public ModuleAsserter and() {
+    public JHipsterModuleAsserter and() {
       return moduleAsserter;
     }
   }

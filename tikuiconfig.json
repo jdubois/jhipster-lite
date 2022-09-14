@@ -1,5 +1,8 @@
 {
   "documentation": "tikui",
   "src": "src/main/style",
-  "dist": "target/classes/public/style"
+  "dist": "target/classes/public/style",
+  "expose": {
+    "src/main/glyph": "glyph"
+  }
 }

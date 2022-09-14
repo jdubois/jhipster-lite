@@ -22,7 +22,7 @@ class DummyFlywayModuleFactoryTest {
     JHipsterModule module = factory.buildPostgresqlModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
 
     assertThatModule(module)
-      .createFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")
+      .hasFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")
       .containing("  id            UUID NOT NULL PRIMARY KEY,");
   }
 
@@ -33,7 +33,7 @@ class DummyFlywayModuleFactoryTest {
     JHipsterModule module = factory.buildNotPostgresqlModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
 
     assertThatModule(module)
-      .createFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")
+      .hasFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")
       .containing("  id            BINARY(16) NOT NULL PRIMARY KEY,");
   }
 }

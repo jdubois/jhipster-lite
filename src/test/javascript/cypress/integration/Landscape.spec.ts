@@ -29,7 +29,7 @@ describe('Landscape', () => {
 
         cy.get(dataSelector('init-module')).click();
         cy.get(dataSelector('parameter-packageName-field')).type('value');
-        cy.get(dataSelector('modules-application-button')).click();
+        cy.get(dataSelector('modules-apply-all-button')).click();
 
         cy.wait('@modules-application').should(xhr => {
           const body = xhr.request.body;

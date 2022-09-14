@@ -1,13 +1,16 @@
 import { LandscapeModule } from './LandscapeModule';
 import { LandscapeFeatureSlug } from './LandscapeFeatureSlug';
 import { LandscapeElement } from './LandscapeElement';
-import { LandscapeElementType } from './LandscapeElementType';
 
 export class LandscapeFeature implements LandscapeElement {
-  constructor(public readonly slug: LandscapeFeatureSlug, public readonly modules: LandscapeModule[]) {}
+  constructor(private readonly featureSlug: LandscapeFeatureSlug, public readonly modules: LandscapeModule[]) {}
 
-  public type(): LandscapeElementType {
-    return 'FEATURE';
+  public slugString(): string {
+    return this.slug().get();
+  }
+
+  public slug(): LandscapeFeatureSlug {
+    return this.featureSlug;
   }
 
   public allModules(): LandscapeModule[] {

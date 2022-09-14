@@ -7,14 +7,12 @@ import ConsoleLogger from '@/common/secondary/ConsoleLogger';
 import { MittAlertBus } from '@/common/secondary/alert/MittAlertBus';
 import mitt from 'mitt';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import 'bootstrap';
 import '../content/css/custom.css';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 import { RestModulesRepository } from './module/secondary/RestModulesRepository';
 import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFoldersRepository';
 import { WindowApplicationListener } from './common/primary/applicationlistener/WindowApplicationListener';
+import { Timeout } from '@/common/primary/timeout/Timeout';
 
 const app = createApp(App);
 
@@ -26,6 +24,7 @@ const consoleLogger = new ConsoleLogger(console);
 const modulesRepository = new RestModulesRepository(axiosHttp);
 const projectFoldersRepository = new RestProjectFoldersRepository(axiosHttp);
 const applicationListener = new WindowApplicationListener(window);
+const timeout = () => new Timeout();
 
 app.provide('alertBus', alertBus);
 app.provide('alertListener', alertListener);
@@ -34,6 +33,7 @@ app.provide('logger', consoleLogger);
 app.provide('modules', modulesRepository);
 app.provide('projectFolders', projectFoldersRepository);
 app.provide('applicationListener', applicationListener);
+app.provide('timeout', timeout);
 app.use(router);
 
 app.mount('#app');

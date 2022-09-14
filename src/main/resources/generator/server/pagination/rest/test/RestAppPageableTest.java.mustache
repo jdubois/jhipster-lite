@@ -1,0 +1,49 @@
+package {{packageName}}.pagination.infrastructure.primary;
+
+import static {{packageName}}.BeanValidationAssertions.*;
+import static org.assertj.core.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import {{packageName}}.UnitTest;
+import {{packageName}}.pagination.domain.{{baseName}}Pageable;
+
+@UnitTest
+class Rest{{baseName}}PageableTest {
+
+  @Test
+  void shouldConvertToDomain() {
+    {{baseName}}Pageable pageable = pageable().toPageable();
+
+    assertThat(pageable.page()).isEqualTo(1);
+    assertThat(pageable.pageSize()).isEqualTo(15);
+  }
+
+  @Test
+  void shouldNotValidateWithPageUnderZero() {
+    Rest{{baseName}}Pageable pageable = pageable();
+    pageable.setPage(-1);
+
+    assertThatBean(pageable).hasInvalidProperty("page");
+  }
+
+  @Test
+  void shouldNotValidateWithSizeAtZero() {
+    Rest{{baseName}}Pageable pageable = pageable();
+    pageable.setPageSize(0);
+
+    assertThatBean(pageable).hasInvalidProperty("pageSize").withParameter("value", 1L);
+  }
+
+  @Test
+  void shouldNotValidateWithPageSizeOverHundred() {
+    Rest{{baseName}}Pageable pageable = pageable();
+    pageable.setPageSize(101);
+
+    assertThatBean(pageable).hasInvalidProperty("pageSize");
+  }
+
+  private Rest{{baseName}}Pageable pageable() {
+    return new Rest{{baseName}}Pageable(1, 15);
+  }
+}

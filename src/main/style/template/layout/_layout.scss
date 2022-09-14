@@ -1,0 +1,16 @@
+.jhlite-layout {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  flex-direction: column;
+
+  &--body {
+    flex-basis: 0;
+    flex-grow: 1;
+    min-width: 0;
+    overflow: auto;
+  }
+}

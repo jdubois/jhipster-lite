@@ -18,6 +18,7 @@ releaseVersion=${currentVersion//-SNAPSHOT/}
 checkGit=$(git status --porcelain|wc -l)
 if [[ $checkGit != 0 ]]; then
   echo "*** check: there are uncommitted changes..."
+  echo " "
   show_syntax
 fi
 
@@ -56,14 +57,21 @@ releaseVersion=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStd
 echo "*** update version in package.json"
 npm version "${releaseVersion}" --no-git-tag-version
 
-echo "*** update version in app.json"
-sed -e '/"description": "Version of the JHipster Lite to deploy.",/{N;s/"value": ".*"/"value": "'$releaseVersion'"/1;}' app.json > app.json.sed
-mv -f app.json.sed app.json
-
 echo "*** git: commit, tag and push tag..."
 git add . && git commit -m "Release v${releaseVersion}"
 git tag -a v"${releaseVersion}" -m "Release v${releaseVersion}"
 git push $GIT_REMOTE v"${releaseVersion}"
+
+echo "*** use specific settings.xml to publish"
+mv ~/.m2/settings.xml ~/.m2/settings.xml.save 2>/dev/null
+cp ~/.m2/jhipster.settings.xml ~/.m2/settings.xml
+
+echo "*** build and publish to maven central"
+./mvnw clean deploy -DskipTests -Drelease
+
+echo "*** put back old settings.xml"
+rm ~/.m2/settings.xml
+mv ~/.m2/settings.xml.save ~/.m2/settings.xml 2>/dev/null
 
 echo "*** version: add SNAPSHOT"
 ./mvnw build-helper:parse-version versions:set \

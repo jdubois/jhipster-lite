@@ -9,12 +9,18 @@ if [ "$#" -ne 1 ]; then
   show_syntax
 fi
 
+if test -f "modulePayload.json"; then
+  payloadFile="modulePayload.json"
+elif test -f tests-ci/modulePayload.json; then
+  payloadFile=tests-ci/modulePayload.json
+fi
+
 application=$1
 
 applyModules() {
   for module in $@
   do
-    local payload="$(sed "s/APP_NAME/$application/g" modulePayload.json)"
+    local payload="$(sed "s/APP_NAME/$application/g" $payloadFile)"
     local api="/api/modules/$module/apply-patch"
 
     echo "curl -o /dev/null -s -w "%{http_code}\n" \
@@ -82,7 +88,8 @@ cucumber_with_jwt() {
   applyModules \
   "spring-boot-jwt" \
   "spring-boot-jwt-basic-auth" \
-  "springdoc-mvc-openapi-with-security-jwt" \
+  "springdoc-mvc-openapi" \
+  "springdoc-jwt" \
   "spring-boot-cucumber" \
   "spring-boot-cucumber-jwt-authentication"
 }
@@ -101,6 +108,9 @@ elif [[ $application == 'fullapp' ]]; then
 
   applyModules \
   "infinitest-filters" \
+  "pagination-domain" \
+  "rest-pagination" \
+  "jpa-pagination" \
   "spring-boot-async" \
   "spring-boot-devtools" \
   "logstash" \
@@ -119,7 +129,6 @@ elif [[ $application == 'fullapp' ]]; then
   applyModules "postgresql" "liquibase"
 
   applyModules \
-  "bean-validation-test" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
@@ -135,12 +144,12 @@ elif [[ $application == 'oauth2app' ]]; then
   applyModules \
   "spring-boot-oauth2" \
   "spring-boot-oauth2-account" \
-  "springdoc-mvc-openapi-with-security-oauth2"
+  "springdoc-mvc-openapi" \
+  "springdoc-oauth2"
 
   applyModules \
   "spring-boot-cucumber" \
   "spring-boot-cucumber-oauth2-authentication" \
-  "bean-validation-test" \
   "dummy-feature"
 
 elif [[ $application == 'mysqlapp' ]]; then
@@ -154,7 +163,6 @@ elif [[ $application == 'mysqlapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
-  "bean-validation-test" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
@@ -187,7 +195,6 @@ elif [[ $application == 'flywayapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
-  "bean-validation-test" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-postgresql-flyway-changelog" \
@@ -205,7 +212,6 @@ elif [[ $application == 'undertowapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
-  "bean-validation-test" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-not-postgresql-flyway-changelog" \
@@ -245,7 +251,6 @@ elif [[ $application == 'mongodbapp' ]]; then
   cucumber_with_jwt
 
   applyModules \
-  "bean-validation-test" \
   "dummy-feature" \
   "dummy-mongodb-persistence"
 
@@ -273,7 +278,8 @@ elif [[ $application == 'angularoauth2app' ]]; then
   applyModules \
   "spring-boot-oauth2" \
   "spring-boot-oauth2-account" \
-  "springdoc-mvc-openapi-with-security-oauth2"
+  "springdoc-mvc-openapi" \
+  "springdoc-oauth2"
 
   applyModules "angular-oauth2"
 
@@ -336,6 +342,6 @@ else
 fi
 
 echo ""
-cat "$filename"
+cat "$payloadFile"
 echo ""
 sleep 5

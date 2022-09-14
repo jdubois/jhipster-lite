@@ -39,8 +39,8 @@ class OAuth2ModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile(), integrationTestFile(), readmeFile())
-      .createPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
-      .createPrefixedFiles(
+      .hasPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/authentication/infrastructure/primary",
         "ApplicationSecurityProperties.java",
         "AudienceValidator.java",
@@ -55,8 +55,8 @@ class OAuth2ModuleFactoryTest {
         "SecurityConfiguration.java",
         "UnknownAuthenticationException.java"
       )
-      .createPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")
-      .createPrefixedFiles(
+      .hasPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/authentication/infrastructure/primary",
         "AccountExceptionResource.java",
         "ApplicationSecurityPropertiesTest.java",
@@ -64,47 +64,46 @@ class OAuth2ModuleFactoryTest {
         "AuthenticatedUserTest.java",
         "AuthenticationExceptionAdviceIT.java",
         "ClaimsTest.java",
-        "CustomClaimConverterIT.java",
+        "CustomClaimConverterTest.java",
         "FakeRequestAttributes.java",
         "JwtGrantedAuthorityConverterTest.java",
         "SecurityConfigurationIT.java",
-        "SecurityConfigurationTest.java",
         "TestSecurityConfiguration.java",
         "WithUnauthenticatedMockUser.java"
       )
-      .createFile("src/main/docker/keycloak.yml")
+      .hasFile("src/main/docker/keycloak.yml")
       .containing("quay.io/keycloak/keycloak:1.1.1")
       .and()
-      .createFile("src/main/docker/keycloak-realm-config/jhipster-realm.json")
+      .hasFile("src/main/docker/keycloak-realm-config/jhipster-realm.json")
       .containing("1.1.1")
       .and()
-      .createFile("src/main/java/com/jhipster/test/authentication/package-info.java")
+      .hasFile("src/main/java/com/jhipster/test/authentication/package-info.java")
       .and()
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing("spring-boot-starter-security")
       .containing("spring-boot-starter-oauth2-client")
       .containing("spring-security-test")
       .containing("spring-boot-starter-oauth2-resource-server")
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://localhost:9080/realms/jhipster")
       .containing("spring.security.oauth2.client.registration.oidc.client-id=web_app")
       .containing("spring.security.oauth2.client.registration.oidc.client-secret=web_app")
       .containing("spring.security.oauth2.client.registration.oidc.scope=openid,profile,email")
       .containing("application.security.oauth2.audience=account,api://default")
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("spring.main.allow-bean-definition-overriding=true")
       .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://DO_NOT_CALL:9080/realms/jhipster")
       .and()
-      .createFile("src/test/java/com/jhipster/test/IntegrationTest.java")
+      .hasFile("src/test/java/com/jhipster/test/IntegrationTest.java")
       .containing("@SpringBootTest(classes = { MyappApp.class, TestSecurityConfiguration.class })")
       .containing("@WithMockUser")
       .containing("import org.springframework.security.test.context.support.WithMockUser;")
       .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;")
       .and()
-      .createFile("README.md")
-      .containing("docker-compose -f src/main/docker/keycloak.yml up -d");
+      .hasFile("README.md")
+      .containing("docker compose -f src/main/docker/keycloak.yml up -d");
   }
 
   private ModuleFile integrationTestFile() {

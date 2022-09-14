@@ -22,12 +22,12 @@ class DummyLiquibaseModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
 
     assertThatModuleWithFiles(module, masterChangelog())
-      .createFile("src/main/resources/config/liquibase/master.xml")
+      .hasFile("src/main/resources/config/liquibase/master.xml")
       .containing(
         "<include file=\"config/liquibase/changelog/20211203101530_dummy_feature_schema.xml\" relativeToChangelogFile=\"false\"/>"
       )
       .and()
-      .createFiles("src/main/resources/config/liquibase/changelog/20211203101530_dummy_feature_schema.xml");
+      .hasFiles("src/main/resources/config/liquibase/changelog/20211203101530_dummy_feature_schema.xml");
   }
 
   private ModuleFile masterChangelog() {

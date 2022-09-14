@@ -19,16 +19,16 @@ class EHCacheModulesFactoryTest {
     JHipsterModule module = factory.buildJavaConfigurationModule(properties());
 
     commonEHCacheModuleAsserter(module)
-      .createFile("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java")
+      .hasFile("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java")
       .containing("JCacheManagerCustomizer")
       .and()
-      .createFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/EhcacheProperties.java")
-      .createPrefixedFiles(
+      .hasFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/EhcacheProperties.java")
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/technical/infrastructure/secondary/cache",
         "CacheConfigurationIT.java",
         "CacheConfigurationTest.java"
       )
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("application.cache.ehcache.max-entries=100")
       .containing("application.cache.ehcache.time-to-live-seconds=3600");
   }
@@ -38,7 +38,7 @@ class EHCacheModulesFactoryTest {
     JHipsterModule module = factory.buildXmlConfigurationModule(properties());
 
     commonEHCacheModuleAsserter(module)
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -57,17 +57,17 @@ class EHCacheModulesFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java")
+      .hasFile("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java")
       .notContaining("JCacheManagerCustomizer")
       .and()
-      .createFiles("src/main/resources/config/ehcache/ehcache.xml")
-      .createFile("src/main/resources/config/application.properties")
+      .hasFiles("src/main/resources/config/ehcache/ehcache.xml")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("spring.cache.jcache.config=classpath:config/ehcache/ehcache.xml");
   }
 
-  private ModuleAsserter commonEHCacheModuleAsserter(JHipsterModule module) {
+  private JHipsterModuleAsserter commonEHCacheModuleAsserter(JHipsterModule module) {
     return assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -93,10 +93,10 @@ class EHCacheModulesFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/resources/logback-spring.xml")
+      .hasFile("src/main/resources/logback-spring.xml")
       .containing("<logger name=\"org.ehcache\" level=\"WARN\" />")
       .and()
-      .createFile("src/test/resources/logback.xml")
+      .hasFile("src/test/resources/logback.xml")
       .containing("<logger name=\"org.ehcache\" level=\"WARN\" />")
       .and();
   }

@@ -8,10 +8,26 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.14.1-SNAPSHOT</version>
+  <version>0.15.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
+  <url>https://github.com/jhipster/jhipster-lite</url>
+  <licenses>
+    <license>
+      <name>Apache License, version 2.0</name>
+      <url>https://github.com/jhipster/jhipster-lite/blob/main/LICENSE.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <organization>
+    <name>JHipster</name>
+    <url>https://www.jhipster.tech</url>
+  </organization>
+  <scm>
+    <connection>scm:git:https://github.com/jhipster/jhipster-lite</connection>
+    <url>https://github.com/jhipster/jhipster-lite</url>
+  </scm>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -29,13 +45,14 @@
 
     <maven.version>3.6.0</maven.version>
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
+    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
 
     <spring-boot.version>2.7.3</spring-boot.version>
-    <byte-buddy.version>1.12.14</byte-buddy.version>
+    <byte-buddy.version>1.12.16</byte-buddy.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
-    <jgit.version>6.2.0.202206071550-r</jgit.version>
+    <jgit.version>6.3.0.202209071007-r</jgit.version>
     <archunit-junit5.version>0.23.1</archunit-junit5.version>
     <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
     <problem-spring.version>0.27.0</problem-spring.version>
@@ -43,7 +60,7 @@
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <apache-commons-io.version>2.11.0</apache-commons-io.version>
-    <cucumber.version>7.6.0</cucumber.version>
+    <cucumber.version>7.7.0</cucumber.version>
     <testng.version>7.6.1</testng.version>
     <maven-model.version>3.8.6</maven-model.version>
     <joox.version>1.6.2</joox.version>
@@ -572,4 +589,50 @@
       </plugins>
     </pluginManagement>
   </build>
+  <profiles>
+    <profile>
+      <id>deploy-central</id>
+      <activation>
+        <property>
+          <name>release</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven-gpg-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <!-- Prevent `gpg` from using pinentry programs -->
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

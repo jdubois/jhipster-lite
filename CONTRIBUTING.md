@@ -10,6 +10,7 @@ Are you ready to contribute to JHipster? We'd love to have you on board, and we 
 - [Submission Guidelines](#submit)
 - [Coding Rules](#rules)
 - [Git Commit Guidelines](#commit)
+- [Module creation guideline](documentation/module-creation.md)
 
 And don't forget we also accept [financial contributions to the project](https://www.jhipster.tech/sponsors/) using OpenCollective.
 
@@ -75,21 +76,15 @@ $ npm -v
 8.11.0
 ```
 
-#### Docker and Docker-compose
+#### Docker
 
 To launch containers for development (like Databases, Sonar...) you need:
 
 - [Docker](https://docs.docker.com/engine/install/) _(minimum version: 20.xx.xx)_
-- [Docker Compose](https://docs.docker.com/compose/install/) _(minimum version: 1.29.x)_
 
 ```
 $ docker -v
-Docker version 20.10.12, build e91ed57
-```
-
-```
-$ docker-compose -v
-docker-compose version 1.29.2, build 5becea4c
+Docker version 20.10.17, build 100c701
 ```
 
 ### Fork the jhipster-lite project

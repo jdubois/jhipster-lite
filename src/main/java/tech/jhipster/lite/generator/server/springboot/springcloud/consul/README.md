@@ -6,7 +6,7 @@ This context is used to add:
 
 - Spring Cloud Consul as Service Discovery
 - Spring Cloud Consul Config
-- a docker-compose file to start Consul with Docker
+- A docker compose file to start Consul with Docker
 
 ## Maintainers
 

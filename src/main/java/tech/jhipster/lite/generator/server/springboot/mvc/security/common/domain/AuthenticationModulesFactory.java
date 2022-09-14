@@ -44,7 +44,6 @@ public final class AuthenticationModulesFactory {
       .context()
         .put("applicationName", properties.projectBaseName().capitalized())
         .and()
-      .startupCommand("docker-compose -f src/main/docker/keycloak.yml up -d")
       .javaDependencies()
         .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-security"))
         .addDependency(springSecurityTest())

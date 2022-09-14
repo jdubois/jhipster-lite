@@ -113,7 +113,7 @@ public class JHipsterLandscape {
   }
 
   private Function<JHipsterLandscapeLevel, Stream<JHipsterModuleSlug>> toLevelModules(Collection<JHipsterModuleSlug> modules) {
-    return level -> modules.stream().filter(inLevel(level));
+    return level -> modules.stream().filter(inLevel(level)).sorted();
   }
 
   private Predicate<JHipsterModuleSlug> inLevel(JHipsterLandscapeLevel level) {

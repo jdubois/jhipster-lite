@@ -24,7 +24,7 @@ class LiquibaseModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile(), lockbackFile(), testLockbackFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -44,26 +44,26 @@ class LiquibaseModuleFactoryTest {
         """
       )
       .and()
-      .createFiles("src/main/resources/config/liquibase/master.xml")
-      .createPrefixedFiles(
+      .hasFiles("src/main/resources/config/liquibase/master.xml")
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/secondary/liquibase",
         "AsyncSpringLiquibase.java",
         "LiquibaseConfiguration.java",
         "SpringLiquibaseUtil.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/technical/infrastructure/secondary/liquibase",
         "AsyncSpringLiquibaseTest.java",
         "LiquibaseConfigurationIT.java",
         "SpringLiquibaseUtilTest.java"
       )
-      .createJavaTests("com/jhipster/test/LogbackRecorder.java")
-      .createFile("src/test/resources/logback.xml")
+      .hasJavaTests("com/jhipster/test/LogbackRecorder.java")
+      .hasFile("src/test/resources/logback.xml")
       .containing("<logger name=\"liquibase\" level=\"WARN\" />")
       .containing("<logger name=\"LiquibaseSchemaResolver\" level=\"INFO\" />")
       .containing("<logger name=\"com.zaxxer.hikari\" level=\"WARN\" />")
       .and()
-      .createFile("src/main/resources/logback-spring.xml")
+      .hasFile("src/main/resources/logback-spring.xml")
       .containing("<logger name=\"liquibase\" level=\"WARN\" />")
       .containing("<logger name=\"LiquibaseSchemaResolver\" level=\"INFO\" />")
       .containing("<logger name=\"com.zaxxer.hikari\" level=\"WARN\" />");

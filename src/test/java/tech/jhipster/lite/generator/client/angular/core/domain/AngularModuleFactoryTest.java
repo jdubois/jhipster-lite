@@ -24,7 +24,7 @@ class AngularModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, packageJsonFile())
-      .createFile("package.json")
+      .hasFile("package.json")
       .containing(nodeDependency("zone.js"))
       .containing(nodeDependency("tslib"))
       .containing(nodeDependency("rxjs"))
@@ -57,10 +57,10 @@ class AngularModuleFactoryTest {
         "  \"jestSonar\": {\n    \"reportPath\": \"target/test-results/jest\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },"
       )
       .and()
-      .createFile("src/main/webapp/app/app.component.ts")
+      .hasFile("src/main/webapp/app/app.component.ts")
       .containing("this.appName = 'jhiTest'")
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "",
         "jest.conf.js",
         "angular.json",
@@ -70,7 +70,7 @@ class AngularModuleFactoryTest {
         "proxy.conf.json",
         ".eslintrc.json"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/webapp/app",
         "app.component.css",
         "app.component.ts",
@@ -80,14 +80,14 @@ class AngularModuleFactoryTest {
         "app-routing.module.spec.ts",
         "app-routing.module.ts"
       )
-      .createPrefixedFiles("src/main/webapp/content/images", "JHipster-Lite-neon-red.png", "AngularLogo.svg")
-      .createPrefixedFiles(
+      .hasPrefixedFiles("src/main/webapp/content/images", "JHipster-Lite-neon-red.png", "AngularLogo.svg")
+      .hasPrefixedFiles(
         "src/main/webapp/environments",
         "environment.ts",
         "environment.prod.ts",
         "environment.prod.spec.ts",
         "environment.spec.ts"
       )
-      .createPrefixedFiles("src/main/webapp", "index.html", "main.ts", "polyfills.ts", "styles.css");
+      .hasPrefixedFiles("src/main/webapp", "index.html", "main.ts", "polyfills.ts", "styles.css");
   }
 }

@@ -1,0 +1,112 @@
+{
+  "name": "jhlite-icons",
+  "css_prefix_text": "jhlite-icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "73ffeb70554099177620847206c12457",
+      "css": "binoculars",
+      "code": 61925,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5f0f183e241d15cbe486bff88b188dff",
+      "css": "puzzle",
+      "code": 61742,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "9755f76110ae4d12ac5f9466c9152031",
+      "css": "book",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "79beb8c7fcd56e1985b70e9a120cbcbf",
+      "css": "map",
+      "code": 62073,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "0f6a2573a7b6df911ed199bb63717e27",
+      "css": "github-circled",
+      "code": 61595,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "627abcdb627cb1789e009c08e2678ef9",
+      "css": "twitter",
+      "code": 61593,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "f9c3205df26e7778abac86183aefdc99",
+      "css": "ccw",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "ce06b5805120d0c2f8d60cd3f1a4fdb5",
+      "css": "play",
+      "code": 59394,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d971475a54acf607bc7eed906c4971b6",
+      "css": "open-collective",
+      "code": 59395,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M500.1 818.9C325 818.9 181.2 674.5 181.2 498.7 181.2 322.9 325 178.5 500.1 178.5 565.4 178.5 622.9 196.9 672.6 231L800.6 102.4C717 39.4 612.5 0 500.1 0 225.6 0 0.9 223.1 0.9 501.3 0.9 779.5 225.6 1000 500.1 1000 615.1 1000 719.6 960.6 803.2 897.7L675.2 769.1C625.5 800.6 565.4 818.9 500.1 818.9ZM818.8 498.7C818.8 561.7 800.5 622 769.1 671.9L897.2 800.5C959.9 716.5 999.1 611.5 999.1 498.7 999.1 385.8 959.9 280.8 897.2 196.8L769.1 325.4C800.5 375.3 818.8 433 818.8 498.7Z",
+        "width": 1000
+      },
+      "search": ["open-collective"]
+    },
+    {
+      "uid": "3eee382c6ad7da09896f997e972e6149",
+      "css": "jhipster",
+      "code": 59396,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M861.8 299.4C759.9 298.3 599 372.1 501.2 422.5 358.5 349.8 78.4 226.1 46.6 358.4 3.9 536.9-44.2 672.7 87.5 697.8 179.6 715.3 383.5 596.6 499.1 522.9 614.6 596.6 821 716.7 913 698.8 1044.3 673.2 996 537 952.8 357.9 942.8 316.3 908.5 300 861.8 299.4Z",
+        "width": 1000
+      },
+      "search": ["jhipster"]
+    },
+    {
+      "uid": "7034e4d22866af82bef811f52fb1ba46",
+      "css": "code",
+      "code": 61729,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "9a76bc135eac17d2c8b8ad4a5774fc87",
+      "css": "download",
+      "code": 59397,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5717236f6134afe2d2a278a5c9b3927a",
+      "css": "play-circled",
+      "code": 61764,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "cancel",
+      "code": 59398,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "12f4ece88e46abd864e40b35e05b11cd",
+      "css": "ok",
+      "code": 59399,
+      "src": "fontawesome"
+    }
+  ]
+}

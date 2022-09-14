@@ -24,8 +24,3 @@ Feature: Banner
     When I apply "banner-jhipster-v3" module to default project without parameters
     Then I should have files in "src/main/resources"
       | banner.txt |
-
-  Scenario: Should add banner Ippon
-    When I apply "banner-ippon" module to default project without parameters
-    Then I should have files in "src/main/resources"
-      | banner.txt |

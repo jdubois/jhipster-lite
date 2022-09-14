@@ -25,7 +25,7 @@ class SpringBootWebfluxModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -61,16 +61,16 @@ class SpringBootWebfluxModuleFactoryTest {
         """
       )
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("server.port=9000")
       .containing("application.exception.details=false")
       .containing("application.exception.package=org.,java.,net.,javax.,com.,io.,de.,com.jhipster.test")
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("server.port=0")
       .containing("application.exception.package=org.,java.")
       .and()
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/primary/exception/",
         "ProblemConfiguration.java",
         "HeaderUtil.java",
@@ -79,7 +79,7 @@ class SpringBootWebfluxModuleFactoryTest {
         "ExceptionTranslator.java",
         "FieldErrorDTO.java"
       )
-      .createPrefixedFiles(
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/technical/infrastructure/primary/exception/",
         "HeaderUtilTest.java",
         "BadRequestAlertExceptionTest.java",
@@ -87,6 +87,6 @@ class SpringBootWebfluxModuleFactoryTest {
         "ExceptionTranslatorTestController.java",
         "FieldErrorDTOTest.java"
       )
-      .createFiles("src/test/java/com/jhipster/test/TestUtil.java");
+      .hasFiles("src/test/java/com/jhipster/test/TestUtil.java");
   }
 }

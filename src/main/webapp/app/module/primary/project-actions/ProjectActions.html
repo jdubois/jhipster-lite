@@ -1,19 +1,30 @@
-<button
-  tabindex="5"
-  class="bi bi-bricks jhipster-modules-actions--format-project"
-  @click="formatProject()"
-  :disabled="disabledActions()"
-  data-selector="format-button"
->
-  Format
-</button>
+<div class="jhipster-side-form--actions">
+  <div class="jhlite-vertical-space -paragraph">
+    <slot />
 
-<button
-  tabindex="5"
-  class="bi bi-file-earmark-arrow-down jhipster-modules-actions--download-project"
-  @click="downloadProject()"
-  :disabled="disabledActions()"
-  data-selector="download-button"
->
-  Download
-</button>
+    <div class="jhlite-vertical-space--slot">
+      <button
+        tabindex="5"
+        class="jhlite-button -block"
+        @click="formatProject()"
+        :disabled="disabledActions()"
+        data-selector="format-button"
+      >
+        <IconVue name="code" aria-label="Icon code" />
+        Format
+      </button>
+    </div>
+    <div class="jhlite-vertical-space--slot">
+      <button
+        tabindex="5"
+        class="jhlite-button -block"
+        @click="downloadProject()"
+        :disabled="disabledActions()"
+        data-selector="download-button"
+      >
+        <IconVue name="download" aria-label="Icon download" />
+        Download
+      </button>
+    </div>
+  </div>
+</div>

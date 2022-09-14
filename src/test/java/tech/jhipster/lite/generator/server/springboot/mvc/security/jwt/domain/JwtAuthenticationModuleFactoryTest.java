@@ -25,7 +25,7 @@ class JwtAuthenticationModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile(), integrationTestFile(), lockbackFile(), testLockbackFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing(
         """
             <dependency>
@@ -73,9 +73,9 @@ class JwtAuthenticationModuleFactoryTest {
         """
       )
       .and()
-      .createFiles("src/main/java/com/jhipster/test/authentication/package-info.java")
-      .createPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
-      .createPrefixedFiles(
+      .hasFiles("src/main/java/com/jhipster/test/authentication/package-info.java")
+      .hasPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/authentication/infrastructure/primary",
         "AuthenticatedUser.java",
         "AuthenticationException.java",
@@ -90,8 +90,8 @@ class JwtAuthenticationModuleFactoryTest {
         "SecurityProblemSupport.java",
         "UnknownAuthenticationException.java"
       )
-      .createPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")
-      .createPrefixedFiles(
+      .hasPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")
+      .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/authentication/infrastructure/primary",
         "AuthenticatedUserTest.java",
         "AuthenticationExceptionAdviceIT.java",
@@ -99,20 +99,20 @@ class JwtAuthenticationModuleFactoryTest {
         "JwtReaderTest.java",
         "AccountExceptionResource.java"
       )
-      .createFile("src/test/java/com/jhipster/test/IntegrationTest.java")
+      .hasFile("src/test/java/com/jhipster/test/IntegrationTest.java")
       .containing("@WithMockUser")
       .containing("import org.springframework.security.test.context.support.WithMockUser;")
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("application.security.jwt-base64-secret=")
       .and()
-      .createFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application.properties")
       .containing("application.security.jwt-base64-secret=")
       .and()
-      .createFile("src/main/resources/logback-spring.xml")
+      .hasFile("src/main/resources/logback-spring.xml")
       .containing("<logger name=\"org.springframework.security\" level=\"WARN\" />")
       .and()
-      .createFile("src/test/resources/logback.xml")
+      .hasFile("src/test/resources/logback.xml")
       .containing("<logger name=\"org.springframework.security\" level=\"WARN\" />");
   }
 

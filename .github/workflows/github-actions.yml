@@ -101,6 +101,7 @@ jobs:
   cypress:
     needs: [tests-linux]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3
@@ -127,6 +128,7 @@ jobs:
   generation:
     needs: [tests-linux]
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       matrix:
         app:
@@ -208,6 +210,7 @@ jobs:
     name: codecov
     if: github.repository == 'jhipster/jhipster-lite'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3
@@ -239,6 +242,7 @@ jobs:
     name: status-checks
     needs: [codecov, generation]
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Validation Status checks
         run: echo 'Configuration for Status checks that are required'

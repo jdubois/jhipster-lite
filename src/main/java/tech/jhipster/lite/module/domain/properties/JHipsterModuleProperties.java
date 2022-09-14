@@ -49,7 +49,7 @@ public class JHipsterModuleProperties {
   public String getOrDefaultString(String key, String defaultValue) {
     Assert.notBlank("defaultValue", defaultValue);
 
-    return parameters.getOrDefault(key, defaultValue, String.class);
+    return parameters.getOrDefault(key, defaultValue, String.class, String::isBlank);
   }
 
   public boolean getBoolean(String key) {

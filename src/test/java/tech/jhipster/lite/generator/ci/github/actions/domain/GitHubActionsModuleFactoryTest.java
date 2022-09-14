@@ -20,6 +20,6 @@ class GitHubActionsModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module).createFiles(".github/actions/setup/action.yml", ".github/workflows/github-actions.yml");
+    assertThatModule(module).hasFiles(".github/actions/setup/action.yml", ".github/workflows/github-actions.yml");
   }
 }

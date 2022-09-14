@@ -28,11 +28,11 @@ class SpringBootActuatorModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
     assertThatModuleWithFiles(module, pomFile())
-      .createFile("pom.xml")
+      .hasFile("pom.xml")
       .containing("<groupId>org.springframework.boot</groupId>")
       .containing("<artifactId>spring-boot-starter-actuator</artifactId>")
       .and()
-      .createFile("src/main/resources/config/application.properties")
+      .hasFile("src/main/resources/config/application.properties")
       .containing("management.endpoints.web.base-path=/management")
       .containing("management.endpoints.web.exposure.include=configprops,env,health,info,logfile,loggers,threaddump")
       .containing("management.endpoint.health.probes.enabled=true")

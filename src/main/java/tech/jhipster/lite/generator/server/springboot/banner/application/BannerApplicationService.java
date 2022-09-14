@@ -33,8 +33,4 @@ public class BannerApplicationService {
   public JHipsterModule buildJHipsterV3Banner(JHipsterModuleProperties properties) {
     return factory.buildModuleBannerJHipsterV3(properties);
   }
-
-  public JHipsterModule buildIpponBanner(JHipsterModuleProperties properties) {
-    return factory.buildModuleBannerIppon(properties);
-  }
 }

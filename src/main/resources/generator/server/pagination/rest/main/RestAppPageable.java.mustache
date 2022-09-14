@@ -1,0 +1,48 @@
+package {{packageName}}.pagination.infrastructure.primary;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import {{packageName}}.common.domain.Generated;
+import {{packageName}}.pagination.domain.{{baseName}}Pageable;
+
+@Schema(name = "{{baseName}}Pageable", description = "Pagination information")
+public class Rest{{baseName}}Pageable {
+
+  private int page;
+  private int pageSize = 10;
+
+  @Generated
+  public Rest{{baseName}}Pageable() {}
+
+  public Rest{{baseName}}Pageable(int page, int pageSize) {
+    this.page = page;
+    this.pageSize = pageSize;
+  }
+
+  @Min(value = 0)
+  @Schema(description = "Page to display (starts at 0)", example = "0")
+  public int getPage() {
+    return page;
+  }
+
+  public void setPage(int page) {
+    this.page = page;
+  }
+
+  @Min(value = 1)
+  @Max(value = 100)
+  @Schema(description = "Number of elements on each page", example = "10")
+  public int getPageSize() {
+    return pageSize;
+  }
+
+  public void setPageSize(int pageSize) {
+    this.pageSize = pageSize;
+  }
+
+  public {{baseName}}Pageable toPageable() {
+    return new {{baseName}}Pageable(page, pageSize);
+  }
+}

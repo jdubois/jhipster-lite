@@ -12,9 +12,7 @@
       @propertyDeleted="deleteProperty"
     />
 
-    <div class="jhipster-side-form--actions">
-      <ProjectActionsVue :folderPath="folderPath" @operationStarted="operationStarted()" @operationEnded="operationEnded()" />
-    </div>
+    <ProjectActionsVue :folderPath="folderPath" @operationStarted="operationStarted()" @operationEnded="operationEnded()" />
   </aside>
 
   <div class="jhipster-modules-list">
@@ -85,17 +83,17 @@
             >
               <span v-if="appliedModule(module.slug)">
                 <IconVue
-                  :name="'arrow-clockwise'"
-                  :aria-label="'Reapply'"
-                  :title="'Re-apply module'"
+                  name="ccw"
+                  aria-label="Reapply"
+                  title="Re-apply module"
                   :data-selector="`module-${module.slug}-application-icon`"
                 />
               </span>
               <span v-else>
                 <IconVue
-                  :name="'caret-right'"
-                  :aria-label="'Reapply'"
-                  :title="'Re-apply module'"
+                  name="play"
+                  aria-label="Reapply"
+                  title="Re-apply module"
                   :data-selector="`module-${module.slug}-application-icon`"
                 />
               </span>

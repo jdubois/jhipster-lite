@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.client.angular.admin.health.infrastructure.
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.angular.admin.health.application.AngularHealthApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
@@ -16,7 +15,7 @@ class AngularhealthModuleConfiguration {
       .builder()
       .slug("angular-health")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc("Angular", "Angular Health"))
+      .apiDoc("Angular", "Angular Health")
       .organization(JHipsterModuleOrganization.builder().addModuleDependency("angular-core").build())
       .tags("client", "angular", "health")
       .factory(angularHealth::buildModule);

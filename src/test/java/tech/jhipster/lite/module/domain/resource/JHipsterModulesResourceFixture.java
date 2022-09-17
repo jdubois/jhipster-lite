@@ -20,7 +20,7 @@ public final class JHipsterModulesResourceFixture {
         defaultModuleResourceBuilder().slug("another-module").tags(new JHipsterModuleTagsBuilder().add("tag2").build()).build(),
         defaultModuleResourceBuilder()
           .slug("yet-another-module")
-          .tag("Another tag")
+          .group("Another tag")
           .operation("Another operation")
           .tags(new JHipsterModuleTagsBuilder().add("tag3").build())
           .build()
@@ -57,7 +57,7 @@ public final class JHipsterModulesResourceFixture {
   public static class JHipsterTestModuleResourceBuilder {
 
     private String slug;
-    private String tag = "tag";
+    private String group = "group";
     private String operation;
     private JHipsterModuleFactory factory;
     private JHipsterModuleTags tags;
@@ -74,8 +74,8 @@ public final class JHipsterModulesResourceFixture {
       return this;
     }
 
-    public JHipsterTestModuleResourceBuilder tag(String tag) {
-      this.tag = tag;
+    public JHipsterTestModuleResourceBuilder group(String group) {
+      this.group = group;
 
       return this;
     }
@@ -121,7 +121,7 @@ public final class JHipsterModulesResourceFixture {
         .builder()
         .slug(slug)
         .propertiesDefinition(JHipsterModulesResourceFixture.propertiesDefinition())
-        .apiDoc(new JHipsterModuleApiDoc(tag, operation))
+        .apiDoc(group, operation)
         .organization(buildOrganization())
         .tags(tags)
         .factory(factory);

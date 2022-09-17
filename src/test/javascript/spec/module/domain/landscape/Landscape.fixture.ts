@@ -13,6 +13,7 @@ export const defaultLandscape = (): Landscape =>
       elements: [
         initialModule('infinitest', 'Add infinitest filters', [applicationBaseNamePropertyDefinition()], []),
         initialModule('init', 'Add some initial tools', [applicationBaseNamePropertyDefinition()], []),
+        initialModule('prettier', 'Add prettier', [applicationBaseNamePropertyDefinition()], []),
       ],
     },
     {

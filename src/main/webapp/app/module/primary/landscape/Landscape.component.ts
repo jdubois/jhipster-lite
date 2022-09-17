@@ -367,6 +367,10 @@ export default defineComponent({
       operationInProgress.value = false;
     };
 
+    const isApplied = (moduleId: string): boolean => {
+      return landscapeValue().isApplied(new ModuleSlug(moduleId));
+    };
+
     return {
       levels,
       isFeature,
@@ -397,6 +401,7 @@ export default defineComponent({
       applyNewModules,
       operationStarted,
       operationEnded,
+      isApplied,
     };
   },
 });

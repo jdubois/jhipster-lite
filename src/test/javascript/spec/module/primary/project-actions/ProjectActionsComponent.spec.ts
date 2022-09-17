@@ -9,6 +9,7 @@ import sinon from 'sinon';
 
 interface WrapperOptions {
   folderPath: string;
+  isPrettierButtonEnabled: boolean;
   modules: ModulesRepository;
 }
 
@@ -16,15 +17,17 @@ const alertBus = stubAlertBus();
 const windowStub = stubWindow();
 
 const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
-  const { modules, folderPath }: WrapperOptions = {
+  const { modules, folderPath, isPrettierButtonEnabled }: WrapperOptions = {
     folderPath: '/dummy',
     modules: stubModulesRepository(),
+    isPrettierButtonEnabled: true,
     ...options,
   };
 
   return shallowMount(ProjectActionsVue, {
     props: {
       folderPath,
+      isPrettierButtonEnabled,
     },
     global: { provide: { modules, alertBus, globalWindow: windowStub } },
   });
@@ -44,6 +47,18 @@ describe('Project actions', () => {
       await flushForm(wrapper);
 
       expect(wrapper.find(wrappedElement('format-button')).attributes('disabled')).toBeDefined();
+    });
+
+    it('should disable format button according to prop', async () => {
+      const wrapper = wrap({ isPrettierButtonEnabled: false });
+
+      expect(wrapper.find(wrappedElement('format-button')).attributes('disabled')).toBeDefined();
+    });
+
+    it('should enable format button according to prop', async () => {
+      const wrapper = wrap({ isPrettierButtonEnabled: true });
+
+      expect(wrapper.find(wrappedElement('format-button')).attributes('disabled')).toBeUndefined();
     });
   });
 

@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.dummy.mongopersistenc
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.dummy.mongopersistence.application.DummyMongoDBPersistenceApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -17,7 +16,7 @@ class DummyMongoDBPersistenceModuleConfiguration {
       .builder()
       .slug("dummy-mongodb-persistence")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add MongoDB persistence for dummy feature"))
+      .apiDoc("Spring Boot - MVC", "Add MongoDB persistence for dummy feature")
       .organization(
         JHipsterModuleOrganization
           .builder()

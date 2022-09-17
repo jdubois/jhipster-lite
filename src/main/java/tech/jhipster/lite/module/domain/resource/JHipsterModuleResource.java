@@ -140,6 +140,10 @@ public class JHipsterModuleResource {
 
   public interface JHipsterModuleResourceApiDocBuilder {
     JHipsterModuleResourceOrganizationBuilder apiDoc(JHipsterModuleApiDoc apiDoc);
+
+    default JHipsterModuleResourceOrganizationBuilder apiDoc(String group, String operation) {
+      return apiDoc(new JHipsterModuleApiDoc(group, operation));
+    }
   }
 
   public interface JHipsterModuleResourceOrganizationBuilder {

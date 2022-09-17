@@ -12,7 +12,12 @@
       @propertyDeleted="deleteProperty"
     />
 
-    <ProjectActionsVue :folderPath="folderPath" @operationStarted="operationStarted()" @operationEnded="operationEnded()" />
+    <ProjectActionsVue
+      :folderPath="folderPath"
+      :isPrettierButtonEnabled="true"
+      @operationStarted="operationStarted()"
+      @operationEnded="operationEnded()"
+    />
   </aside>
 
   <div class="jhipster-modules-list">

@@ -3,8 +3,12 @@
 # JHipster Lite ⚡
 
 [![JHipster Lite version][jhipster-lite-release-version]][jhipster-lite-release-url]
+[![JHipster Lite Maven Central][jhipster-lite-maven-central-version]][jhipster-lite-maven-central-url]
+[![JHipster Lite Docker Hub][jhipster-lite-docker-hub]][jhipster-lite-docker-hub-url]
+
 [![Build Status][github-actions-jhlite-image]][github-actions-url]
 [![Coverage Status][codecov-image]][codecov-url]
+[![sonarcloud-coverage][sonarcloud-coverage]][sonarcloud-url]
 
 [![sonarcloud-quality-gate][sonarcloud-quality-gate]][sonarcloud-url]
 [![sonarcloud-maintainability][sonarcloud-maintainability]][sonarcloud-url]
@@ -13,7 +17,6 @@
 [![sonarcloud-vulnerabilities][sonarcloud-vulnerabilities]][sonarcloud-url]
 [![sonarcloud-security][sonarcloud-security]][sonarcloud-url]
 [![sonarcloud-code-smells][sonarcloud-code-smells]][sonarcloud-url]
-[![sonarcloud-coverage][sonarcloud-coverage]][sonarcloud-url]
 
 ## Description
 
@@ -238,6 +241,11 @@ Support this project by becoming a sponsor! [Become a sponsor](https://opencolle
 
 [jhipster-lite-release-version]: https://img.shields.io/github/v/release/jhipster/jhipster-lite
 [jhipster-lite-release-url]: https://github.com/jhipster/jhipster-lite/releases
+[jhipster-lite-maven-central-version]: https://img.shields.io/maven-central/v/tech.jhipster.lite/jhlite?color=blue
+[jhipster-lite-maven-central-url]: https://repo.maven.apache.org/maven2/tech/jhipster/lite/jhlite/
+[jhipster-lite-docker-hub]: https://img.shields.io/badge/Docker%20Hub-jhipster%2Fjhipster--lite-blue.svg?style=flat
+[jhipster-lite-docker-hub-version]: https://img.shields.io/docker/v/jhipster/jhipster-lite?color=0073ec
+[jhipster-lite-docker-hub-url]: https://hub.docker.com/r/jhipster/jhipster-lite
 [github-actions-jhlite-image]: https://github.com/jhipster/jhipster-lite/workflows/build/badge.svg
 [github-actions-url]: https://github.com/jhipster/jhipster-lite/actions
 [codecov-image]: https://codecov.io/gh/jhipster/jhipster-lite/branch/main/graph/badge.svg

@@ -148,6 +148,7 @@ const restLandscape = (): RestLandscape => ({
       elements: [
         landscapeModule('infinitest', 'Add infinitest filters', applicationBaseNameProperties()),
         landscapeModule('init', 'Add some initial tools', applicationBaseNameProperties()),
+        landscapeModule('prettier', 'Add prettier', applicationBaseNameProperties()),
       ],
     },
     {

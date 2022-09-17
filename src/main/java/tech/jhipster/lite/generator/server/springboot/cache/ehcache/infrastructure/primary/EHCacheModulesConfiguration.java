@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.cache.ehcache.infrastruct
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.cache.ehcache.application.EhcacheApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -19,7 +18,7 @@ class EHCacheModulesConfiguration {
       .builder()
       .slug("ehcache-with-java-config")
       .propertiesDefinition(properties())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Cache", "Add Ehcache with Java configuration"))
+      .apiDoc("Spring Boot - Cache", "Add Ehcache with Java configuration")
       .organization(organization())
       .tags("server", "spring", SPRING_BOOT, "cache")
       .factory(ehCaches::buildJavaConfigurationModule);
@@ -31,7 +30,7 @@ class EHCacheModulesConfiguration {
       .builder()
       .slug("ehcache-with-xml-config")
       .propertiesDefinition(properties())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - Cache", "Add Ehcache with XML configuration"))
+      .apiDoc("Spring Boot - Cache", "Add Ehcache with XML configuration")
       .organization(organization())
       .tags("server", "spring", SPRING_BOOT, "cache")
       .factory(ehCaches::buildXmlConfigurationModule);

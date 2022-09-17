@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.infinitest.infrastructure.primary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.infinitest.application.InfinitestApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 @Configuration
@@ -15,7 +14,7 @@ class InfinitestModuleConfiguration {
       .builder()
       .slug("infinitest-filters")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc("Base", "Add filter for infinitest"))
+      .apiDoc("Base", "Add filter for infinitest")
       .standalone()
       .tags("server", "init", "test")
       .factory(infinitest::build);

@@ -25,6 +25,7 @@
     color: $jhipster-lite-primary-input-color;
     border-radius: 10px;
     padding: 2px 7px;
+    box-sizing: border-box;
   }
 }
 </style>

@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.web.infrastructure.pr
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.web.application.SpringBootMvcApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -19,7 +18,7 @@ class SpringBootMvcModulesConfiguration {
       .builder()
       .slug("spring-boot-tomcat")
       .propertiesDefinition(properties())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add Spring Boot MVC with Tomcat"))
+      .apiDoc("Spring Boot - MVC", "Add Spring Boot MVC with Tomcat")
       .organization(organization())
       .tags("server", "spring", SPRING_BOOT, "mvc", "web", "tomcat")
       .factory(springBootMvc::buildTomcatModule);
@@ -31,7 +30,7 @@ class SpringBootMvcModulesConfiguration {
       .builder()
       .slug("spring-boot-undertow")
       .propertiesDefinition(properties())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add Spring Boot MVC with Undertow"))
+      .apiDoc("Spring Boot - MVC", "Add Spring Boot MVC with Undertow")
       .organization(organization())
       .tags("server", "spring", SPRING_BOOT, "mvc", "web", "undertow")
       .factory(springBootMvc::buildUndertowModule);

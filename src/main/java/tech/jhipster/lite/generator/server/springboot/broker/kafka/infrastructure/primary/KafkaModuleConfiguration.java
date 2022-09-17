@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.broker.kafka.infrastructu
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.broker.kafka.application.KafkaApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -23,7 +22,7 @@ class KafkaModuleConfiguration {
       .builder()
       .slug("spring-boot-kafka")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add Kafka dependencies, with testcontainers"))
+      .apiDoc(TAG, "Add Kafka dependencies, with testcontainers")
       .organization(JHipsterModuleOrganization.builder().addModuleDependency(SPRING_BOOT).build())
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::init);
@@ -35,7 +34,7 @@ class KafkaModuleConfiguration {
       .builder()
       .slug("spring-boot-kafka-dummy-producer-consumer")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add dummy Kafka producer and consumer"))
+      .apiDoc(TAG, "Add dummy Kafka producer and consumer")
       .organization(kafkaDepdency())
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::addDummyProducerConsumer);
@@ -47,7 +46,7 @@ class KafkaModuleConfiguration {
       .builder()
       .slug("spring-boot-kafka-akhq")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().build())
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add AKHQ"))
+      .apiDoc(TAG, "Add AKHQ")
       .organization(kafkaDepdency())
       .tags(SERVER, SPRING, SPRING_BOOT, BROKER)
       .factory(kafkaApplicationService::addAkhq);

@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.dummy.feature.infrast
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.dummy.feature.application.DummyApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -17,7 +16,7 @@ class DummyFeatureModuleConfiguration {
       .builder()
       .slug("dummy-feature")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add Dummy context with some APIs"))
+      .apiDoc("Spring Boot - MVC", "Add Dummy context with some APIs")
       .organization(
         JHipsterModuleOrganization
           .builder()

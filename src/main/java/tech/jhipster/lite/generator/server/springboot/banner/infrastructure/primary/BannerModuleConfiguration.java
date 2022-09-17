@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.banner.infrastructure.pri
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.banner.application.BannerApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
@@ -22,7 +21,7 @@ class BannerModuleConfiguration {
       .builder()
       .slug("banner-jhipster-v7")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner JHipster v7 for Angular"))
+      .apiDoc(TAG, "Add banner JHipster v7 for Angular")
       .organization(organization())
       .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
       .factory(banners::buildJHipsterV7Banner);
@@ -34,7 +33,7 @@ class BannerModuleConfiguration {
       .builder()
       .slug("banner-jhipster-v7-react")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner JHipster v7 for React"))
+      .apiDoc(TAG, "Add banner JHipster v7 for React")
       .organization(organization())
       .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
       .factory(banners::buildJHipsterV7ReactBanner);
@@ -46,7 +45,7 @@ class BannerModuleConfiguration {
       .builder()
       .slug("banner-jhipster-v7-vue")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner JHipster v7 for Vue"))
+      .apiDoc(TAG, "Add banner JHipster v7 for Vue")
       .organization(organization())
       .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
       .factory(banners::buildJHipsterV7VueBanner);
@@ -58,7 +57,7 @@ class BannerModuleConfiguration {
       .builder()
       .slug("banner-jhipster-v2")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner JHipster v2"))
+      .apiDoc(TAG, "Add banner JHipster v2")
       .organization(organization())
       .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
       .factory(banners::buildJHipsterV2Banner);
@@ -70,7 +69,7 @@ class BannerModuleConfiguration {
       .builder()
       .slug("banner-jhipster-v3")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc(TAG, "Add banner JHipster v3"))
+      .apiDoc(TAG, "Add banner JHipster v3")
       .organization(organization())
       .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
       .factory(banners::buildJHipsterV3Banner);

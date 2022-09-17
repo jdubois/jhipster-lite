@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.dummy.flyway.infrastr
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.dummy.flyway.application.DummyFlywayApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
@@ -16,7 +15,7 @@ class DummyFlywaModuleConfiguration {
       .builder()
       .slug("dummy-postgresql-flyway-changelog")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add postgresql flyway changelog for dummy feature"))
+      .apiDoc("Spring Boot - MVC", "Add postgresql flyway changelog for dummy feature")
       .organization(
         JHipsterModuleOrganization
           .builder()
@@ -36,7 +35,7 @@ class DummyFlywaModuleConfiguration {
       .builder()
       .slug("dummy-not-postgresql-flyway-changelog")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc("Spring Boot - MVC", "Add not postgresql flyway changelog for dummy feature"))
+      .apiDoc("Spring Boot - MVC", "Add not postgresql flyway changelog for dummy feature")
       .organization(
         JHipsterModuleOrganization
           .builder()

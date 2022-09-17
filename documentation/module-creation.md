@@ -120,7 +120,7 @@ class MyModuleModuleConfiguration {
       .builder()
       .slug("my-module")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
-      .apiDoc(new JHipsterModuleApiDoc("My module", "This is my module"))
+      .apiDoc("Group", "This is my module")
       .standalone()
       .tags("server")
       .factory(myModules::buildModule);

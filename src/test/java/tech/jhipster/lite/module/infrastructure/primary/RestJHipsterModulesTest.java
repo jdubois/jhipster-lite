@@ -25,7 +25,7 @@ class RestJHipsterModulesTest {
         "properties":{MODULE_PROPERTIES},\
         "tags":["tag3"]}\
         ]},\
-        {"name":"tag","modules":[\
+        {"name":"group","modules":[\
         {"slug":"another-module",\
         "description":"operation",\
         "properties":{MODULE_PROPERTIES},\

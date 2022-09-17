@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.client.svelte.core.infrastructure.primary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.svelte.core.application.SvelteApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
@@ -16,7 +15,7 @@ public class SvelteModuleConfiguration {
       .builder()
       .slug("svelte")
       .withoutProperties()
-      .apiDoc(new JHipsterModuleApiDoc("Svelte", "Add Svelte"))
+      .apiDoc("Svelte", "Add Svelte")
       .organization(
         JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").addModuleDependency("prettier").build()
       )

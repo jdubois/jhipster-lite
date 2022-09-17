@@ -99,7 +99,7 @@ export const defaultProjectHistory = (): ProjectHistory => ({
 });
 
 export const projectHistoryWithInit = (): ProjectHistory => ({
-  modules: [moduleSlug('init')],
+  modules: [moduleSlug('init'), moduleSlug('prettier')],
   properties: appliedModuleProperties(),
 });
 

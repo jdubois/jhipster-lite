@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdo
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoccore.application.SpringdocApplicationService;
-import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
@@ -24,7 +23,7 @@ class SpringdocModuleConfiguration {
       .builder()
       .slug("springdoc-mvc-openapi")
       .propertiesDefinition(buildPropertiesDefinition())
-      .apiDoc(new JHipsterModuleApiDoc(API_GROUP, "Add springdoc-openapi for spring MVC"))
+      .apiDoc(API_GROUP, "Add springdoc-openapi for spring MVC")
       .organization(JHipsterModuleOrganization.builder().feature("springdoc").addModuleDependency("spring-boot-tomcat").build())
       .tags(SERVER_TAG, SPRING_TAG, SPRING_BOOT_TAG, DOCUMENTATION_TAG, SWAGGER_TAG)
       .factory(springdocApplicationService::buildSpringdocMvcModule);
@@ -36,7 +35,7 @@ class SpringdocModuleConfiguration {
       .builder()
       .slug("springdoc-webflux-openapi")
       .propertiesDefinition(buildPropertiesDefinition())
-      .apiDoc(new JHipsterModuleApiDoc(API_GROUP, "Add springdoc-openapi for webflux"))
+      .apiDoc(API_GROUP, "Add springdoc-openapi for webflux")
       .organization(JHipsterModuleOrganization.builder().feature("springdoc").addModuleDependency("spring-boot-webflux-netty").build())
       .tags(SERVER_TAG, SPRING_TAG, SPRING_BOOT_TAG, DOCUMENTATION_TAG, SWAGGER_TAG)
       .factory(springdocApplicationService::buildSpringdocWebfluxModule);

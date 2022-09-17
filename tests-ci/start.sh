@@ -6,6 +6,10 @@ sleep 5
 echo "*** List folder"
 ls -al
 
+echo "*** Removing other jar files..."
+rm *-javadoc.jar
+rm *-sources.jar
+
 echo "*** Starting JHipster Lite..."
 java \
   -jar *.jar \

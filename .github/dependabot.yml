@@ -66,6 +66,9 @@ updates:
     rebase-strategy: 'disabled'
     labels:
       - 'area: dependencies'
+    ignore:
+      - dependency-name: "node"
+        versions: ["15.x", "17.x", "18.x"]
   - package-ecosystem: 'npm'
     directory: '/src/main/resources/generator/dependencies/vue'
     schedule:

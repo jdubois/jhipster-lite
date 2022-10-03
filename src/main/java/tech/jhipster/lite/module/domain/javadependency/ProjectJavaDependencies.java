@@ -7,7 +7,7 @@ public class ProjectJavaDependencies {
 
   public static final ProjectJavaDependencies EMPTY = builder().versions(null).dependenciesManagements(null).dependencies(null);
 
-  private final JavaDependenciesVersions versions;
+  private final ProjectJavaDependenciesVersions versions;
   private final JavaDependencies dependenciesManagement;
   private final JavaDependencies dependencies;
 
@@ -17,9 +17,9 @@ public class ProjectJavaDependencies {
     dependencies = buildDependencies(builder.dependencies);
   }
 
-  private JavaDependenciesVersions buildVersions(JavaDependenciesVersions versions) {
+  private ProjectJavaDependenciesVersions buildVersions(ProjectJavaDependenciesVersions versions) {
     if (versions == null) {
-      return JavaDependenciesVersions.EMPTY;
+      return ProjectJavaDependenciesVersions.EMPTY;
     }
 
     return versions;
@@ -49,7 +49,7 @@ public class ProjectJavaDependencies {
     return dependenciesManagement.get(id);
   }
 
-  public JavaDependenciesVersions versions() {
+  public ProjectJavaDependenciesVersions versions() {
     return versions;
   }
 
@@ -67,12 +67,12 @@ public class ProjectJavaDependencies {
       ProjectJavaDependenciesDependenciesManagementBuilder,
       ProjectJavaDependenciesDependenciesBuilder {
 
-    private JavaDependenciesVersions versions;
+    private ProjectJavaDependenciesVersions versions;
     private JavaDependencies dependenciesManagement;
     private JavaDependencies dependencies;
 
     @Override
-    public ProjectJavaDependenciesDependenciesManagementBuilder versions(JavaDependenciesVersions versions) {
+    public ProjectJavaDependenciesDependenciesManagementBuilder versions(ProjectJavaDependenciesVersions versions) {
       this.versions = versions;
 
       return this;
@@ -94,7 +94,7 @@ public class ProjectJavaDependencies {
   }
 
   public interface ProjectJavaDependenciesVersionsBuilder {
-    ProjectJavaDependenciesDependenciesManagementBuilder versions(JavaDependenciesVersions versions);
+    ProjectJavaDependenciesDependenciesManagementBuilder versions(ProjectJavaDependenciesVersions versions);
   }
 
   public interface ProjectJavaDependenciesDependenciesManagementBuilder {

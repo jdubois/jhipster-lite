@@ -11,7 +11,7 @@ import tech.jhipster.lite.module.domain.javabuild.command.AddDirectJavaBuildPlug
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommand;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
-import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesVersions;
 
 public class JHipsterModuleJavaBuildPlugin {
 
@@ -27,7 +27,7 @@ public class JHipsterModuleJavaBuildPlugin {
     return new JHipsterModuleJavaBuildPluginBuilder(module);
   }
 
-  public JavaBuildCommands buildChanges(CurrentJavaDependenciesVersions versions) {
+  public JavaBuildCommands buildChanges(JavaDependenciesVersions versions) {
     Assert.notNull("versions", versions);
 
     Stream<JavaBuildCommand> managementCommands = pluginsManagement.stream().flatMap(toCommands(versions, AddBuildPluginManagement::new));
@@ -37,7 +37,7 @@ public class JHipsterModuleJavaBuildPlugin {
   }
 
   private static Function<JavaBuildPlugin, Stream<JavaBuildCommand>> toCommands(
-    CurrentJavaDependenciesVersions versions,
+    JavaDependenciesVersions versions,
     Function<JavaBuildPlugin, JavaBuildCommand> addCommandFactory
   ) {
     return plugin -> {

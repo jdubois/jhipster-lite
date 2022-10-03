@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
@@ -34,7 +34,7 @@ class OAuth2ModuleFactoryTest {
       .projectBaseName("myapp")
       .build();
 
-    when(dockerImages.get("quay.io/keycloak/keycloak")).thenReturn(new DockerImage("quay.io/keycloak/keycloak", "1.1.1"));
+    when(dockerImages.get("quay.io/keycloak/keycloak")).thenReturn(new DockerImageVersion("quay.io/keycloak/keycloak", "1.1.1"));
 
     JHipsterModule module = factory.buildModule(properties);
 

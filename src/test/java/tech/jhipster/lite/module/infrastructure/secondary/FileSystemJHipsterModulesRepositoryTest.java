@@ -89,6 +89,7 @@ class FileSystemJHipsterModulesRepositoryTest {
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${spring-boot.version}</version>
+                <classifier>test</classifier>
                 <scope>test</scope>
                 <optional>true</optional>
               </dependency>

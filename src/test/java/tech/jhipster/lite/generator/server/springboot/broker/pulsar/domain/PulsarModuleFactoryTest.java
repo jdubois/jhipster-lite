@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
@@ -28,7 +28,7 @@ class PulsarModuleFactoryTest {
 
   @Test
   void shouldBuildModule() {
-    when(dockerImages.get("apachepulsar/pulsar")).thenReturn(new DockerImage("apachepulsar/pulsar", "1.1.1"));
+    when(dockerImages.get("apachepulsar/pulsar")).thenReturn(new DockerImageVersion("apachepulsar/pulsar", "1.1.1"));
 
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())

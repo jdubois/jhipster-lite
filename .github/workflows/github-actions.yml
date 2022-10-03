@@ -61,8 +61,8 @@ jobs:
         run: docker-compose -f src/main/docker/sonar.yml up -d
       - name: 'Init: install Node.js packages'
         run: npm ci
-      - name: 'Check: prettier'
-        run: npm run prettier:check
+      - name: 'Lint: check'
+        run: npm run lint:ci
       - name: 'Test: run backend tests'
         run: |
           chmod +x mvnw
@@ -118,7 +118,7 @@ jobs:
       - name: 'Test: start application JHipster Lite'
         working-directory: ./tests-ci/
         run: |
-          ./start.sh
+          ./start.sh 7471
       - name: 'Test: launch Cypress'
         run: npm run e2e:headless
 
@@ -151,6 +151,7 @@ jobs:
           - pulsarapp
           - reactiveapp
           - angularoauth2app
+          - customjhlite
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3
@@ -165,7 +166,7 @@ jobs:
       - name: 'Generation: generate ${{ matrix.app }}'
         working-directory: ./tests-ci/
         run: |
-          ./start.sh
+          ./start.sh 7471
           ./generate.sh ${{ matrix.app }}
           ./stop.sh
       - name: 'Test: list ${{ matrix.app }}'
@@ -202,6 +203,17 @@ jobs:
             ${{ github.workspace }}/tests-ci/wait_sonar_analysis.sh
             ./tests-ci/sonar.sh ${{ matrix.app }}
           fi
+      - name: 'Test: copy shell scripts'
+        run: cp ./tests-ci/start.sh /tmp/jhlite/${{ matrix.app }}/
+      - name: 'Test: start docker compose services'
+        working-directory: ./tests-ci/
+        run: |
+          ./start_docker_compose.sh /tmp/jhlite/${{ matrix.app }}/
+      - name: 'Test: start the application'
+        working-directory: /tmp/jhlite/${{ matrix.app }}/
+        run: |
+          ./start.sh
+
   #--------------------------------------------------
   # Send analysis to Codecov
   #--------------------------------------------------
@@ -261,7 +273,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.3.3
+        uses: dependabot/fetch-metadata@v1.3.4
       - name: Enable auto-merge for Dependabot PRs
         if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
         run: gh pr merge --auto --merge "$PR_URL"

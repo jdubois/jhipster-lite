@@ -1,28 +1,38 @@
 package tech.jhipster.lite.module.domain.file;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.domain.JHipsterModulesFixture.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.error.domain.GeneratorException;
-import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
-import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFilesReader;
 
 @UnitTest
+@ExtendWith(MockitoExtension.class)
 class JHipsterFileContentTest {
 
-  private static final ProjectFilesReader files = new FileSystemProjectFilesReader();
+  @Mock
+  private ProjectFilesReader files;
 
-  @Test
-  void shouldNotReadUnknownFile() {
-    JHipsterFileContent content = content("dummy");
+  @BeforeEach
+  void loadFiles() {
+    lenient().when(files.readBytes(anyString())).thenAnswer(invocation -> Files.readAllBytes(testFilePath(invocation)));
+    lenient().when(files.readString(anyString())).thenAnswer(invocation -> Files.readString(testFilePath(invocation)));
+  }
 
-    assertThatThrownBy(() -> content.read(files, context())).isExactlyInstanceOf(GeneratorException.class).hasMessageContaining("dummy");
+  private Path testFilePath(InvocationOnMock invocation) {
+    return Paths.get("src/test/resources/" + invocation.getArgument(0, String.class));
   }
 
   @Test

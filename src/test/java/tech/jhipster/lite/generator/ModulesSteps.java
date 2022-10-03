@@ -22,7 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import tech.jhipster.lite.cucumber.CucumberTestContext;
-import tech.jhipster.lite.git.infrastructure.secondary.GitTestUtil;
+import tech.jhipster.lite.module.infrastructure.secondary.git.GitTestUtil;
 
 public class ModulesSteps {
 

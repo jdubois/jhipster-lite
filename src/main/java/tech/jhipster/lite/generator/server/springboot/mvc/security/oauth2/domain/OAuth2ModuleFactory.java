@@ -3,10 +3,10 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.domai
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.AuthenticationModulesFactory.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
@@ -50,9 +50,9 @@ public class OAuth2ModuleFactory {
   }
 
   private void appendKeycloak(JHipsterModuleBuilder builder) {
-    DockerImage keycloakImage = dockerImages.get("quay.io/keycloak/keycloak");
+    DockerImageVersion keycloakImage = dockerImages.get("quay.io/keycloak/keycloak");
 
-    builder.context().put("dockerKeycloakVersion", keycloakImage.version()).put("dockerKeycloakImage", keycloakImage.fullName());
+    builder.context().put("dockerKeycloakVersion", keycloakImage.version().get()).put("dockerKeycloakImage", keycloakImage.fullName());
 
     builder
       .files()

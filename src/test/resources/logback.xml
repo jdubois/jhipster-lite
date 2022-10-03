@@ -7,12 +7,12 @@
   <logger name="org.springframework" level="WARN" />
   <logger name="org.springframework.web" level="WARN" />
   <logger name="org.springframework.security" level="WARN" />
-  <logger name="org.eclipse.jgit" level="WARN" />
+  <logger name="org.eclipse" level="OFF" />
   <logger name="com.tngtech.archunit.core" level="ERROR" />
-  <logger name="org.apache.catalina" level="ERROR" />
+  <logger name="org.apache" level="ERROR" />
+  <logger name="sun.net" level="OFF" />
   <logger name="_org.springframework.web.servlet.HandlerMapping.Mappings" level="INFO" />
   <logger name="Validator" level="INFO" />
-  <logger name="org.apache.tomcat.util.IntrospectionUtils" level="INFO" />
   <logger name="org.hibernate" level="WARN" />
   <logger name="org.hibernate.validator" level="WARN" />
   <logger name="com.jackson" level="WARN" />
@@ -20,6 +20,13 @@
   <logger name="org.zalando" level="OFF" />
   <logger name="org.zalando.problem.spring.common.AdviceTraits" level="OFF" />
   <logger name="com.tngtech.archunit.ArchConfiguration" level="WARN" />
+  <logger name="com.github.dockerjava" level="OFF" />
+  <logger name="org.testcontainers" level="OFF" />
+  <logger name="io.mongock" level="OFF" />
+  <logger name="com.mongodb" level="OFF" />
+  <logger name="org.mongodb" level="OFF" />
+  <logger name="io.cucumber" level="ERROR" />
+  <logger name="io.swagger" level="ERROR" />
 
   <root>
     <level>WARN</level>

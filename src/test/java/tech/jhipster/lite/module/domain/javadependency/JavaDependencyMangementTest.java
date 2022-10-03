@@ -87,7 +87,7 @@ class JavaDependencyMangementTest {
   @Test
   void shouldUpdateDependencyVersion() {
     JavaDependencyVersion updatedVersion = new JavaDependencyVersion("spring-boot", "1.2.4");
-    CurrentJavaDependenciesVersions currentVersions = new CurrentJavaDependenciesVersions(List.of(updatedVersion));
+    JavaDependenciesVersions currentVersions = new JavaDependenciesVersions(List.of(updatedVersion));
 
     JavaBuildCommands commands = changes()
       .dependency(optionalTestDependency())
@@ -100,11 +100,7 @@ class JavaDependencyMangementTest {
 
   @Test
   void shouldUpgradeDependencyScopeAndOptionality() {
-    JavaDependency upgraded = javaDependency()
-      .groupId("org.junit.jupiter")
-      .artifactId("junit-jupiter-engine")
-      .versionSlug("spring-boot")
-      .build();
+    JavaDependency upgraded = optionalTestDependencyBuilder().optional(false).scope(null).build();
 
     JavaBuildCommands commands = changes().dependency(upgraded).projectDependencies(projectJavaDependencies()).build();
 
@@ -126,9 +122,7 @@ class JavaDependencyMangementTest {
   void shouldUpdateVersionSlug() {
     JavaDependency upgraded = optionalTestDependencyBuilder().versionSlug("updated-junit-jupiter").build();
     JavaDependencyVersion updatedJunitVersion = new JavaDependencyVersion("updated-junit-jupiter", "1.2.4");
-    CurrentJavaDependenciesVersions currentVersions = new CurrentJavaDependenciesVersions(
-      List.of(springBootVersion(), updatedJunitVersion)
-    );
+    JavaDependenciesVersions currentVersions = new JavaDependenciesVersions(List.of(springBootVersion(), updatedJunitVersion));
 
     JavaBuildCommands commands = changes()
       .dependency(upgraded)
@@ -198,6 +192,26 @@ class JavaDependencyMangementTest {
       );
   }
 
+  @Test
+  void shouldAppendDependencyWithDifferentClassifier() {
+    JavaDependency differentClassifier = optionalTestDependencyBuilder().classifier("different").build();
+
+    ProjectJavaDependencies projectDependencies = ProjectJavaDependencies
+      .builder()
+      .versions(projectVersions())
+      .dependenciesManagements(new JavaDependencies(List.of(differentClassifier)))
+      .dependencies(null);
+
+    JavaBuildCommands changes = changes().dependency(optionalTestDependency()).projectDependencies(projectDependencies).build();
+
+    assertThat(changes.get())
+      .containsExactly(
+        new RemoveJavaDependencyManagement(differentClassifier.id()),
+        new AddJavaDependencyManagement(optionalTestDependency()),
+        new AddJavaDependencyManagement(differentClassifier)
+      );
+  }
+
   private JavaDependency junitWithoutVersion() {
     return optionalTestDependencyBuilder().versionSlug((String) null).build();
   }
@@ -210,8 +224,8 @@ class JavaDependencyMangementTest {
       .dependencies(null);
   }
 
-  private JavaDependenciesVersions projectVersions() {
-    return new JavaDependenciesVersions(List.of(springBootVersion()));
+  private ProjectJavaDependenciesVersions projectVersions() {
+    return new ProjectJavaDependenciesVersions(List.of(springBootVersion()));
   }
 
   private JavaDependencies projectDependenciesManagement() {
@@ -225,7 +239,7 @@ class JavaDependencyMangementTest {
   private static class ChangesBuilder {
 
     private JavaDependency dependency = defaultVersionDependency();
-    private CurrentJavaDependenciesVersions currentVersions = currentJavaDependenciesVersion();
+    private JavaDependenciesVersions currentVersions = currentJavaDependenciesVersion();
     private ProjectJavaDependencies projectDependencies = ProjectJavaDependencies.EMPTY;
 
     public ChangesBuilder dependency(JavaDependency dependency) {
@@ -234,7 +248,7 @@ class JavaDependencyMangementTest {
       return this;
     }
 
-    public ChangesBuilder currentVersions(CurrentJavaDependenciesVersions currentVersions) {
+    public ChangesBuilder currentVersions(JavaDependenciesVersions currentVersions) {
       this.currentVersions = currentVersions;
 
       return this;

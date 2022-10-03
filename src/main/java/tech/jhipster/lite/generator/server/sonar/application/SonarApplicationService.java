@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.server.sonar.application;
 
 import org.springframework.stereotype.Component;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.server.sonar.domain.SonarModulesFactory;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Component

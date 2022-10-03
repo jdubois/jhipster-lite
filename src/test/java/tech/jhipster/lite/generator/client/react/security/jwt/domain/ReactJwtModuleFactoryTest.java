@@ -27,11 +27,11 @@ class ReactJwtModuleFactoryTest {
       .hasFile("src/main/webapp/app/common/primary/app/App.css")
       .containing(
         """
-               -moz-osx-font-smoothing: grayscale;
-               display: flex;
-               flex-direction: column;
-               justify-content:center;
-               align-items: center;
+              -moz-osx-font-smoothing: grayscale;
+              display: flex;
+              flex-direction: column;
+              justify-content:center;
+              align-items: center;
             """
       );
   }

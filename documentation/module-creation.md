@@ -38,8 +38,8 @@ class MyModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module).
-      .createPrefixedFiles("src/test/java/com/jhipster/test/my_package", "Dummy.java");
+    assertThatModule(module)
+      .hasPrefixedFiles("src/test/java/com/jhipster/test/my_package", "Dummy.java");
   }
 }
 ```
@@ -106,7 +106,7 @@ Feature: My module
 
 You can now run `CucumberTest` and ensure that it is failing as expected (with a 404).
 
-To be used by JHLite the `JHipsterModuleResource` needs to be a Spring bean so, let's create a configuration in `tech.jhipster.lite.generator.my_module.infrastructure.primary`:
+To be used by JHLite, the `JHipsterModuleResource` needs to be a Spring bean so, let's create a configuration in `tech.jhipster.lite.generator.my_module.infrastructure.primary`:
 
 ```java
 @Configuration
@@ -130,7 +130,7 @@ class MyModuleModuleConfiguration {
 
 In fact, you don't really have choices here, the `JHipsterModuleResource.builder()` is fluent and will only let you go to the next possible step. The most confusing one may be the last one `.factory(myModules::buildModule)` which is, in fact, a method called to build the module.
 
-For this to work we'll need to add a simple orchestration class in `tech.jhipster.lite.generator.my_module.application`:
+For this to work, we'll need to add a simple orchestration class in `tech.jhipster.lite.generator.my_module.application`:
 
 ```java
 @Service
@@ -149,8 +149,8 @@ public class MyModuleApplicationService {
 
 ```
 
-In your `JHipsterModuleResource` you can define additional properties and an organization to display your module in the landscape (replacing `.standalone()`). Here, again, you have a lot of example to rely on.
+In your `JHipsterModuleResource` you can define additional properties and an organization to display your module in the landscape (replacing `.standalone()`). Here again, you have a lot of example to rely on.
 
 ## Applying module in CI
 
-Now that your are confident about your module action you can add it to the JHLite ci by adding it in the `fullapp` application in [generate.sh](../tests-ci/generate.sh) so it will be compiled and analyzed by sonar. You can also create a brand new app if needed.
+Now that your are confident about your module action you can add it to the JHLite ci by adding it in the `fullapp` application in [generate.sh](../tests-ci/generate.sh) so it will be compiled and analyzed by SonarQube. You can also create a brand new app if needed.

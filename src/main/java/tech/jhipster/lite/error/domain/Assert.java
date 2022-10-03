@@ -87,15 +87,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("name", name)
    *   .notBlank()
    *   .maxLength(150);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -112,15 +112,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("age", age)
    *   .min(0)
    *   .max(150);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -137,15 +137,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("duration", duration)
    *   .min(100)
    *   .max(500_000);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -162,15 +162,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("rate", rate)
    *   .min(0)
    *   .max(1);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -187,15 +187,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("rate", rate)
    *   .min(0)
    *   .max(1);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -212,15 +212,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("rate", rate)
    *   .min(0)
    *   .max(1);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -237,15 +237,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("name", name)
    *  .notEmpty()
    *  .maxSize(150);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)
@@ -262,15 +262,15 @@ public class Assert {
    *
    * <p>
    * Usage:
+   * </p>
    *
-   * <code>
    * <pre>
+   * <code>
    * Assert.field("date", date)
    *   .inPast()
    *   .after(otherDate);
-   * </pre>
    * </code>
-   * </p>
+   * </pre>
    *
    * @param field
    *          name of the field to check (will be displayed in exception message)

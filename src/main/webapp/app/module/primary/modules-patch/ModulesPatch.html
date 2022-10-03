@@ -1,26 +1,6 @@
 <div class="jhipster-modules" v-if="content.isLoading()" data-selector="modules-loader">Loading</div>
-<div class="jhipster-modules" v-else data-selector="modules-list">
-  <aside class="jhipster-side-form">
-    <ModulePropertiesFormVue
-      :folderPath="folderPath"
-      :properties="selectedModuleProperties()"
-      :parameters="moduleParameters"
-      @moduleCommitUpdated="updateModuleCommit"
-      @folderPathUpdated="updateFolderPath"
-      @folderPathSelected="projectFolderUpdated"
-      @propertyUpdated="updateProperty"
-      @propertyDeleted="deleteProperty"
-    />
-
-    <ProjectActionsVue
-      :folderPath="folderPath"
-      :isPrettierButtonEnabled="true"
-      @operationStarted="operationStarted()"
-      @operationEnded="operationEnded()"
-    />
-  </aside>
-
-  <div class="jhipster-modules-list">
+<div class="jhipster-modules jhlite-menu-content-template" v-else data-selector="modules-list">
+  <div class="jhipster-modules-list jhlite-menu-content-template--content">
     <div class="jhipster-modules-filters">
       <div class="jhipster-modules-filters--tags">
         <TagFilterVue tag="init" :isSelected="isTagSelected('init')" @selected="toogleTag('init')" />
@@ -108,4 +88,30 @@
       </div>
     </div>
   </div>
+
+  <aside class="jhlite-menu-content-template--menu">
+    <div class="jhlite-side-menu">
+      <div class="jhlite-side-menu--slot -expand">
+        <ModulePropertiesFormVue
+          :folderPath="folderPath"
+          :properties="selectedModuleProperties()"
+          :parameters="moduleParameters"
+          @moduleCommitUpdated="updateModuleCommit"
+          @folderPathUpdated="updateFolderPath"
+          @folderPathSelected="projectFolderUpdated"
+          @propertyUpdated="updateProperty"
+          @propertyDeleted="deleteProperty"
+        />
+      </div>
+
+      <div class="jhlite-side-menu--slot">
+        <ProjectActionsVue
+          :folderPath="folderPath"
+          :isPrettierButtonEnabled="true"
+          @operationStarted="operationStarted()"
+          @operationEnded="operationEnded()"
+        />
+      </div>
+    </div>
+  </aside>
 </div>

@@ -114,12 +114,12 @@ elif [[ $application == 'fullapp' ]]; then
   "spring-boot-async" \
   "spring-boot-devtools" \
   "logstash" \
-  "banner-jhipster-v7" \
   "jib" \
   "dockerfile" \
   "java-archunit" \
   "github-codespaces" \
-  "gitpod"
+  "gitpod" \
+  "java-memoizers"
 
   cucumber_with_jwt
 
@@ -133,7 +133,7 @@ elif [[ $application == 'fullapp' ]]; then
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
 
-  applyModules "ehcache-with-java-config"
+  applyModules "ehcache-java-config"
 
   applyModules "frontend-maven-plugin" "vue-core"
 
@@ -167,7 +167,7 @@ elif [[ $application == 'mysqlapp' ]]; then
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
 
-  applyModules "ehcache-with-xml-config"
+  applyModules "ehcache-xml-config"
 
 elif [[ $application == 'mariadbapp' ]]; then
   spring_boot_mvc
@@ -175,7 +175,7 @@ elif [[ $application == 'mariadbapp' ]]; then
 
   applyModules "springdoc-mvc-openapi"
   applyModules "mariadb" "liquibase"
-  applyModules "ehcache-with-xml-config"
+  applyModules "ehcache-xml-config"
 
 elif [[ $application == 'mssqlapp' ]]; then
   spring_boot_mvc
@@ -335,6 +335,12 @@ elif [[ $application == 'reactiveapp' ]]; then
   "spring-boot-webflux-netty" \
   "spring-boot-actuator" \
   "springdoc-webflux-openapi"
+
+elif [[ $application == 'customjhlite' ]]; then
+  spring_boot
+  sonar_back
+
+  applyModules "custom-jhlite"
 
 else
   echo "*** Unknown configuration..."

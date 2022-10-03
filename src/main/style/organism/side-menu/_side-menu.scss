@@ -1,0 +1,18 @@
+$jhlite-side-menu-padding: 1rem;
+$jhlite-side-menu-gap: 1rem;
+
+.jhlite-side-menu {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: $jhlite-side-menu-gap;
+  padding: $jhlite-side-menu-padding;
+  min-height: 100%;
+
+  &--slot {
+    &.-expand {
+      flex-basis: 0;
+      flex-grow: 1;
+    }
+  }
+}

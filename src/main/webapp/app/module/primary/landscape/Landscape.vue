@@ -10,16 +10,11 @@ $jhipster-landscape-padding: 20px;
   font-family: $jhipster-lite-font-family;
   color: $jhipster-lite-primary-text-color;
   background-color: $jhipster-lite-secondary-color;
-  display: flex;
-  flex-direction: row-reverse;
-  height: 100%;
 }
 
 .jhipster-landscape-map {
   padding: $jhipster-landscape-padding;
   position: relative;
-  flex-grow: 1;
-  overflow: auto;
 }
 
 .jhipster-landscape-modes-selection {

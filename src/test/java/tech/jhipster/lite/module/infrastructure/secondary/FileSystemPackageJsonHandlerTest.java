@@ -18,13 +18,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.Indentation;
+import tech.jhipster.lite.module.domain.npm.NpmPackageVersion;
+import tech.jhipster.lite.module.domain.npm.NpmVersionSource;
+import tech.jhipster.lite.module.domain.npm.NpmVersions;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson.JHipsterModulePackageJsonBuilder;
 import tech.jhipster.lite.module.domain.packagejson.VersionSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
-import tech.jhipster.lite.npm.domain.NpmVersion;
-import tech.jhipster.lite.npm.domain.NpmVersionSource;
-import tech.jhipster.lite.npm.domain.NpmVersions;
 
 @UnitTest
 @SuppressWarnings("java:S5976")
@@ -58,7 +58,7 @@ class FileSystemPackageJsonHandlerTest {
 
   @Test
   void shouldNotAddNotNeededBlock() {
-    when(npmVersions.get("@playwright/test", NpmVersionSource.COMMON)).thenReturn(new NpmVersion("1.1.1"));
+    when(npmVersions.get("@playwright/test", NpmVersionSource.COMMON)).thenReturn(new NpmPackageVersion("1.1.1"));
 
     JHipsterProjectFolder folder = projectWithPackageJson("src/test/resources/projects/empty-node/package.json");
 
@@ -255,7 +255,7 @@ class FileSystemPackageJsonHandlerTest {
     }
 
     private void mockDevVersion() {
-      when(npmVersions.get(anyString(), eq(NpmVersionSource.COMMON))).thenReturn(new NpmVersion("1.1.1"));
+      when(npmVersions.get(anyString(), eq(NpmVersionSource.COMMON))).thenReturn(new NpmPackageVersion("1.1.1"));
     }
   }
 
@@ -331,7 +331,7 @@ class FileSystemPackageJsonHandlerTest {
     }
 
     private void mockVersion() {
-      when(npmVersions.get(anyString(), eq(NpmVersionSource.COMMON))).thenReturn(new NpmVersion("1.1.1"));
+      when(npmVersions.get(anyString(), eq(NpmVersionSource.COMMON))).thenReturn(new NpmPackageVersion("1.1.1"));
     }
   }
 

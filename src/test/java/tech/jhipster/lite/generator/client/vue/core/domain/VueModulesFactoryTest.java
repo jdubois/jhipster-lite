@@ -24,7 +24,7 @@ class VueModulesFactoryTest {
     JHipsterModule module = factory.buildVueModule(properties);
 
     //@formatter:off
-    assertThatModuleWithFiles(module, packageJsonFile())
+    assertThatModuleWithFiles(module, packageJsonFile(), lintStagedConfigFile())
       .hasFile("package.json")
         .containing(nodeDependency("vue"))
         .containing(nodeDependency("@rushstack/eslint-patch"))
@@ -57,6 +57,16 @@ class VueModulesFactoryTest {
         .containing("\"test:watch\": \"npm run jest -- --watch\"")
         .containing("  \"jestSonar\": {\n    \"reportPath\": \"target/test-results/jest\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },")
         .and()
+      .hasFile(".lintstagedrc.js")
+        .containing(
+          """
+            module.exports = {
+              '{src/**/,}*.{js,ts,tsx,vue}': ['eslint --fix'],
+              '{src/**/,}*.{md,json,yml,html,css,scss,java,xml}': ['prettier --write'],
+            };
+            """
+        )
+      .and()
       .hasPrefixedFiles("", ".eslintrc.js", "jest.config.js", "tsconfig.json", "tsconfig.build.json", "vite.config.ts")
       .hasFiles("src/main/webapp/app/http/AxiosHttp.ts")
       .hasPrefixedFiles("src/test/javascript/spec/http", "AxiosHttp.spec.ts", "AxiosHttpStub.ts", "AxiosStub.ts")

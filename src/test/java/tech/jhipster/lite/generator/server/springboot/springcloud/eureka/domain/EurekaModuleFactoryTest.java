@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
@@ -33,7 +33,7 @@ class EurekaModuleFactoryTest {
       .projectBaseName("myApp")
       .build();
 
-    when(dockerImages.get("jhipster/jhipster-registry")).thenReturn(new DockerImage("jhipster/jhipster-registry", "1.1.1"));
+    when(dockerImages.get("jhipster/jhipster-registry")).thenReturn(new DockerImageVersion("jhipster/jhipster-registry", "1.1.1"));
 
     JHipsterModule module = factory.buildModule(properties);
 

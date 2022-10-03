@@ -11,16 +11,17 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 class EHCacheModulesConfiguration {
 
   private static final String SPRING_BOOT = "spring-boot";
+  private static final String CACHE = "cache";
 
   @Bean
   JHipsterModuleResource javaEHCacheModule(EhcacheApplicationService ehCaches) {
     return JHipsterModuleResource
       .builder()
-      .slug("ehcache-with-java-config")
+      .slug("ehcache-java-config")
       .propertiesDefinition(properties())
       .apiDoc("Spring Boot - Cache", "Add Ehcache with Java configuration")
       .organization(organization())
-      .tags("server", "spring", SPRING_BOOT, "cache")
+      .tags("server", "spring", SPRING_BOOT, CACHE)
       .factory(ehCaches::buildJavaConfigurationModule);
   }
 
@@ -28,11 +29,11 @@ class EHCacheModulesConfiguration {
   JHipsterModuleResource xmlEHCacheModule(EhcacheApplicationService ehCaches) {
     return JHipsterModuleResource
       .builder()
-      .slug("ehcache-with-xml-config")
+      .slug("ehcache-xml-config")
       .propertiesDefinition(properties())
       .apiDoc("Spring Boot - Cache", "Add Ehcache with XML configuration")
       .organization(organization())
-      .tags("server", "spring", SPRING_BOOT, "cache")
+      .tags("server", "spring", SPRING_BOOT, CACHE)
       .factory(ehCaches::buildXmlConfigurationModule);
   }
 
@@ -41,6 +42,6 @@ class EHCacheModulesConfiguration {
   }
 
   private JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().feature("ehcache").addModuleDependency(SPRING_BOOT).build();
+    return JHipsterModuleOrganization.builder().feature(CACHE).addModuleDependency(SPRING_BOOT).build();
   }
 }

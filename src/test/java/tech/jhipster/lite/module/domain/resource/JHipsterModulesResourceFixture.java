@@ -14,17 +14,19 @@ public final class JHipsterModulesResourceFixture {
   private JHipsterModulesResourceFixture() {}
 
   public static JHipsterModulesResources moduleResources() {
-    return new JHipsterModulesResources(
-      List.of(
-        defaultModuleResource(),
-        defaultModuleResourceBuilder().slug("another-module").tags(new JHipsterModuleTagsBuilder().add("tag2").build()).build(),
-        defaultModuleResourceBuilder()
-          .slug("yet-another-module")
-          .group("Another tag")
-          .operation("Another operation")
-          .tags(new JHipsterModuleTagsBuilder().add("tag3").build())
-          .build()
-      )
+    return new JHipsterModulesResources(moduleResourcesCollection());
+  }
+
+  public static Collection<JHipsterModuleResource> moduleResourcesCollection() {
+    return List.of(
+      defaultModuleResource(),
+      defaultModuleResourceBuilder().slug("another-module").tags(new JHipsterModuleTagsBuilder().add("tag2").build()).build(),
+      defaultModuleResourceBuilder()
+        .slug("yet-another-module")
+        .group("Another group")
+        .operation("Another operation")
+        .tags(new JHipsterModuleTagsBuilder().add("tag3").build())
+        .build()
     );
   }
 

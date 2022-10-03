@@ -40,6 +40,7 @@ public class SpringBootCoreModuleFactory {
     String mainClassName = properties.projectBaseName().capitalized();
     String packagePath = properties.packagePath();
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath);
+    String fullyQualifiedMainClass = properties.basePackage().get() + "." + mainClassName + "App";
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -59,7 +60,7 @@ public class SpringBootCoreModuleFactory {
         .addDependency(springBootTest())
         .and()
       .javaBuildPlugins()
-        .pluginManagement(springBootPluginManagement())
+        .pluginManagement(springBootPluginManagement(fullyQualifiedMainClass))
         .plugin(springBootMavenPlugin())
         .and()
       .files()
@@ -107,7 +108,7 @@ public class SpringBootCoreModuleFactory {
       .build();
   }
 
-  private JavaBuildPlugin springBootPluginManagement() {
+  private JavaBuildPlugin springBootPluginManagement(String fullyQualifiedMainClass) {
     return JavaBuildPlugin
       .builder()
       .groupId(SRPING_BOOT_GROUP)
@@ -123,9 +124,11 @@ public class SpringBootCoreModuleFactory {
           </execution>
         </executions>
         <configuration>
-          <mainClass>${start-class}</mainClass>
+          <mainClass>%s</mainClass>
         </configuration>
-        """
+        """.formatted(
+            fullyQualifiedMainClass
+          )
       )
       .build();
   }

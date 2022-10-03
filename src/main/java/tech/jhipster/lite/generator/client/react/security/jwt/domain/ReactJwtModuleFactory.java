@@ -74,11 +74,11 @@ public class ReactJwtModuleFactory {
 
   private String authenticationStyle() {
     return """
-           -moz-osx-font-smoothing: grayscale;
-           display: flex;
-           flex-direction: column;
-           justify-content:center;
-           align-items: center;
+          -moz-osx-font-smoothing: grayscale;
+          display: flex;
+          flex-direction: column;
+          justify-content:center;
+          align-items: center;
         """;
   }
 }

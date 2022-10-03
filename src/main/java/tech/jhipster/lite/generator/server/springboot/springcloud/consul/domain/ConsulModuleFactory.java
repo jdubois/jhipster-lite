@@ -2,11 +2,11 @@ package tech.jhipster.lite.generator.server.springboot.springcloud.consul.domain
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.base64.domain.Base64Utils;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -34,8 +34,8 @@ public class ConsulModuleFactory {
     Assert.notNull("properties", properties);
 
     String baseName = properties.projectBaseName().get();
-    DockerImage dockerImageConsul = dockerImages.get(DOCKER_IMAGE_CONSUL);
-    DockerImage dockerImageConfigLoader = dockerImages.get(DOCKER_IMAGE_CONFIG_LOADER);
+    DockerImageVersion dockerImageConsul = dockerImages.get(DOCKER_IMAGE_CONSUL);
+    DockerImageVersion dockerImageConfigLoader = dockerImages.get(DOCKER_IMAGE_CONFIG_LOADER);
 
     //@formatter:off
     JHipsterModuleBuilder builder = moduleBuilder(properties)

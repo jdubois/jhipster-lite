@@ -15,13 +15,13 @@ import org.springframework.stereotype.Repository;
 import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
+import tech.jhipster.lite.module.domain.ProjectFilesReader;
 import tech.jhipster.lite.module.domain.file.JHipsterFileToMove;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToDelete;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToMove;
 import tech.jhipster.lite.module.domain.file.JHipsterTemplatedFile;
 import tech.jhipster.lite.module.domain.file.JHipsterTemplatedFiles;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
-import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @Repository
 class FileSystemJHipsterModuleFiles {

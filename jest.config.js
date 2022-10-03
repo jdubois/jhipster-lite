@@ -27,6 +27,11 @@ module.exports = {
     },
   },
   coveragePathIgnorePatterns: ['<rootDir>/src/main/webapp/app/common/primary/applicationlistener/WindowApplicationListener'],
-  modulePathIgnorePatterns: ['<rootDir>/src/main/resources/', '<rootDir>/target/classes/generator/'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/src/main/resources/',
+    '<rootDir>/src/test/resources/',
+    '<rootDir>/target/classes/generator/',
+    '<rootDir>/target/test-classes/',
+  ],
   testResultsProcessor: 'jest-sonar-reporter',
 };

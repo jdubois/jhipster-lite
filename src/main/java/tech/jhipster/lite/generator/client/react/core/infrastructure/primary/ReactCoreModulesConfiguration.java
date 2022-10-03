@@ -19,7 +19,9 @@ class ReactCoreModulesConfiguration {
       .slug("react-core")
       .propertiesDefinition(properties())
       .apiDoc("React", "Add React+Vite with minimal CSS")
-      .organization(JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").build())
+      .organization(
+        JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").addModuleDependency("prettier").build()
+      )
       .tags("client", REACT)
       .factory(react::buildModule);
   }

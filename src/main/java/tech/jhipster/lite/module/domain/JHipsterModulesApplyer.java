@@ -4,28 +4,27 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.function.Function;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.git.domain.GitRepository;
+import tech.jhipster.lite.module.domain.git.GitRepository;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
-import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
-import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesCurrentVersionsRepository;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesVersionsRepository;
 import tech.jhipster.lite.module.domain.javadependency.ProjectJavaDependenciesRepository;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public class JHipsterModulesApplyer {
 
   private final JHipsterModulesRepository modules;
-  private final JavaDependenciesCurrentVersionsRepository currentVersions;
+  private final JavaDependenciesVersionsRepository javaVersions;
   private final ProjectJavaDependenciesRepository projectDependencies;
   private final GitRepository git;
 
   public JHipsterModulesApplyer(
     JHipsterModulesRepository modules,
-    JavaDependenciesCurrentVersionsRepository currentVersions,
+    JavaDependenciesVersionsRepository currentVersions,
     ProjectJavaDependenciesRepository projectDependencies,
     GitRepository git
   ) {
     this.modules = modules;
-    this.currentVersions = currentVersions;
+    this.javaVersions = currentVersions;
     this.projectDependencies = projectDependencies;
     this.git = git;
   }
@@ -43,8 +42,6 @@ public class JHipsterModulesApplyer {
   public JHipsterModuleApplied apply(JHipsterModuleToApply moduleToApply) {
     Assert.notNull("moduleToApply", moduleToApply);
 
-    CurrentJavaDependenciesVersions versions = currentVersions.get();
-
     JHipsterModule module = moduleToApply.module();
     JHipsterModuleChanges changes = JHipsterModuleChanges
       .builder()
@@ -55,7 +52,7 @@ public class JHipsterModulesApplyer {
       .filesToDelete(module.filesToDelete())
       .mandatoryReplacements(module.mandatoryReplacements())
       .optionalReplacements(module.optionalReplacements())
-      .javaBuildCommands(buildDependenciesChanges(versions, module).merge(buildPluginsChanges(versions, module)))
+      .javaBuildCommands(buildDependenciesChanges(module).merge(buildPluginsChanges(module)))
       .packageJson(module.packageJson())
       .preActions(module.preActions())
       .postActions(module.postActions())
@@ -84,11 +81,11 @@ public class JHipsterModulesApplyer {
     return new StringBuilder().append("Apply ").append(moduleToApply.slug().get()).append(" module").toString();
   }
 
-  private JavaBuildCommands buildDependenciesChanges(CurrentJavaDependenciesVersions versions, JHipsterModule module) {
-    return module.javaDependencies().buildChanges(versions, projectDependencies.get(module.projectFolder()));
+  private JavaBuildCommands buildDependenciesChanges(JHipsterModule module) {
+    return module.javaDependencies().buildChanges(javaVersions.get(), projectDependencies.get(module.projectFolder()));
   }
 
-  private JavaBuildCommands buildPluginsChanges(CurrentJavaDependenciesVersions versions, JHipsterModule module) {
-    return module.javaBuildPlugins().buildChanges(versions);
+  private JavaBuildCommands buildPluginsChanges(JHipsterModule module) {
+    return module.javaBuildPlugins().buildChanges(javaVersions.get());
   }
 }

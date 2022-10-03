@@ -4,9 +4,10 @@ configserver:
   name: Docker Consul Service
   status: Connected to Consul Server running in Docker
 
-application:
-  security:
-    authentication:
-      jwt:
-        # secret key which should be base64 encoded and changed in production
-        base64-secret: {{base64JwtSecret}}
+# Used for Security with JWT (spring-boot-jwt module)
+# application:
+#   security:
+#     authentication:
+#       jwt:
+#         # secret key which should be base64 encoded and changed in production
+#         base64-secret: {{base64JwtSecret}}

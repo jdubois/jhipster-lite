@@ -12,10 +12,10 @@ import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.npm.NpmPackageVersion;
+import tech.jhipster.lite.module.domain.npm.NpmVersionSource;
+import tech.jhipster.lite.module.domain.npm.NpmVersions;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.npm.domain.NpmVersion;
-import tech.jhipster.lite.npm.domain.NpmVersionSource;
-import tech.jhipster.lite.npm.domain.NpmVersions;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)
@@ -35,8 +35,8 @@ class FrontendMavenModuleFactoryTest {
       .projectBaseName("myapp")
       .build();
 
-    when(npmVersions.get("npm", NpmVersionSource.COMMON)).thenReturn(new NpmVersion("4.0.0"));
-    when(npmVersions.get("node", NpmVersionSource.COMMON)).thenReturn(new NpmVersion("16.0.0"));
+    when(npmVersions.get("npm", NpmVersionSource.COMMON)).thenReturn(new NpmPackageVersion("4.0.0"));
+    when(npmVersions.get("node", NpmVersionSource.COMMON)).thenReturn(new NpmPackageVersion("16.0.0"));
 
     JHipsterModule module = factory.buildModule(properties);
 

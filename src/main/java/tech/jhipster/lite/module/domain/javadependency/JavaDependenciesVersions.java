@@ -1,6 +1,9 @@
 package tech.jhipster.lite.module.domain.javadependency;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -10,25 +13,32 @@ import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
 
 public class JavaDependenciesVersions {
 
-  public static final JavaDependenciesVersions EMPTY = new JavaDependenciesVersions(null);
+  public static final JavaDependenciesVersions EMPTY = new JavaDependenciesVersions(List.of());
 
   private final Map<String, JavaDependencyVersion> versions;
 
   public JavaDependenciesVersions(Collection<JavaDependencyVersion> versions) {
-    this.versions = buildVersions(versions);
+    Assert.field("versions", versions).notNull().noNullElement();
+
+    this.versions = versions.stream().collect(Collectors.toUnmodifiableMap(version -> version.slug().propertyName(), Function.identity()));
   }
 
-  private Map<String, JavaDependencyVersion> buildVersions(Collection<JavaDependencyVersion> versions) {
-    if (versions == null) {
-      return Map.of();
-    }
-
-    return versions.stream().collect(Collectors.toUnmodifiableMap(version -> version.slug().propertyName(), Function.identity()));
+  private JavaDependenciesVersions(Map<String, JavaDependencyVersion> versions) {
+    this.versions = Collections.unmodifiableMap(versions);
   }
 
-  public Optional<JavaDependencyVersion> get(VersionSlug slug) {
+  public JavaDependencyVersion get(VersionSlug slug) {
     Assert.notNull("slug", slug);
 
-    return Optional.ofNullable(versions.get(slug.propertyName()));
+    return Optional.ofNullable(versions.get(slug.propertyName())).orElseThrow(() -> new UnknownJavaVersionSlugException(slug));
+  }
+
+  public JavaDependenciesVersions merge(JavaDependenciesVersions other) {
+    Assert.notNull("other", other);
+
+    Map<String, JavaDependencyVersion> mergedVersions = new HashMap<>(other.versions);
+    mergedVersions.putAll(versions);
+
+    return new JavaDependenciesVersions(mergedVersions);
   }
 }

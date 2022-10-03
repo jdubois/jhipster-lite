@@ -43,6 +43,10 @@ public final class JHipsterModulesAssertions {
     return file("src/test/resources/projects/empty-node/package.json", "package.json");
   }
 
+  public static ModuleFile lintStagedConfigFile() {
+    return file("src/test/resources/projects/init/.lintstagedrc.js", ".lintstagedrc.js");
+  }
+
   public static ModuleFile readmeFile() {
     return file("src/test/resources/projects/README.md", "README.md");
   }

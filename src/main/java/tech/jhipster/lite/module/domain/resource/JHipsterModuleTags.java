@@ -21,6 +21,12 @@ public class JHipsterModuleTags {
     return tags;
   }
 
+  public boolean contains(JHipsterModuleTag other) {
+    Assert.notNull("other", other);
+
+    return tags.contains(other);
+  }
+
   public static class JHipsterModuleTagsBuilder {
 
     private final Collection<JHipsterModuleTag> tags = new ArrayList<>();

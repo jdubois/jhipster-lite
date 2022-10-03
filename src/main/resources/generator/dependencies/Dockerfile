@@ -1,9 +1,9 @@
 FROM sonarqube:9.6.1-community
-FROM consul:1.13.1
+FROM consul:1.13.2
 FROM jhipster/consul-config-loader:v0.4.1
-FROM jhipster/jhipster-registry:v7.3.0
+FROM jhipster/jhipster-registry:v7.4.0
 FROM quay.io/keycloak/keycloak:19.0.2
-FROM mariadb:10.9.2
+FROM mariadb:10.9.3
 FROM mongo:5.0.11
 FROM mysql:8.0.30
 FROM mcr.microsoft.com/mssql/server:2017-latest

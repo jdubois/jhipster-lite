@@ -19,7 +19,7 @@ class ReactCoreModulesFactoryTest {
       JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).projectBaseName("jhipster").build()
     );
 
-    assertThatModuleWithFiles(module, packageJsonFile())
+    assertThatModuleWithFiles(module, packageJsonFile(), lintStagedConfigFile())
       .hasFile("package.json")
       .containing(nodeDependency("@testing-library/jest-dom"))
       .containing(nodeDependency("@testing-library/react"))
@@ -48,6 +48,16 @@ class ReactCoreModulesFactoryTest {
       .containing(nodeScript("test:watch", "jest --watch"))
       .containing(
         "  \"jestSonar\": {\n    \"reportPath\": \"target/test-results/jest\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },"
+      )
+      .and()
+      .hasFile(".lintstagedrc.js")
+      .containing(
+        """
+            module.exports = {
+              '{src/**/,}*.{js,ts,tsx,vue}': ['eslint --fix'],
+              '{src/**/,}*.{md,json,yml,html,css,scss,java,xml}': ['prettier --write'],
+            };
+            """
       )
       .and()
       .hasFiles("tsconfig.json", "vite.config.ts", "jest.config.ts")

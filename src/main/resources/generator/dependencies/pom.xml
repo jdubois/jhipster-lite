@@ -16,7 +16,7 @@
     <jjwt.version>0.11.5</jjwt.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <problem-spring.version>0.27.0</problem-spring.version>
-    <spring-boot.version>2.7.3</spring-boot.version>
+    <spring-boot.version>2.7.4</spring-boot.version>
     <spring-cloud.version>2021.0.0</spring-cloud.version>
     <spring-cloud-netflix-eureka-client.version>3.1.4</spring-cloud-netflix-eureka-client.version>
     <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
@@ -30,7 +30,7 @@
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
     <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
     <mongock.version>5.0.41</mongock.version>
-    <archunit-junit5.version>0.23.1</archunit-junit5.version>
+    <archunit-junit5.version>1.0.0-rc1</archunit-junit5.version>
     <cucumber.version>7.8.0</cucumber.version>
     <testng.version>7.6.1</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
@@ -41,6 +41,7 @@
     <jacoco.version>0.8.8</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
+    <jhlite.version>0.15.3</jhlite.version>
   </properties>
 
   <dependencyManagement>
@@ -123,6 +124,11 @@
       <dependency>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-core</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>tech.jhipster.lite</groupId>
+        <artifactId>jhlite</artifactId>
+        <version>${jhlite.version}</version>
       </dependency>
       <dependency>
         <groupId>com.tngtech.archunit</groupId>

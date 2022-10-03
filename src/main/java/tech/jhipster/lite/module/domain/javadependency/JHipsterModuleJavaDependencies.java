@@ -32,16 +32,16 @@ public class JHipsterModuleJavaDependencies {
     return new JHipsterModuleJavaDependenciesBuilder(module);
   }
 
-  public JavaBuildCommands buildChanges(CurrentJavaDependenciesVersions currentVersions, ProjectJavaDependencies projectDependencies) {
-    Assert.notNull("currentVersion", currentVersions);
+  public JavaBuildCommands buildChanges(JavaDependenciesVersions versions, ProjectJavaDependencies projectDependencies) {
+    Assert.notNull("versions", versions);
     Assert.notNull("projectDependencies", projectDependencies);
 
     return Stream
       .of(
         settedVersionsCommands(),
         dependenciesToRemoveCommands(),
-        dependenciesManagementChanges(currentVersions, projectDependencies),
-        dependenciesChanges(currentVersions, projectDependencies)
+        dependenciesManagementChanges(versions, projectDependencies),
+        dependenciesChanges(versions, projectDependencies)
       )
       .flatMap(Function.identity())
       .reduce(JavaBuildCommands.EMPTY, JavaBuildCommands::merge);
@@ -64,14 +64,14 @@ public class JHipsterModuleJavaDependencies {
   }
 
   private Stream<JavaBuildCommands> dependenciesManagementChanges(
-    CurrentJavaDependenciesVersions currentVersions,
+    JavaDependenciesVersions currentVersions,
     ProjectJavaDependencies projectDependencies
   ) {
     return dependenciesManagement.stream().map(dependency -> dependency.changeCommands(currentVersions, projectDependencies));
   }
 
   private Stream<JavaBuildCommands> dependenciesChanges(
-    CurrentJavaDependenciesVersions currentVersions,
+    JavaDependenciesVersions currentVersions,
     ProjectJavaDependencies projectDependencies
   ) {
     return dependencies.stream().map(dependency -> dependency.changeCommands(currentVersions, projectDependencies));

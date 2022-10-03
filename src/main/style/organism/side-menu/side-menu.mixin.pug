@@ -1,0 +1,9 @@
+mixin jhlite-side-menu
+  .jhlite-side-menu
+    block
+
+mixin jhlite-side-menu--slot(opts)
+  -const {expand} = opts || {};
+  -const expandClass = expand ? '-expand' : null;
+  .jhlite-side-menu--slot(class=expandClass)
+    block

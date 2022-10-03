@@ -2,6 +2,7 @@ package tech.jhipster.lite.generator.client.angular.security.jwt.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
+import org.apache.commons.lang3.StringUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.Indentation;
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -85,7 +86,7 @@ public class AngularJwtModuleFactory {
         .in("src/main/webapp/app/app.module.ts")
           .add(fileStart(), MODULES_IMPORTS)
           .add(IMPORT_NEEDLE, "$1" + indentation.spaces() + ", ReactiveFormsModule$2")
-          .add(PROVIDERS_NEEDLE, PROVIDERS.indent(indentation.spacesCount()))
+          .add(PROVIDERS_NEEDLE, StringUtils.chop(PROVIDERS.indent(indentation.spacesCount())))
           .and()
         .and()
       .build();

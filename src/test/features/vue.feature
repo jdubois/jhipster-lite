@@ -1,7 +1,10 @@
 Feature: Vue.js modules
 
   Scenario: Should apply vue core module
-    When I apply "vue-core" module to default project with package json without parameters
+    When I apply modules to default project
+      | init     |
+      | prettier |
+      | vue-core |
     Then I should have files in "src/main/webapp/app/http"
       | AxiosHttp.ts |
 

@@ -15,8 +15,8 @@ import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javabuild.command.RemoveDirectJavaDependency;
 import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
 import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
-import tech.jhipster.lite.module.domain.javadependency.CurrentJavaDependenciesVersions;
 import tech.jhipster.lite.module.domain.javadependency.DependencyId;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesVersions;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDependencyOptionalValueBuilder;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -174,6 +174,7 @@ public final class JHipsterModulesFixture {
       .groupId("org.junit.jupiter")
       .artifactId("junit-jupiter-engine")
       .versionSlug("spring-boot")
+      .classifier("test")
       .scope(JavaDependencyScope.TEST)
       .optional();
   }
@@ -194,8 +195,8 @@ public final class JHipsterModulesFixture {
     return new JHipsterModuleProperties(TestFileUtils.tmpDirForTest(), true, null);
   }
 
-  public static CurrentJavaDependenciesVersions currentJavaDependenciesVersion() {
-    return new CurrentJavaDependenciesVersions(List.of(springBootVersion(), problemVersion(), mavenEnforcerVersion()));
+  public static JavaDependenciesVersions currentJavaDependenciesVersion() {
+    return new JavaDependenciesVersions(List.of(springBootVersion(), problemVersion(), mavenEnforcerVersion()));
   }
 
   private static JavaDependencyVersion problemVersion() {

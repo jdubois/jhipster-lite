@@ -10,6 +10,18 @@
 
   &--text {
     font-size: 0.8rem;
+
+    &.-lg-only {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-medium-large) {
+  .jhlite-icon-text {
+    &--text.-lg-only {
+      display: block;
+    }
   }
 }
 
@@ -17,5 +29,13 @@
   .jhlite-icon-text {
     flex-direction: row;
     gap: 0.5rem;
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-medium-large) {
+  .jhlite-icon-text {
+    &--text {
+      font-size: 1rem;
+    }
   }
 }

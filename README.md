@@ -73,20 +73,27 @@ To launch tests and integration tests:
 ./mvnw clean verify
 ```
 
-## Prettier
+## Lint
 
-We use [prettier](https://github.com/prettier/prettier) and [prettier-java](https://github.com/jhipster/prettier-java) to format our code.
+We use multiple linters check and lint your code:
 
-To check format:
+- [ESlint](https://eslint.org/) for JavaScript/TypeScript
+- [Prettier](https://github.com/prettier/prettier) for the format
+  - [prettier-java](https://github.com/jhipster/prettier-java) for Java
+- [Stylelint](https://stylelint.io/) for style
+  - [stylelint-scss](https://github.com/stylelint-scss) for SCSS
+- [pug-lint](https://www.npmjs.com/package/pug-lint) for Pug
+
+To check:
 
 ```
-npm run prettier:check
+npm run lint:ci
 ```
 
-To launch format all code:
+To lint and fix all code:
 
 ```
-npm run prettier:format
+npm run lint
 ```
 
 ## Sonar Analysis

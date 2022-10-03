@@ -23,7 +23,6 @@ import tech.jhipster.lite.module.domain.file.JHipsterFileToMove;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToDelete;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToMove;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
-import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 @UnitTest
 @ExtendWith(LogsSpy.class)

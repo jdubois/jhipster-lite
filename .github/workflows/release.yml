@@ -26,8 +26,8 @@ jobs:
             ${{ runner.os }}-maven-
       - name: 'Init: install Node.js packages'
         run: npm ci
-      - name: 'Check: prettier'
-        run: npm run prettier:check
+      - name: 'Lint: check'
+        run: npm run lint:ci
       - name: 'Test: run backend tests'
         run: |
           chmod +x mvnw

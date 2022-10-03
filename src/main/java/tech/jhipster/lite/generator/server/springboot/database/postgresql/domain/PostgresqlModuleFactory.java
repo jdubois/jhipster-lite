@@ -3,12 +3,12 @@ package tech.jhipster.lite.generator.server.springboot.database.postgresql.domai
 import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommonModuleBuilder.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.server.springboot.database.common.domain.DatabaseType;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -27,7 +27,7 @@ public class PostgresqlModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    DockerImage dockerImage = dockerImages.get("postgres");
+    DockerImageVersion dockerImage = dockerImages.get("postgres");
     JHipsterSource source = from("server/springboot/database/" + DatabaseType.POSTGRESQL.id());
     String packagePath = properties.packagePath();
     JHipsterDestination databasePath = toSrcMainJava().append(packagePath).append(DEST_SECONDARY);
@@ -62,7 +62,7 @@ public class PostgresqlModuleFactory {
       .set(
         propertyKey("spring.datasource.url"),
         propertyValue(
-          "jdbc:tc:postgresql:" + dockerImage.version() + ":///" + properties.projectBaseName().name() + "?TC_TMPFS=/testtmpfs:rw"
+          "jdbc:tc:postgresql:" + dockerImage.version().get() + ":///" + properties.projectBaseName().name() + "?TC_TMPFS=/testtmpfs:rw"
         )
       )
       .and()

@@ -1,19 +1,28 @@
+@use 'sass:color';
+
 $jhlite-global-color-primary: #4ba8f8 !default;
 $jhlite-global-color-light: #fff !default;
-
 $jhlite-global-color-fill-primary: $jhlite-global-color-primary !default;
-$jhlite-global-color-fill-primary-dark: change-color($jhlite-global-color-primary, $lightness: 40%) !default;
-$jhlite-global-color-fill-primary-darker: change-color($jhlite-global-color-primary, $lightness: 15%) !default;
-
+$jhlite-global-color-fill-primary-dark: color.change($jhlite-global-color-primary, $lightness: 40%) !default;
+$jhlite-global-color-fill-primary-darker: color.change($jhlite-global-color-primary, $lightness: 15%) !default;
 $jhlite-global-color-fill-light: $jhlite-global-color-light !default;
-
 $jhlite-global-color-text-primary: $jhlite-global-color-primary !default;
-$jhlite-global-color-text-dark: change-color($jhlite-global-color-primary, $lightness: 5%) !default;
-
-$jhlite-global-color-fill-disabled-dark: change-color($jhlite-global-color-primary, $saturation: 25%, $lightness: 40%) !default;
-$jhlite-global-color-fill-disabled-light: change-color($jhlite-global-color-primary, $saturation: 20%, $lightness: 75%) !default;
-$jhlite-global-color-text-disabled: change-color($jhlite-global-color-primary, $saturation: 25%, $lightness: 60%) !default;
-
+$jhlite-global-color-text-dark: color.change($jhlite-global-color-primary, $lightness: 5%) !default;
+$jhlite-global-color-fill-disabled-dark: color.change(
+  $jhlite-global-color-primary,
+  $saturation: 25%,
+  $lightness: 40%
+) !default;
+$jhlite-global-color-fill-disabled-light: color.change(
+  $jhlite-global-color-primary,
+  $saturation: 20%,
+  $lightness: 75%
+) !default;
+$jhlite-global-color-text-disabled: color.change(
+  $jhlite-global-color-primary,
+  $saturation: 25%,
+  $lightness: 60%
+) !default;
 $jhlite-global-color-fill-secondary: #353d47 !default;
 $jhlite-global-color-text-light: $jhlite-global-color-light !default;
 $jhlite-global-color-link-light: $jhlite-global-color-light !default;

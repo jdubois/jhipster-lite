@@ -23,7 +23,7 @@ class AngularModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, packageJsonFile())
+    assertThatModuleWithFiles(module, packageJsonFile(), lintStagedConfigFile())
       .hasFile("package.json")
       .containing(nodeDependency("zone.js"))
       .containing(nodeDependency("tslib"))
@@ -55,6 +55,16 @@ class AngularModuleFactoryTest {
       .containing("\"lint\": \"ng lint\"")
       .containing(
         "  \"jestSonar\": {\n    \"reportPath\": \"target/test-results/jest\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },"
+      )
+      .and()
+      .hasFile(".lintstagedrc.js")
+      .containing(
+        """
+            module.exports = {
+              '{src/**/,}*.{js,ts,tsx,vue}': ['eslint --fix'],
+              '{src/**/,}*.{md,json,yml,html,css,scss,java,xml}': ['prettier --write'],
+            };
+            """
       )
       .and()
       .hasFile("src/main/webapp/app/app.component.ts")

@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.database.mssql.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.generator.server.springboot.database.mssql.domain.MsSQLModuleFactory;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @Service

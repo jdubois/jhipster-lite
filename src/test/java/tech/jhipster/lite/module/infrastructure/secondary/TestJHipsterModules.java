@@ -3,16 +3,17 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 import static org.mockito.Mockito.*;
 
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.git.infrastructure.secondary.GitTestUtil;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
+import tech.jhipster.lite.module.domain.ProjectFilesReader;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture;
-import tech.jhipster.lite.npm.infrastructure.secondary.FileSystemNpmVersions;
+import tech.jhipster.lite.module.infrastructure.secondary.git.GitTestUtil;
+import tech.jhipster.lite.module.infrastructure.secondary.javadependency.JavaDependenciesFixture;
+import tech.jhipster.lite.module.infrastructure.secondary.npm.NpmVersionsFixture;
 import tech.jhipster.lite.project.infrastructure.primary.JavaProjects;
-import tech.jhipster.lite.projectfile.infrastructure.secondary.FileSystemProjectFilesReader;
 
 public final class TestJHipsterModules {
 
@@ -37,11 +38,11 @@ public final class TestJHipsterModules {
     private TestJHipsterModulesApplyer() {}
 
     private static JHipsterModulesApplicationService buildApplicationService() {
-      FileSystemProjectFilesReader filesReader = new FileSystemProjectFilesReader();
+      ProjectFilesReader filesReader = new FileSystemProjectFilesReader();
 
       FileSystemJHipsterModulesRepository modulesRepository = new FileSystemJHipsterModulesRepository(
         filesReader,
-        new FileSystemNpmVersions(filesReader),
+        NpmVersionsFixture.npmVersions(filesReader),
         mock(JavaProjects.class),
         JHipsterModulesResourceFixture.moduleResources()
       );
@@ -49,8 +50,8 @@ public final class TestJHipsterModules {
       return new JHipsterModulesApplicationService(
         mock(JHipsterModuleEvents.class),
         modulesRepository,
-        new FileSystemCurrentJavaDependenciesVersionsRepository(filesReader),
-        new FileSystemProjectJavaDependenciesRepository(),
+        JavaDependenciesFixture.javaVersionsRepository(filesReader),
+        JavaDependenciesFixture.projectVersionsRepository(),
         GitTestUtil.gitRepository()
       );
     }

@@ -7,9 +7,6 @@
   font-family: $jhipster-lite-font-family;
   background-color: $jhipster-lite-secondary-color;
   color: $jhipster-lite-primary-text-color;
-  display: flex;
-  height: 100%;
-  flex-direction: row-reverse;
 }
 
 .jhipster-modules-list {

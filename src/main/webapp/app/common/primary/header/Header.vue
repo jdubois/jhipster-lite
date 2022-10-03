@@ -61,7 +61,7 @@
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="jhipster" aria-label="JHipster logo" title="JHipster website" />
                 </span>
-                <span class="jhlite-icon-text--text">JHipster</span>
+                <span class="jhlite-icon-text--text -lg-only">JHipster</span>
               </span>
             </a>
           </li>
@@ -71,7 +71,7 @@
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="github-circled" aria-label="GitHub logo" title="JHipster Lite GitHub page" />
                 </span>
-                <span class="jhlite-icon-text--text">GitHub</span>
+                <span class="jhlite-icon-text--text -lg-only">GitHub</span>
               </span>
             </a>
           </li>
@@ -81,7 +81,7 @@
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="twitter" aria-label="Twitter logo" title="JHipster Twitter" />
                 </span>
-                <span class="jhlite-icon-text--text">Twitter</span>
+                <span class="jhlite-icon-text--text -lg-only">Twitter</span>
               </span>
             </a>
           </li>
@@ -91,7 +91,7 @@
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="open-collective" aria-label="Open Collective logo" title="Open Collective JHipster page" />
                 </span>
-                <span class="jhlite-icon-text--text">Open Collective</span>
+                <span class="jhlite-icon-text--text -lg-only">Open Collective</span>
               </span>
             </a>
           </li>

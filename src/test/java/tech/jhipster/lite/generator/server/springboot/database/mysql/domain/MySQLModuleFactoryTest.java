@@ -10,10 +10,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
@@ -34,7 +34,7 @@ class MySQLModuleFactoryTest {
       .projectBaseName("myapp")
       .build();
 
-    when(dockerImages.get("mysql")).thenReturn(new DockerImage("mysql", "0.0.0"));
+    when(dockerImages.get("mysql")).thenReturn(new DockerImageVersion("mysql", "0.0.0"));
 
     JHipsterModule module = factory.buildModule(properties);
 
@@ -66,7 +66,7 @@ class MySQLModuleFactoryTest {
       .containing("spring.data.jpa.repositories.bootstrap-mode=deferred")
       .containing("spring.jpa.hibernate.ddl-auto=none")
       .containing("spring.jpa.hibernate.naming.implicit-strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy")
-      .containing("spring.jpa.hibernate.naming.physical-strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy")
+      .containing("spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy")
       .containing("spring.jpa.open-in-view=false")
       .containing("spring.jpa.properties.hibernate.cache.use_second_level_cache=false")
       .containing("spring.jpa.properties.hibernate.cache.use_query_cache=false")

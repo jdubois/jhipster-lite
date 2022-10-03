@@ -11,6 +11,7 @@
   }
 
   &--text {
+    display: none;
     font-family: Pacifico, cursive;
     font-size: 1.2rem;
   }
@@ -20,6 +21,10 @@
   .jhlite-logo {
     &--icon {
       width: 48px;
+    }
+
+    &--text {
+      display: block;
     }
   }
 }

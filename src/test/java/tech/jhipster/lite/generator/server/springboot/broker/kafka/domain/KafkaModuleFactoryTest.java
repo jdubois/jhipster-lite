@@ -10,10 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.docker.domain.DockerImage;
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
@@ -28,8 +28,8 @@ class KafkaModuleFactoryTest {
 
   @Test
   void shouldBuildKafkaModuleInit() {
-    when(dockerImages.get("confluentinc/cp-zookeeper")).thenReturn(new DockerImage("confluentinc/cp-zookeeper", "1.0.0"));
-    when(dockerImages.get("confluentinc/cp-kafka")).thenReturn(new DockerImage("confluentinc/cp-kafka", "1.0.0"));
+    when(dockerImages.get("confluentinc/cp-zookeeper")).thenReturn(new DockerImageVersion("confluentinc/cp-zookeeper", "1.0.0"));
+    when(dockerImages.get("confluentinc/cp-kafka")).thenReturn(new DockerImageVersion("confluentinc/cp-kafka", "1.0.0"));
 
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(tmpDirForTest())
@@ -128,7 +128,7 @@ class KafkaModuleFactoryTest {
 
   @Test
   void shouldBuildKafkaModuleAkhq() {
-    when(dockerImages.get("tchiotludo/akhq")).thenReturn(new DockerImage("tchiotludo/akhq", "1.0.0"));
+    when(dockerImages.get("tchiotludo/akhq")).thenReturn(new DockerImageVersion("tchiotludo/akhq", "1.0.0"));
 
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(tmpDirForTest())

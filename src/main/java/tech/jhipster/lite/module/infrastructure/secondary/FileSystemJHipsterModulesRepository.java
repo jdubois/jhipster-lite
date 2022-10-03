@@ -5,12 +5,13 @@ import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleApplied;
 import tech.jhipster.lite.module.domain.JHipsterModuleChanges;
 import tech.jhipster.lite.module.domain.JHipsterModulesRepository;
+import tech.jhipster.lite.module.domain.ProjectFilesReader;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscape;
+import tech.jhipster.lite.module.domain.npm.NpmVersions;
 import tech.jhipster.lite.module.domain.postaction.JHipsterModuleExecutionContext;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
-import tech.jhipster.lite.npm.domain.NpmVersions;
+import tech.jhipster.lite.module.infrastructure.secondary.javadependency.FileSystemJavaBuildCommandsHandler;
 import tech.jhipster.lite.project.infrastructure.primary.JavaProjects;
-import tech.jhipster.lite.projectfile.domain.ProjectFilesReader;
 
 @Repository
 class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {

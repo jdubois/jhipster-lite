@@ -1,0 +1,25 @@
+include /atom/input/input-text/input-text.mixin.pug
+include /atom/button/button.mixin.pug
+include /molecule/field/field.mixin.pug
+include /organism/side-menu/side-menu.mixin.pug
+include /organism/vertical-space/vertical-space.mixin.pug
+
+mixin jhlite-menu-content-template
+  .jhlite-menu-content-template
+    .jhlite-menu-content-template--content Content
+    .jhlite-menu-content-template--menu
+      +jhlite-side-menu
+        +jhlite-side-menu--slot({expand: true})
+          +jhlite-vertical-space('paragraph')
+            +jhlite-vertical-space--line
+              +jhlite-field('First')
+                +jhlite-input-text
+            +jhlite-vertical-space--line
+              +jhlite-field('Second')
+                +jhlite-input-text
+        +jhlite-side-menu--slot
+          +jhlite-vertical-space('paragraph')
+            +jhlite-vertical-space--line
+              +jhlite-button({block: true}) Button
+            +jhlite-vertical-space--line
+              +jhlite-button({block: true}) Button

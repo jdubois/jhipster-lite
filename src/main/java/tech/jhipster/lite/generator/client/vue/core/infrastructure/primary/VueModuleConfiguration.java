@@ -17,7 +17,9 @@ class VueModuleConfiguration {
       .slug("vue-core")
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().build())
       .apiDoc("Vue", "Add Vue+Vite")
-      .organization(JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").build())
+      .organization(
+        JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").addModuleDependency("prettier").build()
+      )
       .tags("client", "init", "vue")
       .factory(vue::buildVueModule);
   }

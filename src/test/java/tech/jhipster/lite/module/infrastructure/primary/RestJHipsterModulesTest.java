@@ -18,7 +18,7 @@ class RestJHipsterModulesTest {
   private String json() {
     return """
         {"categories":\
-        [{"name":"Another tag",\
+        [{"name":"Another group",\
         "modules":[\
         {"slug":"yet-another-module",\
         "description":"Another operation",\

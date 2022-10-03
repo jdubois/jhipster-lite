@@ -44,6 +44,7 @@
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
       <version>${jjwt.version}</version>
+      <classifier>classif</classifier>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

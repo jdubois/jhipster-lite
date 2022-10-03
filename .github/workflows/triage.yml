@@ -1,0 +1,15 @@
+name: Triage pull requests and issues
+on:
+  issues:
+    types: opened
+  pull_request:
+    types: opened
+jobs:
+  apply-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: initial labeling
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "area: triage"
+          ignore-if-labeled: true

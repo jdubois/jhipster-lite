@@ -2,10 +2,10 @@ package tech.jhipster.lite.generator.server.springboot.database.mongodb.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.docker.domain.DockerImages;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
@@ -16,7 +16,8 @@ public class MongoDbModuleFactory {
   private static final JHipsterSource SOURCE = from("server/springboot/database/mongodb");
 
   private static final String MONGO_SECONDARY = "technical/infrastructure/secondary/mongodb";
-  public static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/mongodb.yml up -d";
+  private static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/mongodb.yml up -d";
+  private static final String REFLECTIONS_GROUP = "org.reflections";
 
   private final DockerImages dockerImages;
 
@@ -39,6 +40,7 @@ public class MongoDbModuleFactory {
       .javaDependencies()
         .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-data-mongodb"))
         .addDependency(groupId("org.mongodb"), artifactId("mongodb-driver-sync"))
+        .addDependency(reflectionsDependency())
         .addDependency(testContainerDependency())
         .and()
       .files()
@@ -55,15 +57,15 @@ public class MongoDbModuleFactory {
         .add(SOURCE.template("spring.factories"), to("src/test/resources/META-INF/spring.factories"))
         .and()
       .springMainProperties()
-        .set(propertyKey("spring.data.mongodb.database"), propertyValue(properties.basePackage().get()))
+        .set(propertyKey("spring.data.mongodb.database"), propertyValue(properties.projectBaseName().get()))
         .set(propertyKey("spring.data.mongodb.uri"), propertyValue("mongodb://localhost:27017"))
         .and()
       .springTestProperties()
         .set(propertyKey("spring.data.mongodb.uri"), propertyValue("${TEST_MONGODB_URI}"))
         .and()
-      .springMainLogger("org.reflections", LogLevel.WARN)
+      .springMainLogger(REFLECTIONS_GROUP, LogLevel.WARN)
       .springMainLogger("org.mongodb.driver", LogLevel.WARN)
-      .springTestLogger("org.reflections", LogLevel.WARN)
+      .springTestLogger(REFLECTIONS_GROUP, LogLevel.WARN)
       .springTestLogger("org.mongodb.driver", LogLevel.WARN)
       .springTestLogger("com.github.dockerjava", LogLevel.WARN)
       .springTestLogger("org.testcontainers", LogLevel.WARN)
@@ -82,5 +84,9 @@ public class MongoDbModuleFactory {
       .versionSlug("testcontainers")
       .scope(JavaDependencyScope.TEST)
       .build();
+  }
+
+  private JavaDependency reflectionsDependency() {
+    return javaDependency().groupId(REFLECTIONS_GROUP).artifactId("reflections").versionSlug("reflections").build();
   }
 }

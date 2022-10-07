@@ -2,9 +2,11 @@ package tech.jhipster.lite.module.domain.replacement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.common.domain.JHipsterCollections;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
 public abstract class JHipsterModuleReplacements {
 
@@ -44,7 +46,16 @@ public abstract class JHipsterModuleReplacements {
       replacements.add(fileReplacer);
     }
 
-    public abstract FileReplacementsBuilder in(String file);
+    /**
+     * @deprecated use {@link #in(JHipsterProjectFilePath file)} instead
+     */
+    @Deprecated(forRemoval = true)
+    @Generated(reason = "Candidate for deletion")
+    public FileReplacementsBuilder in(String file) {
+      return in(new JHipsterProjectFilePath(file));
+    }
+
+    public abstract FileReplacementsBuilder in(JHipsterProjectFilePath file);
 
     public abstract Replacements build();
   }
@@ -55,11 +66,11 @@ public abstract class JHipsterModuleReplacements {
   > {
 
     private final ReplacementsBuilder replacements;
-    private final String file;
+    private final JHipsterProjectFilePath file;
 
-    protected JHipsterModuleFileReplacementsBuilder(ReplacementsBuilder replacements, String file) {
+    protected JHipsterModuleFileReplacementsBuilder(ReplacementsBuilder replacements, JHipsterProjectFilePath file) {
       Assert.notNull("replacements", replacements);
-      Assert.notBlank("file", file);
+      Assert.notNull("file", file);
 
       this.replacements = replacements;
       this.file = file;
@@ -82,6 +93,6 @@ public abstract class JHipsterModuleReplacements {
       return replacements;
     }
 
-    protected abstract ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement);
+    protected abstract ContentReplacer buildReplacer(JHipsterProjectFilePath file, ElementReplacer toReplace, String replacement);
   }
 }

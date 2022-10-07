@@ -8,12 +8,12 @@
   "devDependencies": {
     "@babel/preset-env": "7.19.3",
     "@sveltejs/adapter-static": "1.0.0-next.44",
-    "@sveltejs/kit": "1.0.0-next.507",
+    "@sveltejs/kit": "1.0.0-next.511",
     "@testing-library/jest-dom": "5.16.5",
-    "@testing-library/svelte": "3.2.1",
-    "@types/jest": "29.1.1",
-    "@typescript-eslint/eslint-plugin": "5.38.1",
-    "@typescript-eslint/parser": "5.38.1",
+    "@testing-library/svelte": "3.2.2",
+    "@types/jest": "29.1.2",
+    "@typescript-eslint/eslint-plugin": "5.39.0",
+    "@typescript-eslint/parser": "5.39.0",
     "babel-jest": "29.1.2",
     "babel-plugin-transform-vite-meta-env": "1.0.3",
     "eslint": "8.24.0",
@@ -32,6 +32,6 @@
     "ts-jest": "29.0.3",
     "tslib": "2.4.0",
     "typescript": "4.8.4",
-    "vite": "3.1.4"
+    "vite": "3.1.6"
   }
 }

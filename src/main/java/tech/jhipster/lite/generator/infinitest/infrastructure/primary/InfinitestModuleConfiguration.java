@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.infinitest.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.infinitest.application.InfinitestApplicationService;
@@ -12,7 +14,7 @@ class InfinitestModuleConfiguration {
   JHipsterModuleResource infinitestModule(InfinitestApplicationService infinitest) {
     return JHipsterModuleResource
       .builder()
-      .slug("infinitest-filters")
+      .slug(INFINITEST_FILTERS)
       .withoutProperties()
       .apiDoc("Base", "Add filter for infinitest")
       .standalone()

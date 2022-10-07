@@ -107,12 +107,12 @@ class SpringBootMvcsModulesFactoryTest {
       .containing("server.port=0")
       .and()
       .hasPrefixedFiles(
-        "src/main/java/com/jhipster/test/technical/infrastructure/primary/cors",
+        "src/main/java/com/jhipster/test/security/infrastructure/primary",
         "CorsFilterConfiguration.java",
         "CorsProperties.java"
       )
       .hasPrefixedFiles("src/test/java/com/jhipster/test", "BeanValidationAssertions.java", "BeanValidationTest.java")
-      .hasFiles("src/test/java/com/jhipster/test/technical/infrastructure/primary/cors/CorsFilterConfigurationIT.java")
+      .hasFiles("src/test/java/com/jhipster/test/security/infrastructure/primary/CorsFilterConfigurationIT.java")
       .hasFiles("src/test/java/com/jhipster/test/JsonHelper.java")
       .hasFile("pom.xml")
       .containing(

@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.client.tools.playwright.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.tools.playwright.application.PlaywrightApplicationService;
@@ -14,10 +17,10 @@ class PlaywrightModuleConfiguration {
   JHipsterModuleResource playwrightModule(PlaywrightApplicationService playwright) {
     return JHipsterModuleResource
       .builder()
-      .slug("playwright")
+      .slug(PLAYWRIGHT)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addServerPort().build())
       .apiDoc("E2e", "Add Playwright")
-      .organization(JHipsterModuleOrganization.builder().feature("front-browser-test").addModuleDependency("init").build())
+      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(INIT).build())
       .tags("client", "test", "playwright", "e2e")
       .factory(playwright::buildModule);
   }

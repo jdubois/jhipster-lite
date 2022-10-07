@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.cucumber.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.cucumber.application.CucumberApplicationService;
@@ -14,10 +17,10 @@ class CucumberModuleConfiguration {
   JHipsterModuleResource cucumberInitializationModule(CucumberApplicationService cucumber) {
     return JHipsterModuleResource
       .builder()
-      .slug("spring-boot-cucumber")
+      .slug(SPRING_BOOT_CUCUMBER)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().build())
       .apiDoc("Spring Boot - Component Tests", "Add cucumber integration to project")
-      .organization(JHipsterModuleOrganization.builder().addFeatureDependency("spring-server").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_SERVER).build())
       .tags("server", "spring", "spring-boot", "test")
       .factory(cucumber::buildInitializationModule);
   }
@@ -26,12 +29,10 @@ class CucumberModuleConfiguration {
   JHipsterModuleResource cucumberJpaResetModule(CucumberApplicationService cucumber) {
     return JHipsterModuleResource
       .builder()
-      .slug("spring-boot-cucumber-jpa-reset")
+      .slug(SPRING_BOOT_CUCUMBER_JPA_RESET)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
       .apiDoc("Spring Boot - Component Tests", "Add jpa reset for cucumber")
-      .organization(
-        JHipsterModuleOrganization.builder().addModuleDependency("spring-boot-cucumber").addFeatureDependency("jpa-persistence").build()
-      )
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT_CUCUMBER).addDependency(JPA_PERSISTENCE).build())
       .tags("server", "spring", "spring-boot", "test")
       .factory(cucumber::buildJpaResetModule);
   }

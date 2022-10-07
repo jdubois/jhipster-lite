@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.dummy.feature.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.dummy.feature.application.DummyApplicationService;
@@ -14,16 +17,16 @@ class DummyFeatureModuleConfiguration {
   JHipsterModuleResource dummyFeatureModule(DummyApplicationService dummy) {
     return JHipsterModuleResource
       .builder()
-      .slug("dummy-feature")
+      .slug(DUMMY_FEATURE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - MVC", "Add Dummy context with some APIs")
       .organization(
         JHipsterModuleOrganization
           .builder()
-          .addFeatureDependency("cucumber-authentication")
-          .addFeatureDependency("web-error-management")
-          .addFeatureDependency("springdoc")
-          .addModuleDependency("java-base")
+          .addDependency(CUCUMBER_AUTHENTICATION)
+          .addDependency(WEB_ERROR_MANAGEMENT)
+          .addDependency(SPRINGDOC)
+          .addDependency(JAVA_BASE)
           .build()
       )
       .tags("server")

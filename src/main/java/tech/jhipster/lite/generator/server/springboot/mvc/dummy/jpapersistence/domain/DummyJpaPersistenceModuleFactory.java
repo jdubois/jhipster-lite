@@ -60,7 +60,7 @@ public class DummyJpaPersistenceModuleFactory {
         .delete(path("src/test/java").append(packagePath).append(SECONDARY_DESTINATION).append("InMemoryBeersReseter.java"))
         .and()
         .mandatoryReplacements()
-          .in("src/main/java/" + packagePath + "/dummy/application/BeersApplicationService.java")
+          .in(path("src/main/java").append(packagePath).append("dummy/application/BeersApplicationService.java"))
             .add(IMPORT_NEEDLE, "import org.springframework.transaction.annotation.Transactional;")
             .add(CATALOG_METHOD_NEEDLE, spaces + "@Transactional(readOnly = true)")
             .add(REMOVE_METHOD_NEEDLE, spaces + "@Transactional")

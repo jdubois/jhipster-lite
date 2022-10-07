@@ -1,7 +1,9 @@
 package tech.jhipster.lite.module.domain.replacement;
 
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
+
 public interface ContentReplacer {
-  String file();
+  JHipsterProjectFilePath file();
 
   String apply(String content);
 

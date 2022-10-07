@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.javatool.jacoco.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.javatool.jacoco.application.JacocoApplicationService;
@@ -13,10 +16,10 @@ class JacocoThresholdModuleConfiguration {
   JHipsterModuleResource jacocoModuleThreshold(JacocoApplicationService jacoco) {
     return JHipsterModuleResource
       .builder()
-      .slug("jacoco-check-min-coverage")
+      .slug(JACOCO_CHECK_MIN_COVERAGE)
       .withoutProperties()
       .apiDoc("Java", "Add JaCoCo configuration to check minimum coverage")
-      .organization(JHipsterModuleOrganization.builder().addFeatureDependency("java-build-tool").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(JAVA_BUILD_TOOL).build())
       .tags("server", "tools", "coverage")
       .factory(jacoco::buildModule);
   }

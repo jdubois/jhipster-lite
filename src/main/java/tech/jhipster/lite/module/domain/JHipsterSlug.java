@@ -8,7 +8,7 @@ import tech.jhipster.lite.error.domain.Assert;
 
 public abstract sealed class JHipsterSlug implements Comparable<JHipsterSlug> permits JHipsterModuleSlug, JHipsterFeatureSlug {
 
-  private static final Pattern SLUG_FORMAT = Pattern.compile("^[a-z1-9-]+$");
+  private static final Pattern SLUG_FORMAT = Pattern.compile("^[a-z0-9-]+$");
 
   private final String slug;
 

@@ -39,7 +39,7 @@ public class CucumberAuthenticationModuleFactory {
         .addDependency(jsonWebTokenDependency("jjwt-jackson"))
         .and()
       .mandatoryReplacements()
-        .in("src/test/java/" + packagePath + "/cucumber/CucumberConfiguration.java")
+        .in(path("src/test/java").append(packagePath).append("cucumber/CucumberConfiguration.java"))
           .add(text(cucumberConfigurationNeedle), cucumberTestClasses(cucumberConfigurationNeedle))
           .add(lineBeforeText(importNeedle), securityConfigurationImport(properties))
           .and()

@@ -1,7 +1,6 @@
 package {{packageName}}.technical.infrastructure.secondary.cache;
 
 import java.time.Duration;
-import javax.cache.Cache;
 import javax.cache.CacheManager;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.ExpiryPolicyBuilder;
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class CacheConfiguration {
+class CacheConfiguration {
 
   private final javax.cache.configuration.Configuration<Object, Object> configuration;
 
@@ -52,11 +51,16 @@ public class CacheConfiguration {
    * @param cacheName     cache name
    * @param configuration cache configuration
    */
-  static void createCache(CacheManager cm, String cacheName, javax.cache.configuration.Configuration<Object, Object> configuration) {
-    Cache<Object, Object> cache = cm.getCache(cacheName);
+  static void createCache(
+    javax.cache.CacheManager cm,
+    String cacheName,
+    javax.cache.configuration.Configuration<Object, Object> configuration
+  ) {
+    javax.cache.Cache<Object, Object> cache = cm.getCache(cacheName);
     if (cache != null) {
-      cm.destroyCache(cacheName);
+      cache.clear();
+    } else {
+      cm.createCache(cacheName, configuration);
     }
-    cm.createCache(cacheName, configuration);
   }
 }

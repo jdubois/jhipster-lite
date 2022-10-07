@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
 public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacements {
 
@@ -23,7 +24,7 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
     }
 
     @Override
-    public JHipsterModuleFileOptionalReplacementsBuilder in(String file) {
+    public JHipsterModuleFileOptionalReplacementsBuilder in(JHipsterProjectFilePath file) {
       return new JHipsterModuleFileOptionalReplacementsBuilder(this, file);
     }
 
@@ -36,17 +37,20 @@ public class JHipsterModuleOptionalReplacements extends JHipsterModuleReplacemen
   public static class JHipsterModuleFileOptionalReplacementsBuilder
     extends JHipsterModuleFileReplacementsBuilder<JHipsterModuleOptionalReplacementsBuilder, JHipsterModuleFileOptionalReplacementsBuilder> {
 
-    private JHipsterModuleFileOptionalReplacementsBuilder(JHipsterModuleOptionalReplacementsBuilder replacements, String file) {
+    private JHipsterModuleFileOptionalReplacementsBuilder(
+      JHipsterModuleOptionalReplacementsBuilder replacements,
+      JHipsterProjectFilePath file
+    ) {
       super(replacements, file);
     }
 
     @Override
-    protected ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement) {
+    protected ContentReplacer buildReplacer(JHipsterProjectFilePath file, ElementReplacer toReplace, String replacement) {
       return new OptionalFileReplacer(file, new OptionalReplacer(toReplace, replacement));
     }
   }
 
-  private static record OptionalFileReplacer(String file, OptionalReplacer replacement) implements ContentReplacer {
+  private static record OptionalFileReplacer(JHipsterProjectFilePath file, OptionalReplacer replacement) implements ContentReplacer {
     private static final Logger log = LoggerFactory.getLogger(OptionalFileReplacer.class);
 
     public OptionalFileReplacer {

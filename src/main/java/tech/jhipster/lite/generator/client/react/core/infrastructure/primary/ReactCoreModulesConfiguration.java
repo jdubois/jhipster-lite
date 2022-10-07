@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.client.react.core.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.react.core.application.ReactCoreApplicationService;
@@ -16,12 +19,10 @@ class ReactCoreModulesConfiguration {
   JHipsterModuleResource reactCoreModule(ReactCoreApplicationService react) {
     return JHipsterModuleResource
       .builder()
-      .slug("react-core")
+      .slug(REACT_CORE)
       .propertiesDefinition(properties())
       .apiDoc("React", "Add React+Vite with minimal CSS")
-      .organization(
-        JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").addModuleDependency("prettier").build()
-      )
+      .organization(JHipsterModuleOrganization.builder().feature(CLIENT_CORE).addDependency(INIT).addDependency(PRETTIER).build())
       .tags("client", REACT)
       .factory(react::buildModule);
   }

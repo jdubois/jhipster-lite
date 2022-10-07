@@ -8,7 +8,7 @@ import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 
 final class JHipsterModuleShortcuts {
 
-  private static final String README = "README.md";
+  private static final JHipsterProjectFilePath README = path("README.md");
   private static final TextNeedleBeforeReplacer JHIPSTER_DOCUMENTATION_NEEDLE = lineBeforeText("\n<!-- jhipster-needle-documentation -->");
   private static final TextNeedleBeforeReplacer JHIPSTER_LOCAL_ENVIRONMENT_NEEDLE = lineBeforeText(
     "\n<!-- jhipster-needle-localEnvironment -->"
@@ -18,8 +18,8 @@ final class JHipsterModuleShortcuts {
     "\n<!-- jhipster-needle-startupCommand -->"
   );
 
-  private static final String SPRING_MAIN_LOG_FILE = "src/main/resources/logback-spring.xml";
-  private static final String SPRING_TEST_LOG_FILE = "src/test/resources/logback.xml";
+  private static final JHipsterProjectFilePath SPRING_MAIN_LOG_FILE = path("src/main/resources/logback-spring.xml");
+  private static final JHipsterProjectFilePath SPRING_TEST_LOG_FILE = path("src/test/resources/logback.xml");
   private static final TextNeedleBeforeReplacer JHIPSTER_LOGGER_NEEDLE = lineBeforeText("<!-- jhipster-needle-logback-add-log -->");
 
   private static final String BASH_TEMPLATE = """
@@ -97,7 +97,7 @@ final class JHipsterModuleShortcuts {
 
     builder
       .mandatoryReplacements()
-      .in("src/test/java/" + builder.packagePath() + "/IntegrationTest.java")
+      .in(path("src/test/java").append(builder.packagePath()).append("IntegrationTest.java"))
       .add(
         lineBeforeText("import org.springframework.boot.test.context.SpringBootTest;"),
         "import org.junit.jupiter.api.extension.ExtendWith;"

@@ -1,5 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.cucumber.domain;
 
+import static tech.jhipster.lite.generator.server.springboot.cucumbercommon.domain.CucumbersModules.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
@@ -13,8 +14,6 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 public class CucumberModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/cucumber");
-  private static final String CUCUMBER_GROUP_ID = "io.cucumber";
-  private static final String CUCUMBER_VERSION = "cucumber.version";
 
   public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
@@ -23,7 +22,7 @@ public class CucumberModuleFactory {
     JHipsterDestination destination = toSrcTestJava().append(properties.packagePath()).append("cucumber");
 
     //@formatter:off
-    JHipsterModuleBuilder builder = moduleBuilder(properties)
+    JHipsterModuleBuilder builder = cucumberModuleBuilder(properties)
     .context()
       .put("applicationName", applicationName)
       .and()
@@ -53,56 +52,11 @@ public class CucumberModuleFactory {
       .add(SOURCE.file("gitkeep"), to("src/test/features/.gitkeep"))
       .and()
     .javaDependencies()
-      .addDependency(cucumberJunitDependency())
-      .addDependency(cucumberJavaDependency())
-      .addDependency(cucumberSpringDependency())
-      .addDependency(junitVintageDependency())
-      .addDependency(testNgDependency())
       .addDependency(awaitilityDependency())
       .and();
     //@formatter:on
 
     return builder.build();
-  }
-
-  private JavaDependency cucumberJunitDependency() {
-    return javaDependency()
-      .groupId(CUCUMBER_GROUP_ID)
-      .artifactId("cucumber-junit")
-      .versionSlug(CUCUMBER_VERSION)
-      .scope(JavaDependencyScope.TEST)
-      .build();
-  }
-
-  private JavaDependency cucumberJavaDependency() {
-    return javaDependency()
-      .groupId(CUCUMBER_GROUP_ID)
-      .artifactId("cucumber-java")
-      .versionSlug(CUCUMBER_VERSION)
-      .scope(JavaDependencyScope.TEST)
-      .build();
-  }
-
-  private JavaDependency cucumberSpringDependency() {
-    return javaDependency()
-      .groupId(CUCUMBER_GROUP_ID)
-      .artifactId("cucumber-spring")
-      .versionSlug(CUCUMBER_VERSION)
-      .scope(JavaDependencyScope.TEST)
-      .build();
-  }
-
-  private JavaDependency junitVintageDependency() {
-    return javaDependency().groupId("org.junit.vintage").artifactId("junit-vintage-engine").scope(JavaDependencyScope.TEST).build();
-  }
-
-  private JavaDependency testNgDependency() {
-    return javaDependency()
-      .groupId("org.testng")
-      .artifactId("testng")
-      .versionSlug("testng.version")
-      .scope(JavaDependencyScope.TEST)
-      .build();
   }
 
   private JavaDependency awaitilityDependency() {

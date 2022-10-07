@@ -66,7 +66,7 @@ public class CypressModuleFactory {
         )
         .and()
       .optionalReplacements()
-        .in("tsconfig.json")
+        .in(path("tsconfig.json"))
         .add(EXISTING_EXCLUSION_REPLACER, "$1, "+CYPRESS_EXCLUSION+"]")
         .add(EMPTY_EXCLUSION_REPLACER, "$1"+CYPRESS_EXCLUSION+"]")
         .add(NEW_EXCLUSION_REPLACER, newExclusionNode(properties))

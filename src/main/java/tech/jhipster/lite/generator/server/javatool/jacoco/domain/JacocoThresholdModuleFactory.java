@@ -13,7 +13,7 @@ public class JacocoThresholdModuleFactory {
 
     return moduleBuilder(properties)
       .mandatoryReplacements()
-      .in("pom.xml")
+      .in(path("pom.xml"))
       .add(
         lineAfterRegex(
           "<outputDirectory>target\\/jacoco\\/<\\/outputDirectory>[\n\r]*\\s*<\\/configuration>[\n\r]*\\s*<\\/execution>\\s*$"

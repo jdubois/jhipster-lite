@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.dummy.flyway.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.dummy.flyway.application.DummyFlywayApplicationService;
@@ -13,16 +16,16 @@ class DummyFlywaModuleConfiguration {
   JHipsterModuleResource dummyFlywayPostgresqlModule(DummyFlywayApplicationService dummyFlyway) {
     return JHipsterModuleResource
       .builder()
-      .slug("dummy-postgresql-flyway-changelog")
+      .slug(DUMMY_POSTGRESQL_FLYWAY_CHANGELOG)
       .withoutProperties()
       .apiDoc("Spring Boot - MVC", "Add postgresql flyway changelog for dummy feature")
       .organization(
         JHipsterModuleOrganization
           .builder()
-          .feature("dummy-schema")
-          .addModuleDependency("flyway")
-          .addModuleDependency("dummy-feature")
-          .addModuleDependency("postgresql")
+          .feature(DUMMY_SCHEMA)
+          .addDependency(FLYWAY)
+          .addDependency(DUMMY_FEATURE)
+          .addDependency(POSTGRESQL)
           .build()
       )
       .tags("server")
@@ -33,17 +36,10 @@ class DummyFlywaModuleConfiguration {
   JHipsterModuleResource dummyFlywayNotPostgresqlModule(DummyFlywayApplicationService dummyFlyway) {
     return JHipsterModuleResource
       .builder()
-      .slug("dummy-not-postgresql-flyway-changelog")
+      .slug(DUMMY_NOT_POSTGRESQL_FLYWAY_CHANGELOG)
       .withoutProperties()
       .apiDoc("Spring Boot - MVC", "Add not postgresql flyway changelog for dummy feature")
-      .organization(
-        JHipsterModuleOrganization
-          .builder()
-          .feature("dummy-schema")
-          .addModuleDependency("flyway")
-          .addModuleDependency("dummy-feature")
-          .build()
-      )
+      .organization(JHipsterModuleOrganization.builder().feature(DUMMY_SCHEMA).addDependency(FLYWAY).addDependency(DUMMY_FEATURE).build())
       .tags("server")
       .factory(dummyFlyway::buildNotPostgresqlModule);
   }

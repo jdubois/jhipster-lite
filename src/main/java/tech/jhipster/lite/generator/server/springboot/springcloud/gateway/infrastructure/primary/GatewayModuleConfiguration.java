@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.gateway.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.springcloud.gateway.application.GatewayApplicationService;
@@ -14,10 +16,10 @@ class GatewayModuleConfiguration {
   JHipsterModuleResource gatewayModule(GatewayApplicationService gateway) {
     return JHipsterModuleResource
       .builder()
-      .slug("gateway")
+      .slug(GATEWAY)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().build())
       .apiDoc("Spring Boot - Spring Cloud", "Add Spring Cloud Gateway")
-      .organization(JHipsterModuleOrganization.builder().addModuleDependency("spring-cloud").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_CLOUD).build())
       .tags("server", "spring", "spring-boot", "cloud")
       .factory(gateway::buildModule);
   }

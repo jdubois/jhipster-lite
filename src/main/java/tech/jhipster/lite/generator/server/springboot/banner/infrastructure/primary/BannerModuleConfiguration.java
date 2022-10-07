@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.banner.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.banner.application.BannerApplicationService;
@@ -12,18 +15,18 @@ class BannerModuleConfiguration {
   private static final String GROUP = "Spring Boot - Banner";
   private static final String SERVER = "server";
   private static final String SPRING = "spring";
-  private static final String SPRING_BOOT = "spring-boot";
-  private static final String BANNER = "banner";
+  private static final String SPRING_BOOT_TAG = "spring-boot";
+  private static final String BANNER_TAG = "banner";
 
   @Bean
   JHipsterModuleResource jhipsterV7BannerResource(BannerApplicationService banners) {
     return JHipsterModuleResource
       .builder()
-      .slug("banner-jhipster-v7")
+      .slug(BANNER_JHIPSTER_V7)
       .withoutProperties()
       .apiDoc(GROUP, "Add banner JHipster v7 for Angular")
       .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
+      .tags(SERVER, SPRING, SPRING_BOOT_TAG, BANNER_TAG)
       .factory(banners::buildJHipsterV7Banner);
   }
 
@@ -31,11 +34,11 @@ class BannerModuleConfiguration {
   JHipsterModuleResource jhipsterV7ReactBannerResource(BannerApplicationService banners) {
     return JHipsterModuleResource
       .builder()
-      .slug("banner-jhipster-v7-react")
+      .slug(BANNER_JHIPSTER_V7_REACT)
       .withoutProperties()
       .apiDoc(GROUP, "Add banner JHipster v7 for React")
       .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
+      .tags(SERVER, SPRING, SPRING_BOOT_TAG, BANNER_TAG)
       .factory(banners::buildJHipsterV7ReactBanner);
   }
 
@@ -43,11 +46,11 @@ class BannerModuleConfiguration {
   JHipsterModuleResource jhipsterV7VueBannerResource(BannerApplicationService banners) {
     return JHipsterModuleResource
       .builder()
-      .slug("banner-jhipster-v7-vue")
+      .slug(BANNER_JHIPSTER_V7_VUE)
       .withoutProperties()
       .apiDoc(GROUP, "Add banner JHipster v7 for Vue")
       .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
+      .tags(SERVER, SPRING, SPRING_BOOT_TAG, BANNER_TAG)
       .factory(banners::buildJHipsterV7VueBanner);
   }
 
@@ -55,11 +58,11 @@ class BannerModuleConfiguration {
   JHipsterModuleResource jhipsterV2BannerResource(BannerApplicationService banners) {
     return JHipsterModuleResource
       .builder()
-      .slug("banner-jhipster-v2")
+      .slug(BANNER_JHIPSTER_V2)
       .withoutProperties()
       .apiDoc(GROUP, "Add banner JHipster v2")
       .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
+      .tags(SERVER, SPRING, SPRING_BOOT_TAG, BANNER_TAG)
       .factory(banners::buildJHipsterV2Banner);
   }
 
@@ -67,15 +70,15 @@ class BannerModuleConfiguration {
   JHipsterModuleResource jhipsterV3BannerResource(BannerApplicationService banners) {
     return JHipsterModuleResource
       .builder()
-      .slug("banner-jhipster-v3")
+      .slug(BANNER_JHIPSTER_V3)
       .withoutProperties()
       .apiDoc(GROUP, "Add banner JHipster v3")
       .organization(organization())
-      .tags(SERVER, SPRING, SPRING_BOOT, BANNER)
+      .tags(SERVER, SPRING, SPRING_BOOT_TAG, BANNER_TAG)
       .factory(banners::buildJHipsterV3Banner);
   }
 
   private JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().feature(BANNER).addModuleDependency(SPRING_BOOT).build();
+    return JHipsterModuleOrganization.builder().feature(BANNER).addDependency(SPRING_BOOT).build();
   }
 }

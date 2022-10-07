@@ -39,15 +39,15 @@ class CacheConfigurationTest {
   }
 
   @Test
-  void shouldReplaceExistingCache() {
+  void shouldClearExistingCache() {
     // given an existing cache "test"
-    doReturn(cache).when(cm).getCache("shouldReplaceExistingCache");
+    doReturn(cache).when(cm).getCache("shouldClearExistingCache");
 
     // when attempting to create a new cache "test"
-    CacheConfiguration.createCache(cm, "shouldReplaceExistingCache", customConfig);
+    CacheConfiguration.createCache(cm, "shouldClearExistingCache", customConfig);
 
     // then destroy and create cache "test"
-    verify(cm).destroyCache("shouldReplaceExistingCache");
-    verify(cm).createCache("shouldReplaceExistingCache", customConfig);
+    verify(cache).clear();
+    verify(cm, never()).createCache("shouldClearExistingCache", customConfig);
   }
 }

@@ -27,7 +27,7 @@ class JHipsterModuleOptionalReplacementsTest {
 
     Collection<ContentReplacer> replacements = JHipsterModuleOptionalReplacements
       .builder(module)
-      .in(file)
+      .in(path(file))
       .add(new TextReplacer(always(), "old"), "new")
       .and()
       .build()

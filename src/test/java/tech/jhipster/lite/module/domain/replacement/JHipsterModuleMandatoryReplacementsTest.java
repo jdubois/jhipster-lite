@@ -11,6 +11,7 @@ import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
@@ -28,7 +29,7 @@ class JHipsterModuleMandatoryReplacementsTest {
 
     Collection<ContentReplacer> replacements = JHipsterModuleMandatoryReplacements
       .builder(module)
-      .in(file)
+      .in(new JHipsterProjectFilePath(file))
       .add(new TextReplacer(always(), "old"), "new")
       .and()
       .build()

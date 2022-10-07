@@ -16,7 +16,7 @@ public class JHipsterModuleResource {
   private JHipsterModuleResource(JHipsterModuleResourceBuilder builder) {
     assertMandatoryFields(builder);
 
-    slug = new JHipsterModuleSlug(builder.slug);
+    slug = builder.slug.build();
     propertiesDefinition = builder.propertiesDefinition;
     apiDoc = builder.apiDoc;
     tags = builder.tags;
@@ -25,6 +25,7 @@ public class JHipsterModuleResource {
   }
 
   private void assertMandatoryFields(JHipsterModuleResourceBuilder builder) {
+    Assert.notNull("slug", builder.slug);
     Assert.notNull("propertiesDefinition", builder.propertiesDefinition);
     Assert.notNull("apiDoc", builder.apiDoc);
     Assert.notNull("tags", builder.tags);
@@ -73,7 +74,7 @@ public class JHipsterModuleResource {
       JHipsterModuleResourceTagsBuilder,
       JHipsterModuleResourceFactoryBuilder {
 
-    private String slug;
+    private JHipsterModuleSlugFactory slug;
     private JHipsterModuleApiDoc apiDoc;
     private JHipsterModuleFactory factory;
     private JHipsterModulePropertiesDefinition propertiesDefinition;
@@ -84,7 +85,7 @@ public class JHipsterModuleResource {
     private JHipsterModuleResourceBuilder() {}
 
     @Override
-    public JHipsterModuleResourcePropertiesDefinitionBuilder slug(String slug) {
+    public JHipsterModuleResourcePropertiesDefinitionBuilder slug(JHipsterModuleSlugFactory slug) {
       this.slug = slug;
 
       return this;
@@ -127,7 +128,15 @@ public class JHipsterModuleResource {
   }
 
   public interface JHipsterModuleResourceSlugBuilder {
-    JHipsterModuleResourcePropertiesDefinitionBuilder slug(String slug);
+    JHipsterModuleResourcePropertiesDefinitionBuilder slug(JHipsterModuleSlugFactory slug);
+
+    /**
+     * @deprecated use {@link #slug(JHipsterModuleSlugFactory)} instead
+     */
+    @Deprecated(forRemoval = true)
+    default JHipsterModuleResourcePropertiesDefinitionBuilder slug(String slug) {
+      return slug(() -> slug);
+    }
   }
 
   public interface JHipsterModuleResourcePropertiesDefinitionBuilder {

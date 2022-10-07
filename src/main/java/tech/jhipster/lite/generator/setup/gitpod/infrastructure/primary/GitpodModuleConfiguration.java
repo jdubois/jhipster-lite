@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.setup.gitpod.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.setup.gitpod.application.GitpodApplicationService;
@@ -12,7 +14,7 @@ class GitpodModuleConfiguration {
   JHipsterModuleResource gitpodModule(GitpodApplicationService gitPods) {
     return JHipsterModuleResource
       .builder()
-      .slug("gitpod")
+      .slug(GITPOD)
       .withoutProperties()
       .apiDoc("Gitpod", "Init Gitpod configuration files")
       .standalone()

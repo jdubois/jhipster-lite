@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import tech.jhipster.lite.LogsSpy;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements;
 import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacements;
@@ -37,7 +38,7 @@ class FileSystemReplacerTest {
           new JHipsterProjectFolder(path),
           JHipsterModuleMandatoryReplacements
             .builder(emptyModuleBuilder())
-            .in("unknown")
+            .in(new JHipsterProjectFilePath("unknown"))
             .add(new TextReplacer(always(), "old"), "new")
             .and()
             .build()
@@ -55,7 +56,7 @@ class FileSystemReplacerTest {
           new JHipsterProjectFolder(path),
           JHipsterModuleOptionalReplacements
             .builder(emptyModuleBuilder())
-            .in("unknown")
+            .in(new JHipsterProjectFilePath("unknown"))
             .add(new TextReplacer(always(), "old"), "new")
             .and()
             .build()

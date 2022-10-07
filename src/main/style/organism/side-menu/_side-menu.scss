@@ -6,6 +6,7 @@ $jhlite-side-menu-gap: 1rem;
   display: flex;
   flex-direction: column;
   gap: $jhlite-side-menu-gap;
+  border-top: 1px solid $jhlite-global-color-light;
   padding: $jhlite-side-menu-padding;
   min-height: 100%;
 
@@ -14,5 +15,12 @@ $jhlite-side-menu-gap: 1rem;
       flex-basis: 0;
       flex-grow: 1;
     }
+  }
+}
+
+@media screen and (min-width: $jhlite-global-breakpoint-small-medium) {
+  .jhlite-side-menu {
+    border-top: 0;
+    border-left: 1px solid $jhlite-global-color-light;
   }
 }

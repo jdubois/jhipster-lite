@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.prettier.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.prettier.application.PrettierApplicationService;
@@ -14,10 +16,10 @@ class PrettierModuleConfiguration {
   JHipsterModuleResource prettierModule(PrettierApplicationService prettier) {
     return JHipsterModuleResource
       .builder()
-      .slug("prettier")
+      .slug(PRETTIER)
       .propertiesDefinition(initPropertiesDefinition())
       .apiDoc("Prettier", "Format project with prettier")
-      .organization(JHipsterModuleOrganization.builder().addModuleDependency("init").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(INIT).build())
       .tags("server", "client", "init")
       .factory(prettier::buildModule);
   }

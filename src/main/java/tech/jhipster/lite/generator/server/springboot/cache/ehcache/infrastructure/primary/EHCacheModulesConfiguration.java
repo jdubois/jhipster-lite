@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.cache.ehcache.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.cache.ehcache.application.EhcacheApplicationService;
@@ -10,18 +13,18 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 @Configuration
 class EHCacheModulesConfiguration {
 
-  private static final String SPRING_BOOT = "spring-boot";
-  private static final String CACHE = "cache";
+  private static final String SPRING_BOOT_TAG = "spring-boot";
+  private static final String CACHE_TAG = "cache";
 
   @Bean
   JHipsterModuleResource javaEHCacheModule(EhcacheApplicationService ehCaches) {
     return JHipsterModuleResource
       .builder()
-      .slug("ehcache-java-config")
+      .slug(EHCACHE_JAVA_CONFIG)
       .propertiesDefinition(properties())
       .apiDoc("Spring Boot - Cache", "Add Ehcache with Java configuration")
       .organization(organization())
-      .tags("server", "spring", SPRING_BOOT, CACHE)
+      .tags("server", "spring", SPRING_BOOT_TAG, CACHE_TAG)
       .factory(ehCaches::buildJavaConfigurationModule);
   }
 
@@ -29,11 +32,11 @@ class EHCacheModulesConfiguration {
   JHipsterModuleResource xmlEHCacheModule(EhcacheApplicationService ehCaches) {
     return JHipsterModuleResource
       .builder()
-      .slug("ehcache-xml-config")
+      .slug(EHCACHE_XML_CONFIG)
       .propertiesDefinition(properties())
       .apiDoc("Spring Boot - Cache", "Add Ehcache with XML configuration")
       .organization(organization())
-      .tags("server", "spring", SPRING_BOOT, CACHE)
+      .tags("server", "spring", SPRING_BOOT_TAG, CACHE_TAG)
       .factory(ehCaches::buildXmlConfigurationModule);
   }
 
@@ -42,6 +45,6 @@ class EHCacheModulesConfiguration {
   }
 
   private JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().feature(CACHE).addModuleDependency(SPRING_BOOT).build();
+    return JHipsterModuleOrganization.builder().feature(CACHE).addDependency(SPRING_BOOT).build();
   }
 }

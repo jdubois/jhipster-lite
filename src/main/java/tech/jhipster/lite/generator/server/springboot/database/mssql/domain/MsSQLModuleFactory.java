@@ -65,7 +65,7 @@ public class MsSQLModuleFactory {
         .set(propertyKey("spring.datasource.password"), propertyValue("yourStrong(!)Password"))
         .and()
       .mandatoryReplacements()
-        .in("src/test/java/" + properties.basePackage().path() + "/IntegrationTest.java")
+        .in(path("src/test/java").append(properties.basePackage().path()).append("IntegrationTest.java"))
           .add(
             lineBeforeText("import org.springframework.boot.test.context.SpringBootTest;"),
             "import org.junit.jupiter.api.extension.ExtendWith;"

@@ -4,6 +4,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -12,8 +13,8 @@ public class AngularHealthModuleFactory {
 
   private static final JHipsterSource SOURCE = from("client/angular/admin/src/main/webapp/app");
 
-  private static final String APP_PATH = "src/main/webapp/app";
-  private static final JHipsterDestination APP_DESTINATION = to(APP_PATH);
+  private static final JHipsterProjectFilePath APP_PATH = path("src/main/webapp/app");
+  private static final JHipsterDestination APP_DESTINATION = to(APP_PATH.get());
 
   private static final String ADMIN_NAVIGATION_TEST =
     """
@@ -65,13 +66,13 @@ public class AngularHealthModuleFactory {
           .and()
         .and()
       .mandatoryReplacements()
-        .in(APP_PATH + "/app-routing.module.ts")
+        .in(APP_PATH.append("app-routing.module.ts"))
           .add(lineBeforeText("// jhipster-needle-angular-route"), ADMIN_ROUTING)
           .and()
-        .in(APP_PATH + "/app.component.html")
+        .in(APP_PATH.append("app.component.html"))
           .add(lineBeforeText("<!-- jhipster-needle-angular-menu -->"), HEALTH_LINK)
           .and()
-        .in(APP_PATH + "/app-routing.module.spec.ts")
+        .in(APP_PATH.append("app-routing.module.spec.ts"))
           .add(lineBeforeText("// jhipster-needle-angular-menu"), ADMIN_NAVIGATION_TEST)
           .and()
         .and()

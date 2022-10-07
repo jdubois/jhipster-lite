@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.setup.codespaces.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.setup.codespaces.application.CodespacesApplicationService;
@@ -14,7 +16,7 @@ class CodespaceModuleConfiguration {
   JHipsterModuleResource codespaceModule(CodespacesApplicationService codespaces) {
     return JHipsterModuleResource
       .builder()
-      .slug("github-codespaces")
+      .slug(GITHUB_CODESPACES)
       .propertiesDefinition(propertiesDefinition())
       .apiDoc("Codespaces", "Init GitHub Codespaces configuration files")
       .standalone()

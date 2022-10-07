@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,7 +33,13 @@ export default defineConfig({
       '/style': {
         ws: true,
         changeOrigin: true,
-        target: 'http://localhost:7471',
+        rewrite: path => path.replace(/^\/style/, ''),
+        target: 'http://localhost:9005',
+      },
+      '/reload': {
+        ws: true,
+        changeOrigin: true,
+        target: 'http://localhost:9005',
       },
     },
   },

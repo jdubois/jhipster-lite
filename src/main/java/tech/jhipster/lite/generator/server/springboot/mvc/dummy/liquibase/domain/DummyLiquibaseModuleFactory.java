@@ -33,7 +33,7 @@ public class DummyLiquibaseModuleFactory {
         .add(SOURCE.file("00000000000_dummy_feature_schema.xml"), CHANGELOG_DESTINATION.append(changelogFilename))
         .and()
       .mandatoryReplacements()
-        .in("src/main/resources/config/liquibase/master.xml")
+        .in(path("src/main/resources/config/liquibase/master.xml"))
           .add(CHANGELOG_NEEDLE, changelogLine(changelogFilename))
           .and()
         .and()

@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.client.angular.admin.health.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.angular.admin.health.application.AngularHealthApplicationService;
@@ -13,10 +15,10 @@ class AngularhealthModuleConfiguration {
   JHipsterModuleResource angularHealthModule(AngularHealthApplicationService angularHealth) {
     return JHipsterModuleResource
       .builder()
-      .slug("angular-health")
+      .slug(ANGULAR_HEALTH)
       .withoutProperties()
       .apiDoc("Angular", "Angular Health")
-      .organization(JHipsterModuleOrganization.builder().addModuleDependency("angular-core").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(ANGULAR_CORE).build())
       .tags("client", "angular", "health")
       .factory(angularHealth::buildModule);
   }

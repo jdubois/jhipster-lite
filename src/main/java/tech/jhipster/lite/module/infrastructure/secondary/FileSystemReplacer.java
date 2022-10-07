@@ -23,7 +23,7 @@ class FileSystemReplacer {
 
   private Consumer<ContentReplacer> applyReplacement(JHipsterProjectFolder projectFolder) {
     return replacement -> {
-      Path filePath = projectFolder.filePath(replacement.file());
+      Path filePath = projectFolder.filePath(replacement.file().get());
 
       try {
         String content = Files.readString(filePath);

@@ -18,6 +18,7 @@ class VueModulesFactoryTest {
   void shouldCreateVueModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .projectBaseName("jhiTest")
       .basePackage("com.jhipster.test")
       .build();
 
@@ -76,6 +77,9 @@ class VueModulesFactoryTest {
       .hasPrefixedFiles("src/main/webapp/content/images", "JHipster-Lite-neon-green.png", "VueLogo.png")
       .hasFiles("src/test/javascript/spec/common/primary/app/App.spec.ts")
       .hasPrefixedFiles("src/main/webapp/app/common/primary/homepage", "Homepage.component.ts", "Homepage.html","Homepage.vue", "index.ts")
+      .hasFile("src/main/webapp/app/common/primary/homepage/Homepage.component.ts")
+        .containing("appName: 'jhiTest'")
+        .and()
       .hasFiles("src/test/javascript/spec/common/primary/homepage/Homepage.spec.ts")
       .hasFiles("src/main/webapp/app/router/router.ts", "src/test/javascript/spec/router/Router.spec.ts")
       .hasFile("src/main/webapp/app/main.ts")

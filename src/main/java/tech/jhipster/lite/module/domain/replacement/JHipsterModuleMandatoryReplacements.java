@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.domain.replacement;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
+import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
 public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplacements {
 
@@ -21,7 +22,7 @@ public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplaceme
     }
 
     @Override
-    public JHipsterModuleFileMandatoryReplacementsBuilder in(String file) {
+    public JHipsterModuleFileMandatoryReplacementsBuilder in(JHipsterProjectFilePath file) {
       return new JHipsterModuleFileMandatoryReplacementsBuilder(this, file);
     }
 
@@ -34,17 +35,20 @@ public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplaceme
   public static class JHipsterModuleFileMandatoryReplacementsBuilder
     extends JHipsterModuleFileReplacementsBuilder<JHipsterModuleMandatoryReplacementsBuilder, JHipsterModuleFileMandatoryReplacementsBuilder> {
 
-    private JHipsterModuleFileMandatoryReplacementsBuilder(JHipsterModuleMandatoryReplacementsBuilder replacements, String file) {
+    private JHipsterModuleFileMandatoryReplacementsBuilder(
+      JHipsterModuleMandatoryReplacementsBuilder replacements,
+      JHipsterProjectFilePath file
+    ) {
       super(replacements, file);
     }
 
     @Override
-    protected ContentReplacer buildReplacer(String file, ElementReplacer toReplace, String replacement) {
+    protected ContentReplacer buildReplacer(JHipsterProjectFilePath file, ElementReplacer toReplace, String replacement) {
       return new MandatoryFileReplacer(file, new MandatoryReplacer(toReplace, replacement));
     }
   }
 
-  private static record MandatoryFileReplacer(String file, MandatoryReplacer replacement) implements ContentReplacer {
+  private static record MandatoryFileReplacer(JHipsterProjectFilePath file, MandatoryReplacer replacement) implements ContentReplacer {
     public MandatoryFileReplacer {
       Assert.notNull("file", file);
       Assert.notNull("replacement", replacement);

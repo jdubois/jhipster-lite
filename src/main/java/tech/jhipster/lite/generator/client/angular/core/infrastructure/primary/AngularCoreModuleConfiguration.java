@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.core.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.angular.core.application.AngularApplicationService;
@@ -14,12 +17,10 @@ class AngularCoreModuleConfiguration {
   JHipsterModuleResource angularModule(AngularApplicationService angular) {
     return JHipsterModuleResource
       .builder()
-      .slug("angular-core")
+      .slug(ANGULAR_CORE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addProjectName().build())
       .apiDoc("Angular", "Add Angular + Angular CLI")
-      .organization(
-        JHipsterModuleOrganization.builder().feature("client-core").addModuleDependency("init").addModuleDependency("prettier").build()
-      )
+      .organization(JHipsterModuleOrganization.builder().feature(CLIENT_CORE).addDependency(INIT).addDependency(PRETTIER).build())
       .tags("client", "angular")
       .factory(angular::buildInitModule);
   }

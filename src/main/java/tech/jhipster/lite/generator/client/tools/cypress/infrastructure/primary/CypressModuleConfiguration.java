@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.client.tools.cypress.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.tools.cypress.application.CypressApplicationService;
@@ -14,10 +17,10 @@ class CypressModuleConfiguration {
   JHipsterModuleResource cypresModule(CypressApplicationService cypress) {
     return JHipsterModuleResource
       .builder()
-      .slug("cypress")
+      .slug(CYPRESS)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addServerPort().addIndentation().build())
       .apiDoc("E2e", "Add Cypress")
-      .organization(JHipsterModuleOrganization.builder().feature("front-browser-test").addModuleDependency("init").build())
+      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(INIT).build())
       .tags("client", "test", "cypress", "e2e")
       .factory(cypress::buildModule);
   }

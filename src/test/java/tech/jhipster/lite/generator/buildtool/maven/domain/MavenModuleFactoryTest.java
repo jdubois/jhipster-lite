@@ -15,7 +15,7 @@ class MavenModuleFactoryTest {
   private static final MavenModuleFactory factory = new MavenModuleFactory();
 
   @Test
-  void shouldBuildModule() {
+  void shouldBuildMavenModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
@@ -23,7 +23,7 @@ class MavenModuleFactoryTest {
       .projectName("JHipster test")
       .build();
 
-    JHipsterModule module = factory.buildModule(properties);
+    JHipsterModule module = factory.buildMavenModule(properties);
 
     assertThatModuleWithFiles(module, readmeFile())
       .hasFile("pom.xml")
@@ -177,5 +177,16 @@ class MavenModuleFactoryTest {
       .hasPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties")
       .hasFile("README.md")
       .containing("./mvnw");
+  }
+
+  @Test
+  void shouldBuildMavenWrapperModule() {
+    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+
+    JHipsterModule module = factory.buildMavenWrapperModule(properties);
+
+    assertThatModuleWithFiles(module)
+      .hasExecutableFiles("mvnw", "mvnw.cmd")
+      .hasPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties");
   }
 }

@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoccore.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoccore.application.SpringdocApplicationService;
@@ -21,10 +24,10 @@ class SpringdocModuleConfiguration {
   JHipsterModuleResource springdocMvcModule(SpringdocApplicationService springdocApplicationService) {
     return JHipsterModuleResource
       .builder()
-      .slug("springdoc-mvc-openapi")
+      .slug(SPRINGDOC_MVC_OPENAPI)
       .propertiesDefinition(buildPropertiesDefinition())
       .apiDoc(API_GROUP, "Add springdoc-openapi for spring MVC")
-      .organization(JHipsterModuleOrganization.builder().feature("springdoc").addModuleDependency("spring-boot-tomcat").build())
+      .organization(JHipsterModuleOrganization.builder().feature(SPRINGDOC).addDependency(SPRING_BOOT_TOMCAT).build())
       .tags(SERVER_TAG, SPRING_TAG, SPRING_BOOT_TAG, DOCUMENTATION_TAG, SWAGGER_TAG)
       .factory(springdocApplicationService::buildSpringdocMvcModule);
   }
@@ -33,10 +36,10 @@ class SpringdocModuleConfiguration {
   JHipsterModuleResource springdocWebfluxModule(SpringdocApplicationService springdocApplicationService) {
     return JHipsterModuleResource
       .builder()
-      .slug("springdoc-webflux-openapi")
+      .slug(SPRINGDOC_WEBFLUX_OPENAPI)
       .propertiesDefinition(buildPropertiesDefinition())
       .apiDoc(API_GROUP, "Add springdoc-openapi for webflux")
-      .organization(JHipsterModuleOrganization.builder().feature("springdoc").addModuleDependency("spring-boot-webflux-netty").build())
+      .organization(JHipsterModuleOrganization.builder().feature(SPRINGDOC).addDependency(SPRING_BOOT_WEBFLUX_NETTY).build())
       .tags(SERVER_TAG, SPRING_TAG, SPRING_BOOT_TAG, DOCUMENTATION_TAG, SWAGGER_TAG)
       .factory(springdocApplicationService::buildSpringdocWebfluxModule);
   }

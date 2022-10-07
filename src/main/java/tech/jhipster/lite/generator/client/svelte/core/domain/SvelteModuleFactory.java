@@ -72,7 +72,7 @@ public class SvelteModuleFactory {
         .addScript(scriptKey("test"), scriptCommand("jest"))
         .and()
       .optionalReplacements()
-        .in("package.json")
+        .in(path("package.json"))
           .add(lineBeforeText(CACHE_NEEDLE), type(properties.indentation()))
           .and()
         .and()

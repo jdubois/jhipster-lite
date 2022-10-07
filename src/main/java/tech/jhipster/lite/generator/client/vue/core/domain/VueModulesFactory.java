@@ -118,7 +118,7 @@ public class VueModulesFactory {
         .addDevDependency(packageName("@pinia/testing"), VUE)
         .and()
       .mandatoryReplacements()
-        .in("src/main/webapp/app/main.ts")
+        .in(path("src/main/webapp/app/main.ts"))
           .add(lineBeforeText(IMPORT_NEEDLE), piniaImports())
           .add(lineBeforeText(PROVIDER_NEEDLE), piniaProvider())
           .and()

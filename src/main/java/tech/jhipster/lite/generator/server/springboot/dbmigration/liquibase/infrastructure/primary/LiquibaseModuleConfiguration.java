@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.application.LiquibaseApplicationService;
@@ -14,10 +17,10 @@ class LiquibaseModuleConfiguration {
   JHipsterModuleResource liquibaseModule(LiquibaseApplicationService liquibase) {
     return JHipsterModuleResource
       .builder()
-      .slug("liquibase")
+      .slug(LIQUIBASE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().addBasePackage().build())
       .apiDoc("Spring Boot - Database Migration", "Add Liquibase")
-      .organization(JHipsterModuleOrganization.builder().feature("database-migration").addFeatureDependency("jpa-persistence").build())
+      .organization(JHipsterModuleOrganization.builder().feature(DATABASE_MIGRATION).addDependency(JPA_PERSISTENCE).build())
       .tags("server", "spring", "spring-boot", "database", "migration", "liquibase")
       .factory(liquibase::buildModule);
   }

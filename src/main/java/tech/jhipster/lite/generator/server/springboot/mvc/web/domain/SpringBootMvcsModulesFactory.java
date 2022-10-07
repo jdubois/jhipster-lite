@@ -22,7 +22,7 @@ public class SpringBootMvcsModulesFactory {
 
   private static final PropertyKey SERVER_PORT = propertyKey("server.port");
 
-  private static final String CORS_PRIMARY = "technical/infrastructure/primary/cors";
+  private static final String CORS_PRIMARY = "security/infrastructure/primary";
 
   public JHipsterModule buildTomcatModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);

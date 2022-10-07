@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.docker.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.docker.application.SpringBootDockerApplicationService;
@@ -14,7 +17,7 @@ class SpringBootDockerModuleConfiguration {
   JHipsterModuleResource jibModule(SpringBootDockerApplicationService springBootDocker) {
     return JHipsterModuleResource
       .builder()
-      .slug("jib")
+      .slug(JIB)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addServerPort().build())
       .apiDoc("Spring Boot - Tools", "Add Docker image building with Jib")
       .organization(organization())
@@ -26,7 +29,7 @@ class SpringBootDockerModuleConfiguration {
   JHipsterModuleResource dockerFileModule(SpringBootDockerApplicationService springBootDocker) {
     return JHipsterModuleResource
       .builder()
-      .slug("dockerfile")
+      .slug(DOCKERFILE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addServerPort().build())
       .apiDoc("Spring Boot - Tools", "Add Dockerfile")
       .organization(organization())
@@ -35,6 +38,6 @@ class SpringBootDockerModuleConfiguration {
   }
 
   private JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().addFeatureDependency("java-build-tool").build();
+    return JHipsterModuleOrganization.builder().addDependency(JAVA_BUILD_TOOL).build();
   }
 }

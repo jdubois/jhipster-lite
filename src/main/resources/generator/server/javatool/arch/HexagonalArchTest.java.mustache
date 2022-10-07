@@ -31,7 +31,6 @@ class HexagonalArchTest {
     .importPackages(ROOT_PACKAGE);
 
   private static final Collection<String> businessContexts = packagesWithAnnotation(BusinessContext.class);
-  private static final Collection<String> businessContextsPackages = buildPackagesPatterns(businessContexts);
 
   private static final Collection<String> sharedKernels = packagesWithAnnotation(SharedKernel.class);
   private static final Collection<String> sharedKernelsPackages = buildPackagesPatterns(sharedKernels);

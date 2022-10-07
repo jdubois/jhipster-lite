@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.init.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.init.application.InitApplicationService;
@@ -13,7 +15,7 @@ class InitModuleConfiguration {
   JHipsterModuleResource initModule(InitApplicationService inits) {
     return JHipsterModuleResource
       .builder()
-      .slug("init")
+      .slug(INIT)
       .propertiesDefinition(initPropertiesDefinition())
       .apiDoc("Init", "Init project")
       .standalone()

@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.server.javatool.memoizer.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.javatool.memoizer.application.JavaMemoizersApplicationService;
@@ -14,10 +16,10 @@ class JavaMemoizersModuleConfiguration {
   JHipsterModuleResource javaMemoizersModule(JavaMemoizersApplicationService javaMemoizers) {
     return JHipsterModuleResource
       .builder()
-      .slug("java-memoizers")
+      .slug(JAVA_MEMOIZERS)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
       .apiDoc("Java", "Add simple memoizers factory")
-      .organization(JHipsterModuleOrganization.builder().addModuleDependency("java-base").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(JAVA_BASE).build())
       .tags("server")
       .factory(javaMemoizers::buildModule);
   }

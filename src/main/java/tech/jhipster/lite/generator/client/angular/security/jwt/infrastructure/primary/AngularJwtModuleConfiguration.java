@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.client.angular.security.jwt.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.client.angular.security.jwt.application.AngularJwtApplicationService;
@@ -14,10 +17,10 @@ class AngularJwtModuleConfiguration {
   JHipsterModuleResource angularJwtModule(AngularJwtApplicationService angularJwt) {
     return JHipsterModuleResource
       .builder()
-      .slug("angular-jwt")
+      .slug(ANGULAR_JWT)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addProjectBaseName().addIndentation().build())
       .apiDoc("Angular", "Add Angular with authentication JWT")
-      .organization(JHipsterModuleOrganization.builder().feature("angular-authentication").addModuleDependency("angular-core").build())
+      .organization(JHipsterModuleOrganization.builder().feature(ANGULAR_AUTHENTICATION).addDependency(ANGULAR_CORE).build())
       .tags("client", "angular")
       .factory(angularJwt::buildModule);
   }

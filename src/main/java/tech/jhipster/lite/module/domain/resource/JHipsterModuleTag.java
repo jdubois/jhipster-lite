@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 import tech.jhipster.lite.error.domain.Assert;
 
 public record JHipsterModuleTag(String tag) {
-  private static final Pattern TAG_FORMAT = Pattern.compile("^[a-z1-9-]+$");
+  private static final Pattern TAG_FORMAT = Pattern.compile("^[a-z0-9-]+$");
 
   public JHipsterModuleTag {
     Assert.field("tag", tag).notNull().noWhitespace().maxLength(15);

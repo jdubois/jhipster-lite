@@ -26,43 +26,67 @@ class CustomJHLiteModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
+    //@formatter:off
     assertThatModuleWithFiles(module, pomFile(), mainAppFile())
       .hasFile("pom.xml")
-      .containing(
-        """
-            <dependency>
-              <groupId>tech.jhipster.lite</groupId>
-              <artifactId>jhlite</artifactId>
-              <version>${jhlite.version}</version>
-            </dependency>
-        """
-      )
-      .containing(
-        """
-            <dependency>
-              <groupId>tech.jhipster.lite</groupId>
-              <artifactId>jhlite</artifactId>
-              <version>${jhlite.version}</version>
-              <classifier>tests</classifier>
-              <scope>test</scope>
-              <type>test-jar</type>
-            </dependency>
-        """
-      )
-      .and()
+        .containing("<artifactId>cucumber-junit</artifactId>")
+        .containing("<artifactId>cucumber-java</artifactId>")
+        .containing("<artifactId>cucumber-spring</artifactId>")
+        .containing("<artifactId>junit-vintage-engine</artifactId>")
+        .containing("<artifactId>testng</artifactId>")
+        .containing(
+          """
+              <dependency>
+                <groupId>tech.jhipster.lite</groupId>
+                <artifactId>jhlite</artifactId>
+                <version>${jhlite.version}</version>
+              </dependency>
+          """
+        )
+        .containing(
+          """
+              <dependency>
+                <groupId>tech.jhipster.lite</groupId>
+                <artifactId>jhlite</artifactId>
+                <version>${jhlite.version}</version>
+                <classifier>tests</classifier>
+                <scope>test</scope>
+                <type>test-jar</type>
+              </dependency>
+          """
+        )
+        .and()
       .hasFile("src/main/resources/config/application.properties")
-      .containing("server.port=9000")
-      .containing("application.exception.package=org.,java.,net.,javax.,com.,io.,de.,tech.jhipster.lite,com.jhipster.test")
-      .containing("spring.jackson.default-property-inclusion=non_null")
-      .and()
+        .containing("server.port=9000")
+        .containing("application.exception.package=org.,java.,net.,javax.,com.,io.,de.,tech.jhipster.lite,com.jhipster.test")
+        .containing("spring.jackson.default-property-inclusion=non_null")
+        .containing("jhlite-hidden-resources.tags=banner")
+        .containing("jhlite-hidden-resources.slugs=custom-jhlite")
+        .and()
       .hasFile("src/test/resources/config/application.properties")
-      .containing("server.port=0")
-      .and()
+        .containing("server.port=0")
+        .containing("application.exception.package=org.,java.,net.,javax.,com.,io.,de.,tech.jhipster.lite,com.jhipster.test")
+        .containing("spring.main.allow-bean-definition-overriding=true")
+        .and()
       .hasFile("src/main/java/com/jhipster/test/MyappApp.java")
-      .containing("import tech.jhipster.lite.JHLiteApp;")
-      .containing("@SpringBootApplication(scanBasePackageClasses = { JHLiteApp.class, MyappApp.class })")
-      .and()
-      .hasFile("documentation/module-creation.md");
+        .containing("import tech.jhipster.lite.JHLiteApp;")
+        .containing("@SpringBootApplication(scanBasePackageClasses = { JHLiteApp.class, MyappApp.class })")
+        .and()
+      .hasPrefixedFiles("documentation", "module-creation.md", "cucumber.md")
+      .doNotHaveFiles(
+        "src/main/java/tech/jhipster/test/security/infrastructure/primary/CorsFilterConfiguration.java",
+        "src/main/java/tech/jhipster/test/security/infrastructure/primary/CorsProperties.java",
+        "src/test/java/tech/jhipster/test/security/infrastructure/primary/CorsFilterConfigurationIT.java"
+      )
+      .hasFile("src/test/java/com/jhipster/test/cucumber/CucumberTest.java")
+        .containing("glue = { \"com.jhipster.test\", \"tech.jhipster.lite.module.infrastructure.primary\" },")
+        .and()
+      .hasFile("src/test/java/com/jhipster/test/cucumber/CucumberConfiguration.java")
+        .containing("import com.jhipster.test.MyappApp;")
+        .and()
+      .hasFiles("src/test/java/com/jhipster/test/cucumber/CucumberRestTemplate.java")
+      .hasFiles("src/test/features/.gitkeep");
+    //@formatter:on
   }
 
   private ModuleFile mainAppFile() {

@@ -2,6 +2,7 @@
   "documentation": "tikui",
   "src": "src/main/style",
   "dist": "target/classes/public/style",
+  "port": 9005,
   "expose": {
     "src/main/glyph": "glyph"
   }

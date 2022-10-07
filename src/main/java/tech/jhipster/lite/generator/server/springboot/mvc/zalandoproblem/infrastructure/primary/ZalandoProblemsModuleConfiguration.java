@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.zalandoproblem.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.zalandoproblem.application.ZalandoProblemsApplicationService;
@@ -14,10 +17,10 @@ class ZalandoProblemsModuleConfiguration {
   JHipsterModuleResource zalandoProblemsModule(ZalandoProblemsApplicationService zalandoProblems) {
     return JHipsterModuleResource
       .builder()
-      .slug("zalando-problems")
+      .slug(ZALANDO_PROBLEMS)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - MVC", "Zalando problems and error handler")
-      .organization(JHipsterModuleOrganization.builder().feature("web-error-management").addFeatureDependency("spring-server").build())
+      .organization(JHipsterModuleOrganization.builder().feature(WEB_ERROR_MANAGEMENT).addDependency(SPRING_SERVER).build())
       .tags("server", "spring", "spring-boot", "mvc", "problem")
       .factory(zalandoProblems::buildModule);
   }

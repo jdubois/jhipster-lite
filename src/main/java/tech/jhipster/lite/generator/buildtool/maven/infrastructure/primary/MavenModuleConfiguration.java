@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.buildtool.maven.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.buildtool.maven.application.MavenApplicationService;
@@ -14,11 +17,23 @@ class MavenModuleConfiguration {
   JHipsterModuleResource mavenModule(MavenApplicationService maven) {
     return JHipsterModuleResource
       .builder()
-      .slug("maven-java")
+      .slug(MAVEN_JAVA)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addProjectName().build())
       .apiDoc("Build Tool", "Init Maven project with pom.xml and wrapper")
-      .organization(JHipsterModuleOrganization.builder().feature("java-build-tool").addModuleDependency("init").build())
+      .organization(JHipsterModuleOrganization.builder().feature(JAVA_BUILD_TOOL).addDependency(INIT).build())
       .tags("buildtool", "test")
-      .factory(maven::buildModule);
+      .factory(maven::buildMavenModule);
+  }
+
+  @Bean
+  JHipsterModuleResource mavenWrapperModule(MavenApplicationService maven) {
+    return JHipsterModuleResource
+      .builder()
+      .slug(MAVEN_WRAPPER)
+      .withoutProperties()
+      .apiDoc("Build Tool", "Add maven wrapper")
+      .standalone()
+      .tags("buildtool", "test")
+      .factory(maven::buildMavenWrapperModule);
   }
 }

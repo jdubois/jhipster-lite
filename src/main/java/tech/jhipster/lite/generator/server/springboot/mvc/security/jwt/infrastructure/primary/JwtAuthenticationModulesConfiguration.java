@@ -1,5 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.jwt.application.JwtAuthenticationApplicationService;
@@ -10,25 +13,25 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 @Configuration
 public class JwtAuthenticationModulesConfiguration {
 
-  private static final String AUTHENTICATION = "authentication";
+  private static final String AUTHENTICATION_TAG = "authentication";
 
   @Bean
   JHipsterModuleResource jwtAuthenticationModule(JwtAuthenticationApplicationService jwtAuthentications) {
     return JHipsterModuleResource
       .builder()
-      .slug("spring-boot-jwt")
+      .slug(SPRING_BOOT_JWT)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().build())
       .apiDoc("Spring Boot - MVC - Security", "Add Spring Security JWT")
       .organization(
         JHipsterModuleOrganization
           .builder()
           .feature(AUTHENTICATION)
-          .addModuleDependency("java-base")
-          .addFeatureDependency("web-error-management")
-          .addFeatureDependency("spring-server")
+          .addDependency(JAVA_BASE)
+          .addDependency(WEB_ERROR_MANAGEMENT)
+          .addDependency(SPRING_SERVER)
           .build()
       )
-      .tags("server", "spring", "spring-boot", AUTHENTICATION)
+      .tags("server", "spring", "spring-boot", AUTHENTICATION_TAG)
       .factory(jwtAuthentications::buildAuthenticationModule);
   }
 
@@ -36,13 +39,11 @@ public class JwtAuthenticationModulesConfiguration {
   JHipsterModuleResource jwtBasicAuthModule(JwtAuthenticationApplicationService jwtAuthentications) {
     return JHipsterModuleResource
       .builder()
-      .slug("spring-boot-jwt-basic-auth")
+      .slug(SPRING_BOOT_JWT_BASIC_AUTH)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - MVC - Security", "Add Basic Auth for Spring Security JWT")
-      .organization(
-        JHipsterModuleOrganization.builder().addModuleDependency("spring-boot-jwt").addModuleDependency("springdoc-jwt").build()
-      )
-      .tags("server", "spring", "spring-boot", AUTHENTICATION)
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT_JWT).addDependency(SPRINGDOC_JWT).build())
+      .tags("server", "spring", "spring-boot", AUTHENTICATION_TAG)
       .factory(jwtAuthentications::buildBasicAuthModule);
   }
 }

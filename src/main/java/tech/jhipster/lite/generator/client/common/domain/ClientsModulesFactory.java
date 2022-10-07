@@ -17,10 +17,10 @@ public class ClientsModulesFactory {
 
     return moduleBuilder(properties)
       .optionalReplacements()
-      .in("package.json")
+      .in(path("package.json"))
       .add(lineBeforeText(CACHE_NEEDLE), jestSonar(properties.indentation()))
       .and()
-      .in(".lintstagedrc.js")
+      .in(path(".lintstagedrc.js"))
       .add(lineBeforeRegex("\\['prettier --write'\\]"), "  '{src/**/,}*.{js,ts,tsx,vue}': ['eslint --fix'],")
       .and()
       .and();

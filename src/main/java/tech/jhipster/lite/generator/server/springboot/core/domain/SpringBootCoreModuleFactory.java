@@ -76,7 +76,7 @@ public class SpringBootCoreModuleFactory {
         .add(SOURCE.template("ApplicationStartupTracesTest.java"), toSrcTestJava().append(packagePath).append("ApplicationStartupTracesTest.java"))
         .and()
       .optionalReplacements()
-        .in("pom.xml")
+        .in(path("pom.xml"))
           .add(DEFAULT_GOAL_REPLACER, properties.indentation().times(2) + "<defaultGoal>spring-boot:run</defaultGoal>")
           .and()
         .and()

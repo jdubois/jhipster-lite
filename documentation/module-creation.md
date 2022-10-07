@@ -118,7 +118,7 @@ class MyModuleModuleConfiguration {
   ) {
     return JHipsterModuleResource
       .builder()
-      .slug("my-module")
+      .slug(JHLiteModuleSlug.MY_MODULE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
       .apiDoc("Group", "This is my module")
       .standalone()

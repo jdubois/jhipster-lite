@@ -37,8 +37,6 @@ public final class AuthenticationModulesFactory {
     JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("authentication");
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append("authentication");
 
-    String integrationTestFile = "src/test/java/" + properties.packagePath() + "/IntegrationTest.java";
-
     //@formatter:off
     return moduleBuilder(properties)
       .context()
@@ -72,7 +70,7 @@ public final class AuthenticationModulesFactory {
           .and()
         .and()
       .mandatoryReplacements()
-        .in(integrationTestFile)
+        .in(path("src/test/java").append(properties.packagePath()).append("IntegrationTest.java"))
           .add(IMPORT_NEEDLE, "import org.springframework.security.test.context.support.WithMockUser;")
           .add(ANNOTATION_NEEDLE, "@WithMockUser")
           .and()

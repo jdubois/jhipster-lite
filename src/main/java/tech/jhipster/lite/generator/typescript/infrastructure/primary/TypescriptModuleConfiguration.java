@@ -1,5 +1,7 @@
 package tech.jhipster.lite.generator.typescript.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.generator.typescript.application.TypescriptApplicationService;
@@ -13,10 +15,10 @@ class TypescriptModuleConfiguration {
   JHipsterModuleResource typescriptModule(TypescriptApplicationService typescriptApplicationService) {
     return JHipsterModuleResource
       .builder()
-      .slug("typescript")
+      .slug(TYPESCRIPT)
       .withoutProperties()
       .apiDoc("Typescript", "Init Typescript project")
-      .organization(JHipsterModuleOrganization.builder().addModuleDependency("init").build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(INIT).build())
       .tags("typescript")
       .factory(typescriptApplicationService::buildModule);
   }

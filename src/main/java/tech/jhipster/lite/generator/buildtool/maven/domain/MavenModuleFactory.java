@@ -21,23 +21,15 @@ public class MavenModuleFactory {
   private static final ArtifactId JACOCO_ARTIFACT_ID = artifactId("jacoco-maven-plugin");
   private static final VersionSlug JACOCO_VERSION = versionSlug("jacoco");
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
-    Assert.notNull("properties", properties);
-
+  public JHipsterModule buildMavenModule(JHipsterModuleProperties properties) {
     //@formatter:off
-    return moduleBuilder(properties)
+    return mavenWrapperModulesFiles(properties)
       .context()
         .put("dasherizedBaseName", properties.projectBaseName().kebabCase())
         .and()
       .startupCommand("./mvnw")
       .files()
         .add(SOURCE.template("pom.xml"), to("pom.xml"))
-        .addExecutable(SOURCE.file("mvnw"), to("mvnw"))
-        .addExecutable(SOURCE.file("mvnw.cmd"), to("mvnw.cmd"))
-        .batch(SOURCE.append(".mvn/wrapper"), to(".mvn/wrapper"))
-          .addFile("maven-wrapper.jar")
-          .addFile("maven-wrapper.properties")
-          .and()
         .and()
       .javaBuildPlugins()
         .plugin(mavenCompilerPlugin())
@@ -48,6 +40,26 @@ public class MavenModuleFactory {
         .pluginManagement(enforcerPluginManagement())
         .and()
       .build();
+    //@formatter:on
+  }
+
+  public JHipsterModule buildMavenWrapperModule(JHipsterModuleProperties properties) {
+    return mavenWrapperModulesFiles(properties).build();
+  }
+
+  private JHipsterModuleBuilder mavenWrapperModulesFiles(JHipsterModuleProperties properties) {
+    Assert.notNull("properties", properties);
+
+    //@formatter:off
+    return moduleBuilder(properties)
+      .files()
+        .addExecutable(SOURCE.file("mvnw"), to("mvnw"))
+        .addExecutable(SOURCE.file("mvnw.cmd"), to("mvnw.cmd"))
+        .batch(SOURCE.append(".mvn/wrapper"), to(".mvn/wrapper"))
+        .addFile("maven-wrapper.jar")
+        .addFile("maven-wrapper.properties")
+        .and()
+      .and();
     //@formatter:on
   }
 

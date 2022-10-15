@@ -63,7 +63,7 @@ public class CucumberAuthenticationModuleFactory {
   }
 
   private String securityConfigurationImport(JHipsterModuleProperties properties) {
-    return ("import " + properties.basePackage().get() + ".authentication.infrastructure.primary.TestSecurityConfiguration;");
+    return "import " + properties.basePackage().get() + ".authentication.infrastructure.primary.TestSecurityConfiguration;";
   }
 
   private JavaDependency jsonWebTokenDependency(String artifactId) {

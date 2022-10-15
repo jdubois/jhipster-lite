@@ -8,7 +8,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.17.1-SNAPSHOT</version>
+  <version>0.18.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -43,7 +43,7 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <node.version>v16.17.0</node.version>
+    <node.version>v16.18.0</node.version>
     <npm.version>8.15.0</npm.version>
 
     <maven.version>3.6.0</maven.version>
@@ -55,7 +55,7 @@
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
     <spring-boot.version>2.7.4</spring-boot.version>
-    <byte-buddy.version>1.12.17</byte-buddy.version>
+    <byte-buddy.version>1.12.18</byte-buddy.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>

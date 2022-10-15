@@ -1,0 +1,1 @@
+export type ModulePropertyDefaultValue = string;

@@ -43,13 +43,13 @@ class OAuth2Auth0ModuleConfiguration {
   }
 
   public static JHipsterModulePropertyDefinition auth0Domain() {
-    return mandatoryStringProperty("auth0Domain").description("Auth0 domain").example("dev-123456.us.auth0.com").order(800).build();
+    return mandatoryStringProperty("auth0Domain").description("Auth0 domain").defaultValue("dev-123456.us.auth0.com").order(800).build();
   }
 
   public static JHipsterModulePropertyDefinition auth0clientId() {
     return mandatoryStringProperty("auth0ClientId")
       .description("Auth0 Client ID for OIDC application")
-      .example("0oab8eb55Kb9jdMIr5d6")
+      .defaultValue("0oab8eb55Kb9jdMIr5d6")
       .order(900)
       .build();
   }

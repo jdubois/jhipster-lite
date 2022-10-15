@@ -1,12 +1,9 @@
 package tech.jhipster.lite.module.domain.resource;
 
 import java.util.Optional;
+import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
-import tech.jhipster.lite.module.domain.properties.JHipsterPropertyExample;
-import tech.jhipster.lite.module.domain.properties.JHipsterPropertyKey;
-import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
+import tech.jhipster.lite.module.domain.properties.*;
 
 public class JHipsterModulePropertyDefinition {
 
@@ -14,7 +11,7 @@ public class JHipsterModulePropertyDefinition {
   private final boolean mandatory;
   private final JHipsterPropertyKey key;
   private final Optional<JHipsterPropertyDescription> description;
-  private final Optional<JHipsterPropertyExample> example;
+  private final Optional<JHipsterPropertyDefaultValue> defaultValue;
   private final int order;
 
   private JHipsterModulePropertyDefinition(JHipsterModulePropertyDefinitionBuilder builder) {
@@ -25,14 +22,14 @@ public class JHipsterModulePropertyDefinition {
     mandatory = builder.mandatory;
     key = new JHipsterPropertyKey(builder.key);
     description = JHipsterPropertyDescription.of(builder.description);
-    example = JHipsterPropertyExample.of(builder.example);
+    defaultValue = JHipsterPropertyDefaultValue.of(builder.defaultValue);
     order = builder.order;
   }
 
   public static JHipsterModulePropertyDefinition basePackageProperty() {
     return mandatoryStringProperty(JHipsterModuleProperties.BASE_PACKAGE_PARAMETER)
       .description("Base java package")
-      .example("tech.jhipster.lite")
+      .defaultValue("com.mycompany.myapp")
       .order(-300)
       .build();
   }
@@ -40,7 +37,7 @@ public class JHipsterModulePropertyDefinition {
   public static JHipsterModulePropertyDefinition projectNameProperty() {
     return mandatoryStringProperty(JHipsterModuleProperties.PROJECT_NAME_PARAMETER)
       .description("Project full name")
-      .example("JHipster Project")
+      .defaultValue("JHipster Sample Application")
       .order(-200)
       .build();
   }
@@ -48,7 +45,7 @@ public class JHipsterModulePropertyDefinition {
   static JHipsterModulePropertyDefinition projectBaseNameProperty() {
     return mandatoryStringProperty(JHipsterModuleProperties.PROJECT_BASE_NAME_PARAMETER)
       .description("Project short name (only letters and numbers)")
-      .example("jhipster")
+      .defaultValue("jhipsterSampleApplication")
       .order(-100)
       .build();
   }
@@ -56,19 +53,19 @@ public class JHipsterModulePropertyDefinition {
   static JHipsterModulePropertyDefinition serverPortProperty() {
     return mandatoryIntegerProperty(JHipsterModuleProperties.SERVER_PORT_PARAMETER)
       .description("Server port")
-      .example("8080")
+      .defaultValue("8080")
       .order(-50)
       .build();
   }
 
   public static JHipsterModulePropertyDefinition endOfLineProperty() {
-    return optionalStringProperty("endOfLine").description("Type of line break (lf or crlf)").example("lf").order(100).build();
+    return optionalStringProperty("endOfLine").description("Type of line break (lf or crlf)").defaultValue("lf").order(100).build();
   }
 
   public static JHipsterModulePropertyDefinition indentationProperty() {
     return optionalIntegerProperty(JHipsterModuleProperties.INDENTATION_PARAMETER)
       .description("Number of spaces in indentation")
-      .example("2")
+      .defaultValue("2")
       .order(500)
       .build();
   }
@@ -117,8 +114,17 @@ public class JHipsterModulePropertyDefinition {
     return description;
   }
 
+  /**
+   *  @deprecated use {@link #defaultValue()} instead
+   */
+  @Deprecated(forRemoval = true)
+  @Generated(reason = "Candidate for deletion")
   public Optional<JHipsterPropertyExample> example() {
-    return example;
+    return defaultValue.flatMap(value -> JHipsterPropertyExample.of(value.get()));
+  }
+
+  public Optional<JHipsterPropertyDefaultValue> defaultValue() {
+    return defaultValue;
   }
 
   public int order() {
@@ -136,7 +142,7 @@ public class JHipsterModulePropertyDefinition {
     private boolean mandatory;
     private String key;
     private String description;
-    private String example;
+    private String defaultValue;
     private int order;
 
     private JHipsterModulePropertyDefinitionBuilder() {}
@@ -169,9 +175,21 @@ public class JHipsterModulePropertyDefinition {
       return this;
     }
 
+    /**
+     *  @deprecated use {@link #defaultValue(String defaultValue)} instead
+     */
+    @Deprecated(forRemoval = true)
+    @Generated(reason = "Candidate for deletion")
     @Override
     public JHipsterModulePropertyDefinitionOptionalFieldsBuilder example(String example) {
-      this.example = example;
+      this.defaultValue = example;
+
+      return this;
+    }
+
+    @Override
+    public JHipsterModulePropertyDefinitionOptionalFieldsBuilder defaultValue(String defaultValue) {
+      this.defaultValue = defaultValue;
 
       return this;
     }
@@ -204,7 +222,14 @@ public class JHipsterModulePropertyDefinition {
   public interface JHipsterModulePropertyDefinitionOptionalFieldsBuilder {
     JHipsterModulePropertyDefinitionOptionalFieldsBuilder description(String description);
 
+    /**
+     *  @deprecated use {@link #defaultValue(String defaultValue)} instead
+     */
+    @Deprecated(forRemoval = true)
+    @Generated(reason = "Candidate for deletion")
     JHipsterModulePropertyDefinitionOptionalFieldsBuilder example(String example);
+
+    JHipsterModulePropertyDefinitionOptionalFieldsBuilder defaultValue(String defaultValue);
 
     JHipsterModulePropertyDefinitionOptionalFieldsBuilder order(int order);
 

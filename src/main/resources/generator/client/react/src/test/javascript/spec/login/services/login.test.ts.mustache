@@ -1,9 +1,9 @@
 import axios from 'axios';
+import { describe, it, expect, vi } from 'vitest';
 
 import {login} from '@/login/services/login';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
 
 const data = {
   username: 'test',
@@ -15,22 +15,18 @@ const idToken = 123;
 
 describe('login function', () => {
   it('should return a promise', () => {
-    mockedAxios.post.mockImplementationOnce(() => Promise.reject('error'));
-    const setUsername = jest.fn();
-    const setToken = jest.fn();
+    const spy = vi.spyOn(axios, 'post');
+    spy.mockImplementationOnce(() => Promise.reject('error'));
+    const setUsername = vi.fn();
+    const setToken = vi.fn();
     expect(login({...data, setToken, setUsername})).toBeInstanceOf(Promise);
   });
 
   it('should set token and username', async () => {
-    mockedAxios.post.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: {
-          id_token: idToken,
-        },
-      })
-    );
-    const setUsername = jest.fn();
-    const setToken = jest.fn();
+    const spy = vi.spyOn(axios, 'post');
+    spy.mockImplementationOnce(() => Promise.resolve({ data: { id_token: idToken } }));
+    const setUsername = vi.fn();
+    const setToken = vi.fn();
     await login({...data, setToken, setUsername});
     expect(setUsername).toHaveBeenCalledWith(data.username);
     expect(setToken).toHaveBeenCalledWith(idToken);

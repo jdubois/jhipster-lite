@@ -22,4 +22,9 @@ class JHipsterPropertyExampleTest {
   void shouldGetExampleFromActualExample() {
     assertThat(JHipsterPropertyExample.of("example")).contains(new JHipsterPropertyExample("example"));
   }
+
+  @Test
+  void shouldGetValueFromGet() {
+    assertThat(JHipsterPropertyExample.of("example").get().get()).isEqualTo(new JHipsterPropertyExample("example").get());
+  }
 }

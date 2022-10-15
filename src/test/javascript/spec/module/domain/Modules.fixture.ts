@@ -35,8 +35,43 @@ export const applicationBaseNamePropertyDefinition = (): ModulePropertyDefinitio
   mandatory: true,
   key: 'baseName',
   description: 'Application base name',
-  example: 'jhipster',
+  defaultValue: 'jhipster',
   order: -300,
+});
+
+export const indentSizePropertyDefinition = (): ModulePropertyDefinition => ({
+  type: 'INTEGER',
+  mandatory: true,
+  key: 'indentSize',
+  description: 'Application indent size',
+  defaultValue: '2',
+  order: -100,
+});
+
+export const mandatoryBooleanPropertyDefinitionWithoutDefault = (): ModulePropertyDefinition => ({
+  type: 'BOOLEAN',
+  mandatory: true,
+  key: 'mandatoryBoolean',
+  description: 'Test Mandatory boolean',
+  order: -50,
+});
+
+export const mandatoryBooleanPropertyDefinitionWithDefault = (): ModulePropertyDefinition => ({
+  type: 'BOOLEAN',
+  mandatory: true,
+  key: 'mandatoryBooleanDefault',
+  description: 'Test Mandatory boolean with default',
+  defaultValue: 'true',
+  order: -50,
+});
+
+export const mandatoryIntegerPropertyDefinition = (): ModulePropertyDefinition => ({
+  type: 'INTEGER',
+  mandatory: true,
+  key: 'mandatoryInteger',
+  description: 'Test Mandatory integer',
+  defaultValue: '1337',
+  order: -50,
 });
 
 export const optionalBooleanPropertyDefinition = (): ModulePropertyDefinition => ({
@@ -56,6 +91,39 @@ export const defaultModules = (): Modules =>
           description: 'Add cucumber to the application',
           properties: [
             applicationBaseNamePropertyDefinition(),
+            optionalBooleanPropertyDefinition(),
+            {
+              type: 'INTEGER',
+              mandatory: false,
+              key: 'optionalInteger',
+              order: 100,
+            },
+          ],
+          tags: ['server'],
+        },
+        {
+          slug: moduleSlug('banner'),
+          description: 'Add a banner to the application',
+          properties: [],
+          tags: [],
+        },
+      ],
+    },
+  ]);
+
+export const defaultModulesWithNonDefaultProperties = (): Modules =>
+  new Modules([
+    {
+      name: 'Spring',
+      modules: [
+        {
+          slug: moduleSlug('spring-cucumber'),
+          description: 'Add cucumber to the application',
+          properties: [
+            applicationBaseNamePropertyDefinition(),
+            mandatoryBooleanPropertyDefinitionWithoutDefault(),
+            mandatoryBooleanPropertyDefinitionWithDefault(),
+            mandatoryIntegerPropertyDefinition(),
             optionalBooleanPropertyDefinition(),
             {
               type: 'INTEGER',

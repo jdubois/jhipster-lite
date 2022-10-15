@@ -19,6 +19,14 @@ Feature: Modules
   Scenario: Should get modules landscape
     When I get modules landscape
     Then I should have landscape level 0 with elements
-      | Type    | Slug               |
-      | MODULE  | infinitest-filters |
-      | MODULE  | init               |
+      | Type   | Slug               |
+      | MODULE | infinitest-filters |
+      | MODULE | init               |
+
+  Scenario: Should not apply for unknown module
+    When I apply "not-a-real-module" module to default project without parameters
+    Then I should have unknown slug "not-a-real-module" error message
+
+  Scenario: Should not get properties definition for unknown module
+    When I get module "not-a-real-module" properties definition
+    Then I should have unknown slug "not-a-real-module" error message

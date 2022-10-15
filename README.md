@@ -29,6 +29,11 @@
 - You will only generate the code you want, no additional unused code
 - The best quality as possible: 💯% coverage, 0 code smell, no duplication 😎
 
+## Some videos
+
+- [What is JHipster Lite and why should you care?][devoxx-jhlite] by [Julien Dubois][jdubois]
+- [Simple WebServices with JHipster Lite][webservices-with-jhlite] by [Colin Damon][cdamon]
+
 ## Choosing
 
 The original JHipster and JHLite are **not the same thing**, they are **not generating the same code** and **not serving the same purpose**! Here are some choice elements you can take into account:
@@ -271,3 +276,7 @@ Support this project by becoming a sponsor! [Become a sponsor](https://opencolle
 [backers-url]: https://opencollective.com/generator-jhipster
 [bronze-sponsors-image]: https://opencollective.com/generator-jhipster/tiers/bronze-sponsor.svg?avatarHeight=120&width=890
 [bronze-sponsors-url]: https://opencollective.com/generator-jhipster
+[devoxx-jhlite]: https://youtu.be/RnLGnY-vzLI
+[jdubois]: https://twitter.com/juliendubois
+[webservices-with-jhlite]: https://youtu.be/mEECPRZjajI
+[cdamon]: https://www.linkedin.com/in/colin-damon/

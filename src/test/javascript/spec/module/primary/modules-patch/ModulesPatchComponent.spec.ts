@@ -1,5 +1,11 @@
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
-import { defaultModules, defaultProjectHistory, ModulesRepositoryStub, stubModulesRepository } from '../../domain/Modules.fixture';
+import {
+  defaultModules,
+  defaultModulesWithNonDefaultProperties,
+  defaultProjectHistory,
+  ModulesRepositoryStub,
+  stubModulesRepository,
+} from '../../domain/Modules.fixture';
 import { ModulesVue } from '@/module/primary/modules-patch';
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { wrappedElement } from '../../../WrappedElement';
@@ -124,8 +130,8 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable validation button without mandatory fields', async () => {
-      const wrapper = await componentWithModules();
+    it('Should disable validation button without mandatory fields and no defaults', async () => {
+      const wrapper = await componentWithModulesAndNonDefaultProperties();
       await selectModule(wrapper);
 
       wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -134,12 +140,25 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable module application with empty string', async () => {
-      const wrapper = await componentWithModules();
+    it('Should not disable validation button without mandatory fields and available defaults', async () => {
+      const wrapper = await componentWithModulesAndNonDefaultProperties();
       await selectModule(wrapper);
 
       wrapper.find(wrappedElement('folder-path-field')).setValue('test');
-      wrapper.find(wrappedElement('parameter-baseName-field')).setValue('');
+      wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('false');
+      await flushForm(wrapper);
+
+      expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
+    });
+
+    it('Should disable module application with empty string on non default mandatory properties', async () => {
+      const wrapper = await componentWithModulesAndNonDefaultProperties();
+      await selectModule(wrapper);
+
+      wrapper.find(wrappedElement('folder-path-field')).setValue('test');
+      wrapper.find(wrappedElement('parameter-baseName-field')).setValue('baseName');
+      wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('');
+
       await flushForm(wrapper);
 
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
@@ -234,6 +253,29 @@ describe('Modules', () => {
 
       const [, moduleToApply] = modules.apply.lastCall.args;
       expect(moduleToApply.commit).toBe(true);
+    });
+
+    it('Should apply module using repository with default values for unfilled properties', async () => {
+      const modules = repositoryWithModulesAndNonDefaultProperties();
+      modules.apply.resolves(null);
+      const wrapper = wrap({ modules });
+
+      await flushPromises();
+      await selectModule(wrapper);
+
+      wrapper.find(wrappedElement('folder-path-field')).setValue('test');
+      wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('true');
+      await flushForm(wrapper);
+
+      wrapper.find(wrappedElement('module-spring-cucumber-application-button')).trigger('click');
+
+      await flushPromises();
+
+      const [, moduleToApply] = modules.apply.lastCall.args;
+      expect(moduleToApply.commit).toBe(true);
+      expect(wrapper.find(wrappedElement('module-spring-cucumber-baseName-parameter-value')).text()).toBe('jhipster');
+      expect(wrapper.find(wrappedElement('module-spring-cucumber-mandatoryBooleanDefault-parameter-value')).text()).toBe('true');
+      expect(wrapper.find(wrappedElement('module-spring-cucumber-mandatoryInteger-parameter-value')).text()).toBe('1337');
     });
 
     it('Should disable applications during application', async () => {
@@ -544,6 +586,17 @@ describe('Modules', () => {
 
 const componentWithModules = async (): Promise<VueWrapper> => {
   const modules = repositoryWithModules();
+
+  const projectFolders = repositoryWithProjectFolders();
+  const wrapper = wrap({ modules, projectFolders });
+
+  await flushPromises();
+
+  return wrapper;
+};
+
+const componentWithModulesAndNonDefaultProperties = async (): Promise<VueWrapper> => {
+  const modules = repositoryWithModulesAndNonDefaultProperties();
   const projectFolders = repositoryWithProjectFolders();
   const wrapper = wrap({ modules, projectFolders });
 
@@ -577,6 +630,13 @@ const filledModuleForm = async (modules: ModulesRepository): Promise<VueWrapper>
 const repositoryWithModules = (): ModulesRepositoryStub => {
   const modules = stubModulesRepository();
   modules.list.resolves(defaultModules());
+
+  return modules;
+};
+
+const repositoryWithModulesAndNonDefaultProperties = (): ModulesRepositoryStub => {
+  const modules = stubModulesRepository();
+  modules.list.resolves(defaultModulesWithNonDefaultProperties());
 
   return modules;
 };

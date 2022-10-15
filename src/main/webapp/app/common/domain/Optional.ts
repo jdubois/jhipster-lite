@@ -19,7 +19,7 @@ export abstract class Optional<Value> {
   abstract flatMap<Output>(mapper: (feature: Value) => Optional<Output>): Optional<Output>;
   abstract orElse(value: Value): Value;
   abstract orElseGet(factory: () => Value): Value;
-  abstract orElseThrow(): Value;
+  abstract orElseThrow<U = Error>(throwable?: () => U): Value;
   abstract filter(predicate: (value: Value) => boolean): Optional<Value>;
   abstract isEmpty(): boolean;
   abstract isPresent(): boolean;
@@ -44,8 +44,11 @@ class EmptyOptional<Value> extends Optional<Value> {
     return factory();
   }
 
-  orElseThrow(): Value {
-    throw new Error("Can't get value from an empty optional");
+  orElseThrow<U>(throwable?: () => U): Value {
+    if (throwable === undefined) {
+      throw new Error("Can't get value from an empty optional");
+    }
+    throw throwable();
   }
 
   filter(): Optional<Value> {

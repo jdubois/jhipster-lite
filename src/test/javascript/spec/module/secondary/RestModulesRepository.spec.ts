@@ -106,6 +106,14 @@ describe('Rest modules repository', () => {
     expect(project.filename).toBe('file.zip');
     expect(project.content).toEqual([1, 2, 3]);
   });
+
+  it('Should fail to download when there is no suggested filename', async () => {
+    const axiosInstance = stubAxiosHttp();
+    const repository = new RestModulesRepository(axiosInstance);
+    axiosInstance.get.resolves({ headers: {}, data: [1, 2, 3] });
+
+    await expect(repository.download('path/to/project')).rejects.toEqual(new Error('Impossible to download file without filename'));
+  });
 });
 
 const restModules = (): RestModules => ({
@@ -148,6 +156,7 @@ const restLandscape = (): RestLandscape => ({
       elements: [
         landscapeModule('infinitest', 'Add infinitest filters', applicationBaseNameProperties()),
         landscapeModule('init', 'Add some initial tools', applicationBaseNameProperties()),
+        landscapeModule('init-props', 'Add some initial tools with extra properties', initPropsProperties()),
         landscapeModule('prettier', 'Add prettier', applicationBaseNameProperties()),
       ],
     },
@@ -250,6 +259,15 @@ const applicationBaseNameProperties = (): RestModulePropertiesDefinitions => ({
   definitions: [applicationBaseNameProperty()],
 });
 
+const initPropsProperties = (): RestModulePropertiesDefinitions => ({
+  definitions: [
+    applicationBaseNameProperty(),
+    indentSizePropertyDefinition(),
+    mandatoryBooleanPropertyDefinition(),
+    mandatoryBooleanPropertyDefinitionWithDefault(),
+  ],
+});
+
 const optionalBooleanProperties = (): RestModulePropertiesDefinitions => ({
   definitions: [optionalBooleanProperty()],
 });
@@ -259,7 +277,7 @@ const applicationBaseNameProperty = (): RestModulePropertyDefinition => ({
   mandatory: true,
   key: 'baseName',
   description: 'Application base name',
-  example: 'jhipster',
+  defaultValue: 'jhipster',
   order: -300,
 });
 
@@ -268,4 +286,30 @@ const optionalBooleanProperty = (): RestModulePropertyDefinition => ({
   mandatory: false,
   key: 'optionalBoolean',
   order: -200,
+});
+
+export const indentSizePropertyDefinition = (): RestModulePropertyDefinition => ({
+  type: 'INTEGER',
+  mandatory: true,
+  key: 'indentSize',
+  description: 'Application indent size',
+  defaultValue: '2',
+  order: -100,
+});
+
+export const mandatoryBooleanPropertyDefinition = (): RestModulePropertyDefinition => ({
+  type: 'BOOLEAN',
+  mandatory: true,
+  key: 'mandatoryBoolean',
+  description: 'Test Mandatory boolean',
+  order: -50,
+});
+
+export const mandatoryBooleanPropertyDefinitionWithDefault = (): RestModulePropertyDefinition => ({
+  type: 'BOOLEAN',
+  mandatory: true,
+  key: 'mandatoryBooleanDefault',
+  description: 'Test Mandatory boolean with default',
+  defaultValue: 'true',
+  order: -50,
 });

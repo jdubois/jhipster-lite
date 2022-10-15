@@ -32,7 +32,7 @@ class CodespaceModuleConfiguration {
     return JHipsterModulePropertyDefinition
       .optionalIntegerProperty("serverPort")
       .description("Application server port")
-      .example("8080")
+      .defaultValue("8080")
       .order(200)
       .build();
   }

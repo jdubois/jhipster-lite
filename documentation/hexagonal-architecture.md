@@ -12,7 +12,7 @@ So, this is basically about why and how to use a peculiar flavor of [hexagonal a
 ## Disclaimers
 
 - This documentation is a [JHipster Lite](https://github.com/jhipster/jhipster-lite) module. This **probably doesn't fit your exact needs, you'll have to adapt it!**;
-- This is one of the many possible implementations of this architecture. If you are not comfortable with this one just stick to one that helps you;
+- This is one of the many possible implementations of this architecture. If you are not comfortable with this one, just stick to one that helps you;
 - Code architectures are here to help us build great software faster, if it's failing there is probably something to change.
 
 ## Goals
@@ -37,7 +37,7 @@ The hexagonal architecture allows us to reduce all those complexities to their b
 
 The very clear Separation Of Concern enforced by the architecture eases automatic testing of each parts since it's only doing one thing. Being able to build solid tests is also a great way to build a changes welcoming Software!
 
-> Even if the architecture ease tests writing, being able to write good tests takes times and practice!
+> Even if the architecture eases tests writing, being able to write good tests takes times and practice!
 
 ### Shorten feedback loops
 
@@ -54,9 +54,9 @@ There is another **AWESOME** compilation time feedback coming not directly from 
 
 With just those two you can totally fix lots of mistakes with `firstname` and `lastname` inversions in method parameters: if you send the wrong one it just won't compile!
 
-A little bit slower than compilation comes automated tests. As seen earlier this architecture eases testing so you'll be able to get fast (counting in seconds here) and reliable feedbacks from tests.
+Then, a little bit slower than compilation, comes automated tests. As seen earlier this architecture eases testing so you'll be able to get fast (counting in seconds here) and reliable feedbacks from tests.
 
-We said earlier that pairs feedbacks where the fastest ones but what about business experts feedback? Using "classic" (Controller, Service, Repository) architecture we have to build a whole "thing" to hope for a business expert feedback. Here, the Domain Model code is so close to the business that it's really easy to sit at a screen with a business expert and to get feedbacks from that! Of course, you'll probably have to explain some "coding stuff" BUT you will be able to get feedbacks from the business expert on any given piece of algorithm really early!
+We said earlier that pairs feedbacks were the fastest ones but what about business experts feedback? Using "classic" (Controller, Service, Repository) architecture we have to build a whole "thing" to hope for a business expert feedback. Here, the Domain Model code is so close to the business that it's really easy to sit at a screen with a business expert and to get feedbacks from that! Of course, you'll probably have to explain some "coding stuff" BUT you will be able to get feedbacks from the business expert on any given piece of algorithm really early!
 
 ### Delay infrastructure choices
 
@@ -68,7 +68,7 @@ The hexagonal architecture allows us to start as soon as we know the language. F
 
 Delaying choices allows:
 
-- Better choices. Even if you say "we'll change if needs to" you'll have to fight again [the sunk cost fallacy](https://thedecisionlab.com/biases/the-sunk-cost-fallacy);
+- Better choices. Even if you say "we'll change if needs to" you'll have to fight against [the sunk cost fallacy](https://thedecisionlab.com/biases/the-sunk-cost-fallacy);
 - Faster first loops (since you remove big parts of the mandatory complexity from the bootstrap).
 
 ## Where to put code
@@ -94,7 +94,7 @@ We can enforce this architecture with this folder organization:
     - `primary`: contains adapters implementations that drives your context
     - `secondary`: contains adapters implementations that your context drives
 
-As sayed many times each "part" here have a specific concern so let's follow the rabbit in that hole.
+As said many times, each "part" here has a specific concern so let's follow the rabbit in that hole.
 
 ### Code in Domain Model
 
@@ -102,7 +102,7 @@ This is the code that really matters. You can build it using [Domain Driven Desi
 
 This model doesn't depend on anything and everything depends on it so it is totally framework-agnostic, you just need to pick a language to build your Domain Model.
 
-Apart from the code used to make the business operations we'll find ports in the Domain Model. Ports are `interfaces` that are used to invert dependencies. As the Domain Model sometimes needs ports for some operations they can only be there since the Domain don't depend on anything.
+Apart from the code used to make the business operations we'll find ports in the Domain Model. Ports are `interfaces` that are used to invert dependencies. As the Domain Model sometimes needs ports for some operations, they can only be there since the Domain doesn't depend on anything.
 
 ### Code in Application
 
@@ -118,8 +118,8 @@ The application layer **MUST NOT CONTAIN ANY BUSINESS RULE**, its responsibiliti
 
 ### Code in Primary
 
-The primary part contains adapters for the code driving our domain. Example: code to expose REST WebServices. This part depends a lot on frameworks and is responsible for making the best possible exposure of the businesses actions.
+The primary part contains adapters for the code driving our domain. Example: code to expose REST WebServices. This part depends a lot on frameworks and is responsible for making the best possible exposure of the business actions.
 
 ### Code in Secondary
 
-The secondary part are adapters implementing the ports from the domain. This part depends a lot on framework and its responsibility is to make the best possible use of the infrastructure our business needs.
+The secondary part is made of adapters implementing the ports from the domain. This part depends a lot on frameworks and its responsibility is to make the best possible use of the infrastructure our business needs.

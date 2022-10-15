@@ -13,7 +13,7 @@
                 "mandatory": "true",
                 "key": "packageName",
                 "description": "Base package name",
-                "example": "tech.jhipster.beer",
+                "defaultValue": "tech.jhipster.beer",
                 "order": -300
               }
             ]

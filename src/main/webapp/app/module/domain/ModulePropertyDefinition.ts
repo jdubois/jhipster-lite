@@ -1,6 +1,6 @@
 import { ModulePropertyDefinitionType } from './ModulePropertyDefinitionType';
 import { ModulePropertyDescription } from './ModulePropertyDescription';
-import { ModulePropertyExample } from './ModulePropertyExample';
+import { ModulePropertyDefaultValue } from './ModulePropertyDefaultValue';
 import { ModulePropertyKey } from './ModulePropertyKey';
 
 export interface ModulePropertyDefinition {
@@ -8,6 +8,6 @@ export interface ModulePropertyDefinition {
   mandatory: boolean;
   key: ModulePropertyKey;
   description?: ModulePropertyDescription;
-  example?: ModulePropertyExample;
+  defaultValue?: ModulePropertyDefaultValue;
   order: number;
 }

@@ -16,7 +16,7 @@ public class SvelteModuleConfiguration {
   JHipsterModuleResource svelteModule(SvelteApplicationService svelteApplicationService) {
     return JHipsterModuleResource
       .builder()
-      .slug(SVELTE)
+      .slug(SVELTE_CORE)
       .withoutProperties()
       .apiDoc("Svelte", "Add Svelte")
       .organization(JHipsterModuleOrganization.builder().feature(CLIENT_CORE).addDependency(INIT).addDependency(PRETTIER).build())

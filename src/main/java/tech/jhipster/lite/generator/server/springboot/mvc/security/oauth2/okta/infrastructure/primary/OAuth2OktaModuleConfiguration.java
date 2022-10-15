@@ -43,13 +43,13 @@ class OAuth2OktaModuleConfiguration {
   }
 
   public static JHipsterModulePropertyDefinition oktaDomain() {
-    return mandatoryStringProperty("oktaDomain").description("Okta domain").example("dev-123456.okta.com").order(600).build();
+    return mandatoryStringProperty("oktaDomain").description("Okta domain").defaultValue("dev-123456.okta.com").order(600).build();
   }
 
   public static JHipsterModulePropertyDefinition oktaClientId() {
     return mandatoryStringProperty("oktaClientId")
       .description("Okta Client ID for OIDC application")
-      .example("0oab8eb55Kb9jdMIr5d6")
+      .defaultValue("0oab8eb55Kb9jdMIr5d6")
       .order(700)
       .build();
   }

@@ -37,7 +37,7 @@ class SonarModulesFactoryTest {
       .containing(
         "sonar.exclusions=src/main/webapp/main.ts, src/main/webapp/app/main.ts, src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.js, target/classes/static/**/*.*, src/main/webapp/app/index.tsx"
       )
-      .notContaining("sonar.testExecutionReportPaths=target/test-results/jest/TESTS-results-sonar.xml");
+      .notContaining("sonar.testExecutionReportPaths=target/test-results/TESTS-results-sonar.xml");
   }
 
   @Test
@@ -51,7 +51,7 @@ class SonarModulesFactoryTest {
       .containing(
         "sonar.exclusions=src/main/webapp/main.ts, src/main/webapp/app/main.ts, src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.js, target/classes/static/**/*.*, src/main/webapp/app/index.tsx, src/main/webapp/routes/+page.svelte"
       )
-      .containing("sonar.testExecutionReportPaths=target/test-results/jest/TESTS-results-sonar.xml");
+      .containing("sonar.testExecutionReportPaths=target/test-results/TESTS-results-sonar.xml");
   }
 
   private void mockSonarqubeImage() {

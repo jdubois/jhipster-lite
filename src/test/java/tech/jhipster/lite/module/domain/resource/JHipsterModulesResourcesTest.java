@@ -7,9 +7,21 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.MissingMandatoryValueException;
+import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 
 @UnitTest
 class JHipsterModulesResourcesTest {
+
+  @Test
+  void shouldNotGetModuleForUnknownSlug() {
+    JHipsterModulesResources jHipsterModulesResources = new JHipsterModulesResources(
+      List.of(defaultModuleResourceBuilder().slug("dummy").build())
+    );
+
+    assertThatThrownBy(() -> jHipsterModulesResources.get(new JHipsterModuleSlug("dummy-2")))
+      .isExactlyInstanceOf(UnknownSlugException.class)
+      .hasMessageContaining("Module dummy-2 does not exist");
+  }
 
   @Test
   void shouldNotBuildWithoutResources() {

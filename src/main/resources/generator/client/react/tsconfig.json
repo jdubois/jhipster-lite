@@ -17,6 +17,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "baseUrl": "src",
+    "types": ["vitest/globals"],
     "paths": {
       "@/*": ["main/webapp/app/*"]
     }

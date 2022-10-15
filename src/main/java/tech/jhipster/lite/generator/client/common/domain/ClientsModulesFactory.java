@@ -32,7 +32,7 @@ public class ClientsModulesFactory {
       .append("\"jestSonar\": {")
       .append(LINE_BREAK)
       .append(indentation.times(2))
-      .append("\"reportPath\": \"target/test-results/jest\",")
+      .append("\"reportPath\": \"target/test-results\",")
       .append(LINE_BREAK)
       .append(indentation.times(2))
       .append("\"reportFile\": \"TESTS-results-sonar.xml\"")

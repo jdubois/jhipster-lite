@@ -26,7 +26,7 @@ describe('Patch', () => {
           cy.get(dataSelector('modules-loader')).should('not.exist');
           cy.get(dataSelector('modules-list')).should('be.visible');
           cy.get(dataSelector('module-spring-test-application-button')).should('be.enabled');
-          cy.get(dataSelector('module-spring-cucumber-application-button')).should('be.disabled');
+          cy.get(dataSelector('module-spring-cucumber-application-button')).should('be.enabled');
           cy.get(dataSelector('folder-path-field')).invoke('val').should('equal', '/tmp/jhlite/1234');
         });
     });

@@ -1,5 +1,7 @@
-import LoginModal from '@/login/primary/loginModal';
 import { render, fireEvent, act } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+
+import LoginModal from '@/login/primary/loginModal';
 
 const LoginModalRender = (open: boolean) => render(<LoginModal open={open} onClose={() => {}} />);
 

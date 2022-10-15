@@ -12,7 +12,7 @@ import { AlertBus } from '@/common/domain/alert/AlertBus';
 import { ProjectHistory } from '@/module/domain/ProjectHistory';
 import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
 import { ProjectActionsVue } from '../project-actions';
-import { empty } from '../PropertyValue';
+import { castValue, empty } from '../PropertyValue';
 import { ModuleParameterType } from '@/module/domain/ModuleParameters';
 import { ModuleParameter } from '@/module/domain/ModuleParameter';
 import { Landscape } from '@/module/domain/landscape/Landscape';
@@ -278,7 +278,9 @@ export default defineComponent({
     };
 
     const missingMandatoryProperty = () => {
-      return selectedModulesProperties().some(property => property.mandatory && empty(valuatedModuleParameters.value.get(property.key)));
+      return selectedModulesProperties().some(
+        property => property.mandatory && empty(valuatedModuleParameters.value.get(property.key)) && empty(property.defaultValue)
+      );
     };
 
     const selectedModulesProperties = (): ModulePropertyDefinition[] => {
@@ -334,6 +336,12 @@ export default defineComponent({
 
     const applyModules = (modulesToApply: ModuleSlug[]): void => {
       operationStarted();
+
+      selectedModulesProperties().forEach(property => {
+        if (unknownProperty(property.key) && property.defaultValue) {
+          updateProperty({ key: property.key, value: castValue(property.type, property.defaultValue) });
+        }
+      });
 
       modules
         .applyAll({

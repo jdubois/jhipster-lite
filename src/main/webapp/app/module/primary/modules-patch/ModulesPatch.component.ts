@@ -16,6 +16,7 @@ import { ProjectActionsVue } from '../project-actions';
 import { ModuleParameterType } from '@/module/domain/ModuleParameters';
 import { ModuleParameter } from '@/module/domain/ModuleParameter';
 import { ModuleParametersVue } from '../module-parameters';
+import { castValue } from '../PropertyValue';
 
 export default defineComponent({
   name: 'ModulesPatchVue',
@@ -93,7 +94,7 @@ export default defineComponent({
       return (
         operationInProgress.value ||
         empty(folderPath.value) ||
-        getModule(slug).properties.some(property => property.mandatory && isNotSet(property.key))
+        getModule(slug).properties.some(property => property.mandatory && isNotSet(property.key) && empty(property.defaultValue))
       );
     };
 
@@ -204,6 +205,12 @@ export default defineComponent({
 
     const applyModule = (module: string): void => {
       operationInProgress.value = true;
+
+      selectedModuleProperties().forEach(property => {
+        if (unknownProperty(property.key) && property.defaultValue) {
+          updateProperty({ key: property.key, value: castValue(property.type, property.defaultValue) });
+        }
+      });
 
       modules
         .apply(new ModuleSlug(module), {

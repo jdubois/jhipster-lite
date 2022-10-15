@@ -183,7 +183,9 @@ public final class CucumberTestContext {
      *          name of a REST resource, such as "working-folders"
      */
     private boolean forUri(String uri) {
-      if (!uri.matches("[\\w-]+")) Assertions.fail("URI should be the name of a REST resource");
+      if (!uri.matches("[\\w-]+")) {
+        Assertions.fail("URI should be the name of a REST resource");
+      }
 
       return this.uri.matches(String.format(URI_MATCHER, uri));
     }

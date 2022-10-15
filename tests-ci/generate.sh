@@ -313,7 +313,7 @@ elif [[ $application == 'svelteapp' ]]; then
   applyModules \
   "frontend-maven-plugin" \
   "prettier" \
-  "svelte"
+  "svelte-core"
 
 elif [[ $application == 'kafkaapp' ]]; then
   spring_boot_mvc

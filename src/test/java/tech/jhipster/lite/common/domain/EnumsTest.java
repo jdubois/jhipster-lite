@@ -41,15 +41,15 @@ class EnumsTest {
     assertThat(Enums.map(Primary.ONE, Other.class)).isEqualTo(Other.ONE);
   }
 
-  private static enum Primary {
+  private enum Primary {
     ONE,
   }
 
-  private static enum Domain {
+  private enum Domain {
     ONE,
   }
 
-  private static enum Other {
+  private enum Other {
     ONE,
     TWO,
   }

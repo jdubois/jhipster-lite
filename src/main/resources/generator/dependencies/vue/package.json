@@ -4,8 +4,8 @@
   "description": "JHipster Lite : used for Vite+Vue3 dependencies",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "0.27.2",
-    "pinia": "2.0.22",
+    "axios": "1.1.2",
+    "pinia": "2.0.23",
     "pinia-plugin-persist": "1.0.0",
     "vue": "3.2.40",
     "vue-router": "4.1.5"
@@ -13,23 +13,21 @@
   "devDependencies": {
     "@pinia/testing": "0.0.14",
     "@rushstack/eslint-patch": "1.2.0",
-    "@types/jest": "29.1.2",
     "@types/sinon": "10.0.13",
-    "@typescript-eslint/parser": "5.39.0",
+    "@typescript-eslint/parser": "5.40.0",
     "@vitejs/plugin-vue": "3.1.2",
+    "@vitest/coverage-istanbul": "0.24.1",
     "@vue/eslint-config-prettier": "7.0.0",
     "@vue/eslint-config-typescript": "10.0.0",
     "@vue/test-utils": "2.1.0",
-    "eslint": "8.24.0",
+    "eslint": "8.25.0",
     "eslint-plugin-vue": "8.7.1",
-    "jest": "26.6.3",
-    "jest-sonar-reporter": "2.0.0",
-    "jest-transform-stub": "2.0.0",
+    "jsdom": "20.0.1",
     "sinon": "14.0.1",
-    "ts-jest": "26.5.6",
     "typescript": "4.8.4",
-    "vite": "3.1.6",
-    "vue-jest": "5.0.0-alpha.10",
-    "vue-tsc": "0.40.13"
+    "vite": "3.1.8",
+    "vitest": "0.24.1",
+    "vitest-sonar-reporter": "0.3.2",
+    "vue-tsc": "1.0.7"
   }
 }

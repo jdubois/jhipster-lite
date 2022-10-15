@@ -1,0 +1,20 @@
+.jhlite-loader {
+  box-sizing: border-box;
+  display: inline-block;
+  border: 5px solid $jhlite-global-color-light;
+  border-radius: 50%;
+  border-bottom-color: transparent;
+  width: 48px;
+  height: 48px;
+  animation: jhlite-rotation 1s linear infinite;
+}
+
+@keyframes jhlite-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

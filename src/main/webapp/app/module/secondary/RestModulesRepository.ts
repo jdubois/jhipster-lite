@@ -14,6 +14,7 @@ import { mapToLandscape, RestLandscape } from './RestLandscape';
 import { ProjectHistory } from '../domain/ProjectHistory';
 import { ModulesToApply } from '../domain/ModulesToApply';
 import { RestModulesToApply, toRestModulesToApply } from './RestModulesToApply';
+import { Optional } from '@/common/domain/Optional';
 
 export class RestModulesRepository implements ModulesRepository {
   constructor(private axiosInstance: AxiosHttp) {}
@@ -54,9 +55,9 @@ export class RestModulesRepository implements ModulesRepository {
   }
 }
 
-const mapToProject = (response: AxiosResponse<ArrayBuffer>): Project => {
-  return {
-    filename: response.headers['x-suggested-filename'],
-    content: response.data,
-  };
-};
+const mapToProject = (response: AxiosResponse<ArrayBuffer>): Project => ({
+  filename: Optional.ofUndefinable(response.headers['x-suggested-filename']).orElseThrow(
+    () => new Error('Impossible to download file without filename')
+  ),
+  content: response.data,
+});

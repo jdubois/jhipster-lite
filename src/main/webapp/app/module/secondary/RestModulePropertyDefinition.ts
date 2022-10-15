@@ -6,7 +6,7 @@ export interface RestModulePropertyDefinition {
   mandatory: boolean;
   key: string;
   description?: string;
-  example?: string;
+  defaultValue?: string;
   order: number;
 }
 
@@ -15,6 +15,6 @@ export const toPropertyDefinition = (propertyDefinition: RestModulePropertyDefin
   mandatory: propertyDefinition.mandatory,
   key: propertyDefinition.key,
   description: propertyDefinition.description,
-  example: propertyDefinition.example,
+  defaultValue: propertyDefinition.defaultValue,
   order: propertyDefinition.order,
 });

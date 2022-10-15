@@ -1,15 +1,16 @@
 package tech.jhipster.lite.module.infrastructure.secondary;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.defaultModuleResourceBuilder;
 
-import tech.jhipster.lite.error.domain.Assert;
+import java.util.List;
 import tech.jhipster.lite.module.application.JHipsterModulesApplicationService;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
 import tech.jhipster.lite.module.domain.ProjectFilesReader;
-import tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture;
+import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 import tech.jhipster.lite.module.infrastructure.secondary.git.GitTestUtil;
 import tech.jhipster.lite.module.infrastructure.secondary.javadependency.JavaDependenciesFixture;
 import tech.jhipster.lite.module.infrastructure.secondary.npm.NpmVersionsFixture;
@@ -20,31 +21,33 @@ public final class TestJHipsterModules {
   private TestJHipsterModules() {}
 
   static void apply(JHipsterModule module) {
-    applyer().module(module).slug("test-module").apply();
+    applyer(module).apply();
   }
 
-  static TestJHipsterModulesModuleApplyer applyer() {
-    return new TestJHipsterModulesApplyer();
+  private static TestJHipsterModulesFinalApplyer applyer(JHipsterModule module) {
+    return new TestJHipsterModulesApplyer(module);
   }
 
-  public static class TestJHipsterModulesApplyer
-    implements TestJHipsterModulesModuleApplyer, TestJHipsterModulesSlugApplyer, TestJHipsterModulesFinalApplyer {
+  private static class TestJHipsterModulesApplyer implements TestJHipsterModulesFinalApplyer {
 
-    private static final JHipsterModulesApplicationService modules = buildApplicationService();
+    private final JHipsterModule module;
+    private final JHipsterModuleSlug slug;
+    private final JHipsterModulesApplicationService modules;
 
-    private JHipsterModule module;
-    private JHipsterModuleSlug slug;
+    private TestJHipsterModulesApplyer(JHipsterModule module) {
+      this.module = module;
+      this.slug = new JHipsterModuleSlug("test-module");
+      this.modules = buildApplicationService(module);
+    }
 
-    private TestJHipsterModulesApplyer() {}
-
-    private static JHipsterModulesApplicationService buildApplicationService() {
+    private static JHipsterModulesApplicationService buildApplicationService(JHipsterModule module) {
       ProjectFilesReader filesReader = new FileSystemProjectFilesReader();
 
       FileSystemJHipsterModulesRepository modulesRepository = new FileSystemJHipsterModulesRepository(
         filesReader,
         NpmVersionsFixture.npmVersions(filesReader),
         mock(JavaProjects.class),
-        JHipsterModulesResourceFixture.moduleResources()
+        new JHipsterModulesResources(List.of(defaultModuleResourceBuilder().slug("test-module").factory(properties -> module).build()))
       );
 
       return new JHipsterModulesApplicationService(
@@ -57,38 +60,8 @@ public final class TestJHipsterModules {
     }
 
     @Override
-    public TestJHipsterModulesSlugApplyer module(JHipsterModule module) {
-      Assert.notNull("module", module);
-
-      this.module = module;
-
-      return this;
-    }
-
-    @Override
-    public TestJHipsterModulesFinalApplyer slug(JHipsterModuleSlug slug) {
-      Assert.notNull("slug", slug);
-
-      this.slug = slug;
-
-      return this;
-    }
-
-    @Override
     public void apply() {
-      modules.apply(new JHipsterModuleToApply(slug, module));
-    }
-  }
-
-  public interface TestJHipsterModulesModuleApplyer {
-    public TestJHipsterModulesSlugApplyer module(JHipsterModule module);
-  }
-
-  public interface TestJHipsterModulesSlugApplyer {
-    TestJHipsterModulesFinalApplyer slug(JHipsterModuleSlug slug);
-
-    default TestJHipsterModulesFinalApplyer slug(String slug) {
-      return slug(new JHipsterModuleSlug(slug));
+      modules.apply(new JHipsterModuleToApply(slug, module.properties()));
     }
   }
 

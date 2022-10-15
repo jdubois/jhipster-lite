@@ -32,17 +32,17 @@ public class JHipsterModulesApplyer {
   public Collection<JHipsterModuleApplied> apply(JHipsterModulesToApply modulesToApply) {
     Assert.notNull("modulesToApply", modulesToApply);
 
-    return modules.landscape().sort(modulesToApply.modules()).stream().map(toModuleToApply(modulesToApply)).map(this::apply).toList();
+    return modules.landscape().sort(modulesToApply.slugs()).stream().map(toModuleToApply(modulesToApply)).map(this::apply).toList();
   }
 
   private Function<JHipsterModuleSlug, JHipsterModuleToApply> toModuleToApply(JHipsterModulesToApply modulesToApply) {
-    return slug -> new JHipsterModuleToApply(slug, modules.resources().build(slug, modulesToApply.properties()));
+    return slug -> new JHipsterModuleToApply(slug, modulesToApply.properties());
   }
 
   public JHipsterModuleApplied apply(JHipsterModuleToApply moduleToApply) {
     Assert.notNull("moduleToApply", moduleToApply);
 
-    JHipsterModule module = moduleToApply.module();
+    JHipsterModule module = modules.resources().build(moduleToApply.slug(), moduleToApply.properties());
     JHipsterModuleChanges changes = JHipsterModuleChanges
       .builder()
       .projectFolder(module.projectFolder())
@@ -70,7 +70,7 @@ public class JHipsterModulesApplyer {
 
   private void commitIfNeeded(JHipsterModuleToApply moduleToApply) {
     if (moduleToApply.commitNeeded()) {
-      JHipsterProjectFolder projectFolder = moduleToApply.module().projectFolder();
+      JHipsterProjectFolder projectFolder = moduleToApply.properties().projectFolder();
 
       git.init(projectFolder);
       git.commitAll(projectFolder, commitMessage(moduleToApply));

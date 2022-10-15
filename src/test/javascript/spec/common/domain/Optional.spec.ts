@@ -82,12 +82,16 @@ describe('Optional', () => {
   });
 
   describe('Or else throw', () => {
-    it('Should throw erroer for empty optional', () => {
+    it('Should throw error for empty optional', () => {
       expect(() => Optional.empty().orElseThrow()).toThrowError();
     });
 
     it('Should get value for valuated optional', () => {
       expect(Optional.of('value').orElseThrow()).toBe('value');
+    });
+
+    it('Should get supplied error when present', () => {
+      expect(() => Optional.empty().orElseThrow(() => new Error('Supplied error'))).toThrow(new Error('Supplied error'));
     });
   });
 

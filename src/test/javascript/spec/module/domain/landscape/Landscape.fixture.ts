@@ -5,7 +5,14 @@ import { LandscapeFeatureSlug } from '@/module/domain/landscape/LandscapeFeature
 import { LandscapeModule } from '@/module/domain/landscape/LandscapeModule';
 import { ModulePropertyDefinition } from '@/module/domain/ModulePropertyDefinition';
 import { ModuleSlug } from '@/module/domain/ModuleSlug';
-import { applicationBaseNamePropertyDefinition, moduleSlug, optionalBooleanPropertyDefinition } from '../Modules.fixture';
+import {
+  applicationBaseNamePropertyDefinition,
+  indentSizePropertyDefinition,
+  mandatoryBooleanPropertyDefinitionWithDefault,
+  mandatoryBooleanPropertyDefinitionWithoutDefault,
+  moduleSlug,
+  optionalBooleanPropertyDefinition,
+} from '../Modules.fixture';
 
 export const defaultLandscape = (): Landscape =>
   Landscape.initialState([
@@ -13,6 +20,17 @@ export const defaultLandscape = (): Landscape =>
       elements: [
         initialModule('infinitest', 'Add infinitest filters', [applicationBaseNamePropertyDefinition()], []),
         initialModule('init', 'Add some initial tools', [applicationBaseNamePropertyDefinition()], []),
+        initialModule(
+          'init-props',
+          'Add some initial tools with extra properties',
+          [
+            applicationBaseNamePropertyDefinition(),
+            indentSizePropertyDefinition(),
+            mandatoryBooleanPropertyDefinitionWithoutDefault(),
+            mandatoryBooleanPropertyDefinitionWithDefault(),
+          ],
+          []
+        ),
         initialModule('prettier', 'Add prettier', [applicationBaseNamePropertyDefinition()], []),
       ],
     },

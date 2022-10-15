@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.common.domain.Enums;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
+import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDefaultValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
-import tech.jhipster.lite.module.domain.properties.JHipsterPropertyExample;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyKey;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleApiDoc;
@@ -82,7 +82,7 @@ class OpenApiModulesConfiguration {
       .addProperty("mandatory", new Schema<>().type("boolean").description("True if the field is mandatory, false otherwise"))
       .addProperty("key", new Schema<>().type(STRING_TYPE).description("Key of this property"))
       .addProperty("description", new Schema<>().type(STRING_TYPE).description("Description of this property"))
-      .addProperty("example", new Schema<>().type(STRING_TYPE).description("Example value for this property"))
+      .addProperty("defaultValue", new Schema<>().type(STRING_TYPE).description("Default value for this property"))
       .required(List.of("type", "mandatory", "key"));
   }
 
@@ -144,7 +144,7 @@ class OpenApiModulesConfiguration {
       new Schema<>()
         .type(Enums.map(property.type(), OpenApiFieldType.class).key())
         .description(property.description().map(JHipsterPropertyDescription::get).orElse(null))
-        .example(property.example().map(JHipsterPropertyExample::get).orElse(null));
+        .example(property.defaultValue().map(JHipsterPropertyDefaultValue::get).orElse(null));
   }
 
   private Paths buildJHipsterModulesPaths(JHipsterModulesResources modules) {

@@ -1,49 +1,34 @@
 <template>
   <header class="jhlite-header">
     <div class="jhlite-header--slot">
-      <a class="jhlite-logo" href="/">
+      <router-link class="jhlite-logo" to="/">
         <img class="jhlite-logo--icon" src="../../../../content/JHipster-Lite-neon-blue.png" alt="JHipster bow tie" width="48" />
         <span class="jhlite-logo--text">JHipster lite</span>
-      </a>
+      </router-link>
     </div>
     <div class="jhlite-header--slot -expand"></div>
     <div class="jhlite-header--slot">
       <nav aria-label="Main navigation">
         <ul class="jhlite-nav">
           <li class="jhlite-nav--item">
-            <a class="jhlite-nav-item" href="landscape">
+            <router-link class="jhlite-nav-item" to="/landscape">
               <span class="jhlite-icon-text">
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="map" aria-label="Icon map" title="Module landscape" />
                 </span>
                 <span class="jhlite-icon-text--text">Landscape</span>
               </span>
-            </a>
+            </router-link>
           </li>
           <li class="jhlite-nav--item">
-            <a class="jhlite-nav-item" href="patches">
+            <router-link class="jhlite-nav-item" to="/patches">
               <span class="jhlite-icon-text">
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="puzzle" aria-label="Icon puzzle" title="Patch list" />
                 </span>
                 <span class="jhlite-icon-text--text">Patches</span>
               </span>
-            </a>
-          </li>
-          <li class="jhlite-nav--item">
-            <a
-              class="jhlite-nav-item"
-              href="https://github.com/jhipster/jhipster-lite/blob/main/documentation/guides.md"
-              target="_blank"
-              rel="noopener"
-            >
-              <span class="jhlite-icon-text">
-                <span class="jhlite-icon-text--icon">
-                  <IconVue name="book" aria-label="Icon book" title="GitHub JHipster Lite documentation" />
-                </span>
-                <span class="jhlite-icon-text--text">Documentation</span>
-              </span>
-            </a>
+            </router-link>
           </li>
           <li class="jhlite-nav--item">
             <a class="jhlite-nav-item" href="./swagger-ui.html" target="_blank">
@@ -56,7 +41,7 @@
             </a>
           </li>
           <li class="jhlite-nav--item">
-            <a class="jhlite-nav-item" href="https://www.jhipster.tech/" target="_blank" rel="noopener">
+            <a class="jhlite-nav-item" href="https://www.jhipster.tech/jhipster-lite" target="_blank" rel="noopener">
               <span class="jhlite-icon-text">
                 <span class="jhlite-icon-text--icon">
                   <IconVue name="jhipster" aria-label="JHipster logo" title="JHipster website" />

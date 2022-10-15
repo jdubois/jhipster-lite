@@ -346,13 +346,23 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button with missing mandatory properties', async () => {
+    it('Should disable application button with missing mandatory properties and no defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
-      await clickModule('init', wrapper);
+      await clickModule('init-props', wrapper);
 
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeDefined();
+    });
+
+    it('Should not disable application button with missing mandatory properties and available defaults', async () => {
+      const wrapper = await componentWithLandscape();
+
+      await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
+      await clickModule('init-props', wrapper);
+      await wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('false');
+
+      expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeUndefined();
     });
 
     it('Should apply module using repository', async () => {
@@ -396,13 +406,25 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button with missing mandatory properties', async () => {
+    it('Should disable application button with missing mandatory properties and no defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
-      await clickModule('init', wrapper);
+      await clickModule('init-props', wrapper);
 
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
+    });
+
+    it('Should not disable application button with missing mandatory properties and no defaults', async () => {
+      const wrapper = await componentWithLandscape();
+
+      await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
+
+      await clickModule('init-props', wrapper);
+
+      await wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('false');
+
+      expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeUndefined();
     });
 
     it('Should apply module using repository', async () => {
@@ -431,6 +453,35 @@ describe('Landscape', () => {
       expect(message).toBe('Modules applied');
     });
 
+    it('Should apply module using repository with default values for unfilled properties', async () => {
+      const modules = repositoryWithLandscape();
+      const wrapper = wrap({ modules });
+      await flushPromises();
+
+      await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
+      await clickModule('init-props', wrapper);
+      await clickModule('vue', wrapper);
+      await wrapper.find(wrappedElement('parameter-mandatoryBoolean-field')).setValue('true');
+      await wrapper.find(wrappedElement('modules-apply-all-button')).trigger('click');
+
+      await flushPromises();
+
+      expect((wrapper.find(wrappedElement('parameter-baseName-field')).element as HTMLInputElement).value).toBe('jhipster');
+      expect((wrapper.find(wrappedElement('parameter-mandatoryBooleanDefault-field')).element as HTMLInputElement).value).toBe('true');
+      expect((wrapper.find(wrappedElement('parameter-indentSize-field')).element as HTMLInputElement).value).toBe('2');
+
+      const [appliedModules] = modules.applyAll.lastCall.args as ModulesToApply[];
+      expect(appliedModules.modules.map(slug => slug.get())).toEqual(['init-props', 'vue', 'init']);
+      expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeUndefined();
+
+      const initClasses = wrapper.find(wrappedElement('init-module')).classes();
+      expect(initClasses).toContain('-selected');
+      expect(initClasses).toContain('-applied');
+
+      const [message] = alertBus.success.lastCall.args;
+      expect(message).toBe('Modules applied');
+    });
+
     it('Should remove setted boolean parameter', async () => {
       const wrapper = await componentWithLandscape();
 
@@ -438,7 +489,7 @@ describe('Landscape', () => {
       await wrapper.find(wrappedElement('parameter-optionalBoolean-field')).setValue('true');
       await wrapper.find(wrappedElement('parameter-optionalBoolean-field')).setValue('');
 
-      expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
+      expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeUndefined();
     });
 
     it('Should apply modules without committing them', async () => {

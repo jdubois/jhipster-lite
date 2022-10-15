@@ -40,8 +40,8 @@ public class JHipsterModulesApplicationService {
     modulesApplied.forEach(events::dispatch);
   }
 
-  public void apply(JHipsterModuleToApply module) {
-    JHipsterModuleApplied moduleApplied = applyer.apply(module);
+  public void apply(JHipsterModuleToApply moduleToApply) {
+    JHipsterModuleApplied moduleApplied = applyer.apply(moduleToApply);
 
     events.dispatch(moduleApplied);
   }

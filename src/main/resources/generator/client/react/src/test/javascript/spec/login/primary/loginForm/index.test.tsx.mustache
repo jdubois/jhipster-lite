@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { vi, describe, it, expect } from 'vitest';
 
 import LoginForm from '@/login/primary/loginForm/index';
 import {act, fireEvent, render} from '@testing-library/react';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
 
 describe('loginForm', () => {
   it('should render the login button without crashing', () => {
@@ -29,13 +29,8 @@ describe('loginForm', () => {
   });
 
   it('should close when clicking submit button with complete fields', async () => {
-    mockedAxios.post.mockImplementationOnce(() =>
-      Promise.resolve({
-        data: {
-          id_token: 123,
-        },
-      })
-    );
+    const spy = vi.spyOn(axios, 'post');
+    spy.mockImplementationOnce(() => Promise.resolve({ data: { id_token: 123 } }));
 
     const {getByText, getByLabelText, getByTestId} = render(<LoginForm/>);
     const loginButton = getByText('Se connecter');
@@ -50,6 +45,6 @@ describe('loginForm', () => {
       const submitButton = getByTestId('submit-button');
       fireEvent.click(submitButton);
     });
-    expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

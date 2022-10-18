@@ -19,7 +19,7 @@
     <spring-boot.version>2.7.4</spring-boot.version>
     <spring-cloud.version>2021.0.0</spring-cloud.version>
     <spring-cloud-netflix-eureka-client.version>3.1.4</spring-cloud-netflix-eureka-client.version>
-    <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
+    <springdoc-openapi.version>1.6.12</springdoc-openapi.version>
     <testcontainers.version>1.17.3</testcontainers.version>
     <kafka-clients.version>3.2.0</kafka-clients.version>
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
@@ -30,6 +30,7 @@
     <maven-enforcer-plugin.version>3.1.0</maven-enforcer-plugin.version>
     <jib-maven-plugin.version>3.3.0</jib-maven-plugin.version>
     <mongock.version>5.0.41</mongock.version>
+    <neo4j-migrations.version>1.13.0</neo4j-migrations.version>
     <archunit-junit5.version>1.0.0</archunit-junit5.version>
     <cucumber.version>7.8.1</cucumber.version>
     <testng.version>7.6.1</testng.version>
@@ -41,7 +42,7 @@
     <jacoco.version>0.8.8</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
-    <jhlite.version>0.17.0</jhlite.version>
+    <jhlite.version>0.18.0</jhlite.version>
   </properties>
 
   <dependencyManagement>

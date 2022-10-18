@@ -39,6 +39,9 @@ fi
 if [ -a src/main/docker/mariadb.yml ]; then
   docker compose -f src/main/docker/mariadb.yml up -d
 fi
+if [ -a src/main/docker/neo4j.yml ]; then
+  docker compose -f src/main/docker/neo4j.yml up -d
+fi
 if [ -a src/main/docker/mssql.yml ]; then
   docker compose -f src/main/docker/mssql.yml up -d
   echo "*** wait 40sec"

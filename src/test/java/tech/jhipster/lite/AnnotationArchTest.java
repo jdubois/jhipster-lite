@@ -30,36 +30,31 @@ class AnnotationArchTest {
 
   @Test
   void shouldHaveUnitTestOrComponentTestAnnotation() {
+    //@formatter:off
     classes()
       .that()
-      .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
-      .and()
-      .haveSimpleNameEndingWith("Test")
-      .and(not(simpleNameEndingWith("IntTest")))
-      .and()
-      .areTopLevelClasses()
-      .should()
-      .beAnnotatedWith(UnitTest.class)
-      .orShould()
-      .beAnnotatedWith(ComponentTest.class)
-      .orShould()
-      .beInterfaces()
+        .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
+        .and().haveSimpleNameEndingWith("Test")
+        .and(not(simpleNameEndingWith("IntTest")))
+        .and().areTopLevelClasses()
+      .should().beAnnotatedWith(UnitTest.class)
+      .orShould().beAnnotatedWith(ComponentTest.class)
+      .orShould().beInterfaces()
       .check(classes);
+    //@formatter:on
   }
 
   @Test
   void shouldHaveIntegrationTestAnnotation() {
+    //@formatter:off
     classes()
       .that()
-      .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
-      .and()
-      .haveSimpleNameEndingWith("IT")
-      .or()
-      .haveSimpleNameEndingWith("IntTest")
-      .and()
-      .areTopLevelClasses()
-      .should()
-      .beAnnotatedWith(IntegrationTest.class)
+        .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
+        .and().haveSimpleNameEndingWith("IT")
+        .or().haveSimpleNameEndingWith("IntTest")
+        .and().areTopLevelClasses()
+      .should().beAnnotatedWith(IntegrationTest.class)
       .check(classes);
+    //@formatter:on
   }
 }

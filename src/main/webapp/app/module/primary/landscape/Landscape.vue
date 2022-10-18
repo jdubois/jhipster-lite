@@ -38,6 +38,7 @@ $jhipster-landscape-padding: 20px;
     border-radius: 1.5em;
     color: $jhipster-lite-primary-input-color;
     padding: 7px 15px;
+    cursor: pointer;
 
     &.-selected {
       background-color: $jhipster-lite-primary-color;

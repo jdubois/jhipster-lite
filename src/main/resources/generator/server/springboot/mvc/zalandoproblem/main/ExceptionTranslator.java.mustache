@@ -110,8 +110,6 @@ public class ExceptionTranslator implements ProblemHandling {
     return create(ex, request, HeaderUtil.createFailureAlert(applicationName, ex.getEntityName(), ex.getErrorKey()));
   }
 
-  // jhipster-needle-exception-translator
-
   @Override
   public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
     if (!exceptionWithDetails) {

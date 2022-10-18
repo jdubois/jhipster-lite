@@ -8,7 +8,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.18.1-SNAPSHOT</version>
+  <version>0.19.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -61,7 +61,7 @@
     <jacoco.version>0.8.8</jacoco.version>
     <jgit.version>6.3.0.202209071007-r</jgit.version>
     <archunit-junit5.version>1.0.0</archunit-junit5.version>
-    <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
+    <springdoc-openapi-ui.version>1.6.12</springdoc-openapi-ui.version>
     <problem-spring.version>0.27.0</problem-spring.version>
     <problem-spring-web.version>${problem-spring.version}</problem-spring-web.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>

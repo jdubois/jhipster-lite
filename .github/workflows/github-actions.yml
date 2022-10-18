@@ -143,6 +143,7 @@ jobs:
           - consulapp
           - gatewayapp
           - mongodbapp
+          - neo4japp
           - angularapp
           - reactapp
           - vueapp

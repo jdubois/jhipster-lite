@@ -10,6 +10,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 public final class BeanValidationAssertions {
+
   private BeanValidationAssertions() {}
 
   public static <T> BeanAsserter<T> assertThatBean(T bean) {
@@ -17,8 +18,10 @@ public final class BeanValidationAssertions {
   }
 
   public static class BeanAsserter<T> {
+
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     private final Set<ConstraintViolation<T>> violations;
+
     private BeanAsserter(T bean) {
       Assert.notNull("bean", bean);
       violations = validator.validate(bean);
@@ -45,8 +48,10 @@ public final class BeanValidationAssertions {
   }
 
   public static class InvalidPropertyAsserter<T> {
+
     private final BeanAsserter<T> beanAsserter;
     private final ConstraintViolation<T> violation;
+
     private InvalidPropertyAsserter(BeanAsserter<T> beanAsserter, ConstraintViolation<T> violation) {
       this.beanAsserter = beanAsserter;
       this.violation = violation;

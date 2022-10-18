@@ -1,0 +1,30 @@
+package {{packageName}};
+
+import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
+import org.springframework.context.ApplicationListener;
+import org.testcontainers.containers.Neo4jContainer;
+import org.testcontainers.utility.DockerImageName;
+
+class TestNeo4jManager implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
+
+  private static Neo4jContainer<?> neo4jContainer;
+
+  @Override
+  @SuppressWarnings("resource")
+  public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+    if (neo4jContainer != null) {
+      return;
+    }
+
+    neo4jContainer = new Neo4jContainer(DockerImageName.parse("{{neo4jDockerImage}}")).withoutAuthentication();
+
+    neo4jContainer.start();
+
+    System.setProperty("TEST_NEO4J_URI", neo4jContainer.getBoltUrl());
+    Runtime.getRuntime().addShutdownHook(new Thread(stopContainer()));
+  }
+
+  private Runnable stopContainer() {
+    return neo4jContainer::stop;
+  }
+}

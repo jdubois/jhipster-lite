@@ -17,7 +17,7 @@ public class {{mainClass}}App {
   public static void main(String[] args) {
     Environment env = SpringApplication.run({{mainClass}}App.class, args).getEnvironment();
 
-    if(log.isInfoEnabled()) {
+    if (log.isInfoEnabled()) {
       log.info(ApplicationStartupTraces.of(env));
     }
   }

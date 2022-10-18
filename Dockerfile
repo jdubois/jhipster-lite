@@ -8,7 +8,7 @@ RUN \
     cd /code/jhipster-app/ && \
     rm -Rf target node_modules && \
     chmod +x mvnw && \
-    ./mvnw package -DskipTests && \
+    ./mvnw package -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip && \
     mv /code/jhipster-app/target/*.jar /code/ && \
     rm -Rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/*
 

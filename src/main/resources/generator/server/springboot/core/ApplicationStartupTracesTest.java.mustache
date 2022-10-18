@@ -24,7 +24,7 @@ class ApplicationStartupTracesTest {
   void shouldBuildTraceForEmptyWebEnvironment() {
     MockEnvironment environment = new MockEnvironment();
     environment.setProperty("server.port", "80");
-    
+
     assertThat(ApplicationStartupTraces.of(environment))
       .contains("  Application is running!")
       .contains("  Local: \thttp://localhost:80/")

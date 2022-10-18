@@ -11,7 +11,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 
 public final class JsonHelper {
+
   private static final ObjectMapper jsonMapper = jsonMapper();
+
   private JsonHelper() {}
 
   public static ObjectMapper jsonMapper() {

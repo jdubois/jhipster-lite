@@ -14,11 +14,12 @@ resource "azurecaf_name" "storage_account" {
 }
 
 resource "azurerm_storage_account" "storage-file" {
-  name                     = azurecaf_name.storage_account.result
-  resource_group_name      = var.resource_group
-  location                 = var.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+  name                          = azurecaf_name.storage_account.result
+  resource_group_name           = var.resource_group
+  location                      = var.location
+  account_tier                  = "Standard"
+  account_replication_type      = "LRS"
+  public_network_access_enabled = false
 
   tags = {
     "environment"      = var.environment

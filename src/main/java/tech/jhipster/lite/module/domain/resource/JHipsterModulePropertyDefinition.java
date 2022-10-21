@@ -1,9 +1,12 @@
 package tech.jhipster.lite.module.domain.resource;
 
 import java.util.Optional;
-import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.error.domain.Assert;
-import tech.jhipster.lite.module.domain.properties.*;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDefaultValue;
+import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
+import tech.jhipster.lite.module.domain.properties.JHipsterPropertyKey;
+import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
 
 public class JHipsterModulePropertyDefinition {
 
@@ -114,15 +117,6 @@ public class JHipsterModulePropertyDefinition {
     return description;
   }
 
-  /**
-   *  @deprecated use {@link #defaultValue()} instead
-   */
-  @Deprecated(forRemoval = true)
-  @Generated(reason = "Candidate for deletion")
-  public Optional<JHipsterPropertyExample> example() {
-    return defaultValue.flatMap(value -> JHipsterPropertyExample.of(value.get()));
-  }
-
   public Optional<JHipsterPropertyDefaultValue> defaultValue() {
     return defaultValue;
   }
@@ -175,18 +169,6 @@ public class JHipsterModulePropertyDefinition {
       return this;
     }
 
-    /**
-     *  @deprecated use {@link #defaultValue(String defaultValue)} instead
-     */
-    @Deprecated(forRemoval = true)
-    @Generated(reason = "Candidate for deletion")
-    @Override
-    public JHipsterModulePropertyDefinitionOptionalFieldsBuilder example(String example) {
-      this.defaultValue = example;
-
-      return this;
-    }
-
     @Override
     public JHipsterModulePropertyDefinitionOptionalFieldsBuilder defaultValue(String defaultValue) {
       this.defaultValue = defaultValue;
@@ -221,13 +203,6 @@ public class JHipsterModulePropertyDefinition {
 
   public interface JHipsterModulePropertyDefinitionOptionalFieldsBuilder {
     JHipsterModulePropertyDefinitionOptionalFieldsBuilder description(String description);
-
-    /**
-     *  @deprecated use {@link #defaultValue(String defaultValue)} instead
-     */
-    @Deprecated(forRemoval = true)
-    @Generated(reason = "Candidate for deletion")
-    JHipsterModulePropertyDefinitionOptionalFieldsBuilder example(String example);
 
     JHipsterModulePropertyDefinitionOptionalFieldsBuilder defaultValue(String defaultValue);
 

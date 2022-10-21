@@ -65,8 +65,8 @@ public final class JHipsterModulesResourceFixture {
     private JHipsterModuleTags tags;
     private String feature;
 
-    private final Collection<String> moduleDependencies = new ArrayList<>();
-    private final Collection<String> featureDependencies = new ArrayList<>();
+    private final Collection<JHipsterModuleSlugFactory> moduleDependencies = new ArrayList<>();
+    private final Collection<JHipsterFeatureSlugFactory> featureDependencies = new ArrayList<>();
 
     private JHipsterTestModuleResourceBuilder() {}
 
@@ -101,13 +101,13 @@ public final class JHipsterModulesResourceFixture {
     }
 
     public JHipsterTestModuleResourceBuilder moduleDependency(String module) {
-      moduleDependencies.add(module);
+      moduleDependencies.add(() -> module);
 
       return this;
     }
 
     public JHipsterTestModuleResourceBuilder featureDependency(String feature) {
-      featureDependencies.add(feature);
+      featureDependencies.add(() -> feature);
 
       return this;
     }
@@ -121,7 +121,7 @@ public final class JHipsterModulesResourceFixture {
     public JHipsterModuleResource build() {
       return JHipsterModuleResource
         .builder()
-        .slug(slug)
+        .slug(() -> slug)
         .propertiesDefinition(JHipsterModulesResourceFixture.propertiesDefinition())
         .apiDoc(group, operation)
         .organization(buildOrganization())
@@ -130,10 +130,10 @@ public final class JHipsterModulesResourceFixture {
     }
 
     private JHipsterModuleOrganization buildOrganization() {
-      JHipsterModuleOrganizationBuilder builder = JHipsterModuleOrganization.builder().feature(feature);
+      JHipsterModuleOrganizationBuilder builder = JHipsterModuleOrganization.builder().feature(() -> feature);
 
-      moduleDependencies.forEach(builder::addModuleDependency);
-      featureDependencies.forEach(builder::addFeatureDependency);
+      moduleDependencies.forEach(builder::addDependency);
+      featureDependencies.forEach(builder::addDependency);
 
       return builder.build();
     }

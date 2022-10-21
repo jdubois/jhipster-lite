@@ -129,14 +129,6 @@ public class JHipsterModuleResource {
 
   public interface JHipsterModuleResourceSlugBuilder {
     JHipsterModuleResourcePropertiesDefinitionBuilder slug(JHipsterModuleSlugFactory slug);
-
-    /**
-     * @deprecated use {@link #slug(JHipsterModuleSlugFactory)} instead
-     */
-    @Deprecated(forRemoval = true)
-    default JHipsterModuleResourcePropertiesDefinitionBuilder slug(String slug) {
-      return slug(() -> slug);
-    }
   }
 
   public interface JHipsterModuleResourcePropertiesDefinitionBuilder {

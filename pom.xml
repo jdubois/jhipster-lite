@@ -8,7 +8,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.19.1-SNAPSHOT</version>
+  <version>0.20.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -54,7 +54,7 @@
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
-    <spring-boot.version>2.7.4</spring-boot.version>
+    <spring-boot.version>2.7.5</spring-boot.version>
     <byte-buddy.version>1.12.18</byte-buddy.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>

@@ -11,7 +11,7 @@ import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeModule;
 sealed interface RestJHipsterLandscapeElement permits RestJHipsterLandscapeModule, RestJHipsterLandscapeFeature {
   JHipsterLandscapeElementType getType();
 
-  @Generated(reason = "Jacococ think there is a missed case here")
+  @Generated(reason = "Jacoco think there is a missed case here")
   static RestJHipsterLandscapeElement from(JHipsterLandscapeElement element) {
     return switch (element.type()) {
       case MODULE -> RestJHipsterLandscapeModule.fromModule((JHipsterLandscapeModule) element);

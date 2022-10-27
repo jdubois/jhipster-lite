@@ -15,43 +15,11 @@ import tech.jhipster.lite.module.domain.replacement.RegexReplacer;
 
 public class AngularOauth2ModuleFactory {
 
-  private static final String APP_MODULE_IMPORTS =
-    """
-      import { LoginComponent } from './login/login.component';
-      import { Oauth2AuthService } from './auth/oauth2-auth.service';
-      import { HttpAuthInterceptor } from './auth/http-auth.interceptor';
-      """;
-
-  private static final String INIT_APP_METHOD =
-    """
-      const initializeApp = (oauth2AuthService: Oauth2AuthService) => {
-        return () => {
-          oauth2AuthService.initAuthentication();
-        };
-      };
-      """;
-
-  private static final ElementReplacer ANGULAR_CORE_IMPORT_NEEDLE = regex("\\} +from +['\"]@angular/core['\"];");
-  private static final String APP_INITIALIZER_IMPORT = ", APP_INITIALIZER } from '@angular/core';";
-
-  private static final ElementReplacer DECORATOR_NEEDLE = lineBeforeRegex("@[A-Z]{1}[\\w]+\\(\\{");
-
   private static final Pattern PROVIDERS_PATTERN = Pattern.compile("(providers: *\\[)");
   private static final ElementReplacer EXISTING_PROVIDERS_NEEDLE = new RegexReplacer(
     (contentBeforeReplacement, replacement) -> PROVIDERS_PATTERN.matcher(contentBeforeReplacement).find(),
     PROVIDERS_PATTERN
   );
-  private static final ElementReplacer NEW_PROVIDERS_NEEDLE = new RegexReplacer(
-    (contentBeforeReplacement, replacement) -> !PROVIDERS_PATTERN.matcher(contentBeforeReplacement).find(),
-    "(declarations: *\\[[^]]*\\] *,)"
-  );
-  private static final String PROVIDERS =
-    """
-      { provide: APP_INITIALIZER, useFactory: initializeApp, multi: true, deps: [Oauth2AuthService] },
-      { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true, },
-      """;
-
-  private static final ElementReplacer DECLARATIONS_NEEDLE = regex("(declarations: *\\[)");
 
   private static final ElementReplacer ENVIRONMENT_NEEDLE = lineAfterRegex("export const environment *= *\\{");
   private static final String KEYCLOAK_ENVIRONMENT =
@@ -79,6 +47,12 @@ public class AngularOauth2ModuleFactory {
     FILLED_ALLOWED_COMMON_DEPENDENCIES_PATTERN
   );
 
+  private static final Pattern FILLED_STANDALONE_PATTERN = Pattern.compile("(imports: *\\[[^]]+)\\]");
+  private static final ElementReplacer FILLED_STANDALONE_NEEDLE = new RegexReplacer(
+    (contentBeforeReplacement, replacement) -> FILLED_STANDALONE_PATTERN.matcher(contentBeforeReplacement).find(),
+    FILLED_STANDALONE_PATTERN
+  );
+
   private static final ElementReplacer MENU_NEEDLE = lineAfterRegex("<span.+id=\\\"menu-space-separator\\\".*></span>");
 
   private static final String TEST_IMPORTS =
@@ -88,6 +62,10 @@ public class AngularOauth2ModuleFactory {
       """;
   private static final ElementReplacer TEST_NEEDLE = lineAfterRegex("^\\s+it\\('should have appName',[^}]+\\}\\);");
 
+  private static final String LOGIN_IMPORT = """
+      import { LoginComponent } from './login/login.component';
+      """;
+
   private static final String LOGIN_COMPONENT_TEST =
     """
 
@@ -96,6 +74,11 @@ public class AngularOauth2ModuleFactory {
 
         expect(fixture.debugElement.query(By.directive(LoginComponent))).toBeTruthy();
       });
+      """;
+
+  private static final String HTTP_AUTH_INTERCEPTOR_IMPORT =
+    """
+      import { HttpAuthInterceptor } from './app/auth/http-auth.interceptor';
       """;
 
   private static final JHipsterSource SOURCE = from("client/angular/security/oauth2/src/main/webapp/app");
@@ -126,14 +109,6 @@ public class AngularOauth2ModuleFactory {
           .and()
         .and()
       .mandatoryReplacements()
-        .in(path("src/main/webapp/app/app.module.ts"))
-          .add(fileStart(), APP_MODULE_IMPORTS)
-          .add(ANGULAR_CORE_IMPORT_NEEDLE, APP_INITIALIZER_IMPORT)
-          .add(DECORATOR_NEEDLE, INIT_APP_METHOD)
-          .add(DECLARATIONS_NEEDLE, "$1LoginComponent, ")
-          .add(EXISTING_PROVIDERS_NEEDLE, existingProviders(indentation))
-          .add(NEW_PROVIDERS_NEEDLE, newProviders(indentation))
-          .and()
         .in(path("src/main/webapp/environments/environment.ts"))
           .add(ENVIRONMENT_NEEDLE, keycloakEnvironment(indentation))
           .and()
@@ -144,38 +119,24 @@ public class AngularOauth2ModuleFactory {
           .add(FILLED_ALLOWED_COMMON_DEPENDENCIES_NEEDLE, "$1, \"keycloak-js\"]")
           .add(EMPTY_ALLOWED_COMMON_DEPENDENCIES_NEEDLE, "$1\"keycloak-js\"]")
           .and()
-        .in(path("src/main/webapp/app/app.component.html"))
-          .add(MENU_NEEDLE, indentation.spaces() + "<jhi-login></jhi-login>")
+        .in(path("src/main/webapp/main.ts"))
+          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },")
+          .add(fileStart(), HTTP_AUTH_INTERCEPTOR_IMPORT)
+          .and()
+        .in(path("src/main/webapp/app/app.component.ts"))
+          .add(FILLED_STANDALONE_NEEDLE, "$1, LoginComponent]")
+          .add(fileStart(), LOGIN_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.component.spec.ts"))
           .add(fileStart(), TEST_IMPORTS)
-          .add(DECLARATIONS_NEEDLE, "$1LoginComponent, ")
           .add(TEST_NEEDLE, LOGIN_COMPONENT_TEST.indent(indentation.spacesCount() * 2))
+          .and()
+        .in(path("src/main/webapp/app/app.component.html"))
+          .add(MENU_NEEDLE, indentation.spaces() + "<jhi-login></jhi-login>")
           .and()
         .and()
       .build();
     //@formatter:on
-  }
-
-  private String existingProviders(Indentation indentation) {
-    return new StringBuilder()
-      .append("$1")
-      .append(LINE_BREAK)
-      .append(PROVIDERS.indent(indentation.spacesCount() * 2))
-      .append(indentation.times(2))
-      .toString();
-  }
-
-  private String newProviders(Indentation indentation) {
-    return new StringBuilder()
-      .append("$1")
-      .append(LINE_BREAK)
-      .append(indentation.spaces())
-      .append("providers: [")
-      .append(LINE_BREAK)
-      .append(PROVIDERS.indent(indentation.spacesCount() * 2))
-      .append("],")
-      .toString();
   }
 
   private String keycloakEnvironment(Indentation indentation) {

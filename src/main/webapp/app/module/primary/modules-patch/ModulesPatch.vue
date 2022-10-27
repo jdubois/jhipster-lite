@@ -4,7 +4,6 @@
 
 <style lang="scss">
 .jhipster-modules {
-  font-family: $jhipster-lite-font-family;
   background-color: $jhipster-lite-secondary-color;
   color: $jhipster-lite-primary-text-color;
 }

@@ -1,4 +1,4 @@
-package tech.jhipster.lite.generator.typescript.domain;
+package tech.jhipster.lite.generator.typescript.core.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.from;
 import static tech.jhipster.lite.module.domain.JHipsterModule.moduleBuilder;
@@ -33,7 +33,8 @@ public class TypescriptModuleFactory {
         .addDevDependency(packageName("jest"), COMMON)
         .addDevDependency(packageName("@types/jest"), COMMON)
         .addDevDependency(packageName("ts-jest"), COMMON)
-        .addScript(scriptKey("test"), scriptCommand("jest"))
+        .addScript(scriptKey("jest"), scriptCommand("jest src/test/javascript/spec --logHeapUsage --maxWorkers=2 --no-cache"))
+        .addScript(scriptKey("test"), scriptCommand("npm run jest --"))
         .addScript(scriptKey("test:watch"), scriptCommand("jest --watch"))
         .addScript(scriptKey("test:watch:all"), scriptCommand("jest --watchAll"))
         .addScript(scriptKey("eslint:ci"), scriptCommand("eslint './**/*.{ts,js}'"))

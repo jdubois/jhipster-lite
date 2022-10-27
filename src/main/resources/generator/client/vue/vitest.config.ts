@@ -28,9 +28,7 @@ export default defineConfig({
       functions: 100,
       lines: 100,
       clean: true,
-      exclude: [
-        'src/main/webapp/**/*.component.ts',
-      ],
+      exclude: ['src/main/webapp/**/*.component.ts'],
       provider: 'istanbul',
       reportsDirectory: 'target/test-results/',
       reporter: ['html', 'json-summary', 'text', 'text-summary', 'lcov', 'clover'],

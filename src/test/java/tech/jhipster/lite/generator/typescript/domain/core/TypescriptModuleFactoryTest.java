@@ -1,10 +1,11 @@
-package tech.jhipster.lite.generator.typescript.domain;
+package tech.jhipster.lite.generator.typescript.domain.core;
 
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.generator.typescript.core.domain.TypescriptModuleFactory;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -32,7 +33,8 @@ class TypescriptModuleFactoryTest {
       .containing(nodeDependency("jest"))
       .containing(nodeDependency("@types/jest"))
       .containing(nodeDependency("ts-jest"))
-      .containing("\"test\": \"jest\"")
+      .containing("\"jest\": \"jest src/test/javascript/spec --logHeapUsage --maxWorkers=2 --no-cache\"")
+      .containing("\"test\": \"npm run jest --\"")
       .containing("\"test:watch\": \"jest --watch\"")
       .containing("\"test:watch:all\": \"jest --watchAll\"")
       .containing("\"eslint:ci\": \"eslint './**/*.{ts,js}'\"")

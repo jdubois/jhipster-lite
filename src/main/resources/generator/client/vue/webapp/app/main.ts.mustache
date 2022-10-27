@@ -1,9 +1,9 @@
 import { createApp } from 'vue';
-import App from './common/primary/app/App.vue';
+import { AppVue } from './common/primary/app';
 import router from './router/router';
 // jhipster-needle-main-ts-import
 
-const app = createApp(App);
+const app = createApp(AppVue);
 app.use(router);
 // jhipster-needle-main-ts-provider
 app.mount('#app');

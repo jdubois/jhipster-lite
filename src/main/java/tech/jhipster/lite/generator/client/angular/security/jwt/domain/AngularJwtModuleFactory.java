@@ -2,18 +2,24 @@ package tech.jhipster.lite.generator.client.angular.security.jwt.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.regex.Pattern;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.Indentation;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.domain.replacement.RegexNeedleAfterReplacer;
+import tech.jhipster.lite.module.domain.replacement.ElementReplacer;
 import tech.jhipster.lite.module.domain.replacement.RegexReplacer;
 import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 
 public class AngularJwtModuleFactory {
+
+  private static final Pattern PROVIDERS_PATTERN = Pattern.compile("(providers: *\\[)");
+  private static final ElementReplacer EXISTING_PROVIDERS_NEEDLE = new RegexReplacer(
+    (contentBeforeReplacement, replacement) -> PROVIDERS_PATTERN.matcher(contentBeforeReplacement).find(),
+    PROVIDERS_PATTERN
+  );
 
   private static final TextNeedleBeforeReplacer ROUTE_NEEDLE = lineBeforeText("// jhipster-needle-angular-route");
 
@@ -21,30 +27,14 @@ public class AngularJwtModuleFactory {
     """
       {
         path: '',
-        loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
+        loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
       },
       """;
 
-  private static final String MODULES_IMPORTS =
-    """
-      import { ReactiveFormsModule } from '@angular/forms';
-      import { AuthInterceptor } from './auth/auth.interceptor';
-
+  private static final String AUTH_INTERCEPTOR_IMPORT = """
+      import { AuthInterceptor } from './app/auth/auth.interceptor';
       """;
 
-  private static final RegexReplacer IMPORT_NEEDLE = regex("(imports: *\\[[^]]+)(\\s*\\])");
-
-  private static final RegexNeedleAfterReplacer PROVIDERS_NEEDLE = lineAfterRegex("^ *bootstrap: *\\[[^]]*\\],");
-  private static final String PROVIDERS =
-    """
-      providers: [
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true,
-        },
-      ],
-      """;
   private static final JHipsterSource SOURCE = from("client/angular/security/jwt/src/main/webapp/app");
 
   private static final JHipsterDestination APP_DESTINATION = to("src/main/webapp/app");
@@ -75,18 +65,16 @@ public class AngularJwtModuleFactory {
           .addTemplate("login.component.html")
           .addTemplate("login.component.spec.ts")
           .addTemplate("login.component.ts")
-          .addTemplate("login.module.ts")
           .addTemplate("login.route.ts")
           .and()
         .and()
       .mandatoryReplacements()
-        .in(path("src/main/webapp/app/app-routing.module.ts"))
-          .add(ROUTE_NEEDLE, LOGIN_MODULE_ROUTE.indent(indentation.spacesCount()))
+        .in(path("src/main/webapp/main.ts"))
+          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },")
+          .add(fileStart(), AUTH_INTERCEPTOR_IMPORT)
           .and()
-        .in(path("src/main/webapp/app/app.module.ts"))
-          .add(fileStart(), MODULES_IMPORTS)
-          .add(IMPORT_NEEDLE, "$1" + indentation.spaces() + ", ReactiveFormsModule$2")
-          .add(PROVIDERS_NEEDLE, StringUtils.chop(PROVIDERS.indent(indentation.spacesCount())))
+        .in(path("src/main/webapp/app/app.route.ts"))
+          .add(ROUTE_NEEDLE, LOGIN_MODULE_ROUTE.indent(indentation.spacesCount()))
           .and()
         .and()
       .build();

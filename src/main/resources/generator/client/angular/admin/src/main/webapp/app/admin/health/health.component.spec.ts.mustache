@@ -1,34 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 
 import { HealthComponent } from './health.component';
 import { HealthService } from './health.service';
 import { Health } from './health.model';
 
-class MatDialogMock {
-  open() {
-    return {
-      afterClosed: () => of(true)
-    }
-  }
-}
-
 describe('HealthComponent', () => {
   let comp: HealthComponent;
   let fixture: ComponentFixture<HealthComponent>;
   let service: HealthService;
-  let dialog: MatDialog;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [HealthComponent],
-      providers: [
-        { provide: MatDialog, useClass: MatDialogMock },
-        { provide: MAT_DIALOG_DATA, useValue: MatDialogMock }
-      ]
+      imports: [BrowserAnimationsModule, HttpClientTestingModule],
+
     })
       .overrideTemplate(HealthComponent, '')
       .compileComponents();
@@ -38,7 +25,6 @@ describe('HealthComponent', () => {
     fixture = TestBed.createComponent(HealthComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(HealthService);
-    dialog = TestBed.inject(MatDialog);
   });
 
   describe('refresh', () => {
@@ -78,13 +64,13 @@ describe('HealthComponent', () => {
         status: 'UP',
         components: null
       }
-      jest.spyOn(dialog, 'open');
+      jest.spyOn(comp.dialog, 'open');
 
       // WHEN
       comp.showHealth(health);
 
       // THEN
-      expect(dialog.open).toHaveBeenCalled();
+      expect(comp.dialog.open).toHaveBeenCalled();
     });
   });
 

@@ -7,9 +7,6 @@ $jhipster-landscape-padding: 20px;
 
 .jhipster-landscape {
   position: relative;
-  font-family: $jhipster-lite-font-family;
-  color: $jhipster-lite-primary-text-color;
-  background-color: $jhipster-lite-secondary-color;
 }
 
 .jhipster-landscape-map {
@@ -22,7 +19,7 @@ $jhipster-landscape-padding: 20px;
   left: $jhipster-landscape-padding;
   position: absolute;
   z-index: 3;
-  background: rgba($color: $jhipster-lite-secondary-color, $alpha: 0.7);
+  background: rgba($color: $jhipster-lite-color-fill-light, $alpha: 0.7);
   padding: 10px;
   border: 1px dotted $jhipster-lite-line-color;
   border-radius: $jhipster-lite-box-radius;
@@ -36,12 +33,13 @@ $jhipster-landscape-padding: 20px;
     background-color: transparent;
     border: 0;
     border-radius: 1.5em;
-    color: $jhipster-lite-primary-input-color;
+    color: $jhipster-lite-color-text-dark;
     padding: 7px 15px;
     cursor: pointer;
 
     &.-selected {
       background-color: $jhipster-lite-primary-color;
+      color: $jhipster-lite-color-text-light;
     }
   }
 }
@@ -142,11 +140,13 @@ $jhipster-landscape-padding: 20px;
 
   &.-selectable-highlighted {
     animation: $jhipster-lite-selectable-highlight-animation;
+    color: $jhipster-lite-color-text-light;
   }
 
   &.-not-selectable-highlighted,
   &.-highlighted-unselection {
     animation: $jhipster-lite-not-selectable-highlight-animation;
+    color: $jhipster-lite-color-text-light;
   }
 }
 
@@ -159,20 +159,6 @@ $jhipster-landscape-padding: 20px;
 
   &.-extended {
     margin-bottom: 15px;
-  }
-}
-
-.modules-application-button {
-  margin-bottom: 15px;
-  width: 100%;
-  background-color: $jhipster-lite-primary-alternative-color;
-  border: 1px solid $jhipster-lite-line-color;
-  color: $jhipster-lite-primary-input-color;
-  border-radius: 6px;
-  padding: 9px 17px;
-
-  &:disabled {
-    background-color: $jhipster-lite-disabled-color;
   }
 }
 </style>

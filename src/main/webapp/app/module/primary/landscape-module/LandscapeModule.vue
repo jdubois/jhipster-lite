@@ -5,7 +5,8 @@
 <style lang="scss">
 .jhipster-landscape-module {
   border-radius: $jhipster-lite-box-radius;
-  background: rgba($color: $jhipster-lite-secondary-color, $alpha: 0.7);
+  background: rgba($color: $jhipster-lite-color-fill-light, $alpha: 0.7);
+  color: $jhipster-lite-color-text-dark;
   border: 1px solid $jhipster-lite-line-color;
 
   &--slug {
@@ -41,11 +42,13 @@
 
   &.-selectable-highlighted {
     animation: $jhipster-lite-selectable-highlight-animation;
+    color: $jhipster-lite-color-text-light;
   }
 
   &.-not-selectable-highlighted,
   &.-highlighted-unselection {
     animation: $jhipster-lite-not-selectable-highlight-animation;
+    color: $jhipster-lite-color-text-light;
   }
 
   &.-selectable {
@@ -61,6 +64,7 @@
   &.-selected {
     cursor: pointer;
     background-color: $jhipster-lite-primary-color;
+    color: $jhipster-lite-color-text-light;
   }
 
   &.-applied::before {

@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppRoutingModule, routes } from './app-routing.module';
+import { routes } from './app.route';
 
-describe('AppRoutingModule', () => {
+describe('AppRoutes', () => {
   let router: Router;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('AppRoutingModule', () => {
   });
 
   it('should be defined', () => {
-    expect(AppRoutingModule).toBeDefined();
+    expect(routes).toBeDefined();
   });
 
   // jhipster-needle-angular-menu

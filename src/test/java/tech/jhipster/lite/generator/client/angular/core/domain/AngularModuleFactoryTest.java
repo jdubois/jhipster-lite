@@ -84,9 +84,8 @@ class AngularModuleFactoryTest {
         "app.component.ts",
         "app.component.html",
         "app.component.spec.ts",
-        "app.module.ts",
-        "app-routing.module.spec.ts",
-        "app-routing.module.ts"
+        "app.route.spec.ts",
+        "app.route.ts"
       )
       .hasPrefixedFiles("src/main/webapp/content/images", "JHipster-Lite-neon-red.png", "AngularLogo.svg")
       .hasPrefixedFiles(

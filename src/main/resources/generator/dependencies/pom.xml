@@ -35,14 +35,14 @@
     <cucumber.version>7.8.1</cucumber.version>
     <testng.version>7.6.1</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
-    <liquibase.version>4.17.0</liquibase.version>
+    <liquibase.version>4.17.1</liquibase.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <failsafe-plugin.version>3.0.0-M5</failsafe-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
-    <jhlite.version>0.19.0</jhlite.version>
+    <jhlite.version>0.20.0</jhlite.version>
   </properties>
 
   <dependencyManagement>

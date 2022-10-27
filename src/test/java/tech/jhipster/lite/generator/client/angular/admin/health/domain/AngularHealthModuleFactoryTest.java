@@ -30,8 +30,6 @@ class AngularHealthModuleFactoryTest {
         "health.component.ts",
         "health.component.spec.ts",
         "health.model.ts",
-        "health.module.ts",
-        "health.route.ts",
         "health.service.spec.ts",
         "health.service.ts"
       )
@@ -42,7 +40,7 @@ class AngularHealthModuleFactoryTest {
         "health-modal.component.ts",
         "health-modal.component.spec.ts"
       )
-      .hasFile("src/main/webapp/app/app-routing.module.ts")
+      .hasFile("src/main/webapp/app/app.route.ts")
       .containing(
         """
         {
@@ -55,7 +53,7 @@ class AngularHealthModuleFactoryTest {
       .hasFile("src/main/webapp/app/app.component.html")
       .containing("<a routerLink=\"admin/health\" mat-menu-item><span>Health</span></a>")
       .and()
-      .hasFile("src/main/webapp/app/app-routing.module.spec.ts")
+      .hasFile("src/main/webapp/app/app.route.spec.ts")
       .containing(
         """
           it('should navigate on admin endpoint', () => {
@@ -66,7 +64,7 @@ class AngularHealthModuleFactoryTest {
   }
 
   private ModuleFile appRouting() {
-    return file("src/test/resources/projects/angular/app-routing.module.ts", "src/main/webapp/app/app-routing.module.ts");
+    return file("src/test/resources/projects/angular/app.route.ts", "src/main/webapp/app/app.route.ts");
   }
 
   private ModuleFile appComponent() {
@@ -74,6 +72,6 @@ class AngularHealthModuleFactoryTest {
   }
 
   private ModuleFile appRoutingSpec() {
-    return file("src/test/resources/projects/angular/app-routing.module.spec.ts", "src/main/webapp/app/app-routing.module.spec.ts");
+    return file("src/test/resources/projects/angular/app.route.spec.ts", "src/main/webapp/app/app.route.spec.ts");
   }
 }

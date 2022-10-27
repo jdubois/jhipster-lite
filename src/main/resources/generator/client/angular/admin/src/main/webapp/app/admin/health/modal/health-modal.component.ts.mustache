@@ -1,10 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HealthDetails } from '../health.model';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-health-modal',
   templateUrl: './health-modal.component.html',
+  imports: [CommonModule, MatDialogModule, MatIconModule, MatButtonModule, MatTableModule],
+  standalone: true,
   styleUrls: ['./health-modal.component.css'],
 })
 export class HealthModalComponent {

@@ -1,13 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../auth/account.service';
 import { LoginService } from '../login/login.service';
 import { Account } from '../auth/account.model';
 
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+
 @Component({
   selector: 'jhi-login',
   templateUrl: './login.component.html',
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatFormFieldModule, MatInputModule, MatCardModule, MatDividerModule, ReactiveFormsModule,],
+  standalone: true,
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {

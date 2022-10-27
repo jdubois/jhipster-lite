@@ -16,36 +16,19 @@ class AngularOauth2ModuleFactoryTest {
 
   @Test
   void shouldBuildModuleWithEmptyAngularFile() {
-    assertAngularOAuthModule(appModuleFile(), emptyAngularJsonFile())
+    assertAngularOAuthModule(emptyAngularJsonFile())
       .hasFile("angular.json")
       .containing("\"allowedCommonJsDependencies\": [\"keycloak-js\"]");
   }
 
   @Test
-  void shouldBuildModuleWithExistingProviders() {
-    assertAngularOAuthModule(
-      file("src/test/resources/projects/angular/app.module-with-providers.ts", "src/main/webapp/app/app.module.ts"),
-      emptyAngularJsonFile()
-    )
-      .hasFile("src/main/webapp/app/app.module.ts")
-      .containing(
-        """
-                  providers: [
-                    { provide: APP_INITIALIZER, useFactory: initializeApp, multi: true, deps: [Oauth2AuthService] },
-                    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true, },
-                    { provide: DUMMY, useFactory: initializeApp, multi: true, deps: [Oauth2AuthService] }],
-                """
-      );
-  }
-
-  @Test
   void shouldBuildModuleWithAngularFileWithAllowedDependencies() {
-    assertAngularOAuthModule(appModuleFile(), angularJsonFile())
+    assertAngularOAuthModule(angularJsonFile())
       .hasFile("angular.json")
       .containing("\"allowedCommonJsDependencies\": [\"dummy.js\", \"keycloak-js\"]");
   }
 
-  private static JHipsterModuleAsserter assertAngularOAuthModule(ModuleFile moduleFile, ModuleFile angularJson) {
+  private static JHipsterModuleAsserter assertAngularOAuthModule(ModuleFile angularJson) {
     JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
 
     JHipsterModule module = factory.buildModule(properties);
@@ -53,12 +36,13 @@ class AngularOauth2ModuleFactoryTest {
     return assertThatModuleWithFiles(
       module,
       packageJsonFile(),
-      moduleFile,
       environmentFile(),
       prodEnvironmentFile(),
       angularJson,
+      appComponentHtmlFile(),
       appComponentFile(),
-      appComponentSpecFile()
+      appComponentSpecFile(),
+      mainFile()
     )
       .hasFile("package.json")
       .containing(nodeDependency("keycloak-js"))
@@ -71,32 +55,6 @@ class AngularOauth2ModuleFactoryTest {
         "http-auth.interceptor.spec.ts"
       )
       .hasPrefixedFiles("src/main/webapp/app/login", "login.component.html", "login.component.ts", "login.component.spec.ts")
-      .hasFile("src/main/webapp/app/app.module.ts")
-      .containing(
-        """
-                import { LoginComponent } from './login/login.component';
-                import { Oauth2AuthService } from './auth/oauth2-auth.service';
-                import { HttpAuthInterceptor } from './auth/http-auth.interceptor';
-                """
-      )
-      .containing(
-        """
-                const initializeApp = (oauth2AuthService: Oauth2AuthService) => {
-                  return () => {
-                    oauth2AuthService.initAuthentication();
-                  };
-                };
-                """
-      )
-      .containing(
-        """
-                    { provide: APP_INITIALIZER, useFactory: initializeApp, multi: true, deps: [Oauth2AuthService] },
-                    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true, },
-                """
-      )
-      .containing("LoginComponent,")
-      .containing("APP_INITIALIZER")
-      .and()
       .hasFile("src/main/webapp/environments/environment.ts")
       .containing(
         """
@@ -130,10 +88,6 @@ class AngularOauth2ModuleFactoryTest {
       .and();
   }
 
-  private static ModuleFile appModuleFile() {
-    return file("src/test/resources/projects/angular/app.module.ts", "src/main/webapp/app/app.module.ts");
-  }
-
   private static ModuleFile environmentFile() {
     return file("src/test/resources/projects/angular/environment.ts", "src/main/webapp/environments/environment.ts");
   }
@@ -150,11 +104,19 @@ class AngularOauth2ModuleFactoryTest {
     return file("src/test/resources/projects/angular/empty-angular.json", "angular.json");
   }
 
-  private static ModuleFile appComponentFile() {
+  private static ModuleFile appComponentHtmlFile() {
     return file("src/test/resources/projects/angular/app.component.html", "src/main/webapp/app/app.component.html");
   }
 
   private static ModuleFile appComponentSpecFile() {
     return file("src/test/resources/projects/angular/app.component.spec.ts", "src/main/webapp/app/app.component.spec.ts");
+  }
+
+  private static ModuleFile appComponentFile() {
+    return file("src/test/resources/projects/angular/app.component.ts", "src/main/webapp/app/app.component.ts");
+  }
+
+  private static ModuleFile mainFile() {
+    return file("src/test/resources/projects/angular/main.ts", "src/main/webapp/main.ts");
   }
 }

@@ -13,7 +13,6 @@ final class JHipsterModuleShortcuts {
   private static final TextNeedleBeforeReplacer JHIPSTER_LOCAL_ENVIRONMENT_NEEDLE = lineBeforeText(
     "\n<!-- jhipster-needle-localEnvironment -->"
   );
-  private static final TextNeedleBeforeReplacer JHIPSTER_README_SECTION_NEEDLE = lineBeforeText("\n<!-- jhipster-needle-readme -->");
   private static final TextNeedleBeforeReplacer JHIPSTER_STARTUP_COMMAND_SECTION_NEEDLE = lineBeforeText(
     "\n<!-- jhipster-needle-startupCommand -->"
   );
@@ -51,12 +50,6 @@ final class JHipsterModuleShortcuts {
     Assert.notNull("localEnvironment", localEnvironment);
 
     builder.optionalReplacements().in(README).add(JHIPSTER_LOCAL_ENVIRONMENT_NEEDLE, localEnvironment.get());
-  }
-
-  void readmeSection(String section) {
-    Assert.notBlank("section", section);
-
-    builder.optionalReplacements().in(README).add(JHIPSTER_README_SECTION_NEEDLE, section);
   }
 
   void startupCommand(String startupCommand) {

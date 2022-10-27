@@ -330,12 +330,6 @@ public class JHipsterModule {
       return this;
     }
 
-    public JHipsterModuleBuilder readmeSection(String section) {
-      shortcuts.readmeSection(section);
-
-      return this;
-    }
-
     public JHipsterModuleBuilder startupCommand(String startupCommand) {
       shortcuts.startupCommand(startupCommand);
 

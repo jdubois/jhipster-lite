@@ -153,6 +153,7 @@ jobs:
           - reactiveapp
           - angularoauth2app
           - customjhlite
+          - typescriptapp
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3
@@ -176,7 +177,7 @@ jobs:
           ls -al /tmp/jhlite/${{ matrix.app }}
           MD5SUM_POM_XML=$(md5sum /tmp/jhlite/${{ matrix.app }}/pom.xml | cut -d ' ' -f 1)
           echo $MD5SUM_POM_XML
-          echo ::set-output name=md5sum_pom_xml::${MD5SUM_POM_XML}
+          echo "md5sum_pom_xml=${MD5SUM_POM_XML}" >> $GITHUB_OUTPUT
       - name: 'Init: cache local Maven repository'
         uses: actions/cache@v3
         with:
@@ -198,6 +199,10 @@ jobs:
           if [ -f 'mvnw' ]; then
             ./mvnw clean verify sonar:sonar
           fi
+          if [ ${{ matrix.app }} == 'typescriptapp' ]; then
+            npm install
+            npm test
+          fi
       - name: 'Test: check local Sonar Analysis'
         run: |
           if [ -f '/tmp/jhlite/${{ matrix.app }}/src/main/docker/sonar.yml' ]; then
@@ -213,7 +218,9 @@ jobs:
       - name: 'Test: start the application'
         working-directory: /tmp/jhlite/${{ matrix.app }}/
         run: |
-          ./start.sh
+          if [ ${{ matrix.app }} != 'typescriptapp' ]; then
+            ./start.sh
+          fi
 
   #--------------------------------------------------
   # Send analysis to Codecov

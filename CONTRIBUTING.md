@@ -11,6 +11,7 @@ Are you ready to contribute to JHipster? We'd love to have you on board, and we 
 - [Coding Rules](#rules)
 - [Git Commit Guidelines](#commit)
 - [Module creation guideline](documentation/module-creation.md)
+- [Style](documentation/style.md)
 
 And don't forget we also accept [financial contributions to the project](https://www.jhipster.tech/sponsors/) using OpenCollective.
 

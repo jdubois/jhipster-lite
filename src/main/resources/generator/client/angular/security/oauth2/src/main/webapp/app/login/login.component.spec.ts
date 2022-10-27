@@ -11,9 +11,7 @@ describe('LoginComponent', () => {
   let oauth2AuthService: Oauth2AuthService;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-    }).compileComponents();
+    await TestBed.configureTestingModule({}).compileComponents();
   });
 
   beforeEach(() => {

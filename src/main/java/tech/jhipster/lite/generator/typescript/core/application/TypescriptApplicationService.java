@@ -1,7 +1,7 @@
-package tech.jhipster.lite.generator.typescript.application;
+package tech.jhipster.lite.generator.typescript.core.application;
 
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.generator.typescript.domain.TypescriptModuleFactory;
+import tech.jhipster.lite.generator.typescript.core.domain.TypescriptModuleFactory;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 

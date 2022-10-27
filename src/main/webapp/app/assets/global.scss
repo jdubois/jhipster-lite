@@ -1,17 +1,20 @@
 $jhipster-lite-primary-color: #0f5b90;
 $jhipster-lite-primary-alternative-color: #3e8abf;
 $jhipster-lite-secondary-color: #0f172a;
-$jhipster-lite-line-color: #ddeffc;
+$jhipster-lite-line-color: #475569;
 $jhipster-lite-primary-text-color: #ddeffc;
 $jhipster-lite-disabled-color: #6d6d6d;
 $jhipster-lite-primary-input-color: #fff;
 $jhipster-lite-applied-module-color: #2f7b17;
-$jhipster-lite-font-family: Inter serif;
 $jhipster-lite-box-radius: 6px;
 $jhipster-lite-selectable-highlight-animation: validHighlightAnimation 2s infinite;
-
 $jhipster-lite-valid-highlight-start-color: #3ebf5a;
 $jhipster-lite-valid-highlight-end-color: #0f9020;
+
+// Waiting migration colors
+$jhipster-lite-color-text-light: #fff;
+$jhipster-lite-color-text-dark: #0f172a;
+$jhipster-lite-color-fill-light: #fff;
 
 @keyframes validHighlightAnimation {
   0% {
@@ -31,7 +34,6 @@ $jhipster-lite-valid-highlight-end-color: #0f9020;
 }
 
 $jhipster-lite-not-selectable-highlight-animation: invalidHighlightAnimation 2s infinite;
-
 $jhipster-lite-invalid-highlight-start-color: #bf3e3e;
 $jhipster-lite-invalid-highlight-end-color: #900f0f;
 

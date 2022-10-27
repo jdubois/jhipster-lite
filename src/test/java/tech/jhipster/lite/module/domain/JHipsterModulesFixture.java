@@ -52,7 +52,6 @@ public final class JHipsterModulesFixture {
       .and()
     .documentation(documentationTitle("Cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
     .documentation(documentationTitle("Another cucumber integration"), from("server/springboot/cucumber/cucumber.md.mustache"))
-    .readmeSection("This is a readme section")
     .startupCommand("This is a startup section")
     .mandatoryReplacements()
       .in(path("src/main/java/com/company/myapp/errors/Assert.java"))

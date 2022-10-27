@@ -75,6 +75,7 @@ public class SpringBootMvcsModulesFactory {
         .set(SERVER_PORT, propertyValue("0"))
         .and()
       .files()
+        .add(SOURCE.file("resources/404.html"), to("src/main/resources/public/error/404.html"))
         .batch(SOURCE.append("src/cors"), toSrcMainJava().append(packagePath).append(CORS_PRIMARY))
           .addTemplate("CorsFilterConfiguration.java")
           .addTemplate("CorsProperties.java")

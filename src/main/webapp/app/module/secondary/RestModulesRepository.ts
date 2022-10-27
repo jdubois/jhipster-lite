@@ -36,11 +36,11 @@ export class RestModulesRepository implements ModulesRepository {
   }
 
   history(folder: ProjectFolder): Promise<ProjectHistory> {
-    return this.axiosInstance.get<RestProjectHistory>(`/api/projects?path=${folder}`).then(mapToModuleHistory);
+    return this.axiosInstance.get<RestProjectHistory>(`/api/projects?path=${encodeURI(folder)}`).then(mapToModuleHistory);
   }
 
   async format(folder: ProjectFolder): Promise<void> {
-    await this.axiosInstance.post<void, RestModuleToApply>(`/api/format-project?path=${folder}`);
+    await this.axiosInstance.post<void, RestModuleToApply>(`/api/format-project?path=${encodeURI(folder)}`);
   }
 
   download(folder: ProjectFolder): Promise<Project> {
@@ -51,7 +51,7 @@ export class RestModulesRepository implements ModulesRepository {
       },
     };
 
-    return this.axiosInstance.get<ArrayBuffer>(`/api/projects?path=${folder}`, config).then(mapToProject);
+    return this.axiosInstance.get<ArrayBuffer>(`/api/projects?path=${encodeURI(folder)}`, config).then(mapToProject);
   }
 }
 

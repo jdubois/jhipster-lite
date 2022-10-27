@@ -223,7 +223,6 @@ class FileSystemJHipsterModulesRepositoryTest {
 
            <!-- jhipster-needle-documentation -->
            """)
-        .containing("This is a readme section")
         .containing("This is a startup section")
       .and()
       .hasPrefixedFiles(".git", "config", "HEAD")

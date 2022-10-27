@@ -352,6 +352,12 @@ elif [[ $application == 'customjhlite' ]]; then
 
   applyModules "custom-jhlite"
 
+elif [[ $application == 'typescriptapp' ]]; then
+  applyModules \
+    "init" \
+    "typescript" \
+    "optional-typescript"
+
 else
   echo "*** Unknown configuration..."
   exit 1

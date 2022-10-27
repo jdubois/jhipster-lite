@@ -169,26 +169,6 @@ Or in headless mode:
 npm run e2e:headless
 ```
 
-## Glyph
-
-If you need to add a new glyph icon, please notice we are using [Fontello](https://fontello.com/). Please read the [help](https://github.com/fontello/fontello/wiki/Help) Fontello section for any questions.
-
-To add a new glyph using Fontello, please launch:
-
-```shell
-npm run glyph:open
-```
-
-Then, when you've finished, please download the config only and replace it under `src/main/glyph/config.json`.
-
-Now you're able to launch:
-
-```shell
-npm run glyph:build
-```
-
-This will replace the current _CSS_ and _font_ files into the sources.
-
 ## Generate your project
 
 Once started, go to http://localhost:7471, select your option and generate the code you want, step by step, and only what you need.

@@ -8,14 +8,12 @@ import java.nio.file.FileSystems;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import tech.jhipster.lite.IntegrationTest;
 
-@IntegrationTest
 @AutoConfigureMockMvc
-@SpringBootTest(properties = { "application.forced-project-folder=/tmp/forced" })
+@IntegrationTest(properties = { "application.forced-project-folder=/tmp/forced" })
 class ForcedProjectFolderPrefixIntTest {
 
   private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
@@ -29,7 +27,11 @@ class ForcedProjectFolderPrefixIntTest {
       .perform(
         post("/api/modules/init/apply-patch")
           .contentType(MediaType.APPLICATION_JSON)
-          .content("{\"projectFolder\": \"/tmp/forced/my-project\"}")
+          .content("""
+            {
+              "projectFolder": "/tmp/forced/my-project"
+            }
+          """)
       )
       .andExpect(status().isOk());
   }
@@ -38,7 +40,13 @@ class ForcedProjectFolderPrefixIntTest {
   void shouldNotHandleProjectWithWrongProjectFolderPrefix() throws Exception {
     mockMvc
       .perform(
-        post("/api/modules/init/apply-patch").contentType(MediaType.APPLICATION_JSON).content("{\"projectFolder\": \"/home/my-project\"}")
+        post("/api/modules/init/apply-patch")
+          .contentType(MediaType.APPLICATION_JSON)
+          .content("""
+            {
+              "projectFolder": "/home/my-project"
+            }
+          """)
       )
       .andExpect(status().isBadRequest());
   }
@@ -49,7 +57,11 @@ class ForcedProjectFolderPrefixIntTest {
       .perform(
         post("/api/modules/init/apply-patch")
           .contentType(MediaType.APPLICATION_JSON)
-          .content("{\"projectFolder\": \"/tmp/forced/../my-project\"}")
+          .content("""
+            {
+              "projectFolder": "/tmp/forced/../my-project"
+            }
+          """)
       )
       .andExpect(status().isBadRequest());
   }

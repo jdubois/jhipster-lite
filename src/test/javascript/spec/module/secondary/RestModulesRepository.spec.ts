@@ -80,8 +80,9 @@ describe('Rest modules repository', () => {
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restModuleHistory()));
 
-    const appliedModules = await repository.history('test');
+    const appliedModules = await repository.history('path/to\\project');
 
+    expect(axiosInstance.get.lastCall.args[0]).toBe('/api/projects?path=path/to%5Cproject');
     expect(appliedModules).toEqual(defaultProjectHistory());
   });
 
@@ -90,8 +91,9 @@ describe('Rest modules repository', () => {
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.post.resolves(dataBackendResponse(null));
 
-    await repository.format('path/to/project');
+    await repository.format('path/to\\project');
 
+    expect(axiosInstance.post.lastCall.args[0]).toBe('/api/format-project?path=path/to%5Cproject');
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
@@ -100,9 +102,9 @@ describe('Rest modules repository', () => {
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves({ headers: { 'x-suggested-filename': 'file.zip' }, data: [1, 2, 3] });
 
-    const project = await repository.download('path/to/project');
+    const project = await repository.download('path/to\\project');
 
-    expect(axiosInstance.get.lastCall.args[0]).toBe('/api/projects?path=path/to/project');
+    expect(axiosInstance.get.lastCall.args[0]).toBe('/api/projects?path=path/to%5Cproject');
     expect(project.filename).toBe('file.zip');
     expect(project.content).toEqual([1, 2, 3]);
   });

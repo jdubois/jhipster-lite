@@ -6,6 +6,7 @@ import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { wrappedElement } from '../../../WrappedElement';
 import { stubWindow } from '../GlobalWindow.fixture';
 import sinon from 'sinon';
+import { describe, it, expect } from 'vitest';
 
 interface WrapperOptions {
   folderPath: string;

@@ -20,11 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import tech.jhipster.lite.cucumber.CucumberTestContext;
 import tech.jhipster.lite.module.infrastructure.secondary.git.GitTestUtil;
 
@@ -325,9 +321,6 @@ public class ModulesSteps {
 
   @Then("I should have unknown slug {string} error message")
   public void shouldHaveUnknownSlugErrorMessage(String slugName) {
-    assertThatLastResponse()
-      .hasHttpStatus(HttpStatus.BAD_REQUEST)
-      .hasElement("$.title")
-      .withValue("Module " + slugName + " does not exist");
+    assertThatLastResponse().hasHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

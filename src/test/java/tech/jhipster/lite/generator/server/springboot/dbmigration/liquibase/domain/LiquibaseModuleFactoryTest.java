@@ -57,7 +57,6 @@ class LiquibaseModuleFactoryTest {
         "LiquibaseConfigurationIT.java",
         "SpringLiquibaseUtilTest.java"
       )
-      .hasJavaTests("com/jhipster/test/LogbackRecorder.java")
       .hasFile("src/test/resources/logback.xml")
       .containing("<logger name=\"liquibase\" level=\"WARN\" />")
       .containing("<logger name=\"LiquibaseSchemaResolver\" level=\"INFO\" />")

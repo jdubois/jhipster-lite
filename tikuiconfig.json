@@ -3,6 +3,7 @@
   "src": "src/main/style",
   "dist": "target/classes/public/style",
   "port": 9005,
+  "reloadPort": 9006,
   "expose": {
     "src/main/glyph": "glyph"
   }

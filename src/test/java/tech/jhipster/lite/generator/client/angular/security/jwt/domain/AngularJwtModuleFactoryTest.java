@@ -41,8 +41,7 @@ class AngularJwtModuleFactoryTest {
         "login.model.ts",
         "login.component.css",
         "login.component.html",
-        "login.component.ts",
-        "login.route.ts"
+        "login.component.ts"
       )
       .hasFile("src/main/webapp/app/login/login.component.spec.ts")
       .containing(".toEqual('jhipster')")
@@ -53,6 +52,7 @@ class AngularJwtModuleFactoryTest {
               {
                 path: '',
                 loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+                title: 'Login',
               },
             """
       );

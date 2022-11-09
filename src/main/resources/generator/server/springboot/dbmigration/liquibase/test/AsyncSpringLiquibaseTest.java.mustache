@@ -1,225 +1,151 @@
 package {{packageName}}.technical.infrastructure.secondary.liquibase;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import ch.qos.logback.classic.Level;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.time.Duration;
+import java.util.concurrent.Executor;
 import javax.sql.DataSource;
 import liquibase.Liquibase;
 import liquibase.exception.LiquibaseException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.mock.env.MockEnvironment;
+import {{packageName}}.LogsSpy;
 import {{packageName}}.UnitTest;
-import {{packageName}}.LogbackRecorder;
-import {{packageName}}.LogbackRecorder.Event;
 
+@ExtendWith(LogsSpy.class)
 @UnitTest
 class AsyncSpringLiquibaseTest {
 
-  private LiquibaseException exception = new LiquibaseException("Eek");
+  private final ConfigurableEnvironment environment = new MockEnvironment();
+  private final Executor executor = spy(new DirectExecutor());
+  private final LiquibaseProperties liquibaseProperties = new LiquibaseProperties();
+  private final LogsSpy logs;
 
-  private SimpleAsyncTaskExecutor executor;
-  private ConfigurableEnvironment environment;
-  private TestAsyncSpringLiquibase config;
-  private TestBadConnectionSpringLiquibase configWithBadConnection;
-  private LogbackRecorder recorder;
-  private LiquibaseProperties liquibaseProperties;
-
-  @BeforeEach
-  void setup() {
-    executor = new SimpleAsyncTaskExecutor();
-    recorder = LogbackRecorder.forClass(MockEnvironment.class).reset().capture("ALL");
-    environment = new MockEnvironment();
-    recorder.release();
-    liquibaseProperties = new LiquibaseProperties();
-    config = spy(new TestAsyncSpringLiquibase(executor, environment, liquibaseProperties));
-    configWithBadConnection = spy(new TestBadConnectionSpringLiquibase(executor, environment, liquibaseProperties));
-    recorder = LogbackRecorder.forClass(AsyncSpringLiquibase.class).reset().capture("ALL");
+  public AsyncSpringLiquibaseTest(LogsSpy logs) {
+    this.logs = logs;
   }
 
-  @AfterEach
-  void teardown() {
-    recorder.release();
-  }
+  @Nested
+  class AfterPropertiesSetTest {
 
-  @Test
-  void shouldInitDbWithDefault() {
-    Throwable caught;
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          config.afterPropertiesSet();
-          executor.wait(100);
-        });
-      assertThat(caught).isNull();
+    private final AsyncSpringLiquibase asyncSpringLiquibase = spy(new AsyncSpringLiquibase(executor, environment, liquibaseProperties));
+
+    @Test
+    void shouldDoNothingIfLiquibaseIsDisabled() throws LiquibaseException {
+      liquibaseProperties.setEnabled(false);
+
+      asyncSpringLiquibase.afterPropertiesSet();
+
+      verify(asyncSpringLiquibase, never()).initDb();
+      logs.shouldHave(Level.DEBUG, "Liquibase is disabled");
     }
 
-    caught = catchThrowable(() -> verify(config).initDb());
-    assertThat(caught).isNull();
+    @Test
+    void shouldStartSynchronouslyWhenActiveProfileIsNotLocal() throws LiquibaseException {
+      liquibaseProperties.setEnabled(true);
+      environment.setActiveProfiles("prod");
+      doNothing().when(asyncSpringLiquibase).initDb();
 
-    List<Event> events = recorder.play();
-    assertThat(events).hasSize(2);
-    Event event0 = events.get(0);
-    assertThat(event0.getLevel()).isEqualTo("DEBUG");
-    assertThat(event0.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTING_SYNC_MESSAGE);
-    assertThat(event0.getThrown()).isNull();
-    Event event1 = events.get(1);
-    assertThat(event1.getLevel()).isEqualTo("DEBUG");
-    assertThat(event1.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTED_MESSAGE);
-    assertThat(event1.getThrown()).isNull();
-  }
+      asyncSpringLiquibase.afterPropertiesSet();
 
-  @Test
-  void shouldInitDbWithLocalProfile() {
-    environment.setActiveProfiles("local");
-
-    Throwable caught;
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          config.afterPropertiesSet();
-          executor.wait(100);
-        });
-      assertThat(caught).isNull();
+      verify(executor, never()).execute(any());
+      logs.shouldHave(Level.DEBUG, "Starting Liquibase synchronously");
     }
 
-    caught = catchThrowable(() -> verify(config).initDb());
-    assertThat(caught).isNull();
+    @Test
+    void shouldStartAsynchronouslyWhenActiveProfileIsLocal() throws LiquibaseException {
+      liquibaseProperties.setEnabled(true);
+      environment.setActiveProfiles("local");
+      doNothing().when(asyncSpringLiquibase).initDb();
+      when(asyncSpringLiquibase.getDataSource()).thenReturn(mock(DataSource.class));
 
-    List<Event> events = recorder.play();
-    assertThat(events).hasSize(2);
-    Event event0 = events.get(0);
-    assertThat(event0.getLevel()).isEqualTo("WARN");
-    assertThat(event0.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTING_ASYNC_MESSAGE);
-    assertThat(event0.getThrown()).isNull();
-    Event event1 = events.get(1);
-    assertThat(event1.getLevel()).isEqualTo("DEBUG");
-    assertThat(event1.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTED_MESSAGE);
-    assertThat(event1.getThrown()).isNull();
-  }
+      asyncSpringLiquibase.afterPropertiesSet();
 
-  @Test
-  void shouldInitDbWhenSlow() {
-    environment.setActiveProfiles("local");
-    doReturn(AsyncSpringLiquibase.SLOWNESS_THRESHOLD * 1000L + 100L).when(config).getSleep();
-    Throwable caught;
-
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          config.afterPropertiesSet();
-          executor.wait(config.getSleep() + 100L);
-        });
-      assertThat(caught).isNull();
+      verify(executor).execute(any());
+      logs.shouldHave(Level.WARN, "Starting Liquibase asynchronously, your database might not be ready at startup!");
     }
 
-    caught = catchThrowable(() -> verify(config).initDb());
-    assertThat(caught).isNull();
+    @Test
+    void shouldLogErrorOnLiquibaseException() throws LiquibaseException {
+      liquibaseProperties.setEnabled(true);
+      environment.setActiveProfiles("local");
+      when(asyncSpringLiquibase.getDataSource()).thenReturn(mock(DataSource.class));
+      doThrow(new LiquibaseException("some liquibase message")).when(asyncSpringLiquibase).initDb();
 
-    List<Event> events = recorder.play();
-    assertThat(events).hasSize(3);
-    Event event0 = events.get(0);
-    assertThat(event0.getLevel()).isEqualTo("WARN");
-    assertThat(event0.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTING_ASYNC_MESSAGE);
-    assertThat(event0.getThrown()).isNull();
-    Event event1 = events.get(1);
-    assertThat(event1.getLevel()).isEqualTo("DEBUG");
-    assertThat(event1.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTED_MESSAGE);
-    assertThat(event1.getThrown()).isNull();
-    Event event2 = events.get(2);
-    assertThat(event2.getLevel()).isEqualTo("WARN");
-    assertThat(event2.getMessage()).isEqualTo(AsyncSpringLiquibase.SLOWNESS_MESSAGE);
-    assertThat(event2.getThrown()).isNull();
-  }
+      asyncSpringLiquibase.afterPropertiesSet();
 
-  @Test
-  void shouldInitDbWhenDisable() {
-    liquibaseProperties.setEnabled(false);
-
-    Throwable caught;
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          config.afterPropertiesSet();
-          executor.wait(100);
-        });
-      assertThat(caught).isNull();
+      logs.shouldHave(Level.ERROR, "Liquibase could not start correctly, your database is NOT ready: some liquibase message");
     }
 
-    caught = catchThrowable(() -> verify(config, times(0)).initDb());
-    assertThat(caught).isNull();
+    @Test
+    void shouldLogErrorOnSQLException() throws LiquibaseException, SQLException {
+      liquibaseProperties.setEnabled(true);
+      environment.setActiveProfiles("local");
+      DataSource mockedDataSource = mock(DataSource.class);
+      when(asyncSpringLiquibase.getDataSource()).thenReturn(mockedDataSource);
+      doThrow(new SQLException("some sql message")).when(mockedDataSource).getConnection();
+
+      asyncSpringLiquibase.afterPropertiesSet();
+
+      logs.shouldHave(Level.ERROR, "Liquibase could not start correctly, your database is NOT ready: some sql message");
+    }
   }
 
-  @Test
-  void testConnexionException() {
-    environment.setActiveProfiles("local");
+  @Nested
+  class InitDbTest {
 
-    Throwable caught;
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          configWithBadConnection.afterPropertiesSet();
-          executor.wait(100);
-        });
-      assertThat(caught).isNull();
+    @Test
+    void shouldWarnWhenLiquibaseExecutionIsSlow() throws LiquibaseException, SQLException {
+      liquibaseProperties.setEnabled(true);
+      Duration slownessThreshold = Duration.ofMillis(50);
+      TestAsyncSpringLiquibase asyncSpringLiquibase = spy(new TestAsyncSpringLiquibase(executor, environment, liquibaseProperties,
+        slownessThreshold
+      ));
+      asyncSpringLiquibase.setFakeDuration(slownessThreshold.plusMillis(1));
+
+      asyncSpringLiquibase.initDb();
+
+      logs.shouldHave(Level.DEBUG, "Liquibase has updated your database in");
+      logs.shouldHave(Level.WARN, "Warning, Liquibase took more than %s seconds to start up!".formatted(slownessThreshold.toSeconds()));
     }
 
-    caught = catchThrowable(() -> verify(configWithBadConnection).initDb());
-    assertThat(caught).isNotNull();
   }
 
-  @Test
-  void shouldInitDbWithLiquibaseException() {
-    environment.setActiveProfiles("local");
-    Throwable caught = catchThrowable(() -> doThrow(exception).when(config).initDb());
-    assertThat(caught).isNull();
-
-    synchronized (executor) {
-      caught =
-        catchThrowable(() -> {
-          config.afterPropertiesSet();
-          executor.wait(100);
-        });
-      assertThat(caught).isNull();
-    }
-
-    caught = catchThrowable(() -> verify(config).initDb());
-    assertThat(caught).isNull();
-
-    List<Event> events = recorder.play();
-    assertThat(events).hasSize(2);
-    Event event0 = events.get(0);
-    assertThat(event0.getLevel()).isEqualTo("WARN");
-    assertThat(event0.getMessage()).isEqualTo(AsyncSpringLiquibase.STARTING_ASYNC_MESSAGE);
-    assertThat(event0.getThrown()).isNull();
-    Event event1 = events.get(1);
-    assertThat(event1.getLevel()).isEqualTo("ERROR");
-    assertThat(event1.getMessage()).isEqualTo(AsyncSpringLiquibase.EXCEPTION_MESSAGE);
-    assertThat(event1.getThrown()).isEqualTo(exception.toString());
-  }
-
-  private class TestAsyncSpringLiquibase extends AsyncSpringLiquibase {
-
-    public TestAsyncSpringLiquibase(TaskExecutor executor, Environment environment, LiquibaseProperties liquibaseProperties) {
-      super(executor, environment, liquibaseProperties);
-    }
+  private static class DirectExecutor implements Executor {
 
     @Override
-    protected void initDb() throws LiquibaseException {
-      synchronized (executor) {
-        super.initDb();
-        executor.notifyAll();
-      }
+    public void execute(@NotNull Runnable command) {
+      command.run();
+    }
+  }
+
+  private static class TestAsyncSpringLiquibase extends AsyncSpringLiquibase {
+
+    private Duration fakeDuration = Duration.ZERO;
+
+    public TestAsyncSpringLiquibase(Executor executor, Environment environment, LiquibaseProperties liquibaseProperties, Duration slownessThreshold) {
+      super(executor, environment, liquibaseProperties, slownessThreshold);
+    }
+
+    public void setFakeDuration(Duration fakeDuration) {
+      this.fakeDuration = fakeDuration;
     }
 
     @Override
@@ -229,10 +155,11 @@ class AsyncSpringLiquibaseTest {
         doReturn(mock(Connection.class)).when(source).getConnection();
       } catch (SQLException x) {
         // This should never happen
-        throw new Error(x);
+        throw new AssertionError(x);
       }
       return source;
     }
+
 
     @Override
     protected Liquibase createLiquibase(Connection c) {
@@ -242,69 +169,13 @@ class AsyncSpringLiquibaseTest {
     @Override
     @SuppressWarnings("java:S2925")
     protected void performUpdate(Liquibase liquibase) {
-      long sleep = getSleep();
-      if (sleep > 0) {
-        try {
-          Thread.sleep(sleep);
-        } catch (InterruptedException x) {
-          // This should never happen
-          throw new Error(x);
-        }
-      }
-    }
-
-    long getSleep() {
-      return 0L;
-    }
-  }
-
-  private class TestBadConnectionSpringLiquibase extends AsyncSpringLiquibase {
-
-    public TestBadConnectionSpringLiquibase(TaskExecutor executor, Environment environment, LiquibaseProperties liquibaseProperties) {
-      super(executor, environment, liquibaseProperties);
-    }
-
-    @Override
-    protected void initDb() throws LiquibaseException {
-      synchronized (executor) {
-        super.initDb();
-        executor.notifyAll();
-      }
-    }
-
-    @Override
-    public DataSource getDataSource() {
-      DataSource source = mock(DataSource.class);
       try {
-        doThrow(new SQLException("error")).when(source).getConnection();
-      } catch (SQLException x) {
+        Thread.sleep(fakeDuration.toMillis());
+      } catch (InterruptedException x) {
         // This should never happen
         throw new Error(x);
       }
-      return source;
     }
 
-    @Override
-    protected Liquibase createLiquibase(Connection c) {
-      return null;
-    }
-
-    @Override
-    @SuppressWarnings("java:S2925")
-    protected void performUpdate(Liquibase liquibase) {
-      long sleep = getSleep();
-      if (sleep > 0) {
-        try {
-          Thread.sleep(sleep);
-        } catch (InterruptedException x) {
-          // This should never happen
-          throw new Error(x);
-        }
-      }
-    }
-
-    long getSleep() {
-      return 0L;
-    }
   }
 }

@@ -2,9 +2,9 @@ package tech.jhipster.lite.module.infrastructure.primary;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.util.Collection;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModulesToApply;
 import tech.jhipster.lite.projectfolder.domain.ProjectFolder;

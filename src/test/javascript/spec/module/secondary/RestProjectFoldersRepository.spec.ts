@@ -1,5 +1,6 @@
 import { stubAxiosHttp } from '../../http/AxiosHttpStub';
 import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFoldersRepository';
+import { describe, it, expect } from 'vitest';
 
 describe('Rest project folders repository', () => {
   it('Should get project folder using axios', async () => {

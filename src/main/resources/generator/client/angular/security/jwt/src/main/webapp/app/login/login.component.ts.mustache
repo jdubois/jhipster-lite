@@ -8,16 +8,13 @@ import { Account } from '../auth/account.model';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'jhi-login',
   templateUrl: './login.component.html',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatButtonToggleModule, MatFormFieldModule, MatInputModule, MatCardModule, MatDividerModule, ReactiveFormsModule,],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatInputModule, MatCardModule, ReactiveFormsModule],
   standalone: true,
   styleUrls: ['./login.component.css'],
 })

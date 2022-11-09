@@ -10,6 +10,7 @@ module.exports = {
     quotes: ['error', 'single', { avoidEscape: true }],
     '@typescript-eslint/no-unused-vars': ['error'],
     'vue/multi-word-component-names': 'off',
+    'vue/no-reserved-component-names': 'off',
     'prettier/prettier': ['error'],
   },
 };

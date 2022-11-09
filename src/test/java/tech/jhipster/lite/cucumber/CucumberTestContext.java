@@ -131,7 +131,7 @@ public final class CucumberTestContext {
       try {
         uri = URLDecoder.decode(request.getURI().toString(), StandardCharsets.UTF_8.displayName());
         responseHeaders = response.getHeaders();
-        status = response.getStatusCode();
+        status = (HttpStatus) response.getStatusCode();
       } catch (IOException e) {
         throw new AssertionError(e.getMessage(), e);
       }

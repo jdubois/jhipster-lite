@@ -1,7 +1,6 @@
 package tech.jhipster.lite.module.infrastructure.secondary.javadependency;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.nio.file.Files;

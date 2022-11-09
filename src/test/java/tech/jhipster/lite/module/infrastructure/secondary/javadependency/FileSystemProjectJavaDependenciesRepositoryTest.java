@@ -3,6 +3,7 @@ package tech.jhipster.lite.module.infrastructure.secondary.javadependency;
 import static org.assertj.core.api.Assertions.*;
 import static tech.jhipster.lite.module.domain.JHipsterModulesFixture.*;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
@@ -67,11 +68,14 @@ class FileSystemProjectJavaDependenciesRepositoryTest {
 
     assertJJWTDependency(dependencies);
     assertLogstashDependency(dependencies);
-    assertThat(dependencies.get(new DependencyId(new GroupId("org.springdoc"), new ArtifactId("springdoc-openapi-ui")))).isEmpty();
+    assertThat(dependencies.get(new DependencyId(new GroupId("org.springdoc"), new ArtifactId("springdoc-openapi-ui"), Optional.empty())))
+      .isEmpty();
   }
 
   private void assertJJWTDependency(JavaDependencies dependencies) {
-    JavaDependency jjwt = dependencies.get(new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"))).get();
+    JavaDependency jjwt = dependencies
+      .get(new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"), JavaDependencyClassifier.of("classif")))
+      .get();
 
     assertThat(jjwt.version()).contains(new VersionSlug("jjwt"));
     assertThat(jjwt.scope()).isEqualTo(JavaDependencyScope.TEST);
@@ -81,7 +85,7 @@ class FileSystemProjectJavaDependenciesRepositoryTest {
 
   private void assertLogstashDependency(JavaDependencies dependencies) {
     JavaDependency jjwt = dependencies
-      .get(new DependencyId(new GroupId("net.logstash.logback"), new ArtifactId("logstash-logback-encoder")))
+      .get(new DependencyId(new GroupId("net.logstash.logback"), new ArtifactId("logstash-logback-encoder"), Optional.empty()))
       .get();
     assertThat(jjwt.version()).isEmpty();
     assertThat(jjwt.scope()).isEqualTo(JavaDependencyScope.COMPILE);

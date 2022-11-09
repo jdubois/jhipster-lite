@@ -1,19 +1,24 @@
 import { Timeout } from '@/common/primary/timeout/Timeout';
 import sinon from 'sinon';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
 const TIMEOUT_TIME = 3000;
 const LESS_TIME = 1000;
 
 describe('Timeout', () => {
-  beforeEach(() => jest.useFakeTimers());
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
 
-  afterEach(() => jest.useRealTimers());
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   it('Should launch timeout after passed time', () => {
     const stub = sinon.stub();
     new Timeout().register(stub, TIMEOUT_TIME);
 
-    jest.advanceTimersByTime(TIMEOUT_TIME);
+    vi.advanceTimersByTime(TIMEOUT_TIME);
 
     expect(stub.callCount).toBe(1);
   });
@@ -22,7 +27,7 @@ describe('Timeout', () => {
     const stub = sinon.stub();
     new Timeout().register(stub, TIMEOUT_TIME);
 
-    jest.advanceTimersByTime(LESS_TIME);
+    vi.advanceTimersByTime(LESS_TIME);
 
     expect(stub.callCount).toBe(0);
   });
@@ -33,7 +38,7 @@ describe('Timeout', () => {
     timeout.register(stub, TIMEOUT_TIME);
 
     timeout.unregister();
-    jest.advanceTimersByTime(TIMEOUT_TIME);
+    vi.advanceTimersByTime(TIMEOUT_TIME);
 
     expect(stub.callCount).toBe(0);
   });
@@ -50,9 +55,9 @@ describe('Timeout', () => {
     const secondCall = sinon.stub();
 
     timeout.register(firstCall, TIMEOUT_TIME);
-    jest.advanceTimersByTime(LESS_TIME);
+    vi.advanceTimersByTime(LESS_TIME);
     timeout.register(secondCall, TIMEOUT_TIME);
-    jest.advanceTimersByTime(TIMEOUT_TIME);
+    vi.advanceTimersByTime(TIMEOUT_TIME);
 
     expect(firstCall.callCount).toBe(0);
     expect(secondCall.callCount).toBe(1);

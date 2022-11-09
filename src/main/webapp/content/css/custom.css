@@ -51,7 +51,6 @@
 }
 .navbar-toggler:focus,
 a:focus,
-input:focus,
 button:focus {
   outline: 2px solid;
   outline-color: var(--primary-color-focus);

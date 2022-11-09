@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.core.
 
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.AuthenticationModulesFactory.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyValue;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;

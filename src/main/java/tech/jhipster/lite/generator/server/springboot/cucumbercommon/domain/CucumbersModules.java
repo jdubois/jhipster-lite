@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.cucumbercommon.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;

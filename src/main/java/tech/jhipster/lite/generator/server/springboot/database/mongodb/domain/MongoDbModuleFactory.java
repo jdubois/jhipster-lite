@@ -39,7 +39,6 @@ public class MongoDbModuleFactory {
         .and()
       .javaDependencies()
         .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-data-mongodb"))
-        .addDependency(groupId("org.mongodb"), artifactId("mongodb-driver-sync"))
         .addDependency(reflectionsDependency())
         .addDependency(testContainerDependency())
         .and()

@@ -12,13 +12,13 @@ describe('test login modal', () => {
 
   it('should contain login title', () => {
     const { getByText } = LoginModalRender(true);
-    const title = getByText('Se connecter à');
+    const title = getByText('Connect');
     expect(title).toBeTruthy();
   });
 
   it('should be closed', () => {
     const { queryByText } = LoginModalRender(false);
-    const title = queryByText('Se connecter à');
+    const title = queryByText('Connect');
     expect(title).toBeFalsy();
   });
 

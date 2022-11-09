@@ -5,6 +5,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.jhipster.lite.TestFileUtils;
@@ -143,7 +144,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static DependencyId springBootDependencyId() {
-    return new DependencyId(groupId("org.springframework.boot"), artifactId("spring-boot-dependencies"));
+    return new DependencyId(groupId("org.springframework.boot"), artifactId("spring-boot-dependencies"), Optional.empty());
   }
 
   public static JavaDependency defaultVersionDependency() {
@@ -157,7 +158,7 @@ public final class JHipsterModulesFixture {
   public static JavaBuildCommands javaDependenciesCommands() {
     SetVersion setVersion = new SetVersion(springBootVersion());
     RemoveDirectJavaDependency remove = new RemoveDirectJavaDependency(
-      new DependencyId(new GroupId("spring-boot"), new ArtifactId("1.2.3"))
+      new DependencyId(new GroupId("spring-boot"), new ArtifactId("1.2.3"), Optional.empty())
     );
     AddDirectJavaDependency add = new AddDirectJavaDependency(optionalTestDependency());
 
@@ -179,7 +180,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static DependencyId jsonWebTokenDependencyId() {
-    return new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"));
+    return new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"), Optional.empty());
   }
 
   public static JHipsterModuleContext context() {

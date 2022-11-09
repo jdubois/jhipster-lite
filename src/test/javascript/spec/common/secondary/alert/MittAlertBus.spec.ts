@@ -2,6 +2,7 @@ import sinon, { SinonStub } from 'sinon';
 import { Emitter } from 'mitt';
 import { MittAlertBus } from '@/common/secondary/alert/MittAlertBus';
 import { AlertType } from '@/common/secondary/alert/AlertType';
+import { describe, it, expect } from 'vitest';
 
 interface EmitterStub extends Emitter<any> {
   emit: SinonStub;

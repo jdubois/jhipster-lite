@@ -21,16 +21,14 @@ public class JavaDependency {
 
   private final DependencyId id;
   private final Optional<VersionSlug> versionSlug;
-  private final Optional<JavaDependencyClassifier> classifier;
   private final JavaDependencyScope scope;
   private final boolean optional;
   private final Optional<JavaDependencyType> type;
   private final Collection<DependencyId> exclusions;
 
   private JavaDependency(JavaDependencyBuilder builder) {
-    id = new DependencyId(builder.groupId, builder.artifactId);
+    id = new DependencyId(builder.groupId, builder.artifactId, Optional.ofNullable(builder.classifier));
     versionSlug = Optional.ofNullable(builder.versionSlug);
-    classifier = Optional.ofNullable(builder.classifier);
     scope = JavaDependencyScope.from(builder.scope);
     optional = builder.optional;
     type = Optional.ofNullable(builder.type);
@@ -90,30 +88,22 @@ public class JavaDependency {
 
   private Collection<JavaDependency> merge(JavaDependency other) {
     Collection<JavaDependency> resultingDependencies = new ArrayList<>();
-    resultingDependencies.add(merge(other, type, classifier));
+    resultingDependencies.add(merge(other, type));
 
     if (!type.equals(other.type)) {
-      resultingDependencies.add(merge(other, other.type, classifier));
-    }
-
-    if (!classifier.equals(other.classifier)) {
-      resultingDependencies.add(merge(other, type, other.classifier));
+      resultingDependencies.add(merge(other, other.type));
     }
 
     return resultingDependencies;
   }
 
-  private JavaDependency merge(
-    JavaDependency other,
-    Optional<JavaDependencyType> resultingType,
-    Optional<JavaDependencyClassifier> resultingClassifier
-  ) {
+  private JavaDependency merge(JavaDependency other, Optional<JavaDependencyType> resultingType) {
     return JavaDependency
       .builder()
       .groupId(groupId())
       .artifactId(artifactId())
       .versionSlug(mergeVersionsSlugs(other))
-      .classifier(resultingClassifier.orElse(null))
+      .classifier(classifier().orElse(null))
       .scope(mergeScopes(other))
       .optional(mergeOptionalFlag(other))
       .type(resultingType.orElse(null))
@@ -141,7 +131,7 @@ public class JavaDependency {
   }
 
   public Optional<JavaDependencyClassifier> classifier() {
-    return classifier;
+    return id.classifier();
   }
 
   public boolean optional() {
@@ -171,7 +161,7 @@ public class JavaDependency {
   @Override
   @Generated
   public int hashCode() {
-    return new HashCodeBuilder().append(id).append(versionSlug).append(classifier).append(scope).append(optional).append(type).hashCode();
+    return new HashCodeBuilder().append(id).append(versionSlug).append(scope).append(optional).append(type).hashCode();
   }
 
   @Override
@@ -190,7 +180,6 @@ public class JavaDependency {
     return new EqualsBuilder()
       .append(id, other.id)
       .append(versionSlug, other.versionSlug)
-      .append(classifier, other.classifier)
       .append(scope, other.scope)
       .append(optional, other.optional)
       .append(type, other.type)
@@ -319,7 +308,7 @@ public class JavaDependency {
     }
 
     default JavaDependencyOptionalValueBuilder addExclusion(GroupId groupId, ArtifactId artifactId) {
-      return addExclusion(new DependencyId(groupId, artifactId));
+      return addExclusion(new DependencyId(groupId, artifactId, Optional.empty()));
     }
   }
 }

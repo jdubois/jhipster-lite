@@ -13,9 +13,6 @@ Feature: postgreSQL module
       | postgresql.yml |
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/secondary/postgresql"
       | DatabaseConfiguration.java |
-      | FixedPostgreSQL10Dialect.java |
-    And I should have files in "src/test/java/tech/jhipster/chips/technical/infrastructure/secondary/postgresql"
-      | FixedPostgreSQL10DialectTest.java |
     And I should have files in "src/main/resources/config"
       | application.properties |
     And I should have files in "src/test/resources/config"
@@ -41,9 +38,6 @@ Feature: postgreSQL module
       | postgresql.yml |
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/secondary/postgresql"
       | DatabaseConfiguration.java |
-      | FixedPostgreSQL10Dialect.java |
-    And I should have files in "src/test/java/tech/jhipster/chips/technical/infrastructure/secondary/postgresql"
-      | FixedPostgreSQL10DialectTest.java |
     And I should have files in "src/main/resources/config"
       | application.properties |
     And I should have files in "src/test/resources/config"

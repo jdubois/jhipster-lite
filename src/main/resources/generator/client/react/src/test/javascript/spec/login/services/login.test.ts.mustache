@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { describe, it, expect, vi } from 'vitest';
 
-import {login} from '@/login/services/login';
-
-vi.mock('axios');
+import { login } from '@/login/services/login';
 
 const data = {
   username: 'test',

@@ -22,11 +22,11 @@ const LoginForm = () => {
   return (
     <div>
       <Button auto shadow onClick={onClickLoginButton}>
-        Se connecter
+        Log in
       </Button>
       {token && (
         <p>
-          Bienvenue <strong>{username}</strong> !
+          Welcome <strong>{username}</strong> !
         </p>
       )}
       <UserInfoContext.Provider value={userInfoContextValues}>

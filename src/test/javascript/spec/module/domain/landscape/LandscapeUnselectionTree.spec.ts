@@ -1,5 +1,6 @@
 import { LandscapeUnselectionTree } from '@/module/domain/landscape/LandscapeUnselectionTree';
 import { moduleSlug } from '../Modules.fixture';
+import { describe, it, expect } from 'vitest';
 
 describe('Unselection tree', () => {
   it('Should not include unknown element', () => {

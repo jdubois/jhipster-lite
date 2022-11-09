@@ -1,5 +1,5 @@
 <div
-  class="jhipster-landscape-module"
+  class="jhlite-chip"
   :class="moduleClass()"
   :ref="el => landscapeElements.set(module.slugString(), el)"
   :data-selector="`${module.slugString()}-module`"
@@ -7,6 +7,6 @@
   @mouseleave="deEmphasisizeModule()"
   @click="clickedModule()"
 >
-  <div class="jhipster-landscape-module--slug" :class="moduleClass()">{{ module.slugString() }}</div>
-  <div class="jhipster-landscape-module--operation" :class="moduleClass()">{{ module.operation() }}</div>
+  <div class="jhlite-chip--title" :class="moduleClass()">{{ module.slugString() }}</div>
+  <div class="jhlite-chip--description" :class="moduleClass()">{{ module.operation() }}</div>
 </div>

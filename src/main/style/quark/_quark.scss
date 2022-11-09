@@ -14,11 +14,6 @@
   line-height: $jhlite-global-size-field-line-height;
   font-size: $jhlite-global-size-field-font-size;
 
-  &:focus {
-    outline: $jhlite-button-focus-color-outline solid;
-    border-style: dashed;
-  }
-
   &:disabled {
     cursor: not-allowed;
     color: $jhlite-global-color-text-disabled;

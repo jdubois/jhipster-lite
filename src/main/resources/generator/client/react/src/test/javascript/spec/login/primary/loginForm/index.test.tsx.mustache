@@ -2,26 +2,24 @@ import axios from 'axios';
 import { vi, describe, it, expect } from 'vitest';
 
 import LoginForm from '@/login/primary/loginForm/index';
-import {act, fireEvent, render} from '@testing-library/react';
-
-vi.mock('axios');
+import { act, fireEvent, render } from '@testing-library/react';
 
 describe('loginForm', () => {
   it('should render the login button without crashing', () => {
     render(<LoginForm/>);
   });
 
-  it('render button should contain "Se connecter"', () => {
+  it('render button should contain "Log in"', () => {
     const {getByText} = render(<LoginForm/>);
-    const loginButton = getByText('Se connecter');
+    const loginButton = getByText('Log in');
     expect(loginButton).toBeTruthy();
   });
 
   it('render the modal on login button click and close it', async () => {
     const {getByText, getByTestId} = render(<LoginForm/>);
-    const loginButton = getByText('Se connecter');
+    const loginButton = getByText('Log in');
     fireEvent.click(loginButton);
-    expect(getByText('Se connecter à')).toBeTruthy();
+    expect(getByText('Connect')).toBeTruthy();
     const submitButton = getByTestId('submit-button');
     await act(async () => {
       fireEvent.click(submitButton);
@@ -33,7 +31,7 @@ describe('loginForm', () => {
     spy.mockImplementationOnce(() => Promise.resolve({ data: { id_token: 123 } }));
 
     const {getByText, getByLabelText, getByTestId} = render(<LoginForm/>);
-    const loginButton = getByText('Se connecter');
+    const loginButton = getByText('Log in');
     fireEvent.click(loginButton);
     await act(async () => {
       fireEvent.change(getByLabelText("Nom d'utilisateur"), {

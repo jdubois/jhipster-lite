@@ -2,6 +2,7 @@ package {{packageName}}.technical.infrastructure.secondary.liquibase;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.concurrent.Executor;
 import liquibase.exception.LiquibaseException;
 import org.slf4j.Logger;
@@ -23,26 +24,12 @@ import org.springframework.util.StopWatch;
  */
 public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
 
-  /** Constant <code>DISABLED_MESSAGE="Liquibase is disabled"</code> */
-  public static final String DISABLED_MESSAGE = "Liquibase is disabled";
-  /** Constant <code>STARTING_ASYNC_MESSAGE="Starting Liquibase asynchronously, your"{trunked}</code> */
-  public static final String STARTING_ASYNC_MESSAGE = "Starting Liquibase asynchronously, your database might not be ready at startup!";
-  /** Constant <code>STARTING_SYNC_MESSAGE="Starting Liquibase synchronously"</code> */
-  public static final String STARTING_SYNC_MESSAGE = "Starting Liquibase synchronously";
-  /** Constant <code>STARTED_MESSAGE="Liquibase has updated your database in "{trunked}</code> */
-  public static final String STARTED_MESSAGE = "Liquibase has updated your database in {} ms";
-  /** Constant <code>EXCEPTION_MESSAGE="Liquibase could not start correctly, yo"{trunked}</code> */
-  public static final String EXCEPTION_MESSAGE = "Liquibase could not start correctly, your database is NOT ready: {}";
-
-  /** Constant <code>SLOWNESS_THRESHOLD=5</code> */
-  public static final long SLOWNESS_THRESHOLD = 5; // seconds
-  /** Constant <code>SLOWNESS_MESSAGE="Warning, Liquibase took more than {} se"{trunked}</code> */
-  public static final String SLOWNESS_MESSAGE = "Warning, Liquibase took more than {} seconds to start up!";
-
   // named "logger" because there is already a field called "log" in "SpringLiquibase"
   private final Logger logger = LoggerFactory.getLogger(AsyncSpringLiquibase.class);
 
   private final Executor executor;
+
+  private final Duration slownessThreshold;
 
   private final Environment env;
 
@@ -55,16 +42,27 @@ public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
    * @param liquibaseProperties
    */
   public AsyncSpringLiquibase(Executor executor, Environment env, LiquibaseProperties liquibaseProperties) {
-    this.executor = executor;
-    this.env = env;
-    this.liquibaseProperties = liquibaseProperties;
+      this(executor, env, liquibaseProperties, Duration.ofSeconds(5));
   }
 
-  /** {@inheritDoc} */
+  /**
+   * <p>Constructor for AsyncSpringLiquibase.</p>
+   *  @param executor a {@link Executor} object.
+   * @param env a {@link Environment} object.
+   * @param liquibaseProperties
+   * @param slownessThreshold
+   */
+  protected AsyncSpringLiquibase(Executor executor, Environment env, LiquibaseProperties liquibaseProperties, Duration slownessThreshold) {
+      this.executor = executor;
+      this.env = env;
+      this.liquibaseProperties = liquibaseProperties;
+      this.slownessThreshold = slownessThreshold;
+  }
+
   @Override
   public void afterPropertiesSet() throws LiquibaseException {
     if (!liquibaseProperties.isEnabled()) {
-      logger.debug(DISABLED_MESSAGE);
+      logger.debug("Liquibase is disabled");
       return;
     }
 
@@ -74,34 +72,29 @@ public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
       try (Connection connection = getDataSource().getConnection()) {
         executor.execute(() -> {
           try {
-            logger.warn(STARTING_ASYNC_MESSAGE);
+            logger.warn("Starting Liquibase asynchronously, your database might not be ready at startup!");
             initDb();
           } catch (LiquibaseException e) {
-            logger.error(EXCEPTION_MESSAGE, e.getMessage(), e);
+            logger.error("Liquibase could not start correctly, your database is NOT ready: {}", e.getMessage(), e);
           }
         });
       } catch (SQLException e) {
-        logger.error(EXCEPTION_MESSAGE, e.getMessage(), e);
+        logger.error("Liquibase could not start correctly, your database is NOT ready: {}", e.getMessage(), e);
       }
     } else {
-      logger.debug(STARTING_SYNC_MESSAGE);
+      logger.debug("Starting Liquibase synchronously");
       initDb();
     }
   }
 
-  /**
-   * <p>initDb.</p>
-   *
-   * @throws liquibase.exception.LiquibaseException if any.
-   */
   protected void initDb() throws LiquibaseException {
     StopWatch watch = new StopWatch();
     watch.start();
     super.afterPropertiesSet();
     watch.stop();
-    logger.debug(STARTED_MESSAGE, watch.getTotalTimeMillis());
-    if (watch.getTotalTimeMillis() > SLOWNESS_THRESHOLD * 1000L) {
-      logger.warn(SLOWNESS_MESSAGE, SLOWNESS_THRESHOLD);
+    logger.debug("Liquibase has updated your database in {} ms", watch.getTotalTimeMillis());
+    if (watch.getTotalTimeMillis() > slownessThreshold.toMillis()) {
+      logger.warn("Warning, Liquibase took more than {} seconds to start up!", slownessThreshold.toSeconds());
     }
   }
 }

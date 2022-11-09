@@ -2,11 +2,11 @@ package tech.jhipster.lite;
 
 import static org.assertj.core.api.Assertions.*;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import java.util.Set;
 import java.util.function.Predicate;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import tech.jhipster.lite.error.domain.Assert;
 
 public final class BeanValidationAssertions {

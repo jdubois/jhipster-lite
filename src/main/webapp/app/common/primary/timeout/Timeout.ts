@@ -10,7 +10,7 @@ export interface TimeoutListener {
 export type TimeoutLauncher = () => TimeoutListener;
 
 export class Timeout implements TimeoutListener {
-  private registration: Optional<number>;
+  private registration: Optional<ReturnType<typeof setTimeout>>;
   constructor() {
     this.registration = Optional.empty();
   }

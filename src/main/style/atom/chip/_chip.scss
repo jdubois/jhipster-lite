@@ -1,0 +1,58 @@
+.jhlite-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
+  border: 1px solid $jhlite-global-color-fill-primary-dark;
+  border-radius: 6px;
+  background: rgba($color: $jhlite-global-color-fill-light, $alpha: 70%);
+  text-align: center;
+  color: $jhlite-global-color-text-dark;
+
+  &--title {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: center;
+
+    &.-applied::before {
+      float: left;
+      margin: 2px 0 0 3px;
+      color: $jhlite-global-color-success;
+      font-family: $jhlite-global-font-family;
+      content: '\e807';
+    }
+  }
+
+  &--description {
+    border-top: 1px dotted $jhlite-global-color-fill-primary-dark;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 0.8em;
+
+    &.-compacted {
+      display: none;
+    }
+  }
+
+  &.-selectable-highlighted {
+    cursor: pointer;
+    animation: $jhlite-valid-highlight-animation;
+  }
+
+  &.-not-selectable-highlighted {
+    border-style: dotted;
+    background-color: $jhlite-global-color-fill-disabled-light;
+    cursor: not-allowed;
+    animation: $jhlite-invalid-highlight-animation;
+  }
+
+  &.-selected {
+    background-color: $jhlite-global-color-fill-primary-darker;
+    cursor: pointer;
+    color: $jhlite-global-color-text-light;
+  }
+
+  &.-extended {
+    margin-bottom: 15px;
+  }
+}

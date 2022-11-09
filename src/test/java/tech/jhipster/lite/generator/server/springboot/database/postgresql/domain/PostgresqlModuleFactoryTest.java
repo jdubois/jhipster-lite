@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.postgresql.domain;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -39,24 +39,24 @@ class PostgresqlModuleFactoryTest {
     JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
-      .hasPrefixedFiles(
-        "src/main/java/com/jhipster/test/technical/infrastructure/secondary/postgresql",
-        "DatabaseConfiguration.java",
-        "FixedPostgreSQL10Dialect.java"
-      )
+      .hasPrefixedFiles("src/main/java/com/jhipster/test/technical/infrastructure/secondary/postgresql", "DatabaseConfiguration.java")
       .hasFile("documentation/postgresql.md")
       .and()
-      .hasFile("src/test/java/com/jhipster/test/technical/infrastructure/secondary/postgresql/FixedPostgreSQL10DialectTest.java")
-      .and()
       .hasFile("pom.xml")
-      .containing("<groupId>org.postgresql</groupId>")
-      .containing("<artifactId>postgresql</artifactId>")
+      .containing(
+        """
+            <dependency>
+              <groupId>org.postgresql</groupId>
+              <artifactId>postgresql</artifactId>
+              <scope>runtime</scope>
+            </dependency>
+        """
+      )
       .containing("<groupId>com.zaxxer</groupId>")
       .containing("<artifactId>HikariCP</artifactId>")
       .containing("<groupId>org.hibernate</groupId>")
       .containing("<artifactId>hibernate-core</artifactId>")
       .containing("<groupId>org.testcontainers</groupId>")
-      .containing("<artifactId>postgresql</artifactId>")
       .and()
       .hasFile("src/main/resources/config/application.properties")
       .containing("spring.datasource.url=jdbc:postgresql://localhost:5432/myapp")
@@ -71,11 +71,8 @@ class PostgresqlModuleFactoryTest {
       .containing("spring.jpa.hibernate.naming.implicit-strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy")
       .containing("spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy")
       .containing("spring.jpa.open-in-view=false")
-      .containing("spring.jpa.properties.hibernate.cache.use_second_level_cache=false")
-      .containing("spring.jpa.properties.hibernate.cache.use_query_cache=false")
       .containing("spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true")
       .containing("spring.jpa.properties.hibernate.generate_statistics=false")
-      .containing("spring.jpa.properties.hibernate.id.new_generator_mappings=true")
       .containing("spring.jpa.properties.hibernate.jdbc.batch_size=25")
       .containing("spring.jpa.properties.hibernate.jdbc.time_zone=UTC")
       .containing("spring.jpa.properties.hibernate.order_inserts=true")

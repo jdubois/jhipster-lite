@@ -20,7 +20,7 @@ class DevToolsModuleFactoryTest {
   private DevToolsModuleFactory factory;
 
   @Test
-  void shouldCreateOAuth2Module() {
+  void shouldCreateModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
@@ -32,7 +32,16 @@ class DevToolsModuleFactoryTest {
     assertThatModuleWithFiles(module, pomFile())
       .hasPrefixedFiles("documentation", "dev-tools.md")
       .hasFile("pom.xml")
-      .containing("spring-boot-devtools")
+      .containing(
+        """
+            <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-devtools</artifactId>
+              <scope>runtime</scope>
+              <optional>true</optional>
+            </dependency>
+        """
+      )
       .and()
       .hasFile("src/main/resources/config/application.properties")
       .containing("spring.devtools.livereload.enabled=false")

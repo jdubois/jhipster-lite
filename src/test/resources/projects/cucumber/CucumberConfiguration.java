@@ -7,7 +7,7 @@ import com.mycompany.myapp.cucumber.CucumberRestTemplate;
 import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -41,16 +41,8 @@ public class CucumberConfiguration {
 
     RestTemplate template = rest.getRestTemplate();
     template.setRequestFactory(requestFactory);
-    template.setInterceptors(Arrays.asList(mockedCsrfTokenInterceptor(), saveLastResultInterceptor()));
+    template.setInterceptors(List.of(saveLastResultInterceptor()));
     template.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-  }
-
-  private ClientHttpRequestInterceptor mockedCsrfTokenInterceptor() {
-    return (request, body, execution) -> {
-      request.getHeaders().add("mocked-csrf-token", "MockedToken");
-
-      return execution.execute(request, body);
-    };
   }
 
   private ClientHttpRequestInterceptor saveLastResultInterceptor() {

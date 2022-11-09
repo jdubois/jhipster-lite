@@ -67,11 +67,11 @@
       :style="`width: ${landscapeSize.width}px; height: ${landscapeSize.height}px`"
       data-selector="landscape-connectors"
     >
-      <polyline
+      <path
         v-for="connector in landscapeConnectors"
         class="jhipster-landscape-connectors--line"
         :class="elementFlavor(connector.startingElement)"
-        :points="connector.points"
+        :d="connector.path"
       />
     </svg>
   </div>

@@ -1,4 +1,5 @@
 import { Statistics } from '@/common/domain/Statistics';
+import { describe, it, expect } from 'vitest';
 
 describe('Statistics', () => {
   it('Should not build with negative application count', () => {

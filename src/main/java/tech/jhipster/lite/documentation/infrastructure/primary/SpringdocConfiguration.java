@@ -4,8 +4,8 @@ import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import org.springdoc.core.GroupedOpenApi;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ class SpringdocConfiguration {
   }
 
   @Bean
-  public GroupedOpenApi jhLiteAllOpenAPI(OpenApiCustomiser openApiModules) {
-    return GroupedOpenApi.builder().group("all").pathsToMatch("/api/**").addOpenApiCustomiser(openApiModules).build();
+  public GroupedOpenApi jhLiteAllOpenAPI(OpenApiCustomizer openApiModules) {
+    return GroupedOpenApi.builder().group("all").pathsToMatch("/api/**").addOpenApiCustomizer(openApiModules).build();
   }
 }

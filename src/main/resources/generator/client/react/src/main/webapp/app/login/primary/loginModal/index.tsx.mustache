@@ -29,10 +29,10 @@ const LoginModal = ({ open, onClose }: LoginModalType) => {
     <Modal blur open={open} onClose={handleClose} aria-labelledby="modal-login">
       <Modal.Header>
         <Text size={18}>
-          Se connecter à
+          Connect
           <Text size={18} b>
             {' '}
-            Jhipster Lite
+            JHipster Lite
           </Text>
         </Text>
       </Modal.Header>
@@ -64,15 +64,15 @@ const LoginModal = ({ open, onClose }: LoginModalType) => {
           <Spacer y={0.3} />
           {error && (
             <Text data-testid="error-message" size={13} color="error">
-              Veuillez remplir les champs ci dessus
+              Please complete fields above
             </Text>
           )}
           <Spacer y={1} />
           <input type="checkbox" {...register('rememberMe')} />
-          <label>Se souvenir de moi</label>
+          <label>Remember me</label>
           <Spacer y={1} />
           <Button data-testid="submit-button" className="submit-button" type="submit" shadow auto>
-            Se connecter
+            Log in
           </Button>
         </form>
       </Modal.Body>

@@ -1,4 +1,4 @@
-import { getTestBed, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -7,7 +7,6 @@ import { AuthInterceptor } from './auth.interceptor';
 
 describe('Auth Interceptor', () => {
   let service: AuthServerProvider;
-  let injector: TestBed;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -22,7 +21,6 @@ describe('Auth Interceptor', () => {
       ],
     });
 
-    injector = getTestBed();
     httpMock = TestBed.inject(HttpTestingController);
     service = TestBed.inject(AuthServerProvider);
   });

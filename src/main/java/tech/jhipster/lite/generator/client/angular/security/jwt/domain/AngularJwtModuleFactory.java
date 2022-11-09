@@ -28,6 +28,7 @@ public class AngularJwtModuleFactory {
       {
         path: '',
         loadComponent: () => import('./login/login.component').then(m => m.LoginComponent),
+        title: 'Login',
       },
       """;
 
@@ -65,7 +66,6 @@ public class AngularJwtModuleFactory {
           .addTemplate("login.component.html")
           .addTemplate("login.component.spec.ts")
           .addTemplate("login.component.ts")
-          .addTemplate("login.route.ts")
           .and()
         .and()
       .mandatoryReplacements()

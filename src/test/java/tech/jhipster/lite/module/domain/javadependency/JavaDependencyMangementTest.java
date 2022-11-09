@@ -204,12 +204,7 @@ class JavaDependencyMangementTest {
 
     JavaBuildCommands changes = changes().dependency(optionalTestDependency()).projectDependencies(projectDependencies).build();
 
-    assertThat(changes.get())
-      .containsExactly(
-        new RemoveJavaDependencyManagement(differentClassifier.id()),
-        new AddJavaDependencyManagement(optionalTestDependency()),
-        new AddJavaDependencyManagement(differentClassifier)
-      );
+    assertThat(changes.get()).containsExactly(new AddJavaDependencyManagement(optionalTestDependency()));
   }
 
   private JavaDependency junitWithoutVersion() {

@@ -7,6 +7,7 @@ import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.server.springboot.database.common.domain.DatabaseType;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class MySQLModuleFactory {
@@ -26,7 +27,7 @@ public class MySQLModuleFactory {
 
     return sqlCommonModuleBuilder(properties, DatabaseType.MYSQL, dockerImages.get(MYSQL), documentationTitle("MySQL"), artifactId(MYSQL))
       .javaDependencies()
-      .addDependency(groupId(MYSQL), artifactId("mysql-connector-java"))
+      .addDependency(javaDependency().groupId(MYSQL).artifactId("mysql-connector-java").scope(JavaDependencyScope.RUNTIME).build())
       .and()
       .springMainProperties()
       .set(propertyKey("spring.datasource.url"), propertyValue("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name()))

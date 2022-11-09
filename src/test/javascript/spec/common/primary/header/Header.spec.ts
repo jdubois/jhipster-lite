@@ -4,6 +4,7 @@ import { HeaderVue } from '@/common/primary/header';
 import { flushPromises, shallowMount, VueWrapper } from '@vue/test-utils';
 import sinon, { SinonStub } from 'sinon';
 import { wrappedElement } from '../../../WrappedElement';
+import { describe, it, expect } from 'vitest';
 
 export interface StatisticsRepositoryStub extends StatisticsRepository {
   get: SinonStub;

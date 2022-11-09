@@ -1,0 +1,33 @@
+@keyframes jhlite-valid-highlight-animation {
+  0% {
+    background-color: $jhlite-valid-highlight-start-color;
+    stroke: $jhlite-valid-highlight-start-color;
+  }
+
+  50% {
+    background-color: $jhlite-valid-highlight-end-color;
+    stroke: $jhlite-valid-highlight-end-color;
+  }
+
+  100% {
+    background-color: $jhlite-valid-highlight-start-color;
+    stroke: $jhlite-valid-highlight-start-color;
+  }
+}
+
+@keyframes jhlite-invalid-highlight-animation {
+  0% {
+    background-color: $jhlite-invalid-highlight-start-color;
+    stroke: $jhlite-invalid-highlight-start-color;
+  }
+
+  50% {
+    background-color: $jhlite-invalid-highlight-end-color;
+    stroke: $jhlite-invalid-highlight-end-color;
+  }
+
+  100% {
+    background-color: $jhlite-invalid-highlight-start-color;
+    stroke: $jhlite-invalid-highlight-start-color;
+  }
+}

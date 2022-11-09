@@ -13,7 +13,7 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class MongockModuleFactory {
 
-  private static final JHipsterSource SOURCE = from("server/springboot/database/mongock");
+  private static final JHipsterSource SOURCE = from("server/springboot/dbmigration/mongock");
 
   private static final GroupId MONGOCK_GROUP = groupId("io.mongock");
 

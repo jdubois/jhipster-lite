@@ -27,9 +27,4 @@
   <logger name="org.mongodb" level="OFF" />
   <logger name="io.cucumber" level="ERROR" />
   <logger name="io.swagger" level="ERROR" />
-
-  <root>
-    <level>WARN</level>
-    <appender-ref ref="CONSOLE" />
-  </root>
 </configuration>

@@ -6,6 +6,7 @@ import { AlertListener } from '@/common/domain/alert/AlertListener';
 import { AlertListenerFixture, stubAlertListener } from '../../domain/AlertListener.fixure';
 import { TimeoutListener } from '@/common/primary/timeout/Timeout';
 import { stubTimeout } from '../timeout/Timeout.fixture';
+import { describe, it, expect } from 'vitest';
 
 let wrapper: VueWrapper;
 let component: any;

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -126,7 +127,7 @@ public class JHipsterModule {
   }
 
   public static DependencyId dependencyId(String groupId, String artifactId) {
-    return new DependencyId(groupId(groupId), artifactId(artifactId));
+    return new DependencyId(groupId(groupId), artifactId(artifactId), Optional.empty());
   }
 
   public static JavaBuildPluginGroupIdBuilder javaBuildPlugin() {

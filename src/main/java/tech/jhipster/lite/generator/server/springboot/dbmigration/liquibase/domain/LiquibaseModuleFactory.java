@@ -41,7 +41,6 @@ public class LiquibaseModuleFactory {
           .addTemplate("LiquibaseConfigurationIT.java")
           .addTemplate("SpringLiquibaseUtilTest.java")
           .and()
-        .add(SOURCE.template("test/LogbackRecorder.java"), toSrcTestJava().append(packagePath).append("LogbackRecorder.java"))
         .and()
       .springMainLogger(LIQUIBASE, LogLevel.WARN)
       .springMainLogger("LiquibaseSchemaResolver", LogLevel.INFO)

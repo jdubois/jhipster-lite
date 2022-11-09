@@ -10,6 +10,7 @@ import { RestLandscapeFeature } from '@/module/secondary/RestLandscapeFeature';
 import { ModuleSlug } from '@/module/domain/ModuleSlug';
 import { RestModulePropertyDefinition } from '@/module/secondary/RestModulePropertyDefinition';
 import { defaultLandscape } from '../domain/landscape/Landscape.fixture';
+import { describe, it, expect } from 'vitest';
 
 describe('Rest modules repository', () => {
   it('Should list modules using axios', async () => {

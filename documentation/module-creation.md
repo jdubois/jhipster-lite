@@ -88,6 +88,29 @@ Those placeholders will be replaced by properties values during module applicati
 
 And this is it for this part of the documentation... Of course you can do a lot more than that in the `JHipsterModule` but the goal of this documentation is not to go deep in this usage! You have a lot of running example and you can always ask for help, we'll be really happy to help you provide your implementations!
 
+## Add relevant dependencies required for the new module in the Version files
+
+### Dependency resolution
+
+* In the `src/main/resources/generator/dependencies` folder, different files are maintained to handle the dependencies for different tools/frameworks such as docker, maven, angular etc.
+* You can add the dependencies required for your new module in the respective files in the `dependencies` folder.
+* The dependency versions are then automatically managed by the dependabot.
+
+### Overview of Version files/folders in this dependencies folder
+
+* **Docker versions**
+  * You can add the docker images required for your module in the `src/main/resources/generator/dependencies/Dockerfile`
+  * These dependencies are resolved using the [FileSystemDockerImagesReader](https://github.com/jhipster/jhipster-lite/blob/main/src/main/java/tech/jhipster/lite/module/infrastructure/secondary/docker/FileSystemDockerImagesReader.java), an implementation of the `DockerImagesReader` bean to read from a local file.
+
+* **Java versions**
+  * You can add the java dependencies required for your module in the `src/main/resources/generator/dependencies/pom.xml`
+  * These dependencies are resolved using [FileSystemJavaDependenciesReader](https://github.com/jhipster/jhipster-lite/blob/main/src/main/java/tech/jhipster/lite/module/infrastructure/secondary/javadependency/FileSystemJavaDependenciesReader.java), an implementation of the `JavaDependenciesReader` bean to read from a local file.
+
+* **NPM versions**
+  * Common npm dependencies can be added in the `src/main/resources/generator/dependencies/common/package.json`
+  * Framework specific npm dependencies can be added in the `package.json` of the respective framework folders. For eg: `src/main/resources/generator/dependencies/react/package.json`
+  * These dependencies are resolved using [FileSystemNpmVersionReader](https://github.com/jhipster/jhipster-lite/blob/main/src/main/java/tech/jhipster/lite/module/infrastructure/secondary/npm/FileSystemNpmVersionReader.java), an implementation of the `NpmVersionsReader` bean to read from a local file.
+
 ## Creating JHipsterModuleResource
 
 As the main goal of a `JHipsterModuleResource` is to expose a WebService let's start by creating a gherkin scenario for that. So in `src/test/features/my-module.feature` we'll do:

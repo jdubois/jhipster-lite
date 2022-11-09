@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.mysql.domain;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -46,8 +46,15 @@ class MySQLModuleFactoryTest {
       .hasFile("pom.xml")
       .containing("<groupId>org.springframework.boot</groupId>")
       .containing("<artifactId>spring-boot-starter-data-jpa</artifactId>")
-      .containing("<groupId>mysql</groupId>")
-      .containing("<artifactId>mysql-connector-java</artifactId>")
+      .containing(
+        """
+              <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope>
+              </dependency>
+          """
+      )
       .containing("<groupId>com.zaxxer</groupId>")
       .containing("<artifactId>HikariCP</artifactId>")
       .containing("<groupId>org.hibernate</groupId>")
@@ -68,11 +75,8 @@ class MySQLModuleFactoryTest {
       .containing("spring.jpa.hibernate.naming.implicit-strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy")
       .containing("spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy")
       .containing("spring.jpa.open-in-view=false")
-      .containing("spring.jpa.properties.hibernate.cache.use_second_level_cache=false")
-      .containing("spring.jpa.properties.hibernate.cache.use_query_cache=false")
       .containing("spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true")
       .containing("spring.jpa.properties.hibernate.generate_statistics=false")
-      .containing("spring.jpa.properties.hibernate.id.new_generator_mappings=true")
       .containing("spring.jpa.properties.hibernate.jdbc.batch_size=25")
       .containing("spring.jpa.properties.hibernate.jdbc.time_zone=UTC")
       .containing("spring.jpa.properties.hibernate.order_inserts=true")

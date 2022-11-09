@@ -335,17 +335,54 @@ from the main (upstream) repository:
   git pull --ff upstream main
   ```
 
-## Running integration tests locally
+## <a name="local-build"></a> Running integration tests locally
 
-You can run the builds locally by following below commands
+### Overview
 
-Start JHipster Lite application.
+- The `tests-ci/generate.sh` file is used in the Continuous Integration pipeline to test generated projects.
+- This script takes the application-name as input. This is the type of project you would like generate.
+- Below are the list of applications that can be generated for testing (supported input params for the generate.sh script):
+  - spring
+  - fullstack
+  - fullapp
+  - oauth2app
+  - mysqlapp
+  - mariadbapp
+  - mssqlapp
+  - flywayapp
+  - undertowapp
+  - eurekaapp
+  - consulapp
+  - gatewayapp
+  - mongodbapp
+  - neo4japp
+  - angularapp
+  - angularoauth2app
+  - reactapp
+  - vueapp
+  - svelteapp
+  - kafkaapp
+  - pulsarapp
+  - reactiveapp
+  - customjhlite
+  - typescriptapp
 
-Go into the `tests-ci` folder with `cd tests-ci` from the generator source code root folder
+### Generate project builds locally
 
-Run `./generate.sh <filename>`
+- Start JHipster Lite application in local machine
+  ```shell
+  ./mvnw
+  ```
+- Run the generate.sh script with desired project build name.
+  ```shell
+  ./tests-ci/generate.sh <application>
+  ```
+- This will generate the project in `/tmp/jhlite/<application>`. Then, you can test it.
+- The project location of the generated build is configured in the `test-ci/modulePayload.json`.
 
-This will generate the project in `/tmp/jhlite/`. Then, you can test it.
+- For example,
+  - Running `./tests-ci/generate.sh fullapp` will generate a Spring Boot project `fullapp` in the directory`/tmp/jhlite/`
+  - The generated project will have support for maven, sonar, postgresql, liquibase, ehcache, vue-core and lot more capabilities required for a Spring Boot + Vue application.
 
 ## <a name="rules"></a> Coding Rules
 

@@ -6,6 +6,8 @@ import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProfile;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
@@ -21,8 +23,8 @@ public class DevToolsModuleFactory {
     //@formatter:off
     JHipsterModuleBuilder builder = moduleBuilder(properties)
       .context()
-        .put("applicationName", properties.projectBaseName().capitalized())
-        .and();
+      .put("applicationName", properties.projectBaseName().capitalized())
+      .and();
     //@formatter:on
 
     appendDependencies(builder);
@@ -34,7 +36,17 @@ public class DevToolsModuleFactory {
   }
 
   private void appendDependencies(JHipsterModuleBuilder builder) {
-    builder.javaDependencies().addDependency(SPRING_GROUP, artifactId("spring-boot-devtools"));
+    builder
+      .javaDependencies()
+      .addDependency(
+        JavaDependency
+          .builder()
+          .groupId(SPRING_GROUP)
+          .artifactId(artifactId("spring-boot-devtools"))
+          .scope(JavaDependencyScope.RUNTIME)
+          .optional()
+          .build()
+      );
   }
 
   private void appendSpringProperties(JHipsterModuleBuilder builder) {

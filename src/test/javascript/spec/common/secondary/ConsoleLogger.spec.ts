@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 
 import ConsoleLogger from '@/common/secondary/ConsoleLogger';
+import { describe, it, expect } from 'vitest';
 
 describe('ConsoleLogger', () => {
   it('should log an error', () => {

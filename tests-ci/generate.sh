@@ -77,11 +77,11 @@ spring_boot() {
 }
 
 sonar_back() {
-  applyModules "sonar-java-backend"
+  applyModules "sonar-qube-java-backend"
 }
 
 sonar_back_front() {
-  applyModules "sonar-java-backend-and-frontend"
+  applyModules "sonar-qube-java-backend-and-frontend"
 }
 
 cucumber_with_jwt() {
@@ -128,7 +128,7 @@ elif [[ $application == 'fullapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
   applyModules "application-service-hexagonal-architecture-documentation"
 
-  applyModules "postgresql" "liquibase"
+  applyModules "postgresql" "postgresql-dialect" "liquibase"
 
   applyModules \
   "dummy-feature" \

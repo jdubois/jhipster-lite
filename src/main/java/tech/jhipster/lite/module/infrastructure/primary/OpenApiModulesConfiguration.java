@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tech.jhipster.lite.common.domain.Enums;
@@ -44,7 +44,7 @@ class OpenApiModulesConfiguration {
   private static final String JSON_MEDIA_TYPE = "application/json";
 
   @Bean
-  OpenApiCustomiser openApiModules(JHipsterModulesResources modules) {
+  OpenApiCustomizer openApiModules(JHipsterModulesResources modules) {
     return openApi -> {
       openApi
         .schema(MODULE_PROPERTIES_DEFINITION_SCHEMA_NAME, modulePropertyDefinitionSchema())

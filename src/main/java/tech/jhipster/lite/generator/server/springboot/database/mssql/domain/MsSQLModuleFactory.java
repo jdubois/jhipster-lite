@@ -10,6 +10,7 @@ import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class MsSQLModuleFactory {
@@ -38,7 +39,7 @@ public class MsSQLModuleFactory {
         )
         .and()
       .javaDependencies()
-        .addDependency(groupId("com.microsoft.sqlserver"), artifactId("mssql-jdbc"))
+        .addDependency(javaDependency().groupId("com.microsoft.sqlserver").artifactId("mssql-jdbc").scope(JavaDependencyScope.RUNTIME).build())
         .and()
       .springMainProperties()
         .set(

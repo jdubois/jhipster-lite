@@ -3,6 +3,7 @@ import {
   defaultModules,
   defaultModulesWithNonDefaultProperties,
   defaultProjectHistory,
+  moduleSlug,
   ModulesRepositoryStub,
   stubModulesRepository,
 } from '../../domain/Modules.fixture';
@@ -13,6 +14,9 @@ import { stubAlertBus } from '../../../common/domain/AlertBus.fixture';
 import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
+import { describe, it, expect } from 'vitest';
+import { Modules } from '@/module/domain/Modules';
+import { Module } from '@/module/domain/Module';
 
 interface WrapperOptions {
   modules: ModulesRepository;
@@ -38,6 +42,13 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
     },
   });
 };
+
+const makeTaggedModule = (tag: string): Module => ({
+  slug: moduleSlug(`${tag}-slug`),
+  description: `${tag} description`,
+  properties: [],
+  tags: [tag],
+});
 
 describe('Modules', () => {
   describe('Loading', () => {
@@ -76,10 +87,10 @@ describe('Modules', () => {
   });
 
   describe('Properties filling', () => {
-    it('Should select module', async () => {
+    it.each(['click', 'keyup.enter'])('Should select module on %s', async trigger => {
       const wrapper = await componentWithModules();
 
-      await selectModule(wrapper);
+      await selectModule(wrapper, trigger);
 
       expect(wrapper.find(wrappedElement('parameter-baseName-field')).attributes('type')).toBe('text');
       expect(wrapper.find(wrappedElement('parameter-baseName-optional-marker')).exists()).toBe(false);
@@ -494,6 +505,29 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).exists()).toBe(false);
     });
 
+    it.each([{ tag: 'init' }, { tag: 'server' }, { tag: 'client' }])('Should filter modules with $tag filter', async ({ tag }) => {
+      const tags = ['init', 'server', 'client'];
+      const otherTags = tags.filter(current => current !== tag);
+      const repository = stubModulesRepository();
+
+      repository.list.resolves(
+        new Modules([
+          {
+            name: 'Three filters',
+            modules: tags.map(makeTaggedModule),
+          },
+        ])
+      );
+      const wrapper = wrap({ modules: repository });
+      await flushForm(wrapper);
+
+      wrapper.find(wrappedElement(`${tag}-tag-filter`)).trigger('click');
+      await flushForm(wrapper);
+
+      expect(wrapper.find(wrappedElement(`module-${tag}-slug-application-button`)).exists()).toBe(true);
+      otherTags.forEach(other => expect(wrapper.find(wrappedElement(`module-${other}-slug-application-button`)).exists()).toBe(false));
+    });
+
     it('Should filter modules with tag filter', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
@@ -605,8 +639,8 @@ const componentWithModulesAndNonDefaultProperties = async (): Promise<VueWrapper
   return wrapper;
 };
 
-const selectModule = async (wrapper: VueWrapper) => {
-  wrapper.find(wrappedElement('spring-cucumber-module-content')).trigger('click');
+const selectModule = async (wrapper: VueWrapper, trigger = 'click') => {
+  wrapper.find(wrappedElement('spring-cucumber-module-content')).trigger(trigger);
   await wrapper.vm.$nextTick();
 };
 

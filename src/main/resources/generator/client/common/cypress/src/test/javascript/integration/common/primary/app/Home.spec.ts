@@ -1,7 +1,7 @@
 describe('Home', () => {
   it('display home page', () => {
     cy.visit('/');
-    cy.get('#app').should('exist');
+    cy.title().should('include', 'JHipster');
   });
 });
 

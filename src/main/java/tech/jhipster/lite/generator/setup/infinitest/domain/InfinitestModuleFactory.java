@@ -1,4 +1,4 @@
-package tech.jhipster.lite.generator.infinitest.domain;
+package tech.jhipster.lite.generator.setup.infinitest.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 

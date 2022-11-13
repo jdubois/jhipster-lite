@@ -9,9 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
@@ -332,14 +336,20 @@ class MavenCommandHandlerTest {
         );
     }
 
-    @Test
-    void shouldAddCompileDependencyInPomWithDependencies() {
-      Path pom = projectWithPom("src/test/resources/projects/maven/pom.xml");
+    @ParameterizedTest
+    @MethodSource("pomConfigurations")
+    void shouldAddCompileDependencyInPom(String pomPath, String addedDependencies) {
+      Path pom = projectWithPom(pomPath);
 
       new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddDirectJavaDependency(defaultVersionDependency()));
 
-      assertThat(content(pom))
-        .contains(
+      assertThat(content(pom)).contains(addedDependencies);
+    }
+
+    static Stream<Arguments> pomConfigurations() {
+      return Stream.of(
+        Arguments.of(
+          "src/test/resources/projects/maven/pom.xml",
           """
                 <artifactId>logstash-logback-encoder</artifactId>
               </dependency>
@@ -352,41 +362,26 @@ class MavenCommandHandlerTest {
               <dependency>
                 <groupId>io.jsonwebtoken</groupId>
           """
-        );
-    }
-
-    @Test
-    void shouldAddCompileDependencyInPomWithOnlyCompileDependencies() {
-      Path pom = projectWithPom("src/test/resources/projects/maven-compile-only/pom.xml");
-
-      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddDirectJavaDependency(defaultVersionDependency()));
-
-      assertThat(content(pom))
-        .contains(
+        ),
+        Arguments.of(
+          "src/test/resources/projects/maven-compile-only/pom.xml",
           """
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
               </dependency>
             </dependencies>
           """
-        );
-    }
-
-    @Test
-    void shouldAddCompileDependencyInPomWithEmptyDependencies() {
-      Path pom = projectWithPom("src/test/resources/projects/maven-empty-dependencies/pom.xml");
-
-      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddDirectJavaDependency(defaultVersionDependency()));
-
-      assertThat(content(pom))
-        .contains(
+        ),
+        Arguments.of(
+          "src/test/resources/projects/maven-empty-dependencies/pom.xml",
           """
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
               </dependency>
             </dependencies>
           """
-        );
+        )
+      );
     }
   }
 

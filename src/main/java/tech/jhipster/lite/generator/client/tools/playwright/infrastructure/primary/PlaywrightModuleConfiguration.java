@@ -18,9 +18,9 @@ class PlaywrightModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(PLAYWRIGHT)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addServerPort().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().build())
       .apiDoc("E2e", "Add Playwright")
-      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(INIT).build())
+      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(CLIENT_CORE).build())
       .tags("client", "test", "playwright", "e2e")
       .factory(playwright::buildModule);
   }

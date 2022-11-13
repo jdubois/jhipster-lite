@@ -56,12 +56,12 @@ public class CypressModuleFactory {
         .and()
       .files()
         .batch(SOURCE.append(CYPRESS_TEST), CYPRESS_DESTINATION)
-          .addTemplate("cypress-config.ts")
+          .addFile("cypress-config.ts")
           .addFile(".eslintrc.js")
           .addFile("tsconfig.json")
           .and()
         .add(
-          SOURCE.append(CYPRESS_TEST).append(PRIMARY_APP).template("Home.spec.ts"),
+          SOURCE.append(CYPRESS_TEST).append(PRIMARY_APP).file("Home.spec.ts"),
           CYPRESS_DESTINATION.append(PRIMARY_APP).append("Home.spec.ts")
         )
         .and()

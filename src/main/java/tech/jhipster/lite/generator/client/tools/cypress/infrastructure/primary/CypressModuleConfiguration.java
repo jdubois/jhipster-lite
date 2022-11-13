@@ -14,13 +14,13 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 class CypressModuleConfiguration {
 
   @Bean
-  JHipsterModuleResource cypresModule(CypressApplicationService cypress) {
+  JHipsterModuleResource cypressModule(CypressApplicationService cypress) {
     return JHipsterModuleResource
       .builder()
       .slug(CYPRESS)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addServerPort().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addIndentation().build())
       .apiDoc("E2e", "Add Cypress")
-      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(INIT).build())
+      .organization(JHipsterModuleOrganization.builder().feature(FRONT_BROWSER_TEST).addDependency(CLIENT_CORE).build())
       .tags("client", "test", "cypress", "e2e")
       .factory(cypress::buildModule);
   }

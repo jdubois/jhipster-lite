@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import tech.jhipster.lite.common.domain.Enums;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDefaultValue;
@@ -28,6 +29,7 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertyDefinitio
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 
+@ImportRuntimeHints(NativeHints.class)
 @Configuration
 class OpenApiModulesConfiguration {
 

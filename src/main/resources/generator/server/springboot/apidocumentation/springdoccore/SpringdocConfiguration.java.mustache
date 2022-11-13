@@ -19,7 +19,7 @@ class SpringdocConfiguration {
   public OpenAPI {{baseNameLowercase}}OpenAPI() {
     return new OpenAPI().info(swaggerInfo()).externalDocs(swaggerExternalDoc());
   }
-  
+
   private Info swaggerInfo() {
     return new Info()
       .title("{{apiTitle}}")

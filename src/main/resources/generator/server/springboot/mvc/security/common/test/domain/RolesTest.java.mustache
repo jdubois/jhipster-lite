@@ -28,7 +28,7 @@ class RolesTest {
   void shouldHaveAffectedRole() {
     assertThat(new Roles(Set.of(Role.ADMIN)).hasRole(Role.ADMIN)).isTrue();
   }
-  
+
   @Test
   void shouldStreamRoles() {
     assertThat(new Roles(Set.of(Role.ADMIN)).stream()).containsExactly(Role.ADMIN);

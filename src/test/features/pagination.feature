@@ -1,7 +1,7 @@
 Feature: Pagination modules
 
   Scenario: Apply pagination domain module
-    When I apply "pagination-domain" module to default project
+    When I apply "pagination-domain" module to default project with maven file
       | packageName | tech.jhipster.chips |
       | baseName    | chips               |
     Then I should have files in "src/main/java/tech/jhipster/chips/pagination/domain"

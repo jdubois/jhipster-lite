@@ -25,10 +25,10 @@ public class PlaywrightModuleFactory {
         .addScript(scriptKey("e2e:headless"), scriptCommand("npx playwright test"))
         .and()
       .files()
-        .add(SOURCE.template("playwright.config.ts"), to("playwright.config.ts"))
+        .add(SOURCE.file("playwright.config.ts"), to("playwright.config.ts"))
         .batch(SOURCE.append(PLAYWRIGHT_TESTS), to(PLAYWRIGHT_TESTS))
-          .addTemplate("Home.spec.ts")
-          .addTemplate("Home-Page.ts")
+          .addFile("Home.spec.ts")
+          .addFile("Home-Page.ts")
           .and()
         .and()
       .build();

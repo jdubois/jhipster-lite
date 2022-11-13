@@ -22,7 +22,7 @@ class UsernameTest {
   void shouldGetUsernameFromActualUsername() {
     assertThat(Username.of("user")).contains(new Username("user"));
   }
-  
+
   @Test
   void shouldGetUsername() {
     assertThat(new Username("user").get()).isEqualTo("user");

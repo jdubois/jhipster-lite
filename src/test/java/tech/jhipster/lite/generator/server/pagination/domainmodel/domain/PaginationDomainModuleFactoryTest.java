@@ -24,7 +24,18 @@ class PaginationDomainModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModule(module)
+    assertThatModuleWithFiles(module, pomFile())
+      .hasFile("pom.xml")
+      .containing(
+        """
+            <dependency>
+              <groupId>org.apache.commons</groupId>
+              <artifactId>commons-lang3</artifactId>
+              <version>${commons-lang3.version}</version>
+            </dependency>
+        """
+      )
+      .and()
       .hasFiles("src/main/java/com/jhipster/test/pagination/package-info.java")
       .hasPrefixedFiles("src/main/java/com/jhipster/test/pagination/domain", "MyAppPage.java", "MyAppPageable.java")
       .hasPrefixedFiles(

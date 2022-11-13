@@ -26,7 +26,7 @@ class SpringdocConfiguration {
           .version(version)
           .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0"))
       )
-      .externalDocs(new ExternalDocumentation().description("JHipster Lite Documentation").url("https://jhipster.tech/lite"));
+      .externalDocs(new ExternalDocumentation().description("JHipster Lite Documentation").url("https://jhipster.tech/jhipster-lite/"));
   }
 
   @Bean

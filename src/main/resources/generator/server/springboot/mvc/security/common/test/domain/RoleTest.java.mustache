@@ -17,7 +17,7 @@ class RoleTest {
   void shouldConvertUnknownRoleToUnknownRole() {
     assertThat(Role.from("ROLE_DUMMY")).isEqualTo(Role.UNKNOWN);
   }
-  
+
   @Test
   void shouldConvertFromRole() {
     assertThat(Role.from("ROLE_ADMIN")).isEqualTo(Role.ADMIN);

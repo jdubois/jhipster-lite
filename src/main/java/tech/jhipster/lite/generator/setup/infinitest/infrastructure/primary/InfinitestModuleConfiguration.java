@@ -1,10 +1,10 @@
-package tech.jhipster.lite.generator.infinitest.infrastructure.primary;
+package tech.jhipster.lite.generator.setup.infinitest.infrastructure.primary;
 
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech.jhipster.lite.generator.infinitest.application.InfinitestApplicationService;
+import tech.jhipster.lite.generator.setup.infinitest.application.InfinitestApplicationService;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 
 @Configuration

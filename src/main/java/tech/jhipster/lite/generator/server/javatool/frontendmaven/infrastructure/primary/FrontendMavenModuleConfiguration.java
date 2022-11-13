@@ -20,7 +20,7 @@ class FrontendMavenModuleConfiguration {
       .slug(FRONTEND_MAVEN_PLUGIN)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().build())
       .apiDoc("Frontend Maven Plugin", "Add Frontend Maven Plugin")
-      .organization(JHipsterModuleOrganization.builder().addDependency(JAVA_BUILD_TOOL).addDependency(CLIENT_CORE).build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_SERVER).addDependency(CLIENT_CORE).build())
       .tags("server", "tools")
       .factory(frontendMaven::buildModule);
   }

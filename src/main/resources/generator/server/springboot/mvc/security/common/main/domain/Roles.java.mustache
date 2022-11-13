@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public record Roles(Set<Role> roles) {
 
   public static final Roles EMPTY = new Roles(null);
-  
+
   public Roles(Set<Role> roles) {
     this.roles = {{applicationName}}Collections.immutable(roles);
   }
@@ -22,7 +22,7 @@ public record Roles(Set<Role> roles) {
 
     return roles.contains(role);
   }
-  
+
   public Stream<Role> stream() {
     return get().stream();
   }

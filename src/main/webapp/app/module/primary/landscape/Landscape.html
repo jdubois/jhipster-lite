@@ -23,7 +23,15 @@
     </div>
   </div>
 
-  <div class="jhipster-landscape-map jhlite-menu-content-template--content" ref="landscapeContainer">
+  <div
+    class="jhipster-landscape-map jhlite-menu-content-template--content"
+    ref="landscapeContainer"
+    data-selector="landscape-container"
+    @mousedown="startGrabbing"
+    @mousemove="grabbing"
+    @mouseup="stopGrabbing"
+    @mouseleave="stopGrabbing"
+  >
     <div class="jhipster-landscape-levels">
       <ul class="jhipster-landscape-levels--level" :class="modeClass()" v-for="level in levels.value()">
         <li class="jhipster-landscape-element" v-for="element in level.elements" :class="modeClass()">

@@ -43,11 +43,11 @@ public final class JHipsterModulesFixture {
     .files()
       .add(from("init/gitignore"), to(".gitignore"))
       .addExecutable(from("prettier/.husky/pre-commit"), to(".husky/pre-commit"))
-      .batch(from("server/javatool/base"), to("src/main/java/com/company/myapp/errors"))
+      .batch(from("server/javatool/base/main"), to("src/main/java/com/company/myapp/errors"))
         .addTemplate("Assert.java.mustache")
         .addTemplate("AssertionException.java.mustache")
         .and()
-        .add(from("server/springboot/core/MainApp.java.mustache"), to("src/main/java/com/company/myapp/MyApp.java"))
+        .add(from("server/springboot/core/main/MainApp.java.mustache"), to("src/main/java/com/company/myapp/MyApp.java"))
       .add(from("init/README.md.mustache"), to("README.md"))
       .move(path("dummy.txt"), to("dummy.json"))
       .and()
@@ -76,7 +76,6 @@ public final class JHipsterModulesFixture {
       .setVersion(javaDependencyVersion("dummy-dependency", "4.5.8"))
       .removeDependency(dependencyId("net.logstash.logback", "logstash-logback-encoder"))
       .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter"))
-      .addDependency(groupId("org.zalando"), artifactId("problem-spring-web"), versionSlug("problem-spring"))
       .addDependency(groupId("io.jsonwebtoken"), artifactId("jjwt-api"), versionSlug("jjwt.version"))
       .addDependency(optionalTestDependency())
       .addDependency(springBootStarterWebDependency())
@@ -152,7 +151,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static JavaDependency dependencyWithVersion() {
-    return javaDependency().groupId("org.zalando").artifactId("problem-spring-web").versionSlug("problem-spring").build();
+    return javaDependency().groupId("io.jsonwebtoken").artifactId("jjwt-api").versionSlug("jjwt").build();
   }
 
   public static JavaBuildCommands javaDependenciesCommands() {

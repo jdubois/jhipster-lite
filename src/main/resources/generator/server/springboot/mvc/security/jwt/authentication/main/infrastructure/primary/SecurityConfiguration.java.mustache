@@ -8,9 +8,9 @@ import javax.crypto.SecretKey;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -22,20 +22,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.web.filter.CorsFilter;
 
+@Configuration
 @EnableWebSecurity
-@Import(SecurityProblemSupport.class)
 @EnableConfigurationProperties(JwtAuthenticationProperties.class)
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 class SecurityConfiguration {
 
   private final JwtAuthenticationProperties properties;
   private final CorsFilter corsFilter;
-  private final SecurityProblemSupport problemSupport;
 
-  public SecurityConfiguration(JwtAuthenticationProperties properties, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+  public SecurityConfiguration(JwtAuthenticationProperties properties, CorsFilter corsFilter) {
     this.properties = properties;
     this.corsFilter = corsFilter;
-    this.problemSupport = problemSupport;
   }
 
   @Bean
@@ -48,13 +46,14 @@ class SecurityConfiguration {
     return web ->
       web
         .ignoring()
-        .antMatchers(HttpMethod.OPTIONS, "/**")
-        .antMatchers("/app/**/*.{js,html}")
-        .antMatchers("/i18n/**")
-        .antMatchers("/content/**")
-        .antMatchers("/h2-console/**")
-        .antMatchers("/swagger-ui/**")
-        .antMatchers("/test/**");
+        .requestMatchers(HttpMethod.OPTIONS, "/**")
+        .requestMatchers("/app/**")
+        .requestMatchers("/i18n/**")
+        .requestMatchers("/content/**")
+        .requestMatchers("/swagger-ui/**")
+        .requestMatchers("/swagger-ui.html")
+        .requestMatchers("/v3/api-docs/**")
+        .requestMatchers("/test/**");
   }
 
   @Bean
@@ -64,12 +63,8 @@ class SecurityConfiguration {
         .csrf()
         .disable()
         .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-        .exceptionHandling()
-        .authenticationEntryPoint(problemSupport)
-        .accessDeniedHandler(problemSupport)
-        .and()
-      .headers()
-        .contentSecurityPolicy(properties.getContentSecurityPolicy())
+        .headers()
+          .contentSecurityPolicy(properties.getContentSecurityPolicy())
           .and()
         .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
           .and()
@@ -81,19 +76,20 @@ class SecurityConfiguration {
         .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
           .and()
-      .authorizeRequests()
-        .antMatchers("/api/authenticate").permitAll()
-        .antMatchers("/api/register").permitAll()
-        .antMatchers("/api/activate").permitAll()
-        .antMatchers("/api/account/reset-password/init").permitAll()
-        .antMatchers("/api/account/reset-password/finish").permitAll()
-        .antMatchers("/api/admin/**").hasAuthority(Role.ADMIN.key())
-        .antMatchers("/api/**").authenticated()
-        .antMatchers("/management/health").permitAll()
-        .antMatchers("/management/health/**").permitAll()
-        .antMatchers("/management/info").permitAll()
-        .antMatchers("/management/prometheus").permitAll()
-        .antMatchers("/management/**").hasAuthority(Role.ADMIN.key())
+      .authorizeHttpRequests()
+        .requestMatchers("/api/authenticate").permitAll()
+        .requestMatchers("/api/register").permitAll()
+        .requestMatchers("/api/activate").permitAll()
+        .requestMatchers("/api/account/reset-password/init").permitAll()
+        .requestMatchers("/api/account/reset-password/finish").permitAll()
+        .requestMatchers("/api/admin/**").hasAuthority(Role.ADMIN.key())
+        .requestMatchers("/api/**").authenticated()
+        .requestMatchers("/management/health").permitAll()
+        .requestMatchers("/management/health/**").permitAll()
+        .requestMatchers("/management/info").permitAll()
+        .requestMatchers("/management/prometheus").permitAll()
+        .requestMatchers("/management/**").hasAuthority(Role.ADMIN.key())
+        .anyRequest().authenticated()
         .and()
       .httpBasic()
         .and()

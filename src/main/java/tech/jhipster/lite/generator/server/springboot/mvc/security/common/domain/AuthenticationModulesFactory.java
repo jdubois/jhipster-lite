@@ -3,6 +3,7 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.common.domai
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
@@ -40,7 +41,7 @@ public final class AuthenticationModulesFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .context()
-        .put("applicationName", properties.projectBaseName().capitalized())
+        .put("baseName", properties.projectBaseName().capitalized())
         .and()
       .javaDependencies()
         .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-security"))

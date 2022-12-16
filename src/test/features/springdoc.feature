@@ -5,7 +5,7 @@ Feature: Springdoc modules
       | maven-java            |
       | spring-boot           |
       | springdoc-mvc-openapi |
-    Then I should have "springdoc-openapi-ui" in "pom.xml"
+    Then I should have "springdoc-openapi-starter-webmvc-ui" in "pom.xml"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should not have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"
@@ -20,7 +20,7 @@ Feature: Springdoc modules
       | spring-boot               |
       | spring-boot-webflux-netty |
       | springdoc-webflux-openapi |
-    Then I should have "springdoc-openapi-webflux-ui" in "pom.xml"
+    Then I should have "springdoc-openapi-starter-webflux-ui" in "pom.xml"
     And I should have files in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc"
       | SpringdocConfiguration.java |
     And I should not have "jwt" in "src/main/java/tech/jhipster/chips/technical/infrastructure/primary/springdoc/SpringdocConfiguration.java"

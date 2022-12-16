@@ -2,7 +2,9 @@ package {{packageName}}.account.infrastructure.primary;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import {{packageName}}.account.domain.Token;
+
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 
 @Schema(name = "token", description = "A JWT token")
 class RestToken {
@@ -17,7 +19,7 @@ class RestToken {
     return new RestToken(token.get());
   }
 
-  @Schema(description = "JWT token", required = true)
+  @Schema(description = "JWT token", requiredMode = RequiredMode.REQUIRED)
   @JsonProperty("id_token")
   String getIdToken() {
     return idToken;

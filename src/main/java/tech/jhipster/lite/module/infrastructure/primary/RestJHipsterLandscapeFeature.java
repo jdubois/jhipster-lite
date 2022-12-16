@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.infrastructure.primary;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.util.Collection;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeElementType;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeFeature;
@@ -26,17 +27,17 @@ final class RestJHipsterLandscapeFeature implements RestJHipsterLandscapeElement
   }
 
   @Override
-  @Schema(description = "Type of this landscape element", required = true)
+  @Schema(description = "Type of this landscape element", requiredMode = RequiredMode.REQUIRED)
   public JHipsterLandscapeElementType getType() {
     return JHipsterLandscapeElementType.FEATURE;
   }
 
-  @Schema(description = "Unique slug of this feature", required = true)
+  @Schema(description = "Unique slug of this feature", requiredMode = RequiredMode.REQUIRED)
   public String getSlug() {
     return slug;
   }
 
-  @Schema(description = "Modules in this feature", required = true)
+  @Schema(description = "Modules in this feature", requiredMode = RequiredMode.REQUIRED)
   public Collection<RestJHipsterLandscapeModule> getModules() {
     return modules;
   }

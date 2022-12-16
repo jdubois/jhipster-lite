@@ -1,8 +1,10 @@
 package {{packageName}}.account.infrastructure.primary;
 
 import {{packageName}}.error.domain.Assert;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Set;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 
 @Schema(name = "account", description = "Information for the authenticated user account")
 class RestAccount {
@@ -17,7 +19,7 @@ class RestAccount {
     this.authorities = authorities;
   }
 
-  @Schema(description = "Login of the authenticated user", required = true)
+  @Schema(description = "Login of the authenticated user", requiredMode = RequiredMode.REQUIRED)
   public String getLogin() {
     return login;
   }

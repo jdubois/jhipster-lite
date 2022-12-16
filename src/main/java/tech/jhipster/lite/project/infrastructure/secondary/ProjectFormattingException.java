@@ -7,10 +7,10 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 class ProjectFormattingException extends GeneratorException {
 
   public ProjectFormattingException(String message) {
-    super(message);
+    super(internalServerError(ProjectErrorKey.FORMATTING_ERROR).message(message));
   }
 
   public ProjectFormattingException(String message, Throwable cause) {
-    super(message, cause);
+    super(internalServerError(ProjectErrorKey.FORMATTING_ERROR).message(message).cause(cause));
   }
 }

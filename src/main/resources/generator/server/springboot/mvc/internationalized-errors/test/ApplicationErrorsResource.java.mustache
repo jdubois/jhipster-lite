@@ -1,0 +1,17 @@
+package {{ packageName }}.error_generator.infrastructure.primary;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import {{ packageName }}.error.domain.{{ baseName }}Exception;
+import {{ packageName }}.error.domain.StandardErrorKey;
+
+@RestController
+@RequestMapping("/api/errors")
+class {{ baseName }}ErrorsResource {
+
+  @GetMapping("bad-request")
+  void getBadRequest() {
+    throw {{ baseName }}Exception.badRequest(StandardErrorKey.BAD_REQUEST).addParameter("code", "400").build();
+  }
+}

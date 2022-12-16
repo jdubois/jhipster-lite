@@ -116,6 +116,17 @@ class SpringBootMvcsModulesFactoryTest {
       .hasPrefixedFiles("src/test/java/com/jhipster/test", "BeanValidationAssertions.java", "BeanValidationTest.java")
       .hasFiles("src/test/java/com/jhipster/test/security/infrastructure/primary/CorsFilterConfigurationIT.java")
       .hasFiles("src/test/java/com/jhipster/test/JsonHelper.java")
+      .hasFiles("src/main/java/com/jhipster/test/error/infrastructure/primary/BeanValidationErrorsHandler.java")
+      .hasPrefixedFiles(
+        "src/test/java/com/jhipster/test/error/infrastructure/primary",
+        "BeanValidationErrorsHandlerTest.java",
+        "BeanValidationErrorsHandlerIntTest.java"
+      )
+      .hasPrefixedFiles(
+        "src/test/java/com/jhipster/test/error_generator/infrastructure/primary",
+        "BeanValidationErrorsResource.java",
+        "RestMandatoryParameter.java"
+      )
       .hasFile("pom.xml")
       .containing(
         """

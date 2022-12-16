@@ -26,6 +26,7 @@ class VueModulesFactoryTest {
 
     //@formatter:off
     assertThatModuleWithFiles(module, packageJsonFile(), lintStagedConfigFile())
+      .hasFiles("documentation/vue.md")
       .hasFile("package.json")
         .containing(nodeDependency("vue"))
         .containing(nodeDependency("@rushstack/eslint-patch"))
@@ -86,7 +87,13 @@ class VueModulesFactoryTest {
       .hasPrefixedFiles("src/main/webapp/app/common/domain", "Logger.ts", "Message.ts")
       .hasFiles("src/main/webapp/app/common/secondary/ConsoleLogger.ts")
       .hasFiles("src/test/javascript/spec/common/domain/Logger.fixture.ts")
-      .hasFiles("src/test/javascript/spec/common/secondary/ConsoleLogger.spec.ts");
+      .hasFiles("src/test/javascript/spec/common/secondary/ConsoleLogger.spec.ts")
+      .hasFiles("src/main/webapp/app/vue/VueProp.ts")
+      .hasFiles(
+        "src/test/javascript/spec/vue/vue-prop/ArrayComponentVue.vue",
+        "src/test/javascript/spec/vue/vue-prop/ObjectComponentVue.vue",
+        "src/test/javascript/spec/vue/vue-prop/VueProp.spec.ts"
+      );
     //@formatter:on
   }
 

@@ -126,7 +126,7 @@ You may need to mock beans for your component tests but you won't be able to do 
 )
 @SpringBootTest(
   classes = {
-    {{applicationName}}App.class,
+    {{ baseName }}App.class,
     CucumberConfiguration.class,
     CucumberMocksConfiguration.class
   },

@@ -44,7 +44,7 @@ class LiquibaseModuleFactoryTest {
         """
       )
       .and()
-      .hasFiles("src/main/resources/config/liquibase/master.xml")
+      .hasPrefixedFiles("src/main/resources/config/liquibase", "master.xml", "changelog/0000000000_example.xml")
       .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/technical/infrastructure/secondary/liquibase",
         "AsyncSpringLiquibase.java",

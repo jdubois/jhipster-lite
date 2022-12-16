@@ -82,7 +82,7 @@ class AngularOauth2ModuleFactoryTest {
       .and()
       .hasFile("src/main/webapp/app/app.component.spec.ts")
       .containing("import { By } from '@angular/platform-browser';")
-      .containing("import { LoginComponent } from './login/login.component';")
+      .containing("import LoginComponent from './login/login.component';")
       .containing("LoginComponent")
       .containing("it('should display login component', () => {")
       .and();

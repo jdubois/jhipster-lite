@@ -1,0 +1,41 @@
+package {{ packageName }}.error.infrastructure.primary;
+
+import static org.mockito.Mockito.*;
+
+import ch.qos.logback.classic.Level;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.context.MessageSource;
+import {{ packageName }}.LogsSpy;
+import {{ packageName }}.UnitTest;
+import {{ packageName }}.error.domain.{{ baseName }}Exception;
+import {{ packageName }}.error.domain.StandardErrorKey;
+
+@UnitTest
+@ExtendWith(LogsSpy.class)
+class {{ baseName }}ErrorsHandlerTest {
+
+  private static final {{ baseName }}ErrorsHandler handler = new {{ baseName }}ErrorsHandler(mock(MessageSource.class));
+
+  private final LogsSpy logs;
+
+  public {{ baseName }}ErrorsHandlerTest(LogsSpy logs) {
+    this.logs = logs;
+  }
+
+  @Test
+  void shouldLogServerErrorAsError() {
+    handler.handle{{ baseName }}Exception(
+      {{ baseName }}Exception.internalServerError(StandardErrorKey.INTERNAL_SERVER_ERROR).message("Oops").build()
+    );
+
+    logs.shouldHave(Level.ERROR, "Oops");
+  }
+
+  @Test
+  void shouldLogClientErrorAsInfo() {
+    handler.handle{{ baseName }}Exception({{ baseName }}Exception.badRequest(StandardErrorKey.BAD_REQUEST).message("Oops").build());
+
+    logs.shouldHave(Level.INFO, "Oops");
+  }
+}

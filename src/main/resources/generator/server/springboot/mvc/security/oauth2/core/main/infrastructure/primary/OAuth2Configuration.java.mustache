@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 class OAuth2Configuration {
 
   @Bean
+  @SuppressWarnings("java:S1874")
   public OAuth2AuthorizedClientManager authorizedClientManager(
     ClientRegistrationRepository clientRegistrationRepository,
     OAuth2AuthorizedClientRepository authorizedClientRepository

@@ -40,7 +40,7 @@ class PropertiesFileSpringPropertiesHandler {
 
       Files.write(file, properties.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
-      throw new GeneratorException("Error updating properties: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error updating properties: " + e.getMessage(), e);
     }
   }
 

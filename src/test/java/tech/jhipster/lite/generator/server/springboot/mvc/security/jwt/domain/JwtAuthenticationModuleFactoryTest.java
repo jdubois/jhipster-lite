@@ -87,7 +87,6 @@ class JwtAuthenticationModuleFactoryTest {
         "JwtReader.java",
         "NotAuthenticatedUserException.java",
         "SecurityConfiguration.java",
-        "SecurityProblemSupport.java",
         "UnknownAuthenticationException.java"
       )
       .hasPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")

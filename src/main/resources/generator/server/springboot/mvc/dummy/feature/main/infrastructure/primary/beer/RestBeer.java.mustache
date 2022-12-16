@@ -2,9 +2,11 @@ package {{packageName}}.dummy.infrastructure.primary.beer;
 
 import {{packageName}}.dummy.domain.beer.Beer;
 import {{packageName}}.error.domain.Assert;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 
 @Schema(name = "beer", description = "A beer")
 class RestBeer {
@@ -25,17 +27,17 @@ class RestBeer {
     return new RestBeerBuilder().id(beer.id().get()).name(beer.name().get()).unitPrice(beer.unitPrice().get()).build();
   }
 
-  @Schema(description = "ID of this beer", required = true)
+  @Schema(description = "ID of this beer", requiredMode = RequiredMode.REQUIRED)
   public UUID getId() {
     return id;
   }
 
-  @Schema(description = "Name of this beer", required = true)
+  @Schema(description = "Name of this beer", requiredMode = RequiredMode.REQUIRED)
   public String getName() {
     return name;
   }
 
-  @Schema(description = "Unit price (in euro) of this beer", required = true)
+  @Schema(description = "Unit price (in euro) of this beer", requiredMode = RequiredMode.REQUIRED)
   public BigDecimal getUnitPrice() {
     return unitPrice;
   }

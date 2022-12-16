@@ -43,7 +43,7 @@ class KafkaModuleFactoryTest {
       module,
       pomFile(),
       new ModuleFile(
-        "src/main/resources/generator/server/springboot/core/IntegrationTest.java.mustache",
+        "src/main/resources/generator/server/springboot/core/test/IntegrationTest.java.mustache",
         "src/test/java/com/jhipster/test/IntegrationTest.java"
       ),
       readmeFile()

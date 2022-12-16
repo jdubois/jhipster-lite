@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { By } from '@angular/platform-browser';
-import { LoginComponent } from './login.component';
+import LoginComponent from './login.component';
 import { Oauth2AuthService } from '../auth/oauth2-auth.service';
 
 describe('LoginComponent', () => {

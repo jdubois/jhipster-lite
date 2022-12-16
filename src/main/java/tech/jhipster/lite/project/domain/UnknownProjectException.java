@@ -5,6 +5,6 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 public class UnknownProjectException extends GeneratorException {
 
   public UnknownProjectException() {
-    super("A user tried to download an unknown project");
+    super(badRequest(ProjectErrorKey.UNKOWN_PROJECT).message("A user tried to download an unknown project"));
   }
 }

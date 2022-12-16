@@ -18,13 +18,13 @@ public class CucumberModuleFactory {
   public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    String applicationName = properties.projectBaseName().capitalized();
+    String baseName = properties.projectBaseName().capitalized();
     JHipsterDestination destination = toSrcTestJava().append(properties.packagePath()).append("cucumber");
 
     //@formatter:off
     JHipsterModuleBuilder builder = cucumberModuleBuilder(properties)
     .context()
-      .put("applicationName", applicationName)
+      .put("baseName", baseName)
       .and()
     .documentation(documentationTitle("Cucumber"), SOURCE.template("cucumber.md"))
     .files()

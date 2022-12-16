@@ -60,7 +60,7 @@ class FileSystemProjectsRepository implements ProjectsRepository {
       Files.createDirectories(historyPath.getParent());
       Files.write(historyPath, writer.writeValueAsBytes(PersistedProjectHistory.from(history)));
     } catch (IOException e) {
-      throw new GeneratorException("Eror saving history: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Eror saving history: " + e.getMessage(), e);
     }
   }
 
@@ -77,7 +77,7 @@ class FileSystemProjectsRepository implements ProjectsRepository {
     try {
       return json.readValue(Files.readAllBytes(historyFilePath), PersistedProjectHistory.class).toDomain(path);
     } catch (IOException e) {
-      throw new GeneratorException("Can't read project history: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Can't read project history: " + e.getMessage(), e);
     }
   }
 

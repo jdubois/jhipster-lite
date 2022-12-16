@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'health',
-    loadComponent: () => import('./health/health.component').then(m => m.HealthComponent),
+    loadComponent: () => import('./health/health.component'),
     title: 'Health',
   },
 ];
@@ -14,4 +14,4 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
   ],
 })
-export class AdminRoutingModule {}
+export default class AdminRoutingModule {}

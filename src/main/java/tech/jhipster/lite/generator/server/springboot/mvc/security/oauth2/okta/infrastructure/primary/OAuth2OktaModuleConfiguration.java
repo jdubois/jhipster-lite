@@ -1,5 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.okta.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 import static tech.jhipster.lite.module.domain.resource.JHipsterModulePropertyDefinition.mandatoryStringProperty;
 
@@ -26,7 +27,7 @@ class OAuth2OktaModuleConfiguration {
         "Spring Boot - MVC - Security",
         "Add a Spring Security: OAuth 2.0 / OIDC Authentication / Okta Provider (stateful, works with Keycloak and Okta)"
       )
-      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT_OAUTH_2).build())
+      .organization(JHipsterModuleOrganization.builder().feature(OAUTH_PROVIDER).addDependency(SPRING_BOOT_OAUTH_2).build())
       .tags("server", "spring", "spring-boot", AUTHENTICATION, "okta")
       .factory(oAuth2::buildOAuth2OktaModule);
   }

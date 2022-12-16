@@ -50,7 +50,7 @@ class FileSystemProjectJavaDependenciesRepository implements ProjectJavaDependen
         .dependenciesManagements(extractDependenciesManagement(pomContent))
         .dependencies(extractDependencies(pomContent));
     } catch (IOException | XmlPullParserException e) {
-      throw new GeneratorException("Error reading pom file: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error reading pom file: " + e.getMessage(), e);
     }
   }
 

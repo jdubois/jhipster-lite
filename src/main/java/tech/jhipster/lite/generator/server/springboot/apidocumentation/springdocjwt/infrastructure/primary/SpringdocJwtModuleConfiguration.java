@@ -20,7 +20,14 @@ class SpringdocJwtModuleConfiguration {
       .slug(SPRINGDOC_JWT)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - API Documentation", "Add JWT authentication for springdoc")
-      .organization(JHipsterModuleOrganization.builder().addDependency(SPRINGDOC).addDependency(SPRING_BOOT_JWT).build())
+      .organization(
+        JHipsterModuleOrganization
+          .builder()
+          .feature(AUTHENTICATION_SPRINGDOC)
+          .addDependency(SPRINGDOC)
+          .addDependency(SPRING_BOOT_JWT)
+          .build()
+      )
       .tags("server", "swagger", "springdoc")
       .factory(springdocJwt::buildModule);
   }

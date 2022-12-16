@@ -1,9 +1,16 @@
 package tech.jhipster.lite.error.domain;
 
+import java.util.Map;
+
 public class TooManyElementsException extends AssertionException {
 
+  private final String maxSize;
+  private final String currentSize;
+
   public TooManyElementsException(TooManyElementsExceptionBuilder builder) {
-    super(builder.message());
+    super(builder.field, builder.message());
+    maxSize = String.valueOf(builder.maxSize);
+    currentSize = String.valueOf(builder.size);
   }
 
   public static TooManyElementsExceptionBuilder builder() {
@@ -34,7 +41,7 @@ public class TooManyElementsException extends AssertionException {
       return this;
     }
 
-    public String message() {
+    private String message() {
       return new StringBuilder()
         .append("Size of collection \"")
         .append(field)
@@ -48,5 +55,15 @@ public class TooManyElementsException extends AssertionException {
     public TooManyElementsException build() {
       return new TooManyElementsException(this);
     }
+  }
+
+  @Override
+  public AssertionErrorType type() {
+    return AssertionErrorType.TOO_MANY_ELEMENTS;
+  }
+
+  @Override
+  public Map<String, String> parameters() {
+    return Map.of("maxSize", maxSize, "currentSize", currentSize);
   }
 }

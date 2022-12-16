@@ -5,6 +5,10 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 class UnknownFileToMoveException extends GeneratorException {
 
   public UnknownFileToMoveException(String filename) {
-    super("Can't move " + filename + ", can't find it in project");
+    super(badRequest(ModuleSecondaryErrorKey.UNKNOWN_FILE_TO_MOVE).message(buildMessage(filename)).addParameter("file", filename));
+  }
+
+  private static String buildMessage(String filename) {
+    return new StringBuilder().append("Can't move ").append(filename).append(", can't find it in project").toString();
   }
 }

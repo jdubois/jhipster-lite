@@ -177,7 +177,6 @@ class FrontendMavenModuleFactoryTest {
         """
       )
       .and()
-      .hasJavaSources("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResource.java")
-      .hasJavaTests("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResourceIT.java");
+      .hasJavaSources("com/jhipster/test/technical/infrastructure/primary/redirection/RedirectionResource.java");
   }
 }

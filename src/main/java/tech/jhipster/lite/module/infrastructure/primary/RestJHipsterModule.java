@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.infrastructure.primary;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import tech.jhipster.lite.error.domain.Assert;
@@ -31,22 +32,22 @@ class RestJHipsterModule {
       .build();
   }
 
-  @Schema(description = "Module slug", required = true)
+  @Schema(description = "Module slug", requiredMode = RequiredMode.REQUIRED)
   public String getSlug() {
     return slug;
   }
 
-  @Schema(description = "Module description", required = true)
+  @Schema(description = "Module description", requiredMode = RequiredMode.REQUIRED)
   public String getDescription() {
     return description;
   }
 
-  @Schema(description = "Properties for this module", required = true)
+  @Schema(description = "Properties for this module", requiredMode = RequiredMode.REQUIRED)
   public RestJHipsterModulePropertiesDefinition getProperties() {
     return properties;
   }
 
-  @Schema(description = "Module tags", required = true)
+  @Schema(description = "Module tags", requiredMode = RequiredMode.REQUIRED)
   public Collection<String> getTags() {
     return tags;
   }

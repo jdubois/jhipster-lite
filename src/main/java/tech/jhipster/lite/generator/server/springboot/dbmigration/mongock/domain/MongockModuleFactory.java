@@ -29,7 +29,7 @@ public class MongockModuleFactory {
       .javaDependencies()
         .addDependencyManagement(mongockBom())
         .addDependency(MONGOCK_GROUP, artifactId("mongock-springboot"))
-        .addDependency(MONGOCK_GROUP, artifactId("mongodb-springdata-v3-driver"))
+        .addDependency(MONGOCK_GROUP, artifactId("mongodb-springdata-v4-driver"))
         .and()
       .documentation(documentationTitle("Mongock"), SOURCE.append("mongock.md"))
       .files()

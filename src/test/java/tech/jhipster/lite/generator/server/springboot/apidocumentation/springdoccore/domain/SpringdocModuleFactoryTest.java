@@ -23,8 +23,9 @@ class SpringdocModuleFactoryTest {
       .notContaining("JWT")
       .and()
       .hasFile("pom.xml")
-      .containing("<artifactId>springdoc-openapi-ui</artifactId>")
-      .notContaining("<artifactId>springdoc-openapi-webflux-ui</artifactId>")
+      .containing("<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>")
+      .containing("<artifactId>springdoc-openapi-starter-webmvc-api</artifactId>")
+      .notContaining("<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>")
       .and();
   }
 
@@ -37,7 +38,8 @@ class SpringdocModuleFactoryTest {
       .notContaining("JWT")
       .and()
       .hasFile("pom.xml")
-      .containing("<artifactId>springdoc-openapi-webflux-ui</artifactId>")
+      .containing("<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>")
+      .containing("<artifactId>springdoc-openapi-starter-webflux-api</artifactId>")
       .and();
   }
 
@@ -55,9 +57,10 @@ class SpringdocModuleFactoryTest {
       .containing("springdoc.swagger-ui.operationsSorter=alpha")
       .containing("springdoc.swagger-ui.tagsSorter=alpha")
       .containing("springdoc.swagger-ui.tryItOutEnabled=true")
+      .containing("springdoc.enable-native-support=true")
       .and()
       .hasFile("README.md")
-      .containing("- [Local API doc](http://localhost:8080/swagger-ui/index.html)")
+      .containing("- [Local API doc](http://localhost:8080/swagger-ui.html)")
       .and();
   }
 }

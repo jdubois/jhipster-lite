@@ -14,6 +14,8 @@ import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFold
 import { RestStatisticsRepository } from './common/secondary/RestStatisticsRepository';
 import { WindowApplicationListener } from './common/primary/applicationlistener/WindowApplicationListener';
 import { Timeout } from '@/common/primary/timeout/Timeout';
+import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
+import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 
 const app = createApp(App);
 
@@ -22,6 +24,8 @@ const alertBus = new MittAlertBus(emitter);
 const alertListener = new MittAlertListener(emitter);
 const axiosHttp = new AxiosHttp(axios.create({ baseURL: '' }));
 const consoleLogger = new ConsoleLogger(console);
+const cursorUpdater = new BodyCursorUpdater(window);
+const landscapeScroller = new LandscapeScroller();
 const modulesRepository = new RestModulesRepository(axiosHttp);
 const projectFoldersRepository = new RestProjectFoldersRepository(axiosHttp);
 const statisticsRepository = new RestStatisticsRepository(axiosHttp);
@@ -30,8 +34,10 @@ const timeout = () => new Timeout();
 
 app.provide('alertBus', alertBus);
 app.provide('alertListener', alertListener);
+app.provide('cursorUpdater', cursorUpdater);
 app.provide('globalWindow', window);
 app.provide('logger', consoleLogger);
+app.provide('landscapeScroller', landscapeScroller);
 app.provide('modules', modulesRepository);
 app.provide('statistics', statisticsRepository);
 app.provide('projectFolders', projectFoldersRepository);

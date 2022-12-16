@@ -20,7 +20,14 @@ class SpringdocOauth2ModuleConfiguration {
       .slug(SPRINGDOC_OAUTH_2)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - API Documentation", "Add OAuth2 authentication for springdoc")
-      .organization(JHipsterModuleOrganization.builder().addDependency(SPRINGDOC).addDependency(SPRING_BOOT_OAUTH_2).build())
+      .organization(
+        JHipsterModuleOrganization
+          .builder()
+          .feature(AUTHENTICATION_SPRINGDOC)
+          .addDependency(SPRINGDOC)
+          .addDependency(SPRING_BOOT_OAUTH_2)
+          .build()
+      )
       .tags("server", "swagger", "springdoc")
       .factory(springdocOauth2::buildModule);
   }

@@ -139,9 +139,9 @@ jobs:
           - mssqlapp
           - flywayapp
           - undertowapp
-          - eurekaapp
-          - consulapp
-          - gatewayapp
+          #- eurekaapp
+          #- consulapp
+          #- gatewayapp
           - mongodbapp
           - neo4japp
           - angularapp

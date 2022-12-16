@@ -49,7 +49,6 @@ public class JwtAuthenticationModuleFactory {
           .addTemplate("JWTFilter.java")
           .addTemplate("JwtReader.java")
           .addTemplate("SecurityConfiguration.java")
-          .addTemplate("SecurityProblemSupport.java")
           .and()
         .batch(SOURCE.append("test/infrastructure/primary"), toSrcTestJava().append(packagePath).append(AUTHENTICATION_PRIMARY))
           .addTemplate("AuthenticatedUserTest.java")

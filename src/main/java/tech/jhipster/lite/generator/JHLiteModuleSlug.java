@@ -37,9 +37,11 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   GITPOD("gitpod"),
   INFINITEST_FILTERS("infinitest-filters"),
   INIT("init"),
+  INTERNATIONALIZED_ERRORS("internationalized-errors"),
   JACOCO_CHECK_MIN_COVERAGE("jacoco-check-min-coverage"),
   JAVA_ARCHUNIT("java-archunit"),
   JAVA_BASE("java-base"),
+  JAVA_ENUMS("java-enums"),
   JAVA_MEMOIZERS("java-memoizers"),
   JIB("jib"),
   JPA_PAGINATION("jpa-pagination"),
@@ -58,7 +60,6 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   PAGINATION_DOMAIN("pagination-domain"),
   PLAYWRIGHT("playwright"),
   POSTGRESQL("postgresql"),
-  POSTGRESQL_DIALECT("postgresql-dialect"),
   PRETTIER("prettier"),
   REACT_CORE("react-core"),
   REACT_JWT("react-jwt"),
@@ -97,8 +98,7 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   SVELTE_CORE("svelte-core"),
   TYPESCRIPT("typescript"),
   VUE_CORE("vue-core"),
-  VUE_PINIA("vue-pinia"),
-  ZALANDO_PROBLEMS("zalando-problems");
+  VUE_PINIA("vue-pinia");
 
   private final String slug;
 

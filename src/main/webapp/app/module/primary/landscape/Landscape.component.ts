@@ -1,7 +1,7 @@
 import { ApplicationListener } from '@/common/primary/applicationlistener/ApplicationListener';
 import { Loader } from '@/loader/primary/Loader';
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
-import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, Ref, ref } from 'vue';
 import { LandscapeModuleVue } from '../landscape-module';
 import { buildConnector, LandscapeConnector } from './LandscapeConnector';
 import { DisplayMode } from './DisplayMode';
@@ -25,15 +25,19 @@ import { LandscapeElement } from '@/module/domain/landscape/LandscapeElement';
 import { LandscapeFeature } from '@/module/domain/landscape/LandscapeFeature';
 import { LandscapeElementId } from '@/module/domain/landscape/LandscapeElementId';
 import { LandscapeFeatureSlug } from '@/module/domain/landscape/LandscapeFeatureSlug';
+import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
+import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 
 export default defineComponent({
   name: 'LandscapeVue',
   components: { LandscapeModuleVue, ModulePropertiesFormVue, ProjectActionsVue, IconVue },
   setup() {
+    const applicationListener = inject('applicationListener') as ApplicationListener;
     const alertBus = inject('alertBus') as AlertBus;
+    const cursorUpdater = inject('cursorUpdater') as BodyCursorUpdater;
+    const landscapeScroller = inject('landscapeScroller') as LandscapeScroller;
     const modules = inject('modules') as ModulesRepository;
     const projectFolders = inject('projectFolders') as ProjectFoldersRepository;
-    const applicationListener = inject('applicationListener') as ApplicationListener;
 
     const selectedMode = ref<DisplayMode>('COMPACTED');
 
@@ -52,13 +56,45 @@ export default defineComponent({
 
     let commitModule = true;
 
+    const isMoving: Ref<boolean> = ref(false);
+    const startX: Ref<number> = ref(0);
+    const startY: Ref<number> = ref(0);
+    const currentScrollX: Ref<number> = ref(0);
+    const currentScrollY: Ref<number> = ref(0);
+
     const operationInProgress = ref(false);
 
     onMounted(() => {
       modules.landscape().then(response => loadLandscape(response));
-
       projectFolders.get().then(projectFolder => (folderPath.value = projectFolder));
     });
+
+    const startGrabbing = (mouseEvent: MouseEvent): void => {
+      if (mouseEvent.preventDefault) {
+        mouseEvent.preventDefault();
+      }
+      isMoving.value = true;
+      startX.value = mouseEvent.pageX;
+      startY.value = mouseEvent.pageY;
+      const rect = landscapeContainer.value;
+      currentScrollX.value = rect?.scrollLeft || 0;
+      currentScrollY.value = rect?.scrollTop || 0;
+      cursorUpdater.set('grabbing');
+    };
+
+    const stopGrabbing = (): void => {
+      isMoving.value = false;
+      cursorUpdater.reset();
+    };
+
+    const grabbing = (mouseEvent: MouseEvent): void => {
+      if (!isMoving.value) {
+        return;
+      }
+      const scrollX = currentScrollX.value + (startX.value - mouseEvent.clientX);
+      const scrollY = currentScrollY.value + (startY.value - mouseEvent.clientY);
+      landscapeScroller.scroll(landscapeContainer.value!, scrollX, scrollY);
+    };
 
     const loadLandscape = (response: Landscape): void => {
       landscape.value.loaded(response);
@@ -410,6 +446,11 @@ export default defineComponent({
       operationStarted,
       operationEnded,
       isApplied,
+      currentScrollX,
+      currentScrollY,
+      startGrabbing,
+      stopGrabbing,
+      grabbing,
     };
   },
 });

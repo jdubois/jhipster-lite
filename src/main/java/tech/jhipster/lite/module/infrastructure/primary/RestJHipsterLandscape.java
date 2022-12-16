@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.infrastructure.primary;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.util.Collection;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscape;
 
@@ -17,7 +18,7 @@ class RestJHipsterLandscape {
     return new RestJHipsterLandscape(landscape.levels().stream().map(RestJHipsterLandscapeLevel::from).toList());
   }
 
-  @Schema(description = "Levels in the landscape", required = true)
+  @Schema(description = "Levels in the landscape", requiredMode = RequiredMode.REQUIRED)
   public Collection<RestJHipsterLandscapeLevel> getLevels() {
     return levels;
   }

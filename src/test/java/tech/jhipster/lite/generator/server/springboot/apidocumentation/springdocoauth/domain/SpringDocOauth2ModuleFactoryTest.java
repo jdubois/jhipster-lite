@@ -26,9 +26,6 @@ class SpringDocOauth2ModuleFactoryTest {
     //@formatter:off
     assertThatModuleWithFiles(module, pomFile())
       .hasFiles("src/main/java/com/jhipster/test/technical/infrastructure/primary/springdoc/SpringdocOAuth2Configuration.java")
-      .hasFile("pom.xml")
-        .containing("<artifactId>springdoc-openapi-security</artifactId>")
-        .and()
       .hasFile("src/main/resources/config/application.properties")
         .containing("springdoc.swagger-ui.oauth.client-id=web_app")
         .containing("springdoc.swagger-ui.oauth.realm=jhipster")

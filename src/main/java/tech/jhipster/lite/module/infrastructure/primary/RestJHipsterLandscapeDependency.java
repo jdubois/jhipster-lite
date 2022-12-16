@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.infrastructure.primary;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeDependency;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeElementType;
 
@@ -19,12 +20,12 @@ class RestJHipsterLandscapeDependency {
     return new RestJHipsterLandscapeDependency(dependency.type(), dependency.slug().get());
   }
 
-  @Schema(description = "Type of this dependency", required = true)
+  @Schema(description = "Type of this dependency", requiredMode = RequiredMode.REQUIRED)
   public JHipsterLandscapeElementType getType() {
     return type;
   }
 
-  @Schema(description = "Slug of this dependency", required = true)
+  @Schema(description = "Slug of this dependency", requiredMode = RequiredMode.REQUIRED)
   public String getSlug() {
     return slug;
   }

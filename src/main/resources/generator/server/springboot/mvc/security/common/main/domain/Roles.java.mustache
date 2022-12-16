@@ -1,6 +1,6 @@
 package {{packageName}}.authentication.domain;
 
-import {{packageName}}.common.domain.{{applicationName}}Collections;
+import {{packageName}}.common.domain.{{ baseName }}Collections;
 import {{packageName}}.error.domain.Assert;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -10,7 +10,7 @@ public record Roles(Set<Role> roles) {
   public static final Roles EMPTY = new Roles(null);
 
   public Roles(Set<Role> roles) {
-    this.roles = {{applicationName}}Collections.immutable(roles);
+    this.roles = {{ baseName }}Collections.immutable(roles);
   }
 
   public boolean hasRole() {

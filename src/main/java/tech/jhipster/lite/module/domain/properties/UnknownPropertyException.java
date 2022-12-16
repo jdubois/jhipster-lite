@@ -5,6 +5,6 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 class UnknownPropertyException extends GeneratorException {
 
   public UnknownPropertyException(String key) {
-    super("Unknown property " + key);
+    super(badRequest(PropertiesErrorKey.UNKNOWN_PROPERTY).message("Unknown property " + key).addParameter("key", key));
   }
 }

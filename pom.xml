@@ -9,12 +9,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.0-RC2</version>
+    <version>3.0.0</version>
   </parent>
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.23.1-SNAPSHOT</version>
+  <version>0.24.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -45,43 +45,6 @@
     <url>https://github.com/jhipster/jhipster-lite</url>
   </scm>
 
-  <repositories>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-
   <properties>
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -97,23 +60,23 @@
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
-    <byte-buddy.version>1.12.18</byte-buddy.version>
+    <byte-buddy.version>1.12.20</byte-buddy.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
-    <jgit.version>6.3.0.202209071007-r</jgit.version>
-    <archunit-junit5.version>1.0.0</archunit-junit5.version>
-    <springdoc-openapi-starter-webmvc-ui.version>2.0.0-RC1</springdoc-openapi-starter-webmvc-ui.version>
+    <jgit.version>6.4.0.202211300538-r</jgit.version>
+    <archunit-junit5.version>1.0.1</archunit-junit5.version>
+    <springdoc-openapi-starter-webmvc-ui.version>2.0.0</springdoc-openapi-starter-webmvc-ui.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <apache-commons-io.version>2.11.0</apache-commons-io.version>
-    <cucumber.version>7.9.0</cucumber.version>
-    <testng.version>7.6.1</testng.version>
+    <cucumber.version>7.10.0</cucumber.version>
+    <testng.version>7.7.0</testng.version>
     <maven-model.version>3.8.6</maven-model.version>
-    <joox.version>1.6.2</joox.version>
+    <joox.version>2.0.0</joox.version>
     <dom4j.version>2.1.3</dom4j.version>
-    <testcontainers.version>1.17.5</testcontainers.version>
-    <mongock.version>5.1.7</mongock.version>
+    <testcontainers.version>1.17.6</testcontainers.version>
+    <mongock.version>5.2.2</mongock.version>
 
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
     <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
@@ -172,6 +135,7 @@
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
@@ -316,6 +280,9 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
 

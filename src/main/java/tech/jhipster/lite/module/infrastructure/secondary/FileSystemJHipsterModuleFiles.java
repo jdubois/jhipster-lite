@@ -55,7 +55,7 @@ class FileSystemJHipsterModuleFiles {
 
         log.debug("{} added", filePath);
       } catch (IOException e) {
-        throw new GeneratorException("Can't write file to " + filePath.toString() + ": " + e.getMessage(), e);
+        throw GeneratorException.technicalError("Can't write file to " + filePath.toString() + ": " + e.getMessage(), e);
       }
     };
   }
@@ -108,7 +108,7 @@ class FileSystemJHipsterModuleFiles {
     try {
       Files.move(source, destination);
     } catch (IOException e) {
-      throw new GeneratorException("Error moving file: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error moving file: " + e.getMessage(), e);
     }
   }
 
@@ -133,7 +133,7 @@ class FileSystemJHipsterModuleFiles {
     try {
       Files.delete(path);
     } catch (IOException e) {
-      throw new GeneratorException("Error deleting file: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error deleting file: " + e.getMessage(), e);
     }
   }
 }

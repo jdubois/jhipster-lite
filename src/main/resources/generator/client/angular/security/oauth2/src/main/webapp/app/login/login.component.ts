@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   styleUrls: [],
 })
-export class LoginComponent {
+export default class LoginComponent {
   constructor(private oauth2AuthService: Oauth2AuthService) {}
 
   logout(): void {

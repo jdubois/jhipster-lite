@@ -29,6 +29,7 @@ class JavaBaseModuleFactoryTest {
       .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/error/domain",
         "Assert.java",
+        "AssertionErrorType.java",
         "MissingMandatoryValueException.java",
         "AssertionException.java",
         "NotAfterTimeException.java",
@@ -40,9 +41,20 @@ class JavaBaseModuleFactoryTest {
         "StringTooShortException.java",
         "TooManyElementsException.java"
       )
+      .hasPrefixedFiles(
+        "src/test/java/com/jhipster/test/error/domain/",
+        "AssertTest.java",
+        "MissingMandatoryValueExceptionTest.java",
+        "NotAfterTimeExceptionTest.java",
+        "NotBeforeTimeExceptionTest.java",
+        "NullElementInCollectionExceptionTest.java",
+        "NumberValueTooHighExceptionTest.java",
+        "NumberValueTooLowExceptionTest.java",
+        "StringTooLongExceptionTest.java",
+        "StringTooShortExceptionTest.java",
+        "TooManyElementsExceptionTest.java"
+      )
       .hasJavaTests(
-        "com/jhipster/test/error/domain/AssertTest.java",
-        "com/jhipster/test/error/domain/MissingMandatoryValueExceptionTest.java",
         "com/jhipster/test/common/domain/MyappCollectionsTest.java",
         "com/jhipster/test/UnitTest.java",
         "com/jhipster/test/ComponentTest.java",

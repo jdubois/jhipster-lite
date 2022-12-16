@@ -13,11 +13,14 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 public class VueModulesFactory {
 
   private static final JHipsterSource SOURCE = from("client/vue");
+  private static final JHipsterSource DOCUMENTATION_SOURCE = SOURCE.append("documentation");
+  private static final JHipsterSource TEST_SOURCE = SOURCE.append("test/spec");
   private static final JHipsterSource IMAGE_SOURCE = SOURCE.append("webapp/content/images");
   private static final JHipsterSource COMMON_PRIMARY_SOURCE = SOURCE.append("webapp/app/common/primary");
   private static final JHipsterSource COMMON_PRIMARY_TEST_SOURCE = SOURCE.append("test/spec/common/primary");
 
   private static final JHipsterDestination MAIN_DESTINATION = to("src/main/webapp/app");
+  private static final JHipsterDestination TEST_DESTINATION = to("src/test/javascript/spec");
   private static final JHipsterDestination MAIN_PRIMARY_DESTINATION = MAIN_DESTINATION.append("common/primary");
   private static final JHipsterDestination COMMON_PRIMARY_TEST_DESTINATION = to("src/test/javascript/spec/common/primary");
 
@@ -27,6 +30,7 @@ public class VueModulesFactory {
   public JHipsterModule buildVueModule(JHipsterModuleProperties properties) {
     //@formatter:off
     return ClientsModulesFactory.clientModuleBuilder(properties)
+      .documentation(documentationTitle("Vue"), DOCUMENTATION_SOURCE.file("vue.md"))
       .packageJson()
         .addDependency(packageName("vue"), VUE)
         .addDependency(packageName("axios"), VUE)
@@ -99,6 +103,12 @@ public class VueModulesFactory {
         .add(SOURCE.template("webapp/app/common/secondary/ConsoleLogger.ts"), MAIN_DESTINATION.append("common/secondary/ConsoleLogger.ts"))
         .add(SOURCE.template("test/spec/common/domain/Logger.fixture.ts"), to("src/test/javascript/spec/common/domain/Logger.fixture.ts"))
         .add(SOURCE.template("test/spec/common/secondary/ConsoleLogger.spec.ts"), to("src/test/javascript/spec/common/secondary/ConsoleLogger.spec.ts"))
+        .add(SOURCE.file("webapp/app/vue/VueProp.ts"), to("src/main/webapp/app/vue/VueProp.ts"))
+        .batch(TEST_SOURCE.append("vue/vue-prop"), TEST_DESTINATION.append("vue/vue-prop"))
+          .addFile("ArrayComponentVue.vue")
+          .addFile("ObjectComponentVue.vue")
+          .addFile("VueProp.spec.ts")
+          .and()
         .and()
       .build();
     //@formatter:on

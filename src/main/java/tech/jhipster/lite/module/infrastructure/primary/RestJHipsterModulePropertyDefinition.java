@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.infrastructure.primary;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDefaultValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyDescription;
 import tech.jhipster.lite.module.domain.properties.JHipsterPropertyType;
@@ -36,17 +37,17 @@ class RestJHipsterModulePropertyDefinition {
       .build();
   }
 
-  @Schema(description = "Type of this property", required = true)
+  @Schema(description = "Type of this property", requiredMode = RequiredMode.REQUIRED)
   public JHipsterPropertyType getType() {
     return type;
   }
 
-  @Schema(description = "True if this property is mandatory, false otherwise", required = true)
+  @Schema(description = "True if this property is mandatory, false otherwise", requiredMode = RequiredMode.REQUIRED)
   public boolean isMandatory() {
     return mandatory;
   }
 
-  @Schema(description = "Key of this property", required = true)
+  @Schema(description = "Key of this property", requiredMode = RequiredMode.REQUIRED)
   public String getKey() {
     return key;
   }
@@ -61,7 +62,7 @@ class RestJHipsterModulePropertyDefinition {
     return defaultValue;
   }
 
-  @Schema(description = "Order (sort in natural int sorting) for this property", required = true)
+  @Schema(description = "Order (sort in natural int sorting) for this property", requiredMode = RequiredMode.REQUIRED)
   public int getOrder() {
     return order;
   }

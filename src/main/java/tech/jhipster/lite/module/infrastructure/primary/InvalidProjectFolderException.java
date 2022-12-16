@@ -8,6 +8,6 @@ import tech.jhipster.lite.error.domain.GeneratorException;
 class InvalidProjectFolderException extends GeneratorException {
 
   public InvalidProjectFolderException() {
-    super("Project folder is not valid");
+    super(badRequest(ProjectFolderErrorKey.INVALID_FOLDER).message("Project folder is not valid"));
   }
 }

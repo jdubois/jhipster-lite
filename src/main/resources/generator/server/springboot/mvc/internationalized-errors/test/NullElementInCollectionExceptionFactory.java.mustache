@@ -1,0 +1,12 @@
+package {{ packageName }}.error_generator.domain;
+
+import {{ packageName }}.error.domain.NullElementInCollectionException;
+
+public final class NullElementInCollectionExceptionFactory {
+
+  private NullElementInCollectionExceptionFactory() {}
+
+  public static NullElementInCollectionException nullElementInCollection() {
+    return new NullElementInCollectionException("field");
+  }
+}

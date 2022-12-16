@@ -42,7 +42,7 @@ class FileSystemJHipsterModuleFilesTest {
 
     JHipsterModule module = moduleBuilder(JHipsterModulesFixture.propertiesBuilder(project.folder()).build())
       .files()
-      .add(from("server/springboot/core/MainApp.java.mustache"), to("content"))
+      .add(from("server/springboot/core/main/MainApp.java.mustache"), to("content"))
       .and()
       .build();
 
@@ -55,7 +55,7 @@ class FileSystemJHipsterModuleFilesTest {
 
     JHipsterModule module = moduleBuilder(JHipsterModulesFixture.propertiesBuilder(project.folder()).build())
       .files()
-      .add(from("server/springboot/core/MainApp.java.mustache"), to("MainApp.java"))
+      .add(from("server/springboot/core/main/MainApp.java.mustache"), to("MainApp.java"))
       .and()
       .build();
 

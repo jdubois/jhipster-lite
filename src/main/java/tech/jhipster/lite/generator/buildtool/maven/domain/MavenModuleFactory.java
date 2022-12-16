@@ -73,6 +73,9 @@ public class MavenModuleFactory {
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
         </configuration>
         """
       )
@@ -92,6 +95,7 @@ public class MavenModuleFactory {
           <excludes>
             <exclude>**/*IT*</exclude>
             <exclude>**/*IntTest*</exclude>
+            <exclude>**/*CucumberTest*</exclude>
           </excludes>
         </configuration>
         """
@@ -119,6 +123,7 @@ public class MavenModuleFactory {
           <includes>
             <include>**/*IT*</include>
             <include>**/*IntTest*</include>
+            <include>**/*CucumberTest*</include>
           </includes>
         </configuration>
         <executions>

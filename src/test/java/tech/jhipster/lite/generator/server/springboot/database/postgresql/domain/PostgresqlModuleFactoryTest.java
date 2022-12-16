@@ -54,7 +54,7 @@ class PostgresqlModuleFactoryTest {
       )
       .containing("<groupId>com.zaxxer</groupId>")
       .containing("<artifactId>HikariCP</artifactId>")
-      .containing("<groupId>org.hibernate</groupId>")
+      .containing("<groupId>org.hibernate.orm</groupId>")
       .containing("<artifactId>hibernate-core</artifactId>")
       .containing("<groupId>org.testcontainers</groupId>")
       .and()

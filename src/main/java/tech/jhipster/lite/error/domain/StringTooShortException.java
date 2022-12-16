@@ -1,9 +1,16 @@
 package tech.jhipster.lite.error.domain;
 
+import java.util.Map;
+
 public class StringTooShortException extends AssertionException {
 
+  private final String minLength;
+  private final String currentLength;
+
   private StringTooShortException(StringTooShortExceptionBuilder builder) {
-    super(builder.message());
+    super(builder.field, builder.message());
+    minLength = String.valueOf(builder.minLength);
+    currentLength = String.valueOf(builder.value.length());
   }
 
   public static StringTooShortExceptionBuilder builder() {
@@ -50,5 +57,15 @@ public class StringTooShortException extends AssertionException {
     public StringTooShortException build() {
       return new StringTooShortException(this);
     }
+  }
+
+  @Override
+  public AssertionErrorType type() {
+    return AssertionErrorType.STRING_TOO_SHORT;
+  }
+
+  @Override
+  public Map<String, String> parameters() {
+    return Map.of("minLength", minLength, "currentLength", currentLength);
   }
 }

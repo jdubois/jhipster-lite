@@ -29,7 +29,7 @@ public class AngularHealthModuleFactory {
     """
       {
         path: 'admin',
-        loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
+        loadChildren: () => import('./admin/admin-routing.module'),
       },\
       """;
 

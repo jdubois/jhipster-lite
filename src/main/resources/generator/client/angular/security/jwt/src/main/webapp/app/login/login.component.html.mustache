@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card appearance="raised">
   <mat-card-content>
     <div [ngSwitch]="account !== null">
       <form class="login-form" (ngSubmit)="login()" [formGroup]="loginForm" *ngSwitchCase="false">

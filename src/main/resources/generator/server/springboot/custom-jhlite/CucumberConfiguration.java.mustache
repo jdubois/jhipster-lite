@@ -20,11 +20,11 @@ import org.springframework.web.client.RestTemplate;
 
 import tech.jhipster.lite.cucumber.CucumberTestContext;
 
-import {{packageName}}.{{applicationName}}App;
+import {{packageName}}.{{ baseName }}App;
 import {{packageName}}.cucumber.CucumberConfiguration.CucumberRestTemplateConfiguration;
 
 @CucumberContextConfiguration
-@SpringBootTest(classes = { {{applicationName}}App.class, CucumberRestTemplateConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = { {{ baseName }}App.class, CucumberRestTemplateConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {
 
   @Autowired

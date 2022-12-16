@@ -3,9 +3,11 @@ package {{packageName}}.pagination.infrastructure.primary;
 import java.util.List;
 import java.util.function.Function;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import {{packageName}}.error.domain.Assert;
 import {{packageName}}.pagination.domain.{{baseName}}Page;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 
 @Schema(name = "Page", description = "Paginated content")
 public class Rest{{baseName}}Page<T> {
@@ -47,32 +49,32 @@ public class Rest{{baseName}}Page<T> {
     return content;
   }
 
-  @Schema(description = "Current page (starts at 0)", example = "0", required = true)
+  @Schema(description = "Current page (starts at 0)", example = "0", requiredMode = RequiredMode.REQUIRED)
   public int getCurrentPage() {
     return currentPage;
   }
 
-  @Schema(description = "Number of elements on each page", example = "10", required = true)
+  @Schema(description = "Number of elements on each page", example = "10", requiredMode = RequiredMode.REQUIRED)
   public int getPageSize() {
     return pageSize;
   }
 
-  @Schema(description = "Total number of elements to paginate", example = "100", required = true)
+  @Schema(description = "Total number of elements to paginate", example = "100", requiredMode = RequiredMode.REQUIRED)
   public long getTotalElementsCount() {
     return totalElementsCount;
   }
 
-  @Schema(description = "Number of resulting pages", example = "10", required = true)
+  @Schema(description = "Number of resulting pages", example = "10", requiredMode = RequiredMode.REQUIRED)
   public int getPagesCount() {
     return pagesCount;
   }
 
-  @Schema(description = "True is there is a previous page, false otherwise", required = true)
+  @Schema(description = "True is there is a previous page, false otherwise", requiredMode = RequiredMode.REQUIRED)
   public boolean getHasPrevious() {
     return hasPrevious;
   }
 
-  @Schema(description = "True is there is a next page, false otherwise", required = true)
+  @Schema(description = "True is there is a next page, false otherwise", requiredMode = RequiredMode.REQUIRED)
   public boolean getHasNext() {
     return hasNext;
   }

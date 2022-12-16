@@ -38,25 +38,6 @@ class EHCacheModulesFactoryTest {
     JHipsterModule module = factory.buildXmlConfigurationModule(properties());
 
     commonEHCacheModuleAsserter(module)
-      .hasFile("pom.xml")
-      .containing(
-        """
-            <dependency>
-              <groupId>jakarta.xml.bind</groupId>
-              <artifactId>jakarta.xml.bind-api</artifactId>
-            </dependency>
-        """
-      )
-      .containing(
-        """
-            <dependency>
-              <groupId>org.glassfish.jaxb</groupId>
-              <artifactId>jaxb-runtime</artifactId>
-              <scope>runtime</scope>
-            </dependency>
-        """
-      )
-      .and()
       .hasFile("src/main/java/com/jhipster/test/technical/infrastructure/secondary/cache/CacheConfiguration.java")
       .notContaining("JCacheManagerCustomizer")
       .and()
@@ -89,6 +70,7 @@ class EHCacheModulesFactoryTest {
             <dependency>
               <groupId>org.ehcache</groupId>
               <artifactId>ehcache</artifactId>
+              <classifier>jakarta</classifier>
             </dependency>
         """
       )

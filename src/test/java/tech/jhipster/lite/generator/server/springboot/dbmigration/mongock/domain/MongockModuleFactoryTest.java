@@ -49,7 +49,7 @@ class MongockModuleFactoryTest {
         """
             <dependency>
               <groupId>io.mongock</groupId>
-              <artifactId>mongodb-springdata-v3-driver</artifactId>
+              <artifactId>mongodb-springdata-v4-driver</artifactId>
             </dependency>
         """
       )

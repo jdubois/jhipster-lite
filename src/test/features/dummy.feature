@@ -27,7 +27,7 @@ Feature: Dummy feature module
       | maven-java                |
       | liquibase                 |
       | dummy-liquibase-changelog |
-    Then I should have 1 file in "src/main/resources/config/liquibase/changelog"
+    Then  I should have 2 files in "src/main/resources/config/liquibase/changelog"
     
   Scenario: Should Apply dummy postgresql flyway module
     When I apply "dummy-postgresql-flyway-changelog" module to default project without parameters

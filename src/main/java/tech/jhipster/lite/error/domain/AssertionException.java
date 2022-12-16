@@ -1,8 +1,23 @@
 package tech.jhipster.lite.error.domain;
 
-public class AssertionException extends RuntimeException {
+import java.util.Map;
 
-  public AssertionException(String message) {
+public abstract class AssertionException extends RuntimeException {
+
+  private final String field;
+
+  protected AssertionException(String field, String message) {
     super(message);
+    this.field = field;
+  }
+
+  public abstract AssertionErrorType type();
+
+  public String field() {
+    return field;
+  }
+
+  public Map<String, String> parameters() {
+    return Map.of();
   }
 }

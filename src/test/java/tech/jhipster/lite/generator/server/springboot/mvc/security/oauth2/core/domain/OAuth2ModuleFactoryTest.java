@@ -98,9 +98,9 @@ class OAuth2ModuleFactoryTest {
       .and()
       .hasFile("src/test/java/com/jhipster/test/IntegrationTest.java")
       .containing("@SpringBootTest(classes = { MyappApp.class, TestSecurityConfiguration.class })")
+      .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;")
       .containing("@WithMockUser")
       .containing("import org.springframework.security.test.context.support.WithMockUser;")
-      .containing("import com.jhipster.test.authentication.infrastructure.primary.TestSecurityConfiguration;")
       .and()
       .hasFile("README.md")
       .containing("docker compose -f src/main/docker/keycloak.yml up -d");

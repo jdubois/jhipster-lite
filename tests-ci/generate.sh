@@ -48,8 +48,7 @@ spring_boot_mvc() {
   spring_boot
 
   applyModules \
-  "spring-boot-tomcat" \
-  "zalando-problems"
+  "spring-boot-tomcat"
 }
 
 spring_boot_undertow() {
@@ -61,7 +60,6 @@ spring_boot_undertow() {
   "jacoco-check-min-coverage" \
   "spring-boot" \
   "spring-boot-undertow" \
-  "zalando-problems" \
   "spring-boot-actuator"
 }
 
@@ -120,6 +118,8 @@ elif [[ $application == 'fullapp' ]]; then
   "github-codespaces" \
   "gitpod" \
   "java-memoizers" \
+  "java-enums" \
+  "internationalized-errors" \
   "spring-boot-cache" \
   "caffeine-cache"
 
@@ -128,7 +128,7 @@ elif [[ $application == 'fullapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
   applyModules "application-service-hexagonal-architecture-documentation"
 
-  applyModules "postgresql" "postgresql-dialect" "liquibase"
+  applyModules "postgresql" "liquibase"
 
   applyModules \
   "dummy-feature" \

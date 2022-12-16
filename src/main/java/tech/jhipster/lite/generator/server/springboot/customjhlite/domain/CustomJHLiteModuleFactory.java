@@ -41,7 +41,7 @@ public class CustomJHLiteModuleFactory {
     //@formatter:off
     return cucumberModuleBuilder(properties)
       .context()
-        .put("applicationName", properties.projectBaseName().capitalized())
+        .put("baseName", properties.projectBaseName().capitalized())
         .and()
       .documentation(documentationTitle("Module creation"), SOURCE.template("module-creation.md"))
       .documentation(documentationTitle("Cucumber"), CUCUMBER_SOURCE.template("cucumber.md"))
@@ -60,7 +60,7 @@ public class CustomJHLiteModuleFactory {
         .set(SERVER_PORT_KEY, propertyValue(properties.serverPort().stringValue()))
         .set(JACKSON_INCLUSION_KEY, propertyValue("non_null"))
         .set(HIDDEN_TAGS_PROPERTY_KEY, propertyValue("banner"))
-        .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite"))
+        .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite", "spring-cloud", "consul", "eureka-client", "gateway"))
         .and()
       .springTestProperties()
         .set(EXCEPTION_PACKAGE_KEY, exceptionPackages)
@@ -102,6 +102,6 @@ public class CustomJHLiteModuleFactory {
   }
 
   private PropertyValue exceptionPackages(JHipsterModuleProperties properties) {
-    return propertyValue("org.", "java.", "net.", "javax.", "com.", "io.", "de.", "tech.jhipster.lite", properties.basePackage().get());
+    return propertyValue("org.", "java.", "net.", "jakarta.", "com.", "io.", "de.", "tech.jhipster.lite", properties.basePackage().get());
   }
 }

@@ -1,16 +1,14 @@
 package tech.jhipster.lite.project.infrastructure.secondary;
 
-import tech.jhipster.lite.common.domain.Generated;
 import tech.jhipster.lite.error.domain.GeneratorException;
 
-@Generated
 class ProjectZippingException extends GeneratorException {
 
   public ProjectZippingException(String message) {
-    super(message);
+    super(internalServerError(ProjectErrorKey.ZIPPING_ERROR).message(message));
   }
 
   public ProjectZippingException(Throwable cause) {
-    super("Error creating zip file", cause);
+    super(internalServerError(ProjectErrorKey.ZIPPING_ERROR).message("Error creating zip file").cause(cause));
   }
 }

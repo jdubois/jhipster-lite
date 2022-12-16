@@ -58,12 +58,12 @@ public class AngularOauth2ModuleFactory {
   private static final String TEST_IMPORTS =
     """
       import { By } from '@angular/platform-browser';
-      import { LoginComponent } from './login/login.component';
+      import LoginComponent from './login/login.component';
       """;
   private static final ElementReplacer TEST_NEEDLE = lineAfterRegex("^\\s+it\\('should have appName',[^}]+\\}\\);");
 
   private static final String LOGIN_IMPORT = """
-      import { LoginComponent } from './login/login.component';
+      import LoginComponent from './login/login.component';
       """;
 
   private static final String LOGIN_COMPONENT_TEST =
@@ -121,6 +121,7 @@ public class AngularOauth2ModuleFactory {
           .and()
         .in(path("src/main/webapp/main.ts"))
           .add(EXISTING_PROVIDERS_NEEDLE, "providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },")
+          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [ provideHttpClient(withInterceptorsFromDi()),")
           .add(fileStart(), HTTP_AUTH_INTERCEPTOR_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.component.ts"))

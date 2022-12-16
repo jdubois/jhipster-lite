@@ -31,6 +31,7 @@ public class LiquibaseModuleFactory {
         .and()
       .files()
         .add(SOURCE.file("resources/master.xml"), to("src/main/resources/config/liquibase/master.xml"))
+        .add(SOURCE.file("resources/0000000000_example.xml"), to("src/main/resources/config/liquibase/changelog/0000000000_example.xml"))
         .batch(SOURCE.append("main"), toSrcMainJava().append(packagePath).append(LIQUIBASE_SECONDARY))
           .addTemplate("AsyncSpringLiquibase.java")
           .addTemplate("LiquibaseConfiguration.java")

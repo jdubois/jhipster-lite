@@ -3,6 +3,7 @@ package tech.jhipster.lite.module.infrastructure.secondary.git;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.internal.*;
 import org.eclipse.jgit.lib.*;
+import org.eclipse.jgit.util.sha1.SHA1;
 import org.springframework.aot.hint.*;
 import tech.jhipster.lite.common.domain.*;
 
@@ -24,6 +25,7 @@ class NativeHints implements RuntimeHintsRegistrar {
       .registerType(MergeCommand.FastForwardMode.class, MemberCategory.values())
       .registerType(MergeCommand.FastForwardMode.Merge.class, MemberCategory.values())
       .registerType(JGitText.class, MemberCategory.values())
+      .registerType(SHA1.Sha1Implementation.class, MemberCategory.values())
       .registerType(CoreConfig.AutoCRLF.class, MemberCategory.values())
       .registerType(CoreConfig.CheckStat.class, MemberCategory.values())
       .registerType(CoreConfig.EOL.class, MemberCategory.values())

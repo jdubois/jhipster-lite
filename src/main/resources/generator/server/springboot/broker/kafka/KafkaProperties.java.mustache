@@ -2,12 +2,14 @@ package {{packageName}}.technical.infrastructure.config.kafka;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.PostConstruct;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+
+import jakarta.annotation.PostConstruct;
 
 @Configuration
 @ConfigurationProperties(prefix = "kafka")

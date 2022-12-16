@@ -313,6 +313,7 @@ public class ModulesSteps {
   }
 
   @Then("I should have {int} file in {string}")
+  @Then("I should have {int} files in {string}")
   public void shouldHaveFilesCountInDirectory(int filesCount, String directory) throws IOException {
     assertThatLastResponse().hasOkStatus();
 

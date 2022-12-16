@@ -1,9 +1,16 @@
 package tech.jhipster.lite.error.domain;
 
+import java.util.Map;
+
 public class NumberValueTooLowException extends AssertionException {
 
+  private final String min;
+  private final String value;
+
   private NumberValueTooLowException(NumberValueTooLowExceptionBuilder builder) {
-    super(builder.message());
+    super(builder.field, builder.message());
+    min = builder.minValue;
+    value = builder.value;
   }
 
   public static NumberValueTooLowExceptionBuilder builder() {
@@ -48,5 +55,15 @@ public class NumberValueTooLowException extends AssertionException {
     public NumberValueTooLowException build() {
       return new NumberValueTooLowException(this);
     }
+  }
+
+  @Override
+  public AssertionErrorType type() {
+    return AssertionErrorType.NUMBER_VALUE_TOO_LOW;
+  }
+
+  @Override
+  public Map<String, String> parameters() {
+    return Map.of("min", min, "value", value);
   }
 }

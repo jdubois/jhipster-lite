@@ -108,7 +108,7 @@ class MavenCommandHandler {
     try (InputStream input = Files.newInputStream(pomPath)) {
       return $(input);
     } catch (IOException | SAXException e) {
-      throw new GeneratorException("Error reading pom content: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error reading pom content: " + e.getMessage(), e);
     }
   }
 
@@ -546,7 +546,7 @@ class MavenCommandHandler {
         writer.write(element);
       }
     } catch (IOException e) {
-      throw new GeneratorException("Error writing pom: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error writing pom: " + e.getMessage(), e);
     }
   }
 

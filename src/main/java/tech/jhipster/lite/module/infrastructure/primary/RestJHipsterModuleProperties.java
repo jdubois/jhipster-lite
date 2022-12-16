@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.infrastructure.primary;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -37,12 +38,12 @@ class RestJHipsterModuleProperties {
     }
   }
 
-  @Schema(description = "Path to the project folder", required = true)
+  @Schema(description = "Path to the project folder", requiredMode = RequiredMode.REQUIRED)
   public String getProjectFolder() {
     return projectFolder;
   }
 
-  @Schema(description = "True to commit each module application, false otherwise", required = true)
+  @Schema(description = "True to commit each module application, false otherwise", requiredMode = RequiredMode.REQUIRED)
   public boolean isCommit() {
     return commit;
   }

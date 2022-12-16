@@ -17,7 +17,7 @@ public record RegexReplacer(ReplacementCondition condition, Pattern pattern) imp
     try {
       return Pattern.compile(regex);
     } catch (PatternSyntaxException e) {
-      throw new GeneratorException("Can't compile regex " + regex + ": " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Can't compile regex " + regex + ": " + e.getMessage(), e);
     }
   }
 

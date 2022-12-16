@@ -17,6 +17,8 @@ import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 public class SpringBootCoreModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/core");
+  private static final JHipsterSource MAIN_SOURCE = SOURCE.append("main");
+  private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
 
   private static final GroupId SRPING_BOOT_GROUP = groupId("org.springframework.boot");
   private static final String APPLICATION_PROPERTIES = "application.properties";
@@ -37,15 +39,15 @@ public class SpringBootCoreModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    String mainClassName = properties.projectBaseName().capitalized();
+    String baseName = properties.projectBaseName().capitalized();
     String packagePath = properties.packagePath();
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath);
-    String fullyQualifiedMainClass = properties.basePackage().get() + "." + mainClassName + "App";
+    String fullyQualifiedMainClass = properties.basePackage().get() + "." + baseName + "App";
 
     //@formatter:off
     return moduleBuilder(properties)
       .context()
-        .put("mainClass", mainClassName)
+        .put("baseName", baseName)
         .and()
       .documentation(documentationTitle("Logs spy"), SOURCE.file("logs-spy.md"))
       .javaDependencies()
@@ -64,16 +66,16 @@ public class SpringBootCoreModuleFactory {
         .plugin(springBootMavenPlugin())
         .and()
       .files()
-        .add(SOURCE.template("MainApp.java"), toSrcMainJava().append(packagePath).append(mainClassName + "App.java"))
-        .add(SOURCE.template("ApplicationStartupTraces.java"), toSrcMainJava().append(packagePath).append("ApplicationStartupTraces.java"))
-        .add(SOURCE.template("IntegrationTest.java"), testDestination.append("IntegrationTest.java"))
-        .add(SOURCE.template(APPLICATION_PROPERTIES), MAIN_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
-        .add(SOURCE.template("application-local.properties"), MAIN_CONFIG_DESTINATION.append("application-local.properties"))
-        .add(SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
-        .add(SOURCE.template("logback-spring.xml"), MAIN_RESOURCE_DESTINATION.append("logback-spring.xml"))
-        .add(SOURCE.template("logback.xml"), TEST_RESOURCES_DESTINATION.append("logback.xml"))
-        .add(SOURCE.template("LogsSpy.java"), toSrcTestJava().append(properties.packagePath()).append("LogsSpy.java"))
-        .add(SOURCE.template("ApplicationStartupTracesTest.java"), toSrcTestJava().append(packagePath).append("ApplicationStartupTracesTest.java"))
+        .add(MAIN_SOURCE.template("MainApp.java"), toSrcMainJava().append(packagePath).append(baseName + "App.java"))
+        .add(MAIN_SOURCE.template("ApplicationStartupTraces.java"), toSrcMainJava().append(packagePath).append("ApplicationStartupTraces.java"))
+        .add(TEST_SOURCE.template("IntegrationTest.java"), testDestination.append("IntegrationTest.java"))
+        .add(MAIN_SOURCE.template(APPLICATION_PROPERTIES), MAIN_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
+        .add(MAIN_SOURCE.template("application-local.properties"), MAIN_CONFIG_DESTINATION.append("application-local.properties"))
+        .add(TEST_SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
+        .add(MAIN_SOURCE.template("logback-spring.xml"), MAIN_RESOURCE_DESTINATION.append("logback-spring.xml"))
+        .add(TEST_SOURCE.template("logback.xml"), TEST_RESOURCES_DESTINATION.append("logback.xml"))
+        .add(TEST_SOURCE.template("LogsSpy.java"), toSrcTestJava().append(properties.packagePath()).append("LogsSpy.java"))
+        .add(TEST_SOURCE.template("ApplicationStartupTracesTest.java"), toSrcTestJava().append(packagePath).append("ApplicationStartupTracesTest.java"))
         .and()
       .optionalReplacements()
         .in(path("pom.xml"))

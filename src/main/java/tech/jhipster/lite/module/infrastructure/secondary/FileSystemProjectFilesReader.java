@@ -25,7 +25,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
 
       return toString(input);
     } catch (IOException e) {
-      throw new GeneratorException("Error closing " + path + ": " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error closing " + path + ": " + e.getMessage(), e);
     }
   }
 
@@ -34,7 +34,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
     try {
       return IOUtils.toString(input, StandardCharsets.UTF_8);
     } catch (IOException e) {
-      throw new GeneratorException("Error reading file: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error reading file: " + e.getMessage(), e);
     }
   }
 
@@ -48,13 +48,13 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
 
       return toByteArray(input);
     } catch (IOException e) {
-      throw new GeneratorException("Error closing " + path + ": " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error closing " + path + ": " + e.getMessage(), e);
     }
   }
 
   private void assertFileExist(String path, InputStream input) {
     if (input == null) {
-      throw new GeneratorException("Can't find file: " + path);
+      throw GeneratorException.technicalError("Can't find file: " + path);
     }
   }
 
@@ -67,7 +67,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
     try {
       return IOUtils.toByteArray(input);
     } catch (IOException e) {
-      throw new GeneratorException("Error reading file: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error reading file: " + e.getMessage(), e);
     }
   }
 }

@@ -24,7 +24,6 @@ class DummyFeatureModuleConfiguration {
         JHipsterModuleOrganization
           .builder()
           .addDependency(CUCUMBER_AUTHENTICATION)
-          .addDependency(WEB_ERROR_MANAGEMENT)
           .addDependency(SPRINGDOC)
           .addDependency(JAVA_BASE)
           .build()

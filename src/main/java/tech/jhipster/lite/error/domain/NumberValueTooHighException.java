@@ -1,9 +1,16 @@
 package tech.jhipster.lite.error.domain;
 
+import java.util.Map;
+
 public class NumberValueTooHighException extends AssertionException {
 
+  private final String max;
+  private final String value;
+
   private NumberValueTooHighException(NumberValueTooHighExceptionBuilder builder) {
-    super(builder.message());
+    super(builder.field, builder.message());
+    max = builder.maxValue;
+    value = builder.value;
   }
 
   public static NumberValueTooHighExceptionBuilder builder() {
@@ -48,5 +55,15 @@ public class NumberValueTooHighException extends AssertionException {
     public NumberValueTooHighException build() {
       return new NumberValueTooHighException(this);
     }
+  }
+
+  @Override
+  public AssertionErrorType type() {
+    return AssertionErrorType.NUMBER_VALUE_TOO_HIGH;
+  }
+
+  @Override
+  public Map<String, String> parameters() {
+    return Map.of("max", max, "value", value);
   }
 }

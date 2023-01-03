@@ -22,7 +22,7 @@ class GradleModuleFactoryTest {
       .projectBaseName("myApp")
       .build();
 
-    JHipsterModule module = factory.buildModule(properties);
+    JHipsterModule module = factory.buildGradleModule(properties);
 
     assertThatModule(module)
       .hasFile("build.gradle.kts")
@@ -31,6 +31,17 @@ class GradleModuleFactoryTest {
       .hasFile("settings.gradle.kts")
       .containing("my-app")
       .and()
+      .hasExecutableFiles("gradlew", "gradlew.bat")
+      .hasPrefixedFiles("gradle/wrapper", "gradle-wrapper.jar", "gradle-wrapper.properties");
+  }
+
+  @Test
+  void shouldBuildGradleWrapperModule() {
+    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+
+    JHipsterModule module = factory.buildGradleWrapperModule(properties);
+
+    assertThatModuleWithFiles(module)
       .hasExecutableFiles("gradlew", "gradlew.bat")
       .hasPrefixedFiles("gradle/wrapper", "gradle-wrapper.jar", "gradle-wrapper.properties");
   }

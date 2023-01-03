@@ -10,7 +10,7 @@ import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
-class FileSystemJavaDependenciesCommandsHandlerTest {
+class FileSystemJavaBuildCommandsHandlerTest {
 
   private static final FileSystemJavaBuildCommandsHandler handler = new FileSystemJavaBuildCommandsHandler();
 

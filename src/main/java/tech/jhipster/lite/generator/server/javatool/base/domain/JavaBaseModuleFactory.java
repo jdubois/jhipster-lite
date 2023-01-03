@@ -36,6 +36,7 @@ public class JavaBaseModuleFactory {
 
     String packagePath = properties.packagePath();
     String baseName = properties.projectBaseName().capitalized();
+    String basePackage = properties.basePackage().get();
 
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath);
     JHipsterDestination mainDestination = toSrcMainJava().append(packagePath);
@@ -44,6 +45,7 @@ public class JavaBaseModuleFactory {
     return moduleBuilder(properties)
       .context()
         .put("baseName", baseName)
+        .put("basePackage", basePackage)
         .and()
       .documentation(documentationTitle("Package types"), MAIN_SOURCE.template("package-types.md"))
       .documentation(documentationTitle("Assertions"), MAIN_SOURCE.template("assertions.md"))

@@ -35,6 +35,8 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   GITHUB_CODESPACES("github-codespaces"),
   GITLAB_CI("gitlab-ci"),
   GITPOD("gitpod"),
+  GRADLE_JAVA("gradle-java"),
+  GRADLE_WRAPPER("gradle-wrapper"),
   INFINITEST_FILTERS("infinitest-filters"),
   INIT("init"),
   INTERNATIONALIZED_ERRORS("internationalized-errors"),

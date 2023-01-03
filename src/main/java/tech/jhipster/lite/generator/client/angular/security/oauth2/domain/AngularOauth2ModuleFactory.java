@@ -121,7 +121,6 @@ public class AngularOauth2ModuleFactory {
           .and()
         .in(path("src/main/webapp/main.ts"))
           .add(EXISTING_PROVIDERS_NEEDLE, "providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },")
-          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [ provideHttpClient(withInterceptorsFromDi()),")
           .add(fileStart(), HTTP_AUTH_INTERCEPTOR_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.component.ts"))

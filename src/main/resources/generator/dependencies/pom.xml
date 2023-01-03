@@ -13,13 +13,16 @@
   <packaging>pom</packaging>
 
   <properties>
+    <junit-jupiter.version>5.9.1</junit-jupiter.version>
+    <assertj.version>3.23.1</assertj.version>
+    <mockito.version>4.11.0</mockito.version>
     <jjwt.version>0.11.5</jjwt.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
-    <spring-boot.version>3.0.0</spring-boot.version>
-    <spring-cloud.version>2021.0.0</spring-cloud.version>
-    <spring-cloud-netflix-eureka-client.version>3.1.4</spring-cloud-netflix-eureka-client.version>
-    <springdoc-openapi-starter-webmvc.version>2.0.0</springdoc-openapi-starter-webmvc.version>
-    <springdoc-openapi-starter-webflux.version>2.0.0</springdoc-openapi-starter-webflux.version>
+    <spring-boot.version>3.0.1</spring-boot.version>
+    <spring-cloud.version>2022.0.0</spring-cloud.version>
+    <spring-cloud-netflix-eureka-client.version>4.0.0</spring-cloud-netflix-eureka-client.version>
+    <springdoc-openapi-starter-webmvc.version>2.0.2</springdoc-openapi-starter-webmvc.version>
+    <springdoc-openapi-starter-webflux.version>2.0.2</springdoc-openapi-starter-webflux.version>
     <testcontainers.version>1.17.3</testcontainers.version>
     <kafka-clients.version>3.2.0</kafka-clients.version>
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
@@ -32,8 +35,8 @@
     <mongock.version>5.2.2</mongock.version>
     <neo4j-migrations.version>1.13.0</neo4j-migrations.version>
     <archunit-junit5.version>1.0.1</archunit-junit5.version>
-    <cucumber.version>7.10.0</cucumber.version>
-    <testng.version>7.7.0</testng.version>
+    <cucumber.version>7.10.1</cucumber.version>
+    <testng.version>7.7.1</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
     <liquibase.version>4.18.0</liquibase.version>
     <compiler-plugin.version>3.10.1</compiler-plugin.version>
@@ -42,13 +45,37 @@
     <jacoco.version>0.8.8</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
-    <jhlite.version>0.21.0</jhlite.version>
+    <jhlite.version>0.24.0</jhlite.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <ehcache.version>3.10.8</ehcache.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
       <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-api</artifactId>

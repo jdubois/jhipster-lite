@@ -66,7 +66,7 @@ class MySQLModuleFactoryTest {
       .containing("spring.datasource.url=jdbc:mysql://localhost:3306/myapp")
       .containing("spring.datasource.username=root")
       .containing("spring.datasource.password=")
-      .containing("spring.datasource.driver-class-name=com.mysql.jdbc.Driver")
+      .containing("spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver")
       .containing("spring.datasource.type=com.zaxxer.hikari.HikariDataSource")
       .containing("spring.datasource.hikari.poolName=Hikari")
       .containing("spring.datasource.hikari.auto-commit=false")

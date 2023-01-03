@@ -15,6 +15,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
     importProvidersFrom([BrowserAnimationsModule, RouterModule.forRoot(routes)]),
   ],
 }).catch(err => console.error(err));

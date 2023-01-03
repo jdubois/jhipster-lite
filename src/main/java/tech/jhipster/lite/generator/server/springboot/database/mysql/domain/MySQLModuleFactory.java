@@ -32,7 +32,7 @@ public class MySQLModuleFactory {
       .springMainProperties()
       .set(propertyKey("spring.datasource.url"), propertyValue("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name()))
       .set(propertyKey("spring.datasource.username"), propertyValue("root"))
-      .set(propertyKey("spring.datasource.driver-class-name"), propertyValue("com.mysql.jdbc.Driver"))
+      .set(propertyKey("spring.datasource.driver-class-name"), propertyValue("com.mysql.cj.jdbc.Driver"))
       .and()
       .build();
   }

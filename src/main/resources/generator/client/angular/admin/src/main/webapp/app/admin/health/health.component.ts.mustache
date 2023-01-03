@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { HealthService } from './health.service';
 import { Health, HealthStatus } from './health.model';
@@ -21,7 +21,8 @@ export default class HealthComponent implements OnInit {
   displayedColumns: string[] = ['key', 'value', 'detail'];
   datasource: any = [];
 
-  constructor(public dialog: MatDialog, private healthService: HealthService) {}
+  public dialog = inject(MatDialog);
+  private healthService = inject(HealthService);
 
   ngOnInit(): void {
     this.refresh();

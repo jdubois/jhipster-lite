@@ -1,16 +1,30 @@
-$jhlite-button-color-background: $jhlite-global-color-fill-primary-dark;
+@use 'sass:math';
+
+$jhlite-button-color-background: $jhlite-color-brand-700;
 $jhlite-button-color-text: $jhlite-global-color-text-light;
-$jhlite-button-hover-color-background: $jhlite-global-color-fill-primary-darker;
-$jhlite-button-focus-color-outline: $jhlite-global-color-fill-primary-darker;
-$jhlite-button-disabled-color-background: $jhlite-global-color-fill-disabled-dark;
+$jhlite-button-hover-color-background: $jhlite-color-brand-800;
+$jhlite-button-focus-color-outline: rgba($jhlite-button-color-background, 50%);
+$jhlite-button-disabled-color-background: rgba($jhlite-button-color-background, 50%);
+$jhlite-button-disabled-color-text: rgba($jhlite-button-color-text, 50%);
+$jhlite-button-padding: 0.5rem 1rem;
+$jhlite-button-radius: math.div(6, 16) * 1rem;
+$jhlite-button-line-height: 1.5rem !default;
+$jhlite-button-font-size: 1rem !default;
 
 .jhlite-button {
-  @include jhlite-q-field;
-
+  box-sizing: border-box;
+  border: 0;
+  border-radius: $jhlite-button-radius;
   background-color: $jhlite-button-color-background;
   cursor: pointer;
+  padding: $jhlite-button-padding;
   text-align: center;
+  text-transform: uppercase;
+  line-height: $jhlite-button-line-height;
   color: $jhlite-button-color-text;
+  font-family: $jhlite-global-font-primary-family;
+  font-size: $jhlite-button-font-size;
+  font-weight: bold;
 
   &:hover {
     background-color: $jhlite-button-hover-color-background;
@@ -18,6 +32,8 @@ $jhlite-button-disabled-color-background: $jhlite-global-color-fill-disabled-dar
 
   &:disabled {
     background-color: $jhlite-button-disabled-color-background;
+    cursor: not-allowed;
+    color: $jhlite-button-disabled-color-text;
   }
 
   &.-block {

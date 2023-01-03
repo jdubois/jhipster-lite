@@ -60,7 +60,7 @@ public class CustomJHLiteModuleFactory {
         .set(SERVER_PORT_KEY, propertyValue(properties.serverPort().stringValue()))
         .set(JACKSON_INCLUSION_KEY, propertyValue("non_null"))
         .set(HIDDEN_TAGS_PROPERTY_KEY, propertyValue("banner"))
-        .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite", "spring-cloud", "consul", "eureka-client", "gateway"))
+        .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite"))
         .and()
       .springTestProperties()
         .set(EXCEPTION_PACKAGE_KEY, exceptionPackages)

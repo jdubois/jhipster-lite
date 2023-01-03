@@ -11,14 +11,31 @@ public class GradleModuleFactory {
 
   private static final JHipsterSource SOURCE = from("buildtool/gradle");
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+  public JHipsterModule buildGradleModule(JHipsterModuleProperties properties) {
+    //@formatter:off
+    return gradleWrapperModulesFiles(properties)
+      .context()
+        .put("dasherizedBaseName", properties.projectBaseName().kebabCase())
+        .and()
+      .files()
+        .batch(SOURCE, to("."))
+          .addTemplate("build.gradle.kts")
+          .addTemplate("settings.gradle.kts")
+          .and()
+        .and()
+      .build();
+    //@formatter:on
+  }
+
+  public JHipsterModule buildGradleWrapperModule(JHipsterModuleProperties properties) {
+    return gradleWrapperModulesFiles(properties).build();
+  }
+
+  private static JHipsterModuleBuilder gradleWrapperModulesFiles(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
     //@formatter:off
     return moduleBuilder(properties)
-      .context()
-        .put("dasherizedBaseName", properties.projectBaseName().kebabCase())
-        .and()
       .files()
         .batch(SOURCE, to("."))
           .addTemplate("build.gradle.kts")
@@ -30,8 +47,7 @@ public class GradleModuleFactory {
           .and()
         .addExecutable(SOURCE.file("gradlew"), to("gradlew"))
         .addExecutable(SOURCE.file("gradlew.bat"), to("gradlew.bat"))
-        .and()
-      .build();
+        .and();
     //@formatter:on
   }
 }

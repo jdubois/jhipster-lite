@@ -2,7 +2,7 @@ package tech.jhipster.lite.module.domain.javaproperties;
 
 import tech.jhipster.lite.error.domain.Assert;
 
-public class SpringProperty {
+public class SpringProperty implements SpringPropertyTypeFileName {
 
   private final SpringPropertyType type;
   private final PropertyKey key;
@@ -31,6 +31,7 @@ public class SpringProperty {
     return new SpringPropertyBuilder(type);
   }
 
+  @Override
   public SpringPropertyType type() {
     return type;
   }
@@ -43,6 +44,7 @@ public class SpringProperty {
     return value;
   }
 
+  @Override
   public String filename() {
     if (profile.isDefault()) {
       return type.filePrefix();

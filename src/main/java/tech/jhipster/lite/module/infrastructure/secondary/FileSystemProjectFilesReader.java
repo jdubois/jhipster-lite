@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.ProjectFilesReader;
@@ -16,7 +16,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
   private static final String SLASH = "/";
 
   @Override
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   public String readString(String path) {
     Assert.notBlank("path", path);
 
@@ -29,7 +29,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
     }
   }
 
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   private static String toString(InputStream input) {
     try {
       return IOUtils.toString(input, StandardCharsets.UTF_8);
@@ -39,7 +39,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
   }
 
   @Override
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   public byte[] readBytes(String path) {
     Assert.notBlank("path", path);
 
@@ -62,7 +62,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
     return FileSystemProjectFilesReader.class.getResourceAsStream(path.replace("\\", SLASH));
   }
 
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   private static byte[] toByteArray(InputStream input) {
     try {
       return IOUtils.toByteArray(input);

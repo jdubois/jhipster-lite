@@ -14,7 +14,11 @@ public class SpringBootWebfluxApplicationService {
     factory = new SpringBootWebfluxModuleFactory();
   }
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
-    return factory.buildModule(properties);
+  public JHipsterModule buildNettyModule(JHipsterModuleProperties properties) {
+    return factory.buildNettyModule(properties);
+  }
+
+  public JHipsterModule buildEmptyModule(JHipsterModuleProperties properties) {
+    return factory.buildEmptyModule(properties);
   }
 }

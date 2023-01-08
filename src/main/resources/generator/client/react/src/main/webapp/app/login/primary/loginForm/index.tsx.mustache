@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useMemo, useCallback } from 'react';
 import { Button } from '@nextui-org/react';
 
 import LoginModal from '@/login/primary/loginModal';
@@ -10,14 +10,17 @@ const LoginForm = () => {
   const [username, setUsername] = useState<any>('');
   const [token, setToken] = useState<any>('');
 
-  const userInfoContextValues = {
-    setUsername,
-    setToken,
-  };
+  const userInfoContextValues = useMemo(
+    () => ({
+      setUsername,
+      setToken,
+    }),
+    []
+  );
 
-  const onClickLoginButton = () => setOpen(true);
+  const onClickLoginButton = useCallback(() => setOpen(true), []);
 
-  const onCloseModal = () => setOpen(false);
+  const onCloseModal = useCallback(() => setOpen(false), []);
 
   return (
     <div>

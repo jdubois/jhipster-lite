@@ -26,7 +26,7 @@ import org.joox.Match;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import tech.jhipster.lite.common.domain.Enums;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.Indentation;
@@ -533,7 +533,7 @@ class MavenCommandHandler {
     return format;
   }
 
-  @Generated(reason = "The exception hanlding is hard to test and an implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The exception hanlding is hard to test and an implementation detail")
   private void writePom() {
     try (Writer writer = Files.newBufferedWriter(pomPath, StandardCharsets.UTF_8)) {
       writer.write(HEADER);

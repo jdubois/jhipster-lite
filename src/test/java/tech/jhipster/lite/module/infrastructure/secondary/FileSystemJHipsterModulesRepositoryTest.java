@@ -203,16 +203,30 @@ class FileSystemJHipsterModulesRepositoryTest {
             """)
         .and()
       .hasFile("src/main/resources/config/application.properties")
+        .containing("""
+            # This is a comment
+            springdoc.swagger-ui.operationsSorter""")
         .containing("springdoc.swagger-ui.operationsSorter=alpha")
         .and()
       .hasFile("src/main/resources/config/application-local.properties")
+        .containing("""
+            # This is a comment
+            springdoc.swagger-ui.tryItOutEnabled""")
         .containing("springdoc.swagger-ui.tryItOutEnabled=false")
         .and()
       .hasFile("src/test/resources/config/application.properties")
+        .containing("""
+            # This is a comment
+            springdoc.swagger-ui.operationsSorter""")
         .containing("springdoc.swagger-ui.operationsSorter=test")
         .and()
       .hasFile("src/test/resources/config/application-local.properties")
-        .containing("springdoc.swagger-ui.tryItOutEnabled=test")
+        .containing("""
+            ## Swagger properties
+            springdoc.swagger-ui.operationsSorter=test
+            springdoc.swagger-ui.tagsSorter=test
+            # This is a comment
+            springdoc.swagger-ui.tryItOutEnabled=test""")
         .and()
       .hasFile("README.md")
         .containing(

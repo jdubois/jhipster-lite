@@ -26,6 +26,10 @@ public class SpringBootMvcsModulesFactory {
 
   private static final String CORS_PRIMARY = "security/infrastructure/primary";
 
+  public JHipsterModule buildEmptyModule(JHipsterModuleProperties properties) {
+    return moduleBuilder(properties).build();
+  }
+
   public JHipsterModule buildTomcatModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 

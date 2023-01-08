@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.project.domain.ProjectPath;
 import tech.jhipster.lite.project.domain.download.Project;
@@ -46,7 +46,7 @@ class FileSystemProjectDownloader {
     return Files.notExists(source) || !Files.isDirectory(source);
   }
 
-  @Generated(reason = "Hard to test exception handling")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to test exception handling")
   private ProjectName readProjectName(Path source) {
     Path packageJsonPath = source.resolve("package.json");
 
@@ -67,7 +67,7 @@ class FileSystemProjectDownloader {
     }
   }
 
-  @Generated(reason = "Hard to test exception handling")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to test exception handling")
   private static Optional<byte[]> zip(Path source) {
     ByteArrayOutputStream result = new ByteArrayOutputStream();
 
@@ -102,7 +102,7 @@ class FileSystemProjectDownloader {
     };
   }
 
-  @Generated(reason = "Hard to test exception handling")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to test exception handling")
   private static void appendToZipEntry(ZipOutputStream zip, Path path, ZipEntry zipEntry) {
     try {
       zip.putNextEntry(zipEntry);

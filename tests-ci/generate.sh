@@ -44,25 +44,6 @@ applyModules() {
   done
 }
 
-spring_boot_mvc() {
-  spring_boot
-
-  applyModules \
-  "spring-boot-tomcat"
-}
-
-spring_boot_undertow() {
-  applyModules \
-  "init" \
-  "maven-java" \
-  "github-actions" \
-  "java-base" \
-  "jacoco-check-min-coverage" \
-  "spring-boot" \
-  "spring-boot-undertow" \
-  "spring-boot-actuator"
-}
-
 spring_boot() {
   applyModules \
   "init" \
@@ -70,7 +51,30 @@ spring_boot() {
   "github-actions" \
   "java-base" \
   "jacoco-check-min-coverage" \
-  "spring-boot" \
+  "spring-boot"
+}
+
+spring_boot_mvc() {
+  spring_boot
+
+  applyModules \
+  "spring-boot-tomcat" \
+  "spring-boot-actuator"
+}
+
+spring_boot_undertow() {
+  spring_boot
+
+  applyModules \
+  "spring-boot-undertow" \
+  "spring-boot-actuator"
+}
+
+spring_boot_webflux() {
+  spring_boot
+
+  applyModules \
+  "spring-boot-webflux-netty" \
   "spring-boot-actuator"
 }
 
@@ -100,11 +104,18 @@ elif [[ $application == 'fullstack' ]]; then
   spring_boot_mvc
   sonar_back_front
 
+elif [[ $application == 'gradleapp' ]]; then
+  applyModules \
+    "init" \
+    "gradle-java" \
+    "java-base"
+
 elif [[ $application == 'fullapp' ]]; then
   spring_boot_mvc
   sonar_back_front
 
   applyModules \
+  "prettier" \
   "infinitest-filters" \
   "pagination-domain" \
   "rest-pagination" \
@@ -115,6 +126,7 @@ elif [[ $application == 'fullapp' ]]; then
   "jib" \
   "dockerfile" \
   "java-archunit" \
+  "git-information" \
   "github-codespaces" \
   "gitpod" \
   "java-memoizers" \
@@ -235,11 +247,10 @@ elif [[ $application == 'consulapp' ]]; then
   applyModules "consul"
 
 elif [[ $application == 'gatewayapp' ]]; then
-  spring_boot
+  spring_boot_webflux
   sonar_back
 
   applyModules \
-  "spring-boot-webflux-netty" \
   "eureka-client" \
   "spring-cloud" \
   "gateway"
@@ -338,12 +349,10 @@ elif [[ $application == 'pulsarapp' ]]; then
   applyModules "spring-boot-pulsar"
 
 elif [[ $application == 'reactiveapp' ]]; then
-  spring_boot
+  spring_boot_webflux
   sonar_back
 
   applyModules \
-  "spring-boot-webflux-netty" \
-  "spring-boot-actuator" \
   "springdoc-webflux-openapi"
 
 elif [[ $application == 'customjhlite' ]]; then

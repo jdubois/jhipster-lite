@@ -3,7 +3,7 @@ package tech.jhipster.lite.module.infrastructure.secondary.javadependency;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.springframework.stereotype.Service;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.Indentation;
 import tech.jhipster.lite.module.domain.javabuild.command.AddBuildPluginManagement;
@@ -40,7 +40,7 @@ public class FileSystemJavaBuildCommandsHandler {
     commands.get().forEach(command -> handle(handler, command));
   }
 
-  @Generated(reason = "Jacoco thinks there is a missed branch")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco thinks there is a missed branch")
   private void handle(MavenCommandHandler handler, JavaBuildCommand command) {
     switch (command.type()) {
       case SET_VERSION -> handler.handle((SetVersion) command);

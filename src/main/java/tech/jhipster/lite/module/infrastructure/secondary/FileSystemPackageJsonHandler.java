@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import tech.jhipster.lite.common.domain.Enums;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.Indentation;
@@ -116,7 +116,7 @@ class FileSystemPackageJsonHandler {
     return npmVersions.get(dependency.packageName().get(), Enums.map(dependency.versionSource(), NpmVersionSource.class)).get();
   }
 
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   private String readContent(Path file) {
     try {
       return Files.readString(file);
@@ -125,7 +125,7 @@ class FileSystemPackageJsonHandler {
     }
   }
 
-  @Generated(reason = "The error handling is an hard to test implementation detail")
+  @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   private void write(Path file, String content) {
     try {
       Files.write(file, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
@@ -203,7 +203,7 @@ class FileSystemPackageJsonHandler {
       return Pattern.compile("(\"" + blocName + "\"\\s*:\\s*\\{)").matcher(result);
     }
 
-    @Generated(reason = "Combiner can't be tested and an implementation detail")
+    @ExcludeFromGeneratedCodeCoverage(reason = "Combiner can't be tested and an implementation detail")
     private String removeExistingEntries() {
       return entries
         .stream()

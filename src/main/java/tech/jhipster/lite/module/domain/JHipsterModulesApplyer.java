@@ -43,6 +43,7 @@ public class JHipsterModulesApplyer {
     Assert.notNull("moduleToApply", moduleToApply);
 
     JHipsterModule module = modules.resources().build(moduleToApply.slug(), moduleToApply.properties());
+    //@formatter:off
     JHipsterModuleChanges changes = JHipsterModuleChanges
       .builder()
       .projectFolder(module.projectFolder())
@@ -56,7 +57,10 @@ public class JHipsterModulesApplyer {
       .packageJson(module.packageJson())
       .preActions(module.preActions())
       .postActions(module.postActions())
-      .springProperties(module.springProperties());
+      .springProperties(module.springProperties())
+      .springComments(module.springComments())
+      .springPropertiesBlockComments(module.springPropertiesBlockComments());
+    //@formatter:on
 
     modules.apply(changes);
 

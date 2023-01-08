@@ -22,7 +22,11 @@ public class SpringBootWebfluxModuleFactory {
 
   private static final String EXCEPTION_PRIMARY = "technical/infrastructure/primary/exception";
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
+  public JHipsterModule buildEmptyModule(JHipsterModuleProperties properties) {
+    return moduleBuilder(properties).build();
+  }
+
+  public JHipsterModule buildNettyModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();

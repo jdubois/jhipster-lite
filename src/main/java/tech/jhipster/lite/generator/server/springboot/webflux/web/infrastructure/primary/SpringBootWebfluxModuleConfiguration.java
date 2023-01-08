@@ -17,11 +17,27 @@ class SpringBootWebfluxModuleConfiguration {
   JHipsterModuleResource springBootWebfluxModule(SpringBootWebfluxApplicationService webflux) {
     return JHipsterModuleResource
       .builder()
-      .slug(SPRING_BOOT_WEBFLUX_NETTY)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().build())
-      .apiDoc("Spring Boot - Webflux", "Add Spring Boot Webflux with Netty")
+      .slug(SPRING_BOOT_WEBFLUX)
+      .propertiesDefinition(properties())
+      .apiDoc("Spring Boot - Webflux", "Add Spring Boot Webflux")
       .organization(JHipsterModuleOrganization.builder().feature(SPRING_SERVER).addDependency(SPRING_BOOT).build())
       .tags("server", "webflux")
-      .factory(webflux::buildModule);
+      .factory(webflux::buildEmptyModule);
+  }
+
+  @Bean
+  JHipsterModuleResource springBootWebfluxNettyModule(SpringBootWebfluxApplicationService webflux) {
+    return JHipsterModuleResource
+      .builder()
+      .slug(SPRING_BOOT_WEBFLUX_NETTY)
+      .propertiesDefinition(properties())
+      .apiDoc("Spring Boot - Webflux", "Add Spring Boot Webflux with Netty")
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT_WEBFLUX).build())
+      .tags("server", "webflux")
+      .factory(webflux::buildNettyModule);
+  }
+
+  private static JHipsterModulePropertiesDefinition properties() {
+    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().build();
   }
 }

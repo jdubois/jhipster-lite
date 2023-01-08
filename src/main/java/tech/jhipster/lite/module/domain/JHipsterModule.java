@@ -35,12 +35,19 @@ import tech.jhipster.lite.module.domain.javadependency.JHipsterModuleJavaDepende
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDependencyGroupIdBuilder;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
+import tech.jhipster.lite.module.domain.javaproperties.Comment;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties.JHipsterModuleSpringPropertiesBuilder;
+import tech.jhipster.lite.module.domain.javaproperties.PropertiesBlockComment;
+import tech.jhipster.lite.module.domain.javaproperties.PropertiesBlockComment.PropertiesBlockCommentPropertiesBuilder;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
+import tech.jhipster.lite.module.domain.javaproperties.SpringComment;
+import tech.jhipster.lite.module.domain.javaproperties.SpringComments;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProfile;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProperties;
+import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComment;
+import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComments;
 import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
 import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
@@ -78,6 +85,8 @@ public class JHipsterModule {
   private final JHipsterModulePreActions preActions;
   private final JHipsterModulePostActions postActions;
   private final SpringProperties springProperties;
+  private final SpringComments springComments;
+  private final SpringPropertiesBlockComments springPropertiesBlockComments;
 
   private JHipsterModule(JHipsterModuleBuilder builder) {
     properties = builder.properties;
@@ -92,6 +101,8 @@ public class JHipsterModule {
     preActions = builder.preActions.build();
     postActions = builder.postActions.build();
     springProperties = buildSpringProperties(builder);
+    springComments = buildSpringComments(builder);
+    springPropertiesBlockComments = buildSpringPropertiesBlockComments(builder);
   }
 
   private SpringProperties buildSpringProperties(JHipsterModuleBuilder builder) {
@@ -110,6 +121,49 @@ public class JHipsterModule {
         .builder(inputProperties.getKey().type())
         .key(property.getKey())
         .value(property.getValue())
+        .profile(inputProperties.getKey().profile())
+        .build();
+  }
+
+  private SpringComments buildSpringComments(JHipsterModuleBuilder builder) {
+    return new SpringComments(builder.springProperties.entrySet().stream().flatMap(toSpringComments()).toList());
+  }
+
+  private Function<Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder>, Stream<SpringComment>> toSpringComments() {
+    return inputProperties -> inputProperties.getValue().build().comments().entrySet().stream().map(toSpringComment(inputProperties));
+  }
+
+  private Function<Entry<PropertyKey, Comment>, SpringComment> toSpringComment(
+    Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder> inputProperties
+  ) {
+    return propertyComment ->
+      SpringComment
+        .builder(inputProperties.getKey().type())
+        .key(propertyComment.getKey())
+        .comment(propertyComment.getValue())
+        .profile(inputProperties.getKey().profile())
+        .build();
+  }
+
+  private SpringPropertiesBlockComments buildSpringPropertiesBlockComments(JHipsterModuleBuilder builder) {
+    return new SpringPropertiesBlockComments(
+      builder.springProperties.entrySet().stream().flatMap(toSpringPropertiesBlockComments()).toList()
+    );
+  }
+
+  private Function<Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder>, Stream<SpringPropertiesBlockComment>> toSpringPropertiesBlockComments() {
+    return inputProperties ->
+      inputProperties.getValue().build().propertiesBlockComments().stream().map(toSpringPropertiesBlockComment(inputProperties));
+  }
+
+  private Function<PropertiesBlockComment, SpringPropertiesBlockComment> toSpringPropertiesBlockComment(
+    Entry<PropertiesKey, JHipsterModuleSpringPropertiesBuilder> inputProperties
+  ) {
+    return propertiesBlockComment ->
+      SpringPropertiesBlockComment
+        .builder(inputProperties.getKey().type())
+        .comment(propertiesBlockComment.comment())
+        .properties(propertiesBlockComment.properties())
         .profile(inputProperties.getKey().profile())
         .build();
   }
@@ -208,6 +262,14 @@ public class JHipsterModule {
     return new SpringProfile(profile);
   }
 
+  public static Comment comment(String value) {
+    return new Comment(value);
+  }
+
+  public static PropertiesBlockCommentPropertiesBuilder properties(String comment) {
+    return PropertiesBlockComment.builder().comment(comment(comment));
+  }
+
   public static DocumentationTitle documentationTitle(String title) {
     return new DocumentationTitle(title);
   }
@@ -286,8 +348,16 @@ public class JHipsterModule {
     return postActions;
   }
 
+  public SpringComments springComments() {
+    return springComments;
+  }
+
   public SpringProperties springProperties() {
     return springProperties;
+  }
+
+  public SpringPropertiesBlockComments springPropertiesBlockComments() {
+    return springPropertiesBlockComments;
   }
 
   public static class JHipsterModuleBuilder {

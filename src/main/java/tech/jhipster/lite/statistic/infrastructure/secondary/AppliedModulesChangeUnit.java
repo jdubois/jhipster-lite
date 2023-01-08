@@ -4,10 +4,10 @@ import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 
 @ChangeUnit(id = "create-applied-modules-collection", order = "002", author = "cdamon")
-@Generated(reason = "Rollback not called in a normal lifecycle and an implementation detail")
+@ExcludeFromGeneratedCodeCoverage(reason = "Rollback not called in a normal lifecycle and an implementation detail")
 public class AppliedModulesChangeUnit {
 
   @Execution

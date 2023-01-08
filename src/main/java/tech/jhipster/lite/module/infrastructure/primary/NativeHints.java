@@ -3,10 +3,10 @@ package tech.jhipster.lite.module.infrastructure.primary;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscapeElementType;
 
-@Generated(reason = "Not testing native runtime hints")
+@ExcludeFromGeneratedCodeCoverage(reason = "Not testing native runtime hints")
 class NativeHints implements RuntimeHintsRegistrar {
 
   @Override

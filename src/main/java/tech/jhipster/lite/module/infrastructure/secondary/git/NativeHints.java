@@ -7,7 +7,7 @@ import org.eclipse.jgit.util.sha1.SHA1;
 import org.springframework.aot.hint.*;
 import tech.jhipster.lite.common.domain.*;
 
-@Generated(reason = "Not testing native runtime hints")
+@ExcludeFromGeneratedCodeCoverage(reason = "Not testing native runtime hints")
 class NativeHints implements RuntimeHintsRegistrar {
 
   @Override

@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.module.domain.JHipsterFeatureSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterSlug;
@@ -60,7 +60,7 @@ public class JHipsterLandscape {
     return level -> new JHipsterLandscapeLevel(level.elements().stream().map(this::toElementWithoutNestedDependencies).toList());
   }
 
-  @Generated(reason = "Jacoco think there is a missing case")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco think there is a missing case")
   private JHipsterLandscapeElement toElementWithoutNestedDependencies(JHipsterLandscapeElement element) {
     return switch (element.type()) {
       case MODULE -> moduleWithoutNestedDependencies((JHipsterLandscapeModule) element);
@@ -138,7 +138,7 @@ public class JHipsterLandscape {
     return level -> new JHipsterLandscapeLevel(level.elements().stream().sorted(levelComparator).toList());
   }
 
-  @Generated(reason = "Jacoco think there is a missing case")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco think there is a missing case")
   private long linksCount(JHipsterLandscapeElement element) {
     return switch (element.type()) {
       case FEATURE -> featureLinksCount((JHipsterLandscapeFeature) element);

@@ -10,11 +10,11 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.project.domain.ProjectPath;
 
-@Generated(reason = "Error cases are hard to test and not worth the efforts")
+@ExcludeFromGeneratedCodeCoverage(reason = "Error cases are hard to test and not worth the efforts")
 record NpmProjectFormatter(String command) implements ProjectFormatter {
   private static final Logger log = LoggerFactory.getLogger(NpmProjectFormatter.class);
 

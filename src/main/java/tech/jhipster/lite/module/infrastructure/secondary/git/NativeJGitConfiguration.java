@@ -4,6 +4,6 @@ import org.springframework.context.annotation.*;
 import tech.jhipster.lite.common.domain.*;
 
 @ImportRuntimeHints(NativeHints.class)
-@Generated(reason = "Not testing native configuration")
+@ExcludeFromGeneratedCodeCoverage(reason = "Not testing native configuration")
 @Configuration
 class NativeJGitConfiguration {}

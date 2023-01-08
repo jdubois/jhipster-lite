@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 import tech.jhipster.lite.module.domain.ProjectFilesReader;
@@ -60,7 +60,7 @@ class FileSystemJHipsterModuleFiles {
     };
   }
 
-  @Generated(reason = "Ensuring posix FS will be a nightmare :)")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Ensuring posix FS will be a nightmare :)")
   private void setExecutable(JHipsterTemplatedFile file, Path filePath) throws IOException {
     if (isNotPosix()) {
       return;
@@ -73,7 +73,7 @@ class FileSystemJHipsterModuleFiles {
     Files.setPosixFilePermissions(filePath, EXECUTABLE_FILE_PERMISSIONS);
   }
 
-  @Generated(reason = "Only tested on POSIX systems")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Only tested on POSIX systems")
   private static boolean isNotPosix() {
     return !FileSystems.getDefault().supportedFileAttributeViews().contains("posix");
   }
@@ -103,7 +103,7 @@ class FileSystemJHipsterModuleFiles {
     };
   }
 
-  @Generated(reason = "Move error case is hard to test and with low value")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Move error case is hard to test and with low value")
   private void move(Path source, Path destination) {
     try {
       Files.move(source, destination);
@@ -128,7 +128,7 @@ class FileSystemJHipsterModuleFiles {
     };
   }
 
-  @Generated(reason = "Deletion error case is hard to test and with low value")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Deletion error case is hard to test and with low value")
   private void delete(Path path) {
     try {
       Files.delete(path);

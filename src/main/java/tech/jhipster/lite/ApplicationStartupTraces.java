@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
-import tech.jhipster.lite.common.domain.Generated;
+import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 
 final class ApplicationStartupTraces {
@@ -101,7 +101,7 @@ final class ApplicationStartupTraces {
     return new StringBuilder().append("Profile(s): \t").append(Stream.of(profiles).collect(Collectors.joining(", "))).toString();
   }
 
-  @Generated(reason = "Hard to test implement detail error management")
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to test implement detail error management")
   private static String hostAddress() {
     try {
       return InetAddress.getLocalHost().getHostAddress();

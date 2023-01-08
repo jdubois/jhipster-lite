@@ -15,14 +15,14 @@ class SpringBootWebfluxModuleFactoryTest {
   private static final SpringBootWebfluxModuleFactory factory = new SpringBootWebfluxModuleFactory();
 
   @Test
-  void shouldBuildModule() {
+  void shouldBuildWebfluxNettyModule() {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
       .put("serverPort", 9000)
       .build();
 
-    JHipsterModule module = factory.buildModule(properties);
+    JHipsterModule module = factory.buildNettyModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
       .hasFile("pom.xml")

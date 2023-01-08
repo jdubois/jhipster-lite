@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Input, Modal, Spacer, Text } from '@nextui-org/react';
 
@@ -20,10 +20,10 @@ const LoginModal = ({ open, onClose }: LoginModalType) => {
     } else setError(true);
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setError(false);
     onClose();
-  };
+  }, []);
 
   return (
     <Modal blur open={open} onClose={handleClose} aria-labelledby="modal-login">

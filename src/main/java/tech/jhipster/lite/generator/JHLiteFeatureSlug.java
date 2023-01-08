@@ -20,6 +20,7 @@ public enum JHLiteFeatureSlug implements JHipsterFeatureSlugFactory {
   OAUTH_PROVIDER_SPRINGDOC("oauth-provider-springdoc"),
   SERVICE_DISCOVERY("service-discovery"),
   SPRING_SERVER("spring-server"),
+  SPRING_MVC_SERVER("spring-mvc-server"),
   SPRINGDOC("springdoc");
 
   private final String slug;

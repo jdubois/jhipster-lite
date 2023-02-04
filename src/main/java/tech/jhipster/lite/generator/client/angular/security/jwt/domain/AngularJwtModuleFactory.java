@@ -29,8 +29,8 @@ public class AngularJwtModuleFactory {
         path: '',
         loadComponent: () => import('./login/login.component'),
         title: 'Login',
-      },
-      """;
+      },\
+    """;
 
   private static final String AUTH_INTERCEPTOR_IMPORT = """
       import { AuthInterceptor } from './app/auth/auth.interceptor';
@@ -74,7 +74,7 @@ public class AngularJwtModuleFactory {
           .add(fileStart(), AUTH_INTERCEPTOR_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.route.ts"))
-          .add(ROUTE_NEEDLE, LOGIN_MODULE_ROUTE.indent(indentation.spacesCount()))
+          .add(ROUTE_NEEDLE, LOGIN_MODULE_ROUTE)
           .and()
         .and()
       .build();

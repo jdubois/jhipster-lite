@@ -66,6 +66,7 @@ public class GitInfoModuleFactory {
             <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
             <includeOnlyProperty>^git.branch$</includeOnlyProperty>
           </includeOnlyProperties>
+          <verbose>false</verbose>
         </configuration>
         """
       )

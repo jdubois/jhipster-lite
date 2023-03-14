@@ -70,7 +70,7 @@ public class AngularJwtModuleFactory {
         .and()
       .mandatoryReplacements()
         .in(path("src/main/webapp/main.ts"))
-          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },")
+          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [\n    provideHttpClient(withInterceptors([AuthInterceptor])),")
           .add(fileStart(), AUTH_INTERCEPTOR_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.route.ts"))

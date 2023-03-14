@@ -1,5 +1,6 @@
 package tech.jhipster.lite.module.domain.javaproperties;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import tech.jhipster.lite.common.domain.JHipsterCollections;
@@ -18,5 +19,13 @@ public record PropertyValue(Collection<String> values) {
 
   public Collection<String> get() {
     return values();
+  }
+
+  public static PropertyValue merge(PropertyValue v1, PropertyValue v2) {
+    Collection<String> mergedValues = new ArrayList<>();
+    mergedValues.addAll(v1.get());
+    mergedValues.addAll(v2.get());
+
+    return new PropertyValue(mergedValues);
   }
 }

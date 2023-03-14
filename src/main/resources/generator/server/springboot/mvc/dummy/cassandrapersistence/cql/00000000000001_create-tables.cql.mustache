@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS {{ baseName }}.beer (
+    id uuid,
+    name text,
+    unit_price decimal,
+    selling_state text,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS {{ baseName }}.beer_catalog (
+    id uuid,
+    name text,
+    unit_price decimal,
+    PRIMARY KEY(id)
+);

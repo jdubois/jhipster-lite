@@ -21,6 +21,7 @@ public final class AuthenticationModulesFactory {
 
   public static final GroupId SPRING_GROUP = groupId("org.springframework.boot");
 
+  private static final String APPLICATION = "application";
   private static final String DOMAIN = "domain";
   private static final String PRIMARY = "infrastructure/primary";
 
@@ -54,12 +55,12 @@ public final class AuthenticationModulesFactory {
           .addTemplate("Roles.java")
           .addTemplate("Username.java")
           .and()
-        .batch(MAIN_SOURCE.append(PRIMARY), mainDestination.append(PRIMARY))
+        .batch(MAIN_SOURCE.append(APPLICATION), mainDestination.append(APPLICATION))
           .addTemplate("AuthenticationException.java")
-          .addTemplate("AuthenticationExceptionAdvice.java")
           .addTemplate("NotAuthenticatedUserException.java")
           .addTemplate("UnknownAuthenticationException.java")
           .and()
+        .add(MAIN_SOURCE.append(PRIMARY).template("AuthenticationExceptionAdvice.java"), mainDestination.append(PRIMARY).append("AuthenticationExceptionAdvice.java"))
         .batch(TEST_SOURCE.append(DOMAIN), testDestination.append(DOMAIN))
           .addTemplate("RolesTest.java")
           .addTemplate("RoleTest.java")

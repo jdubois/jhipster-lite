@@ -1,5 +1,8 @@
 package {{packageName}}.authentication.infrastructure.primary;
 
+import {{packageName}}.authentication.application.NotAuthenticatedUserException;
+import {{packageName}}.authentication.application.UnknownAuthenticationException;
+
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

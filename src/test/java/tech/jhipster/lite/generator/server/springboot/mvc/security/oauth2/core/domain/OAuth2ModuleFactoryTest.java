@@ -41,27 +41,30 @@ class OAuth2ModuleFactoryTest {
     assertThatModuleWithFiles(module, pomFile(), integrationTestFile(), readmeFile())
       .hasPrefixedFiles("src/main/java/com/jhipster/test/authentication/domain", "Role.java", "Roles.java", "Username.java")
       .hasPrefixedFiles(
+        "src/main/java/com/jhipster/test/authentication/application",
+        "AuthenticatedUser.java",
+        "NotAuthenticatedUserException.java",
+        "AuthenticationException.java",
+        "UnknownAuthenticationException.java"
+      )
+      .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/authentication/infrastructure/primary",
         "ApplicationSecurityProperties.java",
         "AudienceValidator.java",
-        "AuthenticatedUser.java",
-        "AuthenticationException.java",
         "AuthenticationExceptionAdvice.java",
         "Claims.java",
         "CustomClaimConverter.java",
         "JwtGrantedAuthorityConverter.java",
-        "NotAuthenticatedUserException.java",
         "OAuth2Configuration.java",
-        "SecurityConfiguration.java",
-        "UnknownAuthenticationException.java"
+        "SecurityConfiguration.java"
       )
       .hasPrefixedFiles("src/test/java/com/jhipster/test/authentication/domain", "RolesTest.java", "RoleTest.java", "UsernameTest.java")
+      .hasFiles("src/test/java/com/jhipster/test/authentication/application/AuthenticatedUserTest.java")
       .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/authentication/infrastructure/primary",
         "AccountExceptionResource.java",
         "ApplicationSecurityPropertiesTest.java",
         "AudienceValidatorTest.java",
-        "AuthenticatedUserTest.java",
         "AuthenticationExceptionAdviceIT.java",
         "ClaimsTest.java",
         "CustomClaimConverterTest.java",

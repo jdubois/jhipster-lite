@@ -25,6 +25,14 @@ public class ReactJwtModuleFactory {
   private static final RegexNeedleBeforeReplacer LOGIN_FORM_MATCHER = lineBeforeRegex(
     "[  ]{0,10}[<\\/div>]{0,1}\n{0,5}[  ]{0,10}<\\/div>\n{0,5}[  ]{0,10}[);]{0,2}\n{0,5}\\}\n{0,5}[  ]{0,10}export default App;"
   );
+  private static final String AUTHENTICATION_STYLE =
+    """
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items: center;
+    """;
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
@@ -65,20 +73,10 @@ public class ReactJwtModuleFactory {
         .and()
       .optionalReplacements()
         .in(path("src/main/webapp/app/common/primary/app/App.css"))
-          .add(text("  -moz-osx-font-smoothing: grayscale;"), authenticationStyle())
+          .add(text("  -moz-osx-font-smoothing: grayscale;"), AUTHENTICATION_STYLE)
           .and()
         .and()
       .build();
     //@formatter:on
-  }
-
-  private String authenticationStyle() {
-    return """
-          -moz-osx-font-smoothing: grayscale;
-          display: flex;
-          flex-direction: column;
-          justify-content:center;
-          align-items: center;
-        """;
   }
 }

@@ -228,6 +228,9 @@ class FileSystemJHipsterModulesRepositoryTest {
             # This is a comment
             springdoc.swagger-ui.tryItOutEnabled=test""")
         .and()
+      .hasFile("src/test/resources/META-INF/spring.factories")
+        .containing("o.s.c.ApplicationListener=c.m.m.MyListener1,c.m.m.MyListener2")
+        .and()
       .hasFile("README.md")
         .containing(
             """

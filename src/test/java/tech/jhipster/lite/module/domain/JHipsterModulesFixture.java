@@ -118,8 +118,12 @@ public final class JHipsterModulesFixture {
         .add(propertyKey("springdoc.swagger-ui.operationsSorter"), propertyValue("test"))
         .add(propertyKey("springdoc.swagger-ui.tagsSorter"), propertyValue("test"))
         .add(propertyKey("springdoc.swagger-ui.tryItOutEnabled"), propertyValue("test"))
-        .build())   
+        .build())
       .and()
+    .springTestFactories()
+     .append(propertyKey("o.s.c.ApplicationListener"), propertyValue("c.m.m.MyListener1"))
+     .append(propertyKey("o.s.c.ApplicationListener"), propertyValue("c.m.m.MyListener2"))
+     .and()
     .build();
     // @formatter:on
   }

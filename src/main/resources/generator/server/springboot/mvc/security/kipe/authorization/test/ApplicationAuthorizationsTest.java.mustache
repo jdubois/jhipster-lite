@@ -1,0 +1,89 @@
+package {{packageName}}.kipe.application;
+
+import static org.assertj.core.api.Assertions.*;
+import static {{packageName}}.kipe.application.TestAuthentications.*;
+import static {{packageName}}.kipe.domain.RolesAccessesFixture.*;
+
+import java.util.List;
+import {{packageName}}.UnitTest;
+import {{packageName}}.authentication.domain.Username;
+import {{packageName}}.kipe.domain.RolesAccessesFixture.TestResource;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+@UnitTest
+class {{ baseName }}AuthorizationsTest {
+
+  private static final {{ baseName }}Authorizations authorizations = new {{ baseName }}Authorizations(List.of(rolesAccesses()));
+
+  @Nested
+  @DisplayName("All authorized")
+  class AllAuthorizedTest {
+
+    @Test
+    void shouldNotBeAuthorizedWithoutAuthentication() {
+      assertThat(authorizations.allAuthorized(null, "read", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithoutAction() {
+      assertThat(authorizations.allAuthorized(admin(), null, TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithBlankAction() {
+      assertThat(authorizations.allAuthorized(admin(), " ", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithoutResourceAction() {
+      assertThat(authorizations.allAuthorized(admin(), "read", null)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedForNotAuthorizedAction() {
+      assertThat(authorizations.allAuthorized(admin(), "not-authorized", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldBeAuthorizedForAuthorizedAction() {
+      assertThat(authorizations.allAuthorized(admin(), "read", TestResource.USERS)).isTrue();
+    }
+  }
+
+  @Nested
+  @DisplayName("Specific authorized")
+  class SpecificAuthorizedTest {
+
+    @Test
+    void shouldNotBeAuthorizedWithoutAuthentication() {
+      assertThat(authorizations.specificAuthorized(null, "read", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithoutAction() {
+      assertThat(authorizations.specificAuthorized(user(), null, TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithBlankAction() {
+      assertThat(authorizations.specificAuthorized(user(), " ", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedWithoutResourceAction() {
+      assertThat(authorizations.specificAuthorized(user(), "read", null)).isFalse();
+    }
+
+    @Test
+    void shouldNotBeAuthorizedForNotAuthorizedAction() {
+      assertThat(authorizations.specificAuthorized(user(), "not-authorized", TestResource.USERS)).isFalse();
+    }
+
+    @Test
+    void shouldBeAuthorizedForAuthorizedAction() {
+      assertThat(authorizations.specificAuthorized(user(), "read", TestResource.USERS)).isTrue();
+    }
+  }
+}

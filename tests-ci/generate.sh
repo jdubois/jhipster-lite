@@ -92,7 +92,7 @@ cucumber_with_jwt() {
   "spring-boot-jwt-basic-auth" \
   "springdoc-mvc-openapi" \
   "springdoc-jwt" \
-  "spring-boot-cucumber" \
+  "spring-boot-cucumber-mvc" \
   "spring-boot-cucumber-jwt-authentication"
 }
 
@@ -143,6 +143,8 @@ elif [[ $application == 'fullapp' ]]; then
   applyModules "postgresql" "liquibase"
 
   applyModules \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
@@ -156,14 +158,19 @@ elif [[ $application == 'oauth2app' ]]; then
   sonar_back
 
   applyModules \
+  "java-memoizers" \
+
+  applyModules \
   "spring-boot-oauth2" \
   "spring-boot-oauth2-account" \
   "springdoc-mvc-openapi" \
   "springdoc-oauth2"
 
   applyModules \
-  "spring-boot-cucumber" \
+  "spring-boot-cucumber-mvc" \
   "spring-boot-cucumber-oauth2-authentication" \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature"
 
 elif [[ $application == 'mysqlapp' ]]; then
@@ -177,6 +184,8 @@ elif [[ $application == 'mysqlapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-liquibase-changelog" \
@@ -209,6 +218,8 @@ elif [[ $application == 'flywayapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-postgresql-flyway-changelog" \
@@ -226,6 +237,8 @@ elif [[ $application == 'undertowapp' ]]; then
   applyModules "spring-boot-cucumber-jpa-reset"
 
   applyModules \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature" \
   "dummy-jpa-persistence" \
   "dummy-not-postgresql-flyway-changelog" \
@@ -264,14 +277,34 @@ elif [[ $application == 'mongodbapp' ]]; then
   cucumber_with_jwt
 
   applyModules \
+  "kipe-expression" \
+  "kipe-authorization" \
   "dummy-feature" \
   "dummy-mongodb-persistence"
+
+elif [[ $application == 'redisapp' ]]; then
+  spring_boot_mvc
+  sonar_back
+
+  applyModules "redis"
+
+  cucumber_with_jwt
 
 elif [[ $application == 'cassandraapp' ]]; then
   spring_boot_mvc
   sonar_back
 
-  applyModules "cassandra"
+  applyModules 
+  "cassandra" \
+  "cassandra-migration"
+
+  cucumber_with_jwt
+
+  applyModules   
+  "kipe-expression" \
+  "kipe-authorization" \
+  "dummy-feature" \
+  "dummy-cassandra-persistence"
 
 elif [[ $application == 'neo4japp' ]]; then
   spring_boot_mvc
@@ -296,6 +329,9 @@ elif [[ $application == 'angularapp' ]]; then
 elif [[ $application == 'angularoauth2app' ]]; then
   spring_boot_mvc
   sonar_back_front
+
+  applyModules \
+  "java-memoizers" \
 
   applyModules \
   "frontend-maven-plugin" \

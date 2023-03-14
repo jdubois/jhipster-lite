@@ -26,6 +26,16 @@ public class VueModulesFactory {
 
   private static final String IMPORT_NEEDLE = "// jhipster-needle-main-ts-import";
   private static final String PROVIDER_NEEDLE = "// jhipster-needle-main-ts-provider";
+  private static final String PINIA_IMPORTS =
+    """
+    import { createPinia } from 'pinia';
+    import piniaPersist from 'pinia-plugin-persist';
+    """;
+  private static final String PINIA_PROVIDER = """
+    const pinia = createPinia();
+    pinia.use(piniaPersist);
+    app.use(pinia);
+    """;
 
   public JHipsterModule buildVueModule(JHipsterModuleProperties properties) {
     //@formatter:off
@@ -54,6 +64,7 @@ public class VueModulesFactory {
         .addDevDependency(packageName("sinon"), VUE)
         .addScript(scriptKey("build"), scriptCommand("vue-tsc -p tsconfig.build.json --noEmit && vite build --emptyOutDir"))
         .addScript(scriptKey("dev"), scriptCommand("vite"))
+        .addScript(scriptKey("lint"), scriptCommand("eslint --ext .js,.ts,.vue src"))
         .addScript(scriptKey("preview"), scriptCommand("vite preview"))
         .addScript(scriptKey("start"), scriptCommand("vite"))
         .addScript(scriptKey("test"), scriptCommand("vitest run --coverage"))
@@ -126,26 +137,11 @@ public class VueModulesFactory {
         .and()
       .mandatoryReplacements()
         .in(path("src/main/webapp/app/main.ts"))
-          .add(lineBeforeText(IMPORT_NEEDLE), piniaImports())
-          .add(lineBeforeText(PROVIDER_NEEDLE), piniaProvider())
+          .add(lineBeforeText(IMPORT_NEEDLE), PINIA_IMPORTS)
+          .add(lineBeforeText(PROVIDER_NEEDLE), PINIA_PROVIDER)
           .and()
         .and()
       .build();
     //@formatter:on
-  }
-
-  private String piniaImports() {
-    return """
-        import { createPinia } from 'pinia';
-        import piniaPersist from 'pinia-plugin-persist';
-        """;
-  }
-
-  private String piniaProvider() {
-    return """
-        const pinia = createPinia();
-        pinia.use(piniaPersist);
-        app.use(pinia);
-        """;
   }
 }

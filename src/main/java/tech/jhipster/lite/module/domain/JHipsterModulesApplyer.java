@@ -59,7 +59,8 @@ public class JHipsterModulesApplyer {
       .postActions(module.postActions())
       .springProperties(module.springProperties())
       .springComments(module.springComments())
-      .springPropertiesBlockComments(module.springPropertiesBlockComments());
+      .springPropertiesBlockComments(module.springPropertiesBlockComments())
+      .springFactories(module.springFactories());
     //@formatter:on
 
     modules.apply(changes);

@@ -13,6 +13,8 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 public class MySQLModuleFactory {
 
   private static final String MYSQL = "mysql";
+  private static final String MYSQL_GROUPID = "com.mysql";
+  private static final String MYSQL_ARTIFACTID = "mysql-connector-j";
 
   private final DockerImages dockerImages;
 
@@ -27,7 +29,7 @@ public class MySQLModuleFactory {
 
     return sqlCommonModuleBuilder(properties, DatabaseType.MYSQL, dockerImages.get(MYSQL), documentationTitle("MySQL"), artifactId(MYSQL))
       .javaDependencies()
-      .addDependency(javaDependency().groupId(MYSQL).artifactId("mysql-connector-java").scope(JavaDependencyScope.RUNTIME).build())
+      .addDependency(javaDependency().groupId(MYSQL_GROUPID).artifactId(MYSQL_ARTIFACTID).scope(JavaDependencyScope.RUNTIME).build())
       .and()
       .springMainProperties()
       .set(propertyKey("spring.datasource.url"), propertyValue("jdbc:mysql://localhost:3306/" + properties.projectBaseName().name()))

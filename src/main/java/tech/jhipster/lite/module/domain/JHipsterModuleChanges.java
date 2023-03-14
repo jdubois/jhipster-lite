@@ -5,9 +5,7 @@ import tech.jhipster.lite.module.domain.file.JHipsterFilesToDelete;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToMove;
 import tech.jhipster.lite.module.domain.file.JHipsterTemplatedFiles;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
-import tech.jhipster.lite.module.domain.javaproperties.SpringComments;
-import tech.jhipster.lite.module.domain.javaproperties.SpringProperties;
-import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComments;
+import tech.jhipster.lite.module.domain.javaproperties.*;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
 import tech.jhipster.lite.module.domain.postaction.JHipsterModulePostActions;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
@@ -30,6 +28,7 @@ public class JHipsterModuleChanges {
   private final SpringProperties springProperties;
   private final SpringComments springComments;
   private final SpringPropertiesBlockComments springPropertiesBlockComments;
+  private final SpringFactories springFactories;
 
   private JHipsterModuleChanges(JHipsterModuleChangesBuilder builder) {
     assertMandatoryFields(builder);
@@ -48,6 +47,7 @@ public class JHipsterModuleChanges {
     springProperties = builder.springProperties;
     springComments = builder.springComments;
     springPropertiesBlockComments = builder.springPropertiesBlockComments;
+    springFactories = builder.springFactories;
   }
 
   private void assertMandatoryFields(JHipsterModuleChangesBuilder builder) {
@@ -62,6 +62,7 @@ public class JHipsterModuleChanges {
     Assert.notNull("preActions", builder.preActions);
     Assert.notNull("postActions", builder.postActions);
     Assert.notNull("springProperties", builder.springProperties);
+    Assert.notNull("springFactories", builder.springFactories);
   }
 
   public static JHipsterModuleChangesProjectFolderBuilder builder() {
@@ -124,6 +125,10 @@ public class JHipsterModuleChanges {
     return springPropertiesBlockComments;
   }
 
+  public SpringFactories springFactories() {
+    return springFactories;
+  }
+
   public static class JHipsterModuleChangesBuilder
     implements
       JHipsterModuleChangesProjectFolderBuilder,
@@ -139,7 +144,8 @@ public class JHipsterModuleChanges {
       JHipsterModuleChangesPostActionsBuilder,
       JHipsterModuleChangesSpringPropertiesBuilder,
       JHipsterModuleChangesSpringCommentsBuilder,
-      JHipsterModuleChangesSpringPropertiesBlockCommentsBuilder {
+      JHipsterModuleChangesSpringPropertiesBlockCommentsBuilder,
+      JHipsterModuleChangesSpringFactoriesBuilder {
 
     private JHipsterProjectFolder projectFolder;
     private JHipsterTemplatedFiles filesToAdd;
@@ -155,6 +161,7 @@ public class JHipsterModuleChanges {
     private SpringProperties springProperties;
     private SpringComments springComments;
     private SpringPropertiesBlockComments springPropertiesBlockComments;
+    private SpringFactories springFactories;
 
     private JHipsterModuleChangesBuilder() {}
 
@@ -252,8 +259,17 @@ public class JHipsterModuleChanges {
     }
 
     @Override
-    public JHipsterModuleChanges springPropertiesBlockComments(SpringPropertiesBlockComments springPropertiesBlockComments) {
+    public JHipsterModuleChangesSpringFactoriesBuilder springPropertiesBlockComments(
+      SpringPropertiesBlockComments springPropertiesBlockComments
+    ) {
       this.springPropertiesBlockComments = springPropertiesBlockComments;
+
+      return this;
+    }
+
+    @Override
+    public JHipsterModuleChanges springFactories(SpringFactories springFactories) {
+      this.springFactories = springFactories;
 
       return new JHipsterModuleChanges(this);
     }
@@ -312,6 +328,10 @@ public class JHipsterModuleChanges {
   }
 
   public interface JHipsterModuleChangesSpringPropertiesBlockCommentsBuilder {
-    JHipsterModuleChanges springPropertiesBlockComments(SpringPropertiesBlockComments springPropertiesBlockComments);
+    JHipsterModuleChangesSpringFactoriesBuilder springPropertiesBlockComments(SpringPropertiesBlockComments springPropertiesBlockComments);
+  }
+
+  public interface JHipsterModuleChangesSpringFactoriesBuilder {
+    JHipsterModuleChanges springFactories(SpringFactories springFactories);
   }
 }

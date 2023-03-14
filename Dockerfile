@@ -10,7 +10,7 @@ RUN \
     chmod +x mvnw && \
     ./mvnw package -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip && \
     mv /code/jhipster-app/target/*.jar /code/ && \
-    rm -Rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/*
+    rm -Rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/* /code/*-tests.jar 
 
 ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS="" \

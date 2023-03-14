@@ -21,6 +21,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
 
   public static final String DEFAULT_MAIN_FOLDER = "src/main/resources/config/";
   public static final String DEFAULT_TEST_FOLDER = "src/test/resources/config/";
+  public static final String TEST_META_INF_FOLDER = "src/test/resources/META-INF/";
 
   public static Map<SpringPropertyType, List<String>> buildPaths() {
     return Map.of(
@@ -42,6 +43,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
   private final FileSystemJavaBuildCommandsHandler javaBuild;
   private final FileSystemSpringPropertiesCommandsHandler springProperties;
   private final FileSystemSpringCommentsCommandsHandler springComments;
+  private final FileSystemSpringFactoriesCommandsHandler springFactories;
   private final FileSystemPackageJsonHandler packageJson;
   private final FileSystemReplacer replacer;
   private final JHipsterLandscape landscape;
@@ -60,6 +62,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     javaBuild = new FileSystemJavaBuildCommandsHandler();
     springProperties = new FileSystemSpringPropertiesCommandsHandler();
     springComments = new FileSystemSpringCommentsCommandsHandler();
+    springFactories = new FileSystemSpringFactoriesCommandsHandler();
     packageJson = new FileSystemPackageJsonHandler(npmVersions);
     replacer = new FileSystemReplacer();
   }
@@ -76,6 +79,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     javaBuild.handle(changes.indentation(), changes.projectFolder(), changes.javaBuildCommands());
     springProperties.handle(changes.projectFolder(), changes.springProperties());
     springComments.handle(changes.projectFolder(), changes.springComments(), changes.springPropertiesBlockComments());
+    springFactories.handle(changes.projectFolder(), changes.springFactories());
     packageJson.handle(changes.indentation(), changes.projectFolder(), changes.packageJson());
     replacer.handle(changes.projectFolder(), changes.mandatoryReplacements());
     replacer.handle(changes.projectFolder(), changes.optionalReplacements());

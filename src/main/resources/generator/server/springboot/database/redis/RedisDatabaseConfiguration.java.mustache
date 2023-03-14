@@ -1,0 +1,22 @@
+package {{packageName}}.technical.infrastructure.secondary.redis;
+
+import {{packageName}}.technical.infrastructure.secondary.redis.JSR310DateConverters.DateToZonedDateTimeConverter;
+import {{packageName}}.technical.infrastructure.secondary.redis.JSR310DateConverters.ZonedDateTimeToDateConverter;
+import java.util.List;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.core.convert.RedisCustomConversions;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+
+@Configuration
+@EnableRedisRepositories({ "{{packageName}}" })
+@Import(value = RedisAutoConfiguration.class)
+public class RedisDatabaseConfiguration {
+
+  @Bean
+  public RedisCustomConversions customConversions() {
+    return new RedisCustomConversions(List.of(DateToZonedDateTimeConverter.INSTANCE, ZonedDateTimeToDateConverter.INSTANCE));
+  }
+}

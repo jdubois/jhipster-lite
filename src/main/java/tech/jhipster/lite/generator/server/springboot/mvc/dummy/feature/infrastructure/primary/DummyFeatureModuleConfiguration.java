@@ -18,7 +18,7 @@ class DummyFeatureModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(DUMMY_FEATURE)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().build())
       .apiDoc("Spring Boot - MVC", "Add Dummy context with some APIs")
       .organization(
         JHipsterModuleOrganization
@@ -26,6 +26,8 @@ class DummyFeatureModuleConfiguration {
           .addDependency(CUCUMBER_AUTHENTICATION)
           .addDependency(SPRINGDOC)
           .addDependency(JAVA_BASE)
+          .addDependency(KIPE_EXPRESSION)
+          .addDependency(KIPE_AUTHORIZATION)
           .build()
       )
       .tags("server")

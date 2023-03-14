@@ -15,14 +15,14 @@
   <properties>
     <junit-jupiter.version>5.9.2</junit-jupiter.version>
     <assertj.version>3.24.2</assertj.version>
-    <mockito.version>5.1.1</mockito.version>
+    <mockito.version>5.2.0</mockito.version>
     <jjwt.version>0.11.5</jjwt.version>
-    <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
-    <spring-boot.version>3.0.2</spring-boot.version>
+    <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
+    <spring-boot.version>3.0.4</spring-boot.version>
     <spring-cloud.version>2022.0.0</spring-cloud.version>
     <spring-cloud-netflix-eureka-client.version>4.0.0</spring-cloud-netflix-eureka-client.version>
-    <springdoc-openapi-starter-webmvc.version>2.0.2</springdoc-openapi-starter-webmvc.version>
-    <springdoc-openapi-starter-webflux.version>2.0.2</springdoc-openapi-starter-webflux.version>
+    <springdoc-openapi-starter-webmvc.version>2.0.3</springdoc-openapi-starter-webmvc.version>
+    <springdoc-openapi-starter-webflux.version>2.0.3</springdoc-openapi-starter-webflux.version>
     <testcontainers.version>1.17.6</testcontainers.version>
     <kafka-clients.version>3.2.0</kafka-clients.version>
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
@@ -38,17 +38,18 @@
     <cucumber.version>7.11.1</cucumber.version>
     <testng.version>7.7.1</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
-    <liquibase.version>4.19.0</liquibase.version>
-    <compiler-plugin.version>3.10.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M8</surefire-plugin.version>
+    <liquibase.version>4.20.0</liquibase.version>
+    <compiler-plugin.version>3.11.0</compiler-plugin.version>
+    <surefire-plugin.version>3.0.0-M9</surefire-plugin.version>
     <failsafe-plugin.version>3.0.0-M5</failsafe-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
-    <jhlite.version>0.26.0</jhlite.version>
+    <jhlite.version>0.28.0</jhlite.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <ehcache.version>3.10.8</ehcache.version>
     <git-commit-id-plugin.version>5.0.0</git-commit-id-plugin.version>
+    <cassandraunit.version>4.3.1.0</cassandraunit.version>
   </properties>
 
   <dependencyManagement>

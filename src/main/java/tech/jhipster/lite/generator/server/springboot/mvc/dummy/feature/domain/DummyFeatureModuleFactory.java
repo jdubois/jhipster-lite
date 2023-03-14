@@ -18,6 +18,7 @@ public class DummyFeatureModuleFactory {
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
   private static final JHipsterSource DUMMY_TEST_SOURCE = TEST_SOURCE.append(DUMMY);
 
+  private static final String APPLICATION = "application";
   private static final String DOMAIN = "domain";
   private static final String PRIMARY = "infrastructure/primary";
   private static final String SECONDARY = "infrastructure/secondary";
@@ -34,12 +35,18 @@ public class DummyFeatureModuleFactory {
 
     //@formatter:off
     return moduleBuilder(properties)
+      .context()
+        .put("baseName", properties.projectBaseName().capitalized())
+        .and()
       .documentation(documentationTitle("Dummy"), SOURCE.file("dummy.md"))
       .files()
-        .add(
-          MAIN_SOURCE.template("application/BeersApplicationService.java"),
-          mainDestination.append("application/BeersApplicationService.java")
-        )
+        .batch(MAIN_SOURCE.append(APPLICATION), mainDestination.append(APPLICATION))
+          .addTemplate("BeersApplicationService.java")
+          .addTemplate("BeerIdAccessChecker.java")
+          .addTemplate("BeerResource.java")
+          .addTemplate("BeersAccessesConfiguration.java")
+          .addTemplate("BeerToCreateAccessChecker.java")
+          .and()
         .batch(MAIN_SOURCE.append(DOMAIN).append(BEER), mainDestination.append(DOMAIN).append(BEER))
           .addTemplate("Beer.java")
           .addTemplate("BeerName.java")
@@ -70,6 +77,10 @@ public class DummyFeatureModuleFactory {
              MAIN_SOURCE.append(SECONDARY).template("InMemoryBeersRepository.java"),
              mainDestination.append(SECONDARY).append("InMemoryBeersRepository.java")
            )
+        .batch(DUMMY_TEST_SOURCE.append(APPLICATION), testDestination.append(APPLICATION))
+          .addTemplate("BeerIdAccessCheckerTest.java")
+          .addTemplate("BeerToCreateAccessCheckerTest.java")
+          .and()
         .batch(DUMMY_TEST_SOURCE.append(DOMAIN), testDestination.append(DOMAIN))
           .addTemplate("AmountTest.java")
           .addTemplate("BeersIdentityFixture.java")

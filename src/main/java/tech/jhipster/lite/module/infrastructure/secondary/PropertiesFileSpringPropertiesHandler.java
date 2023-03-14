@@ -33,7 +33,7 @@ class PropertiesFileSpringPropertiesHandler {
     updateProperties(key, value);
   }
 
-  @ExcludeFromGeneratedCodeCoverage
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to cover IOException")
   private void updateProperties(PropertyKey key, PropertyValue value) {
     try {
       String properties = buildProperties(key, value);

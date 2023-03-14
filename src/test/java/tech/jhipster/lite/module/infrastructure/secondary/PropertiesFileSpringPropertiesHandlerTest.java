@@ -1,10 +1,10 @@
 package tech.jhipster.lite.module.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
+import static tech.jhipster.lite.TestFileUtils.content;
+import static tech.jhipster.lite.TestFileUtils.loadDefaultProperties;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,10 @@ import tech.jhipster.lite.UnitTest;
 
 @UnitTest
 class PropertiesFileSpringPropertiesHandlerTest {
+
+  public static final Path EXISTING_SPRING_PROPERTIES = Paths.get(
+    "src/test/resources/projects/project-with-spring-properties/application.properties"
+  );
 
   @Test
   void shouldCreateUnknownFile() {
@@ -27,7 +31,7 @@ class PropertiesFileSpringPropertiesHandlerTest {
   @Test
   void shouldAppendPropertyToFileWithProperties() {
     Path propertiesFile = Paths.get(TestFileUtils.tmpDirForTest(), "src/main/resources/application.properties");
-    loadDefaultProperties(propertiesFile);
+    loadDefaultProperties(EXISTING_SPRING_PROPERTIES, propertiesFile);
     PropertiesFileSpringPropertiesHandler handler = new PropertiesFileSpringPropertiesHandler(propertiesFile);
 
     handler.set(propertyKey("springdoc.swagger-ui.operationsSorter"), propertyValue("alpha", "beta"));
@@ -40,29 +44,11 @@ class PropertiesFileSpringPropertiesHandlerTest {
   @Test
   void shouldReplaceExistingProperty() {
     Path propertiesFile = Paths.get(TestFileUtils.tmpDirForTest(), "src/main/resources/application.properties");
-    loadDefaultProperties(propertiesFile);
+    loadDefaultProperties(EXISTING_SPRING_PROPERTIES, propertiesFile);
     PropertiesFileSpringPropertiesHandler handler = new PropertiesFileSpringPropertiesHandler(propertiesFile);
 
     handler.set(propertyKey("spring.application.name"), propertyValue("alpha"));
 
     assertThat(content(propertiesFile)).startsWith("spring.application.name=alpha").doesNotContain("spring.application.name=JHLite");
-  }
-
-  private static String content(Path file) {
-    try {
-      return Files.readString(file);
-    } catch (IOException e) {
-      throw new AssertionError(e.getMessage(), e);
-    }
-  }
-
-  private void loadDefaultProperties(Path propertiesFile) {
-    try {
-      Files.createDirectories(propertiesFile.getParent());
-
-      Files.copy(Paths.get("src/test/resources/projects/project-with-spring-properties/application.properties"), propertiesFile);
-    } catch (IOException e) {
-      throw new AssertionError(e.getMessage(), e);
-    }
   }
 }

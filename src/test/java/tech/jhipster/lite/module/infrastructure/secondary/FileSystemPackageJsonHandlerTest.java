@@ -254,6 +254,24 @@ class FileSystemPackageJsonHandlerTest {
       );
     }
 
+    @Test
+    void shouldRemoveExistingDevDependency() {
+      mockDevVersion();
+
+      JHipsterProjectFolder folder = projectWithPackageJson("src/test/resources/projects/node/package.json");
+
+      packageJson.handle(
+        Indentation.DEFAULT,
+        folder,
+        emptyBuilder().removeDevDependency(packageName("@prettier/plugin-xml"), VersionSource.COMMON).build()
+      );
+
+      assertPackageJsonContent(folder, """
+            "devDependencies": {
+                },
+          """);
+    }
+
     private void mockDevVersion() {
       when(npmVersions.get(anyString(), eq(NpmVersionSource.COMMON))).thenReturn(new NpmPackageVersion("1.1.1"));
     }
@@ -328,6 +346,24 @@ class FileSystemPackageJsonHandlerTest {
             },
           """
       );
+    }
+
+    @Test
+    void shouldRemoveExistingDependency() {
+      mockVersion();
+
+      JHipsterProjectFolder folder = projectWithPackageJson("src/test/resources/projects/node/package.json");
+
+      packageJson.handle(
+        Indentation.DEFAULT,
+        folder,
+        emptyBuilder().removeDependency(packageName("@fortawesome/fontawesome-svg-core"), VersionSource.COMMON).build()
+      );
+
+      assertPackageJsonContent(folder, """
+            "dependencies": {
+                },
+          """);
     }
 
     private void mockVersion() {

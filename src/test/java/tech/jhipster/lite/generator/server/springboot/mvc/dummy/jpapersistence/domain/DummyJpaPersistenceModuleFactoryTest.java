@@ -43,17 +43,17 @@ class DummyJpaPersistenceModuleFactoryTest {
           """)
       .containing(
         """
-              @Transactional
-              @PreAuthorize("hasRole('ADMIN')")
-              public Beer create(BeerToCreate beerToCreate) {
-            """
+          @Transactional
+          @PreAuthorize("can('create', #beerToCreate)")
+          public Beer create(BeerToCreate beerToCreate) {
+        """
       )
       .containing(
         """
-              @Transactional
-              @PreAuthorize("hasRole('ADMIN')")
-              public void remove(BeerId beer) {
-            """
+          @Transactional
+          @PreAuthorize("can('remove', #beer)")
+          public void remove(BeerId beer) {
+        """
       )
       .and()
       .doNotHaveFiles(

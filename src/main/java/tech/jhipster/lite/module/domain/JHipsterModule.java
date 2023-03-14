@@ -3,6 +3,7 @@ package tech.jhipster.lite.module.domain;
 import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import java.nio.file.Paths;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,21 +36,10 @@ import tech.jhipster.lite.module.domain.javadependency.JHipsterModuleJavaDepende
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDependencyGroupIdBuilder;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
-import tech.jhipster.lite.module.domain.javaproperties.Comment;
-import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties;
+import tech.jhipster.lite.module.domain.javaproperties.*;
+import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringFactories.JHipsterModuleSpringFactoriesBuilder;
 import tech.jhipster.lite.module.domain.javaproperties.JHipsterModuleSpringProperties.JHipsterModuleSpringPropertiesBuilder;
-import tech.jhipster.lite.module.domain.javaproperties.PropertiesBlockComment;
 import tech.jhipster.lite.module.domain.javaproperties.PropertiesBlockComment.PropertiesBlockCommentPropertiesBuilder;
-import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
-import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
-import tech.jhipster.lite.module.domain.javaproperties.SpringComment;
-import tech.jhipster.lite.module.domain.javaproperties.SpringComments;
-import tech.jhipster.lite.module.domain.javaproperties.SpringProfile;
-import tech.jhipster.lite.module.domain.javaproperties.SpringProperties;
-import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComment;
-import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComments;
-import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
-import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson.JHipsterModulePackageJsonBuilder;
 import tech.jhipster.lite.module.domain.packagejson.PackageName;
@@ -87,6 +77,7 @@ public class JHipsterModule {
   private final SpringProperties springProperties;
   private final SpringComments springComments;
   private final SpringPropertiesBlockComments springPropertiesBlockComments;
+  private final SpringFactories springFactories;
 
   private JHipsterModule(JHipsterModuleBuilder builder) {
     properties = builder.properties;
@@ -103,6 +94,7 @@ public class JHipsterModule {
     springProperties = buildSpringProperties(builder);
     springComments = buildSpringComments(builder);
     springPropertiesBlockComments = buildSpringPropertiesBlockComments(builder);
+    springFactories = buildSpringFactories(builder);
   }
 
   private SpringProperties buildSpringProperties(JHipsterModuleBuilder builder) {
@@ -168,6 +160,20 @@ public class JHipsterModule {
         .build();
   }
 
+  private SpringFactories buildSpringFactories(JHipsterModuleBuilder builder) {
+    return new SpringFactories(builder.springFactories.entrySet().stream().flatMap(toSpringFactories()).toList());
+  }
+
+  private Function<Entry<SpringFactoryType, JHipsterModuleSpringFactoriesBuilder>, Stream<SpringFactory>> toSpringFactories() {
+    return inputFactories -> inputFactories.getValue().build().factories().entrySet().stream().map(toSpringFactory(inputFactories));
+  }
+
+  private Function<Entry<PropertyKey, PropertyValue>, SpringFactory> toSpringFactory(
+    Entry<SpringFactoryType, JHipsterModuleSpringFactoriesBuilder> inputFactories
+  ) {
+    return property -> SpringFactory.builder(inputFactories.getKey()).key(property.getKey()).value(property.getValue());
+  }
+
   public static JHipsterModuleBuilder moduleBuilder(JHipsterModuleProperties properties) {
     return new JHipsterModuleBuilder(properties);
   }
@@ -212,6 +218,10 @@ public class JHipsterModule {
 
   public static JHipsterDestination toSrcTestJava() {
     return JHipsterDestination.SRC_TEST_JAVA;
+  }
+
+  public static JHipsterDestination toSrcMainResources() {
+    return JHipsterDestination.SRC_MAIN_RESOURCES;
   }
 
   public static GroupId groupId(String groupId) {
@@ -356,6 +366,10 @@ public class JHipsterModule {
     return springProperties;
   }
 
+  public SpringFactories springFactories() {
+    return springFactories;
+  }
+
   public SpringPropertiesBlockComments springPropertiesBlockComments() {
     return springPropertiesBlockComments;
   }
@@ -376,6 +390,7 @@ public class JHipsterModule {
     private final JHipsterModulePreActionsBuilder preActions = JHipsterModulePreActions.builder(this);
     private final JHipsterModulePostActionsBuilder postActions = JHipsterModulePostActions.builder(this);
     private final Map<PropertiesKey, JHipsterModuleSpringPropertiesBuilder> springProperties = new HashMap<>();
+    private final Map<SpringFactoryType, JHipsterModuleSpringFactoriesBuilder> springFactories = new EnumMap<>(SpringFactoryType.class);
 
     private JHipsterModuleBuilder(JHipsterModuleProperties properties) {
       Assert.notNull("properties", properties);
@@ -505,6 +520,10 @@ public class JHipsterModule {
         new PropertiesKey(profile, SpringPropertyType.TEST_PROPERTIES),
         key -> JHipsterModuleSpringProperties.builder(this)
       );
+    }
+
+    public JHipsterModuleSpringFactoriesBuilder springTestFactories() {
+      return springFactories.computeIfAbsent(SpringFactoryType.TEST_FACTORIES, key -> JHipsterModuleSpringFactories.builder(this));
     }
 
     String packagePath() {

@@ -9,12 +9,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.4</version>
   </parent>
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.27.1-SNAPSHOT</version>
+  <version>0.29.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -49,30 +49,30 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <node.version>v18.12.1</node.version>
-    <npm.version>8.19.2</npm.version>
+    <node.version>v18.15.0</node.version>
+    <npm.version>9.6.1</npm.version>
 
     <maven.version>3.6.0</maven.version>
     <maven-enforcer-plugin.version>3.2.1</maven-enforcer-plugin.version>
     <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-    <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
-    <byte-buddy.version>1.12.22</byte-buddy.version>
-    <compiler-plugin.version>3.10.1</compiler-plugin.version>
-    <surefire-plugin.version>3.0.0-M8</surefire-plugin.version>
+    <byte-buddy.version>1.14.2</byte-buddy.version>
+    <compiler-plugin.version>3.11.0</compiler-plugin.version>
+    <surefire-plugin.version>3.0.0-M9</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
-    <jgit.version>6.4.0.202211300538-r</jgit.version>
+    <jgit.version>6.5.0.202303070854-r</jgit.version>
     <archunit-junit5.version>1.0.1</archunit-junit5.version>
-    <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
+    <springdoc-openapi-starter-webmvc-ui.version>2.0.3</springdoc-openapi-starter-webmvc-ui.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <apache-commons-io.version>2.11.0</apache-commons-io.version>
     <cucumber.version>7.11.1</cucumber.version>
     <testng.version>7.7.1</testng.version>
-    <maven-model.version>3.8.7</maven-model.version>
+    <maven-model.version>3.9.0</maven-model.version>
     <joox.version>2.0.0</joox.version>
     <dom4j.version>2.1.4</dom4j.version>
     <night-config.version>3.6.6</night-config.version>
@@ -672,6 +672,18 @@
           <artifactId>sonar-maven-plugin</artifactId>
           <version>${sonar-maven-plugin.version}</version>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>test-jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -688,6 +700,10 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
             <version>${project.parent.version}</version>
@@ -700,8 +716,11 @@
             </executions>
             <configuration>
               <image>
+                <env>
+                  <BP_JVM_VERSION>17</BP_JVM_VERSION>
+                </env>
                 <buildpacks>
-                  <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.9.0-ea</buildpack>
+                  <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.11.0</buildpack>
                   <buildpack>gcr.io/paketo-buildpacks/java-native-image</buildpack>
                 </buildpacks>
               </image>
@@ -750,17 +769,6 @@
                     <arg>loopback</arg>
                   </gpgArguments>
                 </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
               </execution>
             </executions>
           </plugin>

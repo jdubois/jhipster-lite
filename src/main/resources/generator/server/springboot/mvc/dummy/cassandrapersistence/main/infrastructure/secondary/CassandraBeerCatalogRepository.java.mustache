@@ -1,0 +1,14 @@
+package {{ packageName }}.dummy.infrastructure.secondary;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+interface CassandraBeerCatalogRepository extends CrudRepository<BeerCatalogTable, UUID> {
+
+  @Override
+  List<BeerCatalogTable> findAll();
+}

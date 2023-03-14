@@ -50,6 +50,7 @@ class VueModulesFactoryTest {
         .containing(nodeDependency("vue-router"))
         .containing("\"build\": \"vue-tsc -p tsconfig.build.json --noEmit && vite build --emptyOutDir\"")
         .containing("\"dev\": \"vite\"")
+        .containing("\"lint\": \"eslint --ext .js,.ts,.vue src\"")
         .containing("\"preview\": \"vite preview\"")
         .containing("\"start\": \"vite\"")
         .containing("\"test\": \"vitest run --coverage\"")

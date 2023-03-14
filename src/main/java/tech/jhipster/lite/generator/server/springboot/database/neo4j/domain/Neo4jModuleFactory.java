@@ -26,6 +26,8 @@ public class Neo4jModuleFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();
+    String packageName = properties.basePackage().get() + ".";
+
     //@formatter:off
     return moduleBuilder(properties)
       .documentation(documentationTitle("Neo4j DB"), SOURCE.template("neo4j.md"))
@@ -42,7 +44,6 @@ public class Neo4jModuleFactory {
         .batch(SOURCE, toSrcMainJava().append(packagePath).append(NEO4J_SECONDARY))
         .and()
         .add(SOURCE.template("TestNeo4jManager.java"), toSrcTestJava().append(packagePath).append("TestNeo4jManager.java"))
-        .add(SOURCE.template("spring.factories"), to("src/test/resources/META-INF/spring.factories"))
         .and()
       .springMainProperties()
         .set(propertyKey("spring.neo4j.uri"), propertyValue("bolt://localhost:7687"))
@@ -50,6 +51,9 @@ public class Neo4jModuleFactory {
         .and()
       .springTestProperties()
         .set(propertyKey("spring.neo4j.uri"), propertyValue("${TEST_NEO4J_URI}"))
+        .and()
+      .springTestFactories()
+        .append(propertyKey("org.springframework.context.ApplicationListener"), propertyValue(packageName + "TestNeo4jManager"))
         .and()
       .springMainLogger("org.neo4j.driver", LogLevel.WARN)
       .springTestLogger("org.neo4j.driver", LogLevel.WARN)

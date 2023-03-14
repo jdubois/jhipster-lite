@@ -20,13 +20,15 @@ public class OAuth2ModuleFactory {
     "import org.springframework.boot.test.context.SpringBootTest;"
   );
   private static final GroupId SPRING_GROUP = groupId("org.springframework.boot");
-  private static final String PRIMARY = "infrastructure/primary";
 
   private static final JHipsterSource SOURCE = from("server/springboot/mvc/security/oauth2/core");
   private static final JHipsterSource MAIN_SOURCE = SOURCE.append("main");
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
   private static final JHipsterSource DOCKER_SOURCE = SOURCE.append("docker");
   private static final JHipsterDestination DOCKER_DESTINATION = to("src/main/docker");
+
+  private static final String APPLICATION = "application";
+  private static final String PRIMARY = "infrastructure/primary";
 
   private static final PropertyValue CLIENT_ID = propertyValue("web_app");
   private static final PropertyValue CLIENT_SECRET = propertyValue("web_app");
@@ -74,21 +76,20 @@ public class OAuth2ModuleFactory {
     builder
     .startupCommand("docker compose -f src/main/docker/keycloak.yml up -d")
     .files()
+      .add(MAIN_SOURCE.append(APPLICATION).template("AuthenticatedUser.java"), mainDestination.append(APPLICATION).append("AuthenticatedUser.java"))
       .batch(MAIN_SOURCE.append(PRIMARY), mainDestination.append(PRIMARY))
         .addTemplate("ApplicationSecurityProperties.java")
         .addTemplate("AudienceValidator.java")
-        .addTemplate("AuthenticatedUser.java")
         .addTemplate("Claims.java")
         .addTemplate("CustomClaimConverter.java")
         .addTemplate("JwtGrantedAuthorityConverter.java")
         .addTemplate("OAuth2Configuration.java")
         .addTemplate("SecurityConfiguration.java")
         .and()
+      .add(TEST_SOURCE.append(APPLICATION).template("AuthenticatedUserTest.java"), testDestination.append(APPLICATION).append("AuthenticatedUserTest.java"))
       .batch(TEST_SOURCE.append(PRIMARY), testDestination.append(PRIMARY))
         .addTemplate("ApplicationSecurityPropertiesTest.java")
         .addTemplate("AudienceValidatorTest.java")
-        .addTemplate("AuthenticatedUserTest.java")
-
         .addTemplate("ClaimsTest.java")
         .addTemplate("CustomClaimConverterTest.java")
         .addTemplate("FakeRequestAttributes.java")

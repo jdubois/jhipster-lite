@@ -27,6 +27,7 @@ public class CassandraModuleFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();
+    String packageName = properties.basePackage().get() + ".";
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -52,7 +53,6 @@ public class CassandraModuleFactory {
         .add(SOURCE.template("cassandra.yml"), toSrcMainDocker().append("cassandra.yml"))
         .add(SOURCE.template("TestCassandraManager.java"), toSrcTestJava().append(packagePath).append("TestCassandraManager.java"))
         .add(SOURCE.template("CassandraKeyspaceIT.java"), toSrcTestJava().append(packagePath).append("CassandraKeyspaceIT.java"))
-        .add(SOURCE.template("spring.factories"), to("src/test/resources/META-INF/spring.factories"))
         .and()
       .springMainProperties()
         .set(propertyKey("spring.cassandra.contact-points"), propertyValue("127.0.0.1"))
@@ -67,6 +67,9 @@ public class CassandraModuleFactory {
         .set(propertyKey("spring.cassandra.local-datacenter"), propertyValue("${TEST_CASSANDRA_DC}"))
         .set(propertyKey("spring.cassandra.keyspace-name"), propertyValue("${TEST_CASSANDRA_KEYSPACE}"))
         .set(propertyKey("spring.cassandra.schema-action"), propertyValue("none"))
+        .and()
+      .springTestFactories()
+        .append(propertyKey("org.springframework.context.ApplicationListener"), propertyValue(packageName + "TestCassandraManager"))
         .and()
       .springMainLogger("com.datastax", LogLevel.WARN)
       .springTestLogger("com.datastax", LogLevel.WARN)

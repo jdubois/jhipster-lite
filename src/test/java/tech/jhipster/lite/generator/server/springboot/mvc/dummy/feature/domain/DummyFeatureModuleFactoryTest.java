@@ -25,7 +25,14 @@ class DummyFeatureModuleFactoryTest {
 
     assertThatModuleWithFiles(module, pomFile())
       .hasFiles("documentation/dummy.md")
-      .hasFiles("src/main/java/com/jhipster/test/dummy/application/BeersApplicationService.java")
+      .hasPrefixedFiles(
+        "src/main/java/com/jhipster/test/dummy/application",
+        "BeersApplicationService.java",
+        "BeerIdAccessChecker.java",
+        "BeerResource.java",
+        "BeersAccessesConfiguration.java",
+        "BeerToCreateAccessChecker.java"
+      )
       .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/dummy/domain/beer",
         "Beer.java",
@@ -48,6 +55,11 @@ class DummyFeatureModuleFactoryTest {
         "RestBeerToCreate.java"
       )
       .hasFiles("src/main/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersRepository.java")
+      .hasPrefixedFiles(
+        "src/test/java/com/jhipster/test/dummy/application",
+        "BeerIdAccessCheckerTest.java",
+        "BeerToCreateAccessCheckerTest.java"
+      )
       .hasPrefixedFiles("src/test/java/com/jhipster/test/dummy/domain/beer", "BeersFixture.java", "BeersRemoverTest.java", "BeersTest.java")
       .hasPrefixedFiles("src/test/java/com/jhipster/test/dummy/domain/order", "BeerOrderFixture.java", "BeerOrderTest.java")
       .hasPrefixedFiles("src/test/java/com/jhipster/test/dummy/domain", "AmountTest.java", "BeersIdentityFixture.java")

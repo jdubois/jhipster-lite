@@ -24,9 +24,9 @@ class SpringBootMvcModulesConfiguration {
   JHipsterModuleResource springBootMvcModule(SpringBootMvcApplicationService springBootMvc) {
     return JHipsterModuleResource
       .builder()
-      .slug(SPRING_BOOT_MVC)
+      .slug(SPRING_BOOT_MVC_EMPTY)
       .propertiesDefinition(properties())
-      .apiDoc(SPRING_BOOT_MVC_API_GROUP, "Add Spring Boot MVC")
+      .apiDoc(SPRING_BOOT_MVC_API_GROUP, "Empty module: do not use alone. You should add another module in Spring MVC Server")
       .organization(JHipsterModuleOrganization.builder().feature(SPRING_SERVER).addDependency(SPRING_BOOT).build())
       .tags(SERVER_TAG, SPRING_TAG, SPRING_BOOT_TAG, MVC_TAG, WEB_TAG)
       .factory(springBootMvc::buildEmptyModule);
@@ -61,6 +61,6 @@ class SpringBootMvcModulesConfiguration {
   }
 
   private JHipsterModuleOrganization mvcServerOrganization() {
-    return JHipsterModuleOrganization.builder().feature(SPRING_MVC_SERVER).addDependency(SPRING_BOOT_MVC).build();
+    return JHipsterModuleOrganization.builder().feature(SPRING_MVC_SERVER).addDependency(SPRING_BOOT_MVC_EMPTY).build();
   }
 }

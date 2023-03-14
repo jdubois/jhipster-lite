@@ -24,12 +24,12 @@ public class BeersApplicationService {
     remover = new BeersRemover(beers);
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("can('create', #beerToCreate)")
   public Beer create(BeerToCreate beerToCreate) {
     return creator.create(beerToCreate);
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("can('remove', #beer)")
   public void remove(BeerId beer) {
     remover.remove(beer);
   }

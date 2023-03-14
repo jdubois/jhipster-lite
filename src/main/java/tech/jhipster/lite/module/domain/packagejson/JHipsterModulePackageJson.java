@@ -9,12 +9,16 @@ public class JHipsterModulePackageJson {
 
   private final Scripts scripts;
   private final PackageJsonDependencies dependencies;
+  private final PackageJsonDependencies dependenciesToRemove;
   private final PackageJsonDependencies devDependencies;
+  private final PackageJsonDependencies devDependenciesToRemove;
 
   private JHipsterModulePackageJson(JHipsterModulePackageJsonBuilder builder) {
     scripts = new Scripts(builder.scripts);
     dependencies = new PackageJsonDependencies(builder.dependencies);
+    dependenciesToRemove = new PackageJsonDependencies(builder.dependenciesToRemove);
     devDependencies = new PackageJsonDependencies(builder.devDependencies);
+    devDependenciesToRemove = new PackageJsonDependencies(builder.devDependenciesToRemove);
   }
 
   public static JHipsterModulePackageJsonBuilder builder(JHipsterModuleBuilder module) {
@@ -22,7 +26,13 @@ public class JHipsterModulePackageJson {
   }
 
   public boolean isEmpty() {
-    return scripts.isEmpty() && dependencies.isEmpty() && devDependencies.isEmpty();
+    return (
+      scripts.isEmpty() &&
+      dependencies.isEmpty() &&
+      devDependencies.isEmpty() &&
+      dependenciesToRemove.isEmpty() &&
+      devDependenciesToRemove.isEmpty()
+    );
   }
 
   public Scripts scripts() {
@@ -37,12 +47,22 @@ public class JHipsterModulePackageJson {
     return dependencies;
   }
 
+  public PackageJsonDependencies devDependenciesToRemove() {
+    return devDependenciesToRemove;
+  }
+
+  public PackageJsonDependencies dependenciesToRemove() {
+    return dependenciesToRemove;
+  }
+
   public static class JHipsterModulePackageJsonBuilder {
 
     private final JHipsterModuleBuilder module;
     private final Collection<Script> scripts = new ArrayList<>();
     private final Collection<PackageJsonDependency> dependencies = new ArrayList<>();
     private final Collection<PackageJsonDependency> devDependencies = new ArrayList<>();
+    private final Collection<PackageJsonDependency> dependenciesToRemove = new ArrayList<>();
+    private final Collection<PackageJsonDependency> devDependenciesToRemove = new ArrayList<>();
 
     private JHipsterModulePackageJsonBuilder(JHipsterModuleBuilder module) {
       Assert.notNull("module", module);
@@ -62,9 +82,19 @@ public class JHipsterModulePackageJson {
       return this;
     }
 
+    public JHipsterModulePackageJsonBuilder removeDependency(PackageName packageName, VersionSource versionSource) {
+      dependenciesToRemove.add(new PackageJsonDependency(packageName, versionSource));
+      return this;
+    }
+
     public JHipsterModulePackageJsonBuilder addDevDependency(PackageName packageName, VersionSource versionSource) {
       devDependencies.add(new PackageJsonDependency(packageName, versionSource));
 
+      return this;
+    }
+
+    public JHipsterModulePackageJsonBuilder removeDevDependency(PackageName packageName, VersionSource versionSource) {
+      devDependenciesToRemove.add(new PackageJsonDependency(packageName, versionSource));
       return this;
     }
 

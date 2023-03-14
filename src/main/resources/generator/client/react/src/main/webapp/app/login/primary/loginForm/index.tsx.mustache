@@ -7,8 +7,8 @@ export const UserInfoContext = createContext<UserInfoContextType | Record<string
 
 const LoginForm = () => {
   const [isOpen, setOpen] = useState(false);
-  const [username, setUsername] = useState<any>('');
-  const [token, setToken] = useState<any>('');
+  const [username, setUsername] = useState<string>('');
+  const [token, setToken] = useState<string>('');
 
   const userInfoContextValues = useMemo(
     () => ({
@@ -24,7 +24,7 @@ const LoginForm = () => {
 
   return (
     <div>
-      <Button auto shadow onClick={onClickLoginButton}>
+      <Button css={{ backgroundColor: '$blue700' }} auto shadow onClick={onClickLoginButton}>
         Log in
       </Button>
       {token && (

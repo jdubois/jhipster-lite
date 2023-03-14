@@ -27,13 +27,13 @@ public class DummyJpaPersistenceModuleFactory {
 
   private static final RegexNeedleBeforeReplacer REMOVE_METHOD_NEEDLE = new RegexNeedleBeforeReplacer(
     ReplacementCondition.always(),
-    Pattern.compile("^ +@PreAuthorize\\(\"hasRole\\('ADMIN'\\)\"\\)\\n+ +public void remove\\(BeerId beer\\)", Pattern.MULTILINE)
+    Pattern.compile("^ +@PreAuthorize\\(\"can\\('remove', #beer\\)\"\\)\\n+ +public void remove\\(BeerId beer\\)", Pattern.MULTILINE)
   );
 
   private static final RegexNeedleBeforeReplacer CREATE_METHOD_NEEDLE = new RegexNeedleBeforeReplacer(
     ReplacementCondition.always(),
     Pattern.compile(
-      "^ +@PreAuthorize\\(\"hasRole\\('ADMIN'\\)\"\\)\\n+ +public Beer create\\(BeerToCreate beerToCreate\\)",
+      "^ +@PreAuthorize\\(\"can\\('create', #beerToCreate\\)\"\\)\\n+ +public Beer create\\(BeerToCreate beerToCreate\\)",
       Pattern.MULTILINE
     )
   );

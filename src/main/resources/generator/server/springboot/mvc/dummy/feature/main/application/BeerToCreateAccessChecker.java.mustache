@@ -1,0 +1,22 @@
+package {{packageName}}.dummy.application;
+
+import {{packageName}}.dummy.domain.beer.BeerToCreate;
+import {{packageName}}.kipe.application.AccessChecker;
+import {{packageName}}.kipe.application.AccessContext;
+import {{packageName}}.kipe.application.{{ baseName }}Authorizations;
+import org.springframework.stereotype.Component;
+
+@Component
+class BeerToCreateAccessChecker implements AccessChecker<BeerToCreate> {
+
+  private final {{ baseName }}Authorizations authorizations;
+
+  public BeerToCreateAccessChecker({{ baseName }}Authorizations authorizations) {
+    this.authorizations = authorizations;
+  }
+
+  @Override
+  public boolean can(AccessContext<BeerToCreate> access) {
+    return authorizations.allAuthorized(access.authentication(), access.action(), BeerResource.BEERS);
+  }
+}

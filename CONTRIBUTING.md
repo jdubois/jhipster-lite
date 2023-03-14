@@ -355,6 +355,7 @@ from the main (upstream) repository:
   - consulapp
   - gatewayapp
   - mongodbapp
+  - redisapp
   - cassandraapp
   - neo4japp
   - angularapp

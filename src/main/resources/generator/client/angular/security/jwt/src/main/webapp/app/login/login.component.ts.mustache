@@ -19,8 +19,6 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./login.component.css'],
 })
 export default class LoginComponent implements OnInit, OnDestroy {
-  appName = '';
-
   private readonly destroy$ = new Subject<void>();
 
   account: Account | null = null;
@@ -39,7 +37,6 @@ export default class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.appName = '{{baseName}}';
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))

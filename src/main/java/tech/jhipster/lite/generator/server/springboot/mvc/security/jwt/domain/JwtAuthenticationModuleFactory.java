@@ -23,7 +23,7 @@ public class JwtAuthenticationModuleFactory {
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
 
   private static final GroupId JJWT_GROUP = groupId("io.jsonwebtoken");
-  private static final VersionSlug JJWT_VERSION = versionSlug("jjwt");
+  private static final VersionSlug JJWT_VERSION = versionSlug("json-web-token");
 
   private static final String APPLICATION = "application";
   private static final String PRIMARY = "infrastructure/primary";

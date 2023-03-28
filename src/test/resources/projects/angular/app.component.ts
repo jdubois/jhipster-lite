@@ -18,6 +18,6 @@ export class AppComponent implements OnInit{
   appName = '';
 
   ngOnInit(): void {
-    this.appName = '{{baseName}}';
+    this.appName = 'jhipster';
   }
 }

@@ -57,7 +57,7 @@ public final class CucumberTestContext {
 
   private static Function<String, Integer> toEntriesCount(String jsonPath) {
     return response -> {
-      Object element = null;
+      Object element;
       try {
         element = JsonPath.read(jsonReader.parse(response), jsonPath);
       } catch (PathNotFoundException e) {

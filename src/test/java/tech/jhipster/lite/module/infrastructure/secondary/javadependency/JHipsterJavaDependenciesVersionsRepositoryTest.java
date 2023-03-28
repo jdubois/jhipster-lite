@@ -13,14 +13,16 @@ class JHipsterJavaDependenciesVersionsRepositoryTest {
 
   @Test
   void shouldGetVersionsFromReaders() {
-    JavaDependenciesReader customVersions = () -> versions(version("jjwt", "1.2.3"));
-    JavaDependenciesReader defaultVersions = () -> versions(version("jjwt", "1.1.3"), version("spring", "2.1.2"));
+    JavaDependenciesReader customVersions = () -> versions(version("json-web-token", "1.2.3"));
+    JavaDependenciesReader defaultVersions = () -> versions(version("json-web-token", "1.1.3"), version("spring", "2.1.2"));
 
     JHipsterJavaDependenciesVersionsRepository repository = new JHipsterJavaDependenciesVersionsRepository(
       List.of(customVersions, defaultVersions)
     );
 
-    assertThat(repository.get()).usingRecursiveComparison().isEqualTo(versions(version("jjwt", "1.2.3"), version("spring", "2.1.2")));
+    assertThat(repository.get())
+      .usingRecursiveComparison()
+      .isEqualTo(versions(version("json-web-token", "1.2.3"), version("spring", "2.1.2")));
   }
 
   private static JavaDependenciesVersions versions(JavaDependencyVersion... versions) {

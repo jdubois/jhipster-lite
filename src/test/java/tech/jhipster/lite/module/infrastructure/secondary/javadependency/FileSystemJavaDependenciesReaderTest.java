@@ -31,6 +31,6 @@ class FileSystemJavaDependenciesReaderTest {
 
   @Test
   void shouldReadJavaDependencies() {
-    assertThat(reader.get().get(new VersionSlug("jjwt"))).isNotNull();
+    assertThat(reader.get().get(new VersionSlug("json-web-token"))).isNotNull();
   }
 }

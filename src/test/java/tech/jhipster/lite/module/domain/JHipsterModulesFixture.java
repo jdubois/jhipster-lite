@@ -76,7 +76,7 @@ public final class JHipsterModulesFixture {
       .setVersion(javaDependencyVersion("dummy-dependency", "4.5.8"))
       .removeDependency(dependencyId("net.logstash.logback", "logstash-logback-encoder"))
       .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter"))
-      .addDependency(groupId("io.jsonwebtoken"), artifactId("jjwt-api"), versionSlug("jjwt.version"))
+      .addDependency(groupId("io.jsonwebtoken"), artifactId("jjwt-api"), versionSlug("json-web-token.version"))
       .addDependency(optionalTestDependency())
       .addDependency(springBootStarterWebDependency())
       .addDependencyManagement(springBootDependencyManagement())
@@ -164,7 +164,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static JavaDependency dependencyWithVersion() {
-    return javaDependency().groupId("io.jsonwebtoken").artifactId("jjwt-api").versionSlug("jjwt").build();
+    return javaDependency().groupId("io.jsonwebtoken").artifactId("jjwt-api").versionSlug("json-web-token").build();
   }
 
   public static JavaBuildCommands javaDependenciesCommands() {

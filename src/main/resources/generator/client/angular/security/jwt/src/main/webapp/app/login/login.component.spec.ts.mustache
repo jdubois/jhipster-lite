@@ -50,7 +50,7 @@ describe('Login Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should have appName', () => {
+    it('should check authentication', () => {
       // GIVEN
       const authenticationState = new Subject<Account | null>();
       mockAccountService.getAuthenticationState = jest.fn(() => authenticationState.asObservable());
@@ -59,7 +59,6 @@ describe('Login Component', () => {
       comp.ngOnInit();
 
       // THEN
-      expect(comp.appName).toEqual('{{baseName}}');
       expect(mockAccountService.getAuthenticationState).toHaveBeenCalled();
 
       // THEN

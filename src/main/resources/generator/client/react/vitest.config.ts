@@ -10,7 +10,7 @@ export default defineConfig({
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src/main/webapp/app') }],
   },
   test: {
-    reporters: ['json', 'verbose', 'vitest-sonar-reporter'],
+    reporters: ['verbose', 'vitest-sonar-reporter'],
     outputFile: {
       'vitest-sonar-reporter': 'target/test-results/TESTS-results-sonar.xml',
     },

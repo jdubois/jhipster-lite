@@ -12,7 +12,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <jjwt.version>0.11.5</jjwt.version>
+    <json-web-token.version>0.11.5</json-web-token.version>
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     <spring-boot.version>2.7.1</spring-boot.version>
   </properties>
@@ -43,7 +43,7 @@
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
-      <version>${jjwt.version}</version>
+      <version>${json-web-token.version}</version>
       <classifier>classif</classifier>
       <scope>test</scope>
       <optional>true</optional>

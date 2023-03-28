@@ -59,13 +59,13 @@ class GradleCommandHandlerTest {
     void shouldUpdateExistingProperty() {
       JHipsterProjectFolder projectFolder = projectFrom("src/test/resources/projects/empty-gradle");
       GradleCommandHandler gradleCommandHandler = new GradleCommandHandler(Indentation.DEFAULT, projectFolder);
-      gradleCommandHandler.handle(new SetVersion(new JavaDependencyVersion("jjwt", "0.12.0")));
+      gradleCommandHandler.handle(new SetVersion(new JavaDependencyVersion("json-web-token", "0.12.0")));
 
-      gradleCommandHandler.handle(new SetVersion(new JavaDependencyVersion("jjwt", "0.13.0")));
+      gradleCommandHandler.handle(new SetVersion(new JavaDependencyVersion("json-web-token", "0.13.0")));
 
       assertThat(versionCatalogContent(projectFolder))
         .contains("[versions]")
-        .contains("jjwt = \"0.13.0\"");
+        .contains("json-web-token = \"0.13.0\"");
     }
   }
 

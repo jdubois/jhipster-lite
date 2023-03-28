@@ -18,20 +18,32 @@ const LoginForm = () => {
     []
   );
 
-  const onClickLoginButton = useCallback(() => setOpen(true), []);
+  const onPressLoginButton = useCallback(() => setOpen(true), []);
+
+  const onPressLogoutButton = useCallback(() => setToken(''), []);
 
   const onCloseModal = useCallback(() => setOpen(false), []);
 
   return (
     <div>
-      <Button css={{ backgroundColor: '$blue700' }} auto shadow onClick={onClickLoginButton}>
-        Log in
-      </Button>
-      {token && (
-        <p>
-          Welcome <strong>{username}</strong> !
-        </p>
-      )}
+      {!token ?
+        (
+          <Button data-testid="login-button" css={{ backgroundColor: '$blue700' }} auto shadow onPress={onPressLoginButton}>
+            Log in
+          </Button>
+        )
+      :
+        (
+          <>
+            <p>
+              Welcome <strong>{username}</strong> !
+            </p>
+            <Button css={{ backgroundColor: '$blue700' }} size="sm" shadow onPress={onPressLogoutButton}>
+              Log out
+            </Button>
+          </>
+        )
+      }
       <UserInfoContext.Provider value={userInfoContextValues}>
         <LoginModal open={isOpen} onClose={onCloseModal} />
       </UserInfoContext.Provider>

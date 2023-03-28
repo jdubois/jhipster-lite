@@ -90,11 +90,11 @@ class MavenCommandHandlerTest {
     void shouldUpdateExistingProperty() {
       Path pom = projectWithPom("src/test/resources/projects/maven/pom.xml");
 
-      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new SetVersion(new JavaDependencyVersion("jjwt", "0.12.0")));
+      new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new SetVersion(new JavaDependencyVersion("json-web-token", "0.12.0")));
 
       assertThat(content(pom))
-        .contains("    <jjwt.version>0.12.0</jjwt.version>")
-        .doesNotContain("    <jjwt.version>0.11.5</jjwt.version>")
+        .contains("    <json-web-token.version>0.12.0</json-web-token.version>")
+        .doesNotContain("    <json-web-token.version>0.11.5</json-web-token.version>")
         .doesNotContain(">  ");
     }
   }
@@ -235,7 +235,7 @@ class MavenCommandHandlerTest {
       assertThat(content(pom))
         .doesNotContain("      <groupId>io.jsonwebtoken</groupId>")
         .doesNotContain("      <artifactId>jjwt-api</artifactId>")
-        .doesNotContain("      <version>${jjwt.version}</version>")
+        .doesNotContain("      <version>${json-web-token.version}</version>")
         .doesNotContain("      <scope>test</scope>")
         .doesNotContain("      <optional>true</optional>");
     }
@@ -260,7 +260,7 @@ class MavenCommandHandlerTest {
               </dependency>
           """
         )
-        .doesNotContain("      <version>${jjwt.version}</version>")
+        .doesNotContain("      <version>${json-web-token.version}</version>")
         .doesNotContain("      <scope>test</scope>")
         .doesNotContain("      <optional>true</optional>");
     }

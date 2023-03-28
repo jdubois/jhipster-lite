@@ -4,6 +4,29 @@ import { vi, describe, it, expect } from 'vitest';
 import LoginForm from '@/login/primary/loginForm/index';
 import { act, fireEvent, render } from '@testing-library/react';
 
+const mockPost = () => {
+  const spy = vi.spyOn(axios, 'post');
+  spy.mockImplementationOnce(() => Promise.resolve({ data: { id_token: 123 } }));
+  return spy;
+};
+
+const login = async () => {
+  const { getByText, getByLabelText, getByTestId } = render(<LoginForm/>);
+  const loginButton = getByText('Log in');
+    fireEvent.click(loginButton);
+    await act(async () => {
+      fireEvent.change(getByLabelText("Nom d'utilisateur"), {
+        target: {value: 'admin'},
+      });
+      fireEvent.change(getByLabelText('Mot de passe'), {
+        target: {value: 'admin'},
+      });
+      const submitButton = getByTestId('submit-button');
+      fireEvent.click(submitButton);
+  });
+  return { getByText, getByLabelText, getByTestId };
+};
+
 describe('loginForm', () => {
   it('should render the login button without crashing', () => {
     render(<LoginForm/>);
@@ -27,22 +50,19 @@ describe('loginForm', () => {
   });
 
   it('should close when clicking submit button with complete fields', async () => {
-    const spy = vi.spyOn(axios, 'post');
-    spy.mockImplementationOnce(() => Promise.resolve({ data: { id_token: 123 } }));
+    const spy = mockPost();
+    await login();
 
-    const {getByText, getByLabelText, getByTestId} = render(<LoginForm/>);
-    const loginButton = getByText('Log in');
-    fireEvent.click(loginButton);
-    await act(async () => {
-      fireEvent.change(getByLabelText("Nom d'utilisateur"), {
-        target: {value: 'admin'},
-      });
-      fireEvent.change(getByLabelText('Mot de passe'), {
-        target: {value: 'admin'},
-      });
-      const submitButton = getByTestId('submit-button');
-      fireEvent.click(submitButton);
-    });
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should display Log out after login and display Log in after logout', async () => {
+    mockPost();
+    const { getByText, getByTestId } = await login();
+
+    expect(getByText('Log out')).toBeTruthy();
+    const logoutButton = getByText('Log out');
+    fireEvent.click(logoutButton);
+    expect(getByTestId('login-button')).toBeTruthy();
   });
 });

@@ -59,12 +59,11 @@ class SonarQubeModulesFactoryTest {
   }
 
   private JHipsterModuleProperties properties() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture
+    return JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
       .projectBaseName("myapp")
       .build();
-    return properties;
   }
 
   private JHipsterModuleAsserter assertCommonModule(JHipsterModule module) {

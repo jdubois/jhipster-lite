@@ -49,7 +49,7 @@ class FileSystemProjectJavaDependenciesRepositoryTest {
   void shouldGetVersionsFromMavenFile() {
     ProjectJavaDependenciesVersions versions = mavenDependencies().versions();
 
-    assertThat(versions.get(new VersionSlug("jjwt"))).contains(new JavaDependencyVersion("jjwt", "0.11.5"));
+    assertThat(versions.get(new VersionSlug("json-web-token"))).contains(new JavaDependencyVersion("json-web-token", "0.11.5"));
     assertThat(versions.get(new VersionSlug("logstash-logback-encoder.version")))
       .contains(new JavaDependencyVersion("logstash-logback-encoder", "7.2"));
     assertThat(versions.get(new VersionSlug("dummy"))).isEmpty();
@@ -78,7 +78,7 @@ class FileSystemProjectJavaDependenciesRepositoryTest {
       .get(new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"), JavaDependencyClassifier.of("classif")))
       .get();
 
-    assertThat(jjwt.version()).contains(new VersionSlug("jjwt"));
+    assertThat(jjwt.version()).contains(new VersionSlug("json-web-token"));
     assertThat(jjwt.scope()).isEqualTo(JavaDependencyScope.TEST);
     assertThat(jjwt.optional()).isTrue();
     assertThat(jjwt.classifier()).contains(new JavaDependencyClassifier("classif"));

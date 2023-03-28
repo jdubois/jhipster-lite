@@ -39,7 +39,7 @@ class JwtAuthenticationModuleFactoryTest {
                 <dependency>
                   <groupId>io.jsonwebtoken</groupId>
                   <artifactId>jjwt-api</artifactId>
-                  <version>${jjwt.version}</version>
+                  <version>${json-web-token.version}</version>
                 </dependency>
             """
       )
@@ -48,7 +48,7 @@ class JwtAuthenticationModuleFactoryTest {
                 <dependency>
                   <groupId>io.jsonwebtoken</groupId>
                   <artifactId>jjwt-impl</artifactId>
-                  <version>${jjwt.version}</version>
+                  <version>${json-web-token.version}</version>
                   <scope>runtime</scope>
                 </dependency>
             """
@@ -58,7 +58,7 @@ class JwtAuthenticationModuleFactoryTest {
                 <dependency>
                   <groupId>io.jsonwebtoken</groupId>
                   <artifactId>jjwt-jackson</artifactId>
-                  <version>${jjwt.version}</version>
+                  <version>${json-web-token.version}</version>
                   <scope>runtime</scope>
                 </dependency>
             """

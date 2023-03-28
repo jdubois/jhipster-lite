@@ -5,14 +5,14 @@ Let's take a simple use case:
 We have this repository:
 
 ```java
-package {{packageName}}.user.domain
+package {{packageName}}.user.domain;
 
 public interface UsersRepository {
   Users list(Group group);
 }
 ```
 
-Allowing us to list users in a given group. To implement this we'll make a call to our IDP: 
+Allowing us to list users in a given group. To implement this we'll make a call to our IDP:
 
 ```java
 @Repository
@@ -33,7 +33,7 @@ class MyApplicationUsersRepository implements UsersRepository {
 }
 ```
 
-But, we'll soon find that calling this has a cost and that the users in groups are not updated that often so we want to configure a simple local cache: 
+But, we'll soon find that calling this has a cost and that the users in groups are not updated that often so we want to configure a simple local cache:
 
 ```java
 package {{packageName}}.user.infrastructure.secondary;

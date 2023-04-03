@@ -1,4 +1,11 @@
 # JWT basic auth
 
-The basic auth just allows you to authenticate one user configured in `application.properties`. Before going to production you probably want to update the user password using a BCrypt tool like [https://bcrypt-generator.com](https://bcrypt-generator.com)
-  
+The basic auth just allows you to authenticate one user configured in `application.properties`. Before going to production you probably want to update the user password (which is admin by default) using a BCrypt tool like [https://bcrypt-generator.com](https://bcrypt-generator.com).
+
+## How it works
+
+- Be sure to have selected and applied the `springdoc-jwt` module
+- Access the swagger url: [http://localhost:8080/swagger-ui/index.html#](http://localhost:8080/swagger-ui/index.html#)
+- Execute the `POST /api/authenticate` endpoint passing the username and password to retrieve the token
+- Enter only the token after clicking on the  `Authorize` button at the top right
+- Execute the `GET /api/account` to test if the token works

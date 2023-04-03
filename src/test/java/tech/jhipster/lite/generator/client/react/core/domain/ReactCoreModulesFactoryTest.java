@@ -47,7 +47,6 @@ class ReactCoreModulesFactoryTest {
       .containing(nodeScript("lint", "eslint --ext .js,.ts,.tsx src/main/webapp/app/**/*"))
       .containing(nodeScript("test", "vitest run --coverage"))
       .containing(nodeScript("test:watch", "vitest --"))
-      .containing("  \"jestSonar\": {\n    \"reportPath\": \"target/test-results\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },")
       .and()
       .hasFile(".lintstagedrc.js")
       .containing(

@@ -30,16 +30,10 @@ class TypescriptModuleFactoryTest {
       .containing(nodeDependency("eslint-import-resolver-typescript"))
       .containing(nodeDependency("eslint-plugin-import"))
       .containing(nodeDependency("eslint-plugin-prettier"))
-      .containing(nodeDependency("jest"))
-      .containing(nodeDependency("@types/jest"))
-      .containing(nodeDependency("ts-jest"))
-      .containing("\"jest\": \"jest src/test/javascript/spec --logHeapUsage --maxWorkers=2 --no-cache\"")
-      .containing("\"test\": \"npm run jest --\"")
-      .containing("\"test:watch\": \"jest --watch\"")
-      .containing("\"test:watch:all\": \"jest --watchAll\"")
+      .containing("\"test\": \"echo 'Error: no test specified'\"")
       .containing("\"eslint:ci\": \"eslint './**/*.{ts,js}'\"")
       .containing("\"eslint\": \"eslint './**/*.{ts,js}' --fix\"")
       .and()
-      .hasPrefixedFiles("", ".eslintrc.js", "jest.config.js", "tsconfig.json");
+      .hasPrefixedFiles("", ".eslintrc.js", "tsconfig.json");
   }
 }

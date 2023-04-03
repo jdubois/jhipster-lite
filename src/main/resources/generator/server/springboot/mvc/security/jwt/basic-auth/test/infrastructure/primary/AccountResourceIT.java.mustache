@@ -32,6 +32,6 @@ class AccountResourceIT {
   @Test
   @WithAnonymousUser
   void shouldNotGetAccountForNotAuthenticatedUser() throws Exception {
-    mockMvc.perform(get("/api/account")).andExpect(status().isUnauthorized());
+    mockMvc.perform(get("/api/account")).andExpect(status().isForbidden());
   }
 }

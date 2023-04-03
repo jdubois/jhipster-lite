@@ -55,7 +55,6 @@ class SvelteModuleFactoryTest {
       .containing("\"lint\": \"prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .\"")
       .containing("\"format\": \"prettier --ignore-path .gitignore --write --plugin-search-dir=. .\"")
       .containing("\"test\": \"vitest run --coverage\"")
-      .containing("  \"jestSonar\": {\n    \"reportPath\": \"target/test-results\",\n    \"reportFile\": \"TESTS-results-sonar.xml\"\n  },")
       .containing("\"type\": \"module\"")
       .and()
       .hasFiles(".eslintrc.cjs", "tsconfig.json", "svelte.config.js", "vite.config.js", "vitest.config.ts")

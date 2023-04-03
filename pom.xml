@@ -14,7 +14,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.30.1-SNAPSHOT</version>
+  <version>0.31.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -60,13 +60,13 @@
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
-    <byte-buddy.version>1.14.2</byte-buddy.version>
+    <byte-buddy.version>1.14.3</byte-buddy.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
     <jacoco.version>0.8.8</jacoco.version>
     <jgit.version>6.5.0.202303070854-r</jgit.version>
     <archunit-junit5.version>1.0.1</archunit-junit5.version>
-    <springdoc-openapi-starter-webmvc-ui.version>2.0.4</springdoc-openapi-starter-webmvc-ui.version>
+    <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
     <apache-commons-io.version>2.11.0</apache-commons-io.version>

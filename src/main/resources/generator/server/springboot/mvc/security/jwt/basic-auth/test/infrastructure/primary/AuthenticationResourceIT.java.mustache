@@ -49,7 +49,7 @@ class AuthenticationResourceIT {
 
     mockMvc
       .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(query))
-      .andExpect(status().isUnauthorized())
+      .andExpect(status().isForbidden())
       .andExpect(jsonPath("$.id_token").doesNotExist())
       .andExpect(header().doesNotExist("Authorization"));
   }
@@ -60,7 +60,7 @@ class AuthenticationResourceIT {
 
     mockMvc
       .perform(post("/api/authenticate").contentType(MediaType.APPLICATION_JSON).content(query))
-      .andExpect(status().isUnauthorized())
+      .andExpect(status().isForbidden())
       .andExpect(jsonPath("$.id_token").doesNotExist())
       .andExpect(header().doesNotExist("Authorization"));
   }

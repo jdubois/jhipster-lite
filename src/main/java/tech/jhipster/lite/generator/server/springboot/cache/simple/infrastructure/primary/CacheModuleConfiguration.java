@@ -1,5 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.cache.simple.infrastructure.primary;
 
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,12 @@ class CacheModuleConfiguration {
       .slug(SPRING_BOOT_CACHE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
       .apiDoc("Spring Boot - Cache", "Add simple cache")
-      .organization(JHipsterModuleOrganization.SPRINGBOOT_DEPENDENCY)
+      .organization(organization())
       .tags("server", "spring", "spring-boot", "cache")
       .factory(caches::buildModule);
+  }
+
+  private JHipsterModuleOrganization organization() {
+    return JHipsterModuleOrganization.builder().feature(CACHE).addDependency(SPRING_BOOT).build();
   }
 }

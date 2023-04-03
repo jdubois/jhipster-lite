@@ -1,6 +1,7 @@
 package {{packageName}}.technical.infrastructure.primary.springdoc;
 
 import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -14,20 +15,18 @@ import {{packageName}}.common.domain.Generated;
 @Generated(reason = "Not called by integration tests")
 class SpringdocJWTConfiguration {
 
+  private static final String SECURITY_SCHEME_NAME = "bearer-jwt";
+
   @Bean
   GlobalOpenApiCustomizer jwtOpenApi() {
-    return openApi -> openApi.components(jwtComponents(openApi.getComponents()));
+    return openApi ->
+      openApi.addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME)).components(jwtComponents(openApi.getComponents()));
   }
 
   private Components jwtComponents(Components existingComponents) {
     return existingComponents.addSecuritySchemes(
-      "bearer-jwt",
-      new SecurityScheme()
-        .type(SecurityScheme.Type.HTTP)
-        .scheme("Bearer")
-        .bearerFormat("JWT")
-        .in(SecurityScheme.In.HEADER)
-        .name("bearerAuth")
+      SECURITY_SCHEME_NAME,
+      new SecurityScheme().name(SECURITY_SCHEME_NAME).type(SecurityScheme.Type.HTTP).scheme("Bearer").bearerFormat("JWT")
     );
   }
 }

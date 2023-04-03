@@ -4,6 +4,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import static tech.jhipster.lite.module.domain.packagejson.VersionSource.*;
 
 import tech.jhipster.lite.generator.client.common.domain.ClientsModulesFactory;
+import tech.jhipster.lite.module.domain.Indentation;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
@@ -11,6 +12,8 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 public class AngularModuleFactory {
 
   private static final JHipsterSource SOURCE = from("client/angular/core");
+
+  private static final String CACHE_NEEDLE = "  \"cacheDirectories\":";
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     //@formatter:off
@@ -89,7 +92,28 @@ public class AngularModuleFactory {
           .addTemplate("polyfills.ts")
           .and()
         .and()
+      .mandatoryReplacements()
+        .in(path("package.json"))
+          .add(lineBeforeText(CACHE_NEEDLE), jestSonar(properties.indentation()))
+        .and()
+      .and()
       .build();
     //@formatter:on
+  }
+
+  private static String jestSonar(Indentation indentation) {
+    return new StringBuilder()
+      .append(indentation.spaces())
+      .append("\"jestSonar\": {")
+      .append(LINE_BREAK)
+      .append(indentation.times(2))
+      .append("\"reportPath\": \"target/test-results\",")
+      .append(LINE_BREAK)
+      .append(indentation.times(2))
+      .append("\"reportFile\": \"TESTS-results-sonar.xml\"")
+      .append(LINE_BREAK)
+      .append(indentation.spaces())
+      .append("},")
+      .toString();
   }
 }

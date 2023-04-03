@@ -15,10 +15,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @Configuration
 @EnableMongoRepositories({ "{{packageName}}" })
 @Import(value = MongoAutoConfiguration.class)
-public class MongodbDatabaseConfiguration {
+class MongodbDatabaseConfiguration {
 
   @Bean
-  public MongoCustomConversions customConversions() {
+  public MongoCustomConversions mongoCustomConversions() {
     List<Converter<?, ?>> converters = new ArrayList<>();
     converters.add(DateToZonedDateTimeConverter.INSTANCE);
     converters.add(ZonedDateTimeToDateConverter.INSTANCE);

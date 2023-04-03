@@ -13,10 +13,10 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EnableRedisRepositories({ "{{packageName}}" })
 @Import(value = RedisAutoConfiguration.class)
-public class RedisDatabaseConfiguration {
+class RedisDatabaseConfiguration {
 
   @Bean
-  public RedisCustomConversions customConversions() {
+  public RedisCustomConversions redisCustomConversions() {
     return new RedisCustomConversions(List.of(DateToZonedDateTimeConverter.INSTANCE, ZonedDateTimeToDateConverter.INSTANCE));
   }
 }

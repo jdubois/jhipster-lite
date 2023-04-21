@@ -13,6 +13,8 @@ public class AngularModuleFactory {
 
   private static final JHipsterSource SOURCE = from("client/angular/core");
 
+  private static final JHipsterSource COMMON_ESLINT = from("client/common/eslint");
+
   private static final String CACHE_NEEDLE = "  \"cacheDirectories\":";
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
@@ -67,6 +69,7 @@ public class AngularModuleFactory {
         .add(SOURCE.file("tsconfig.spec.json"), to("tsconfig.spec.json"))
         .add(SOURCE.file("proxy.conf.json"), to("proxy.conf.json"))
         .add(SOURCE.file(".eslintrc.json"), to(".eslintrc.json"))
+        .add(COMMON_ESLINT.file(".eslintignore"), to(".eslintignore"))
         .batch(SOURCE.file("src/main/webapp/app"), to("src/main/webapp/app"))
           .addTemplate("app.component.ts")
           .addTemplate("app.component.css")

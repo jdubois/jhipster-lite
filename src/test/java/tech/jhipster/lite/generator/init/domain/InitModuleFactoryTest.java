@@ -39,7 +39,7 @@ class InitModuleFactoryTest {
       .hasFile("README.md")
       .containing("# Test Project")
       .and()
-      .hasFiles(".gitignore", ".gitattributes", ".eslintignore")
+      .hasFiles(".gitignore", ".gitattributes")
       .hasFile(".editorconfig")
       .containing("end_of_line = crlf")
       .containing("indent_size = 4")

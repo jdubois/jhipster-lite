@@ -15,10 +15,10 @@ import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 
 public class AngularJwtModuleFactory {
 
-  private static final Pattern PROVIDERS_PATTERN = Pattern.compile("(providers: *\\[)");
-  private static final ElementReplacer EXISTING_PROVIDERS_NEEDLE = new RegexReplacer(
-    (contentBeforeReplacement, replacement) -> PROVIDERS_PATTERN.matcher(contentBeforeReplacement).find(),
-    PROVIDERS_PATTERN
+  private static final Pattern PROVIDE_HTTP_CLIENT_PATTERN = Pattern.compile("provideHttpClient\\(\\),");
+  private static final ElementReplacer EXISTING_PROVIDE_HTTP_CLIENT_NEEDLE = new RegexReplacer(
+    (contentBeforeReplacement, replacement) -> PROVIDE_HTTP_CLIENT_PATTERN.matcher(contentBeforeReplacement).find(),
+    PROVIDE_HTTP_CLIENT_PATTERN
   );
 
   private static final TextNeedleBeforeReplacer ROUTE_NEEDLE = lineBeforeText("// jhipster-needle-angular-route");
@@ -70,7 +70,7 @@ public class AngularJwtModuleFactory {
         .and()
       .mandatoryReplacements()
         .in(path("src/main/webapp/main.ts"))
-          .add(EXISTING_PROVIDERS_NEEDLE, "providers: [\n    provideHttpClient(withInterceptors([AuthInterceptor])),")
+          .add(EXISTING_PROVIDE_HTTP_CLIENT_NEEDLE, "provideHttpClient(withInterceptors([AuthInterceptor])),")
           .add(fileStart(), AUTH_INTERCEPTOR_IMPORT)
           .and()
         .in(path("src/main/webapp/app/app.route.ts"))

@@ -4,7 +4,6 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
-import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
@@ -47,15 +46,9 @@ public class EHCacheModulesFactory {
   public JHipsterModule buildXmlConfigurationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    String packagePath = properties.packagePath();
-
     //@formatter:off
     return commonEHCacheModuleBuilder(properties)
       .files()
-        .add(
-          MAIN_SOURCE.template("XmlCacheConfiguration.java"),
-          toSrcMainJava().append(packagePath).append(CACHE_SECONDARY).append("CacheConfiguration.java")
-        )
         .add(SOURCE.file("resources/ehcache.xml"), to("src/main/resources/config/ehcache/ehcache.xml"))
         .and()
       .springMainProperties()
@@ -69,7 +62,6 @@ public class EHCacheModulesFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .javaDependencies()
-        .addDependency(groupId("org.springframework.boot"), artifactId("spring-boot-starter-cache"))
         .addDependency(groupId("javax.cache"), artifactId("cache-api"))
         .addDependency(javaDependency().groupId(EHCACHE_GROUP).artifactId("ehcache").classifier("jakarta").build())
         .and()

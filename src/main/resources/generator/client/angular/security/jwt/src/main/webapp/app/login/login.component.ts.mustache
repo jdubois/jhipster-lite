@@ -6,7 +6,6 @@ import { AccountService } from '../auth/account.service';
 import { LoginService } from '../login/login.service';
 import { Account } from '../auth/account.model';
 
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -14,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'jhi-login',
   templateUrl: './login.component.html',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatInputModule, MatCardModule, ReactiveFormsModule],
+  imports: [CommonModule, MatButtonModule, MatInputModule, MatCardModule, ReactiveFormsModule],
   standalone: true,
   styleUrls: ['./login.component.css'],
 })

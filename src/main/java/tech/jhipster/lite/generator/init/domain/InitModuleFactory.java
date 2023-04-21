@@ -36,7 +36,6 @@ public class InitModuleFactory {
           .addTemplate("README.md")
           .addTemplate("package.json")
           .addTemplate(".editorconfig")
-          .addFile(".eslintignore")
           .and()
         .add(SOURCE.file("gitignore"), to(".gitignore"))
         .add(SOURCE.file("gitattributes"), to(".gitattributes"))

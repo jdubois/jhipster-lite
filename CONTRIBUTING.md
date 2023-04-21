@@ -53,9 +53,9 @@ You need to have [Java 17](https://openjdk.java.net/projects/jdk/17/) :
 
 ```
 $ java -version
-openjdk version "17.0.1" 2021-10-19
-OpenJDK Runtime Environment (build 17.0.1+12-Ubuntu-120.04)
-OpenJDK 64-Bit Server VM (build 17.0.1+12-Ubuntu-120.04, mixed mode, sharing)
+openjdk version "17.0.6" 2023-01-17
+OpenJDK Runtime Environment (build 17.0.6+10-Ubuntu-0ubuntu122.04)
+OpenJDK 64-Bit Server VM (build 17.0.6+10-Ubuntu-0ubuntu122.04, mixed mode, sharing)
 ```
 
 ```
@@ -69,12 +69,12 @@ javac 17.0.1
 
 ```
 $ node -v
-v16.18.0
+v18.16.0
 ```
 
 ```
 $ npm -v
-8.19.2
+9.6.3
 ```
 
 #### Docker

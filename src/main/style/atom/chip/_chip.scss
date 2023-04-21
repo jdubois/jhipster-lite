@@ -56,3 +56,23 @@
     margin-bottom: 15px;
   }
 }
+
+.has-emphasized-module {
+  .jhlite-chip {
+    &--title,
+    &--description {
+      opacity: 0.5;
+    }
+  }
+
+  .-selectable-highlighted,
+  .-not-selectable-highlighted,
+  .-selected {
+    .jhlite-chip {
+      &--title,
+      &--description {
+        opacity: 1;
+      }
+    }
+  }
+}

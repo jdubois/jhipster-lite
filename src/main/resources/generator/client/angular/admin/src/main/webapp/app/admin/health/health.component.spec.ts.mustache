@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { of } from 'rxjs';
 
 import HealthComponent from './health.component';
@@ -11,11 +13,11 @@ describe('HealthComponent', () => {
   let comp: HealthComponent;
   let fixture: ComponentFixture<HealthComponent>;
   let service: HealthService;
+  let loader: HarnessLoader;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, HttpClientTestingModule],
-
+      imports: [HttpClientTestingModule],
     })
       .overrideTemplate(HealthComponent, '')
       .compileComponents();
@@ -25,6 +27,7 @@ describe('HealthComponent', () => {
     fixture = TestBed.createComponent(HealthComponent);
     comp = fixture.componentInstance;
     service = TestBed.inject(HealthService);
+    loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   describe('refresh', () => {
@@ -58,19 +61,19 @@ describe('HealthComponent', () => {
   });
 
   describe('showHealth', () => {
-    it('should open dialog', () => {
+    it('should open dialog', async () => {
       // GIVEN
       const health: Health = {
         status: 'UP',
         components: null
       }
-      jest.spyOn(comp.dialog, 'open');
 
       // WHEN
       comp.showHealth(health);
 
       // THEN
-      expect(comp.dialog.open).toHaveBeenCalled();
+      const dialogs = await loader.getAllHarnesses(MatDialogHarness);
+      expect(dialogs.length).toBe(1);
     });
   });
 

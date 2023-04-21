@@ -57,7 +57,7 @@ class SvelteModuleFactoryTest {
       .containing("\"test\": \"vitest run --coverage\"")
       .containing("\"type\": \"module\"")
       .and()
-      .hasFiles(".eslintrc.cjs", "tsconfig.json", "svelte.config.js", "vite.config.js", "vitest.config.ts")
+      .hasFiles(".eslintignore", ".eslintrc.cjs", "tsconfig.json", "svelte.config.js", "vite.config.js", "vitest.config.ts")
       .hasPrefixedFiles("src/main/webapp", "app.html", "app.d.ts")
       .hasPrefixedFiles("src/main/webapp/routes", "+page.svelte")
       .hasPrefixedFiles("src/test/javascript/spec/common/primary/app", "App.spec.ts")

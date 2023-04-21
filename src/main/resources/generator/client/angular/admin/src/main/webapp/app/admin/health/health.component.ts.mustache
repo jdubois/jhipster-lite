@@ -21,7 +21,7 @@ export default class HealthComponent implements OnInit {
   displayedColumns: string[] = ['key', 'value', 'detail'];
   datasource: any = [];
 
-  public dialog = inject(MatDialog);
+  private dialog = inject(MatDialog);
   private healthService = inject(HealthService);
 
   ngOnInit(): void {

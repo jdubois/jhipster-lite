@@ -15,5 +15,10 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     "react/jsx-no-target-blank": "off",
+  },
+  settings: {
+    react: {
+      version: "detect"
+    }
   }
 };

@@ -22,7 +22,7 @@ public class DevToolsModuleFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .documentation(documentationTitle("Dev tools"), SOURCE.template("devtools.md"))
-        .javaDependencies()
+      .javaDependencies()
         .addDependency(springBootDevtoolsDependency())
         .and()
       .springMainProperties()

@@ -76,6 +76,7 @@ class AngularModuleFactoryTest {
         "tsconfig.app.json",
         "tsconfig.spec.json",
         "proxy.conf.json",
+        ".eslintignore",
         ".eslintrc.json"
       )
       .hasPrefixedFiles(

@@ -33,6 +33,7 @@
 
 - [What is JHipster Lite and why should you care?][devoxx-jhlite] by [Julien Dubois][jdubois]
 - [Simple WebServices with JHipster Lite][webservices-with-jhlite] by [Colin Damon][cdamon]
+- [JHipster vs JHipster Lite][jhipster-vs-jhlite] by [Julien Dubois][jdubois]
 
 ## Choosing
 
@@ -63,6 +64,28 @@ You will only need to run this command when dependencies change in [package.json
 ```
 npm install
 ```
+
+## Quick Start
+
+You need to clone this project:
+
+```
+git clone https://github.com/jhipster/jhipster-lite
+```
+
+Go into the folder:
+
+```
+cd jhipster-lite
+```
+
+Run the project:
+
+```
+./mvnw
+```
+
+Then, you can navigate to http://localhost:7471 in your browser.
 
 ## Test the project
 
@@ -301,4 +324,5 @@ Support this project by becoming a sponsor! [Become a sponsor](https://opencolle
 [devoxx-jhlite]: https://youtu.be/RnLGnY-vzLI
 [jdubois]: https://twitter.com/juliendubois
 [webservices-with-jhlite]: https://youtu.be/mEECPRZjajI
+[jhipster-vs-jhlite]: https://youtu.be/t5GA329FMfU
 [cdamon]: https://www.linkedin.com/in/colin-damon/

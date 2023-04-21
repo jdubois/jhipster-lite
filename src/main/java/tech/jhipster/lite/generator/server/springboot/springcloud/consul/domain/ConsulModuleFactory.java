@@ -23,6 +23,7 @@ public class ConsulModuleFactory {
   private static final PropertyValue TRUE_VALUE = propertyValue("true");
   private static final String DOCKER_IMAGE_CONSUL = "consul";
   private static final String DOCKER_IMAGE_CONFIG_LOADER = "jhipster/consul-config-loader";
+  private static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/consul.yml up -d";
 
   private final DockerImages dockerImages;
 
@@ -54,6 +55,7 @@ public class ConsulModuleFactory {
         .addDependency(springCloudConsulDiscoveryDependency())
         .addDependency(springCloudConsulConfigDependency())
         .and()
+      .startupCommand(DOCKER_COMPOSE_COMMAND)
       .springMainBootstrapProperties()
         .set(propertyKey("spring.application.name"), propertyValue(baseName))
         .set(propertyKey("spring.cloud.consul.host"), propertyValue("localhost"))

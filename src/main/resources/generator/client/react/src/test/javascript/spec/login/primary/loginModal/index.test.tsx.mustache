@@ -1,9 +1,17 @@
+import axios from 'axios';
 import { render, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 
 import LoginModal from '@/login/primary/loginModal';
+import { UserInfoContext } from '@/login/primary/loginForm';
 
-const LoginModalRender = (open: boolean) => render(<LoginModal open={open} onClose={() => {}} />);
+const setUsername = vi.fn();
+const setToken = vi.fn();
+
+const LoginModalRender = (open: boolean) => render(
+<UserInfoContext.Provider value={{ setUsername, setToken }}>
+  <LoginModal open={open} onClose={() => {}} />
+</UserInfoContext.Provider>);
 
 describe('test login modal', () => {
   it('describe should render without crashing', () => {
@@ -40,9 +48,11 @@ describe('test login modal', () => {
     expect(submit).toBeTruthy();
   });
 
-  it('render the modal on login button click and close the modal on submit button click', () => {
+  it('render the modal on login button click and close the modal on submit button click', async () => {
     const { getByLabelText, getByTestId } = LoginModalRender(true);
-    act(() => {
+    const spy = vi.spyOn(axios, 'post');
+    spy.mockImplementationOnce(() => Promise.resolve({ data: {} }));
+    await act(() => {
       fireEvent.change(getByLabelText("Nom d'utilisateur"), {
         target: { value: 'admin' },
       });
@@ -52,6 +62,7 @@ describe('test login modal', () => {
       const submitButton = getByTestId('submit-button');
       fireEvent.click(submitButton);
     });
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should contain error message when submit button is clicked with empty value', async () => {

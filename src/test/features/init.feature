@@ -9,7 +9,6 @@ Feature: Init
       | .gitignore                    |
       | .gitattributes                |
       | .editorconfig                 |
-      | .eslintignore                 |
       | package.json                  |
       | README.md                     |
     And I should not have files in ""

@@ -24,7 +24,7 @@
   </div>
 
   <div
-    class="jhipster-landscape-map jhlite-menu-content-template--content"
+    :class="landscapeClass()"
     ref="landscapeContainer"
     data-selector="landscape-container"
     @mousedown="startGrabbing"

@@ -1,8 +1,7 @@
 # Introduction
 
-Add the spring dev tool and enable it in local profile.
+Add the spring dev tool and enable it with `local` profile.
 
 # How to use it
 
-[official documentation:](https://docs.spring.io/spring-boot/docs/2.7.x/reference/html/using.html#using.devtools)
-
+[Official documentation](https://docs.spring.io/spring-boot/docs/3.0.x/reference/html/using.html#using.devtools)

@@ -24,7 +24,7 @@ class JHipsterCollectionsTest {
       Collection<String> collection = JHipsterCollections.immutable(source);
 
       assertThat(collection).isEmpty();
-      assertThatThrownBy(() -> collection.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -34,7 +34,7 @@ class JHipsterCollectionsTest {
       Collection<String> collection = JHipsterCollections.immutable(source);
 
       assertThat(collection).containsExactly("test");
-      assertThatThrownBy(() -> collection.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
 
@@ -48,7 +48,7 @@ class JHipsterCollectionsTest {
       Map<String, String> map = JHipsterCollections.immutable(source);
 
       assertThat(map).isEmpty();
-      assertThatThrownBy(() -> map.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(map::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -58,7 +58,7 @@ class JHipsterCollectionsTest {
       Map<String, String> map = JHipsterCollections.immutable(source);
 
       assertThat(map).containsExactly(entry("key", "value"));
-      assertThatThrownBy(() -> map.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(map::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
 }

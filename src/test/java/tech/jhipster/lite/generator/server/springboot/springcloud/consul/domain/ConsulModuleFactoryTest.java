@@ -38,7 +38,7 @@ class ConsulModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, pomFile())
+    assertThatModuleWithFiles(module, pomFile(), readmeFile())
       .hasFile("src/main/docker/consul.yml")
       .containing("consul:1.12.2")
       .containing("jhipster/consul-config-loader:v0.4.1")
@@ -93,6 +93,13 @@ class ConsulModuleFactoryTest {
       .and()
       .hasFile("src/test/resources/config/bootstrap.properties")
       .containing("spring.cloud.consul.enabled=false")
-      .containing("spring.cloud.compatibility-verifier.enabled=false");
+      .containing("spring.cloud.compatibility-verifier.enabled=false")
+      .and()
+      .hasFile("README.md")
+      .containing("""
+        ```bash
+        docker compose -f src/main/docker/consul.yml up -d
+        ```
+        """);
   }
 }

@@ -8,11 +8,11 @@ import { UserInfoContext } from '@/login/primary/loginForm';
 import './LoginModal.scss';
 
 const LoginModal = ({ open, onClose }: LoginModalType) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<LoginFunctionType>();
   const [error, setError] = useState<boolean>(false);
   const { setUsername, setToken } = useContext(UserInfoContext);
 
-  const onSubmit = (loginData: any) => {
+  const onSubmit = (loginData: LoginFunctionType) => {
     if (loginData.username && loginData.password) {
       login({ ...loginData, setUsername, setToken });
       setError(false);

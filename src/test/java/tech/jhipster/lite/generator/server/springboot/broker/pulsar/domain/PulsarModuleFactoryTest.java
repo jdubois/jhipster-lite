@@ -37,7 +37,7 @@ class PulsarModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, pomFile(), integrationTestAnnotation())
+    assertThatModuleWithFiles(module, pomFile(), integrationTestAnnotation(), readmeFile())
       .hasFile("pom.xml")
       .containing(
         """
@@ -81,7 +81,13 @@ class PulsarModuleFactoryTest {
         "PulsarProperties.java",
         "PulsarConfiguration.java"
       )
-      .hasFiles("src/test/java/com/jhipster/test/technical/infrastructure/config/pulsar/PulsarConfigurationIT.java");
+      .hasFiles("src/test/java/com/jhipster/test/technical/infrastructure/config/pulsar/PulsarConfigurationIT.java")
+      .hasFile("README.md")
+      .containing("""
+          ```bash
+          docker compose -f src/main/docker/pulsar.yml up -d
+          ```
+          """);
   }
 
   private ModuleFile integrationTestAnnotation() {

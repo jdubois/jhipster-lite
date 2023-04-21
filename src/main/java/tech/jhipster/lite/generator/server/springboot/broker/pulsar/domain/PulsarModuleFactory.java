@@ -17,6 +17,8 @@ public class PulsarModuleFactory {
 
   private static final String PULSAR_CONFIG = "technical/infrastructure/config/pulsar";
 
+  private static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/pulsar.yml up -d";
+
   private final DockerImages dockerImages;
 
   public PulsarModuleFactory(DockerImages dockerImages) {
@@ -47,6 +49,7 @@ public class PulsarModuleFactory {
           .and()
         .add(SOURCE.template("PulsarConfigurationIT.java"), testDestination.append(PULSAR_CONFIG).append("PulsarConfigurationIT.java"))
         .and()
+      .startupCommand(DOCKER_COMPOSE_COMMAND)
       .springMainProperties()
         .set(propertyKey("pulsar.client.service-url"), propertyValue("pulsar://localhost:6650"))
         .and()

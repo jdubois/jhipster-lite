@@ -151,6 +151,8 @@ elif [[ $application == 'fullapp' ]]; then
 
   applyModules "ehcache-java-config"
 
+  applyModules "hibernate-2nd-level-cache"
+
   applyModules "frontend-maven-plugin" "vue-core"
 
 elif [[ $application == 'oauth2app' ]]; then

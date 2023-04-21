@@ -14,6 +14,7 @@ public class ReactCoreModulesFactory {
   private static final JHipsterSource SOURCE = from("client/react");
 
   private static final JHipsterSource WEBAPP_SOURCE = SOURCE.append("src/main/webapp");
+  private static final JHipsterSource COMMON_ESLINT = from("client/common/eslint");
   private static final JHipsterDestination WEBAPP_DESTINATION = to("src/main/webapp");
 
   private static final JHipsterSource APP_SOURCE = WEBAPP_SOURCE.append("app");
@@ -64,6 +65,9 @@ public class ReactCoreModulesFactory {
           .addFile("vite.config.ts")
           .addFile("vitest.config.ts")
           .addFile(".eslintrc.js")
+          .and()
+        .batch(COMMON_ESLINT, to("."))
+          .addFile(".eslintignore")
           .and()
         .batch(APP_SOURCE, APP_DESTINATION)
           .addTemplate("index.css")

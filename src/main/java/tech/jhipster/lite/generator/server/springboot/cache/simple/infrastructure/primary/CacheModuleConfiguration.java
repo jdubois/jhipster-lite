@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.cache.simple.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_CACHE;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +26,6 @@ class CacheModuleConfiguration {
   }
 
   private JHipsterModuleOrganization organization() {
-    return JHipsterModuleOrganization.builder().feature(CACHE).addDependency(SPRING_BOOT).build();
+    return JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT).build();
   }
 }

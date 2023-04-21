@@ -149,6 +149,11 @@ export default defineComponent({
       return element instanceof LandscapeFeature;
     };
 
+    const landscapeClass = (): string => {
+      const hasEmphasizedModule = emphasizedModule.value !== undefined;
+      return `jhipster-landscape-map jhlite-menu-content-template--content${hasEmphasizedModule ? ' has-emphasized-module' : ''}`;
+    };
+
     const modeSwitchClass = (mode: DisplayMode): string => {
       if (selectedMode.value === mode) {
         return '-selected';
@@ -422,6 +427,7 @@ export default defineComponent({
       landscapeSize,
       landscapeElements,
       landscapeContainer,
+      landscapeClass,
       modeSwitchClass,
       selectMode,
       modeClass,

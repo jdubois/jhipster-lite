@@ -262,6 +262,18 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('spring-boot-module')).classes()).toContain('-highlighted-unselection');
       assertUnSelectionHighlightedConnectorsCount(wrapper, 2);
     });
+
+    it('Should put not emphasized in background', async () => {
+      const wrapper = await componentWithLandscape();
+
+      wrapper.find(wrappedElement('infinitest-module')).trigger('mouseover');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.find(wrappedElement('landscape-container')).classes()).toContain('has-emphasized-module');
+
+      wrapper.find(wrappedElement('infinitest-module')).trigger('mouseleave');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.find(wrappedElement('landscape-container')).classes()).not.toContain('has-emphasized-module');
+    });
   });
 
   describe('Selectable module', () => {

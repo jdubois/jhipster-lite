@@ -25,7 +25,7 @@ class {{ baseName }}CollectionsTest {
       Collection<Object> collection = {{ baseName }}Collections.immutable(input);
 
       assertThat(collection).isEmpty();
-      assertThatThrownBy(() -> collection.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -35,7 +35,7 @@ class {{ baseName }}CollectionsTest {
       Collection<String> collection = {{ baseName }}Collections.immutable(input);
 
       assertThat(collection).containsExactly("value");
-      assertThatThrownBy(() -> collection.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(collection::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
 
@@ -49,7 +49,7 @@ class {{ baseName }}CollectionsTest {
       Set<Object> set = {{ baseName }}Collections.immutable(input);
 
       assertThat(set).isEmpty();
-      assertThatThrownBy(() -> set.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(set::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -59,7 +59,7 @@ class {{ baseName }}CollectionsTest {
       Set<String> set = {{ baseName }}Collections.immutable(input);
 
       assertThat(set).containsExactly("value");
-      assertThatThrownBy(() -> set.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(set::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
 
@@ -73,7 +73,7 @@ class {{ baseName }}CollectionsTest {
       List<Object> list = {{ baseName }}Collections.immutable(input);
 
       assertThat(list).isEmpty();
-      assertThatThrownBy(() -> list.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(list::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
@@ -83,7 +83,7 @@ class {{ baseName }}CollectionsTest {
       List<String> list = {{ baseName }}Collections.immutable(input);
 
       assertThat(list).containsExactly("value");
-      assertThatThrownBy(() -> list.clear()).isExactlyInstanceOf(UnsupportedOperationException.class);
+      assertThatThrownBy(list::clear).isExactlyInstanceOf(UnsupportedOperationException.class);
     }
   }
 }

@@ -63,7 +63,7 @@
     <byte-buddy.version>1.14.4</byte-buddy.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <surefire-plugin.version>3.0.0</surefire-plugin.version>
-    <jacoco.version>0.8.9</jacoco.version>
+    <jacoco.version>0.8.10</jacoco.version>
     <jgit.version>6.5.0.202303070854-r</jgit.version>
     <archunit-junit5.version>1.0.1</archunit-junit5.version>
     <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>

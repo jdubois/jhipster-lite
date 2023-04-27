@@ -134,16 +134,13 @@ ul.list-group--inline {
   max-width: 100%;
   width: auto;
   padding: 0.25rem 1rem;
+  box-shadow: inset 0 0 0 1px var(--bs-gray-400);
+  background-color: white;
+  border: none;
 }
 .list-group--inline > .list-group-item:not(:last-child) {
   margin-right: 0.75rem;
   margin-bottom: 0.5rem;
-}
-
-.list-group--inline > .list-group-item {
-  box-shadow: inset 0 0 0 1px var(--bs-gray-400);
-  background-color: white;
-  border: none;
 }
 .list-group-item-action input[type='radio']:checked {
   box-shadow: inset 0 0 0 1px var(--primary-color);
@@ -166,18 +163,16 @@ ul.list-group--inline {
 input[type='checkbox'],
 input[type='radio'] {
   cursor: pointer;
-}
-input[type='radio'] {
-  margin-right: 1rem;
-}
-input[type='checkbox'],
-input[type='radio'] {
   /* Double-sized Checkboxes */
   -ms-transform: scale(1.2); /* IE */
   -moz-transform: scale(1.2); /* FF */
   -webkit-transform: scale(1.2); /* Safari and Chrome */
   -o-transform: scale(1.2); /* Opera */
 }
+input[type='radio'] {
+  margin-right: 1rem;
+}
+
 .card {
   border-radius: 0;
   border: none;

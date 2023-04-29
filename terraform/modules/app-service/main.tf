@@ -54,7 +54,7 @@ resource "azurerm_linux_web_app" "application" {
       java_version        = "java17"
     }
     always_on        = true
-    ftps_state       = "FtpsOnly"
+    ftps_state       = "Disabled"
   }
 
   app_settings = {

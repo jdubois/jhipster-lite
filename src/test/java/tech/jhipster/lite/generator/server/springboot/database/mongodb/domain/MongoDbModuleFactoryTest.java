@@ -90,7 +90,7 @@ class MongoDbModuleFactoryTest {
       .and()
       .hasFile("src/main/resources/config/application.properties")
       .containing("spring.data.mongodb.database=jhipster")
-      .containing("spring.data.mongodb.uri=mongodb://localhost:27017")
+      .containing("spring.data.mongodb.uri=mongodb://localhost:27017/jhipster")
       .and()
       .hasFile("src/test/resources/config/application.properties")
       .containing("spring.data.mongodb.uri=${TEST_MONGODB_URI}")

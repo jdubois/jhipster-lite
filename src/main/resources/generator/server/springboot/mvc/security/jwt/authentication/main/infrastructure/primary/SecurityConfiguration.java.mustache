@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,26 +61,20 @@ class SecurityConfiguration {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     // @formatter:off
-    return http
-        .csrf()
-        .disable()
-        .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-        .headers()
-          .contentSecurityPolicy(properties.getContentSecurityPolicy())
-          .and()
-        .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-          .and()
-        .permissionsPolicy().policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
-          .and()
-        .frameOptions()
-          .deny()
-          .and()
-        .formLogin().disable()
-        .httpBasic().disable()
-        .sessionManagement()
-          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-          .and()
-      .authorizeHttpRequests()
+    http
+      .csrf(csrf -> csrf.disable())
+      .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+      .headers(headers -> headers
+        .contentSecurityPolicy(csp -> csp.policyDirectives(properties.getContentSecurityPolicy()))
+        .frameOptions(FrameOptionsConfig::deny)
+        .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+        .permissionsPolicy(permissions ->
+          permissions.policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"))
+      )
+      .formLogin(AbstractHttpConfigurer::disable)
+      .httpBasic(AbstractHttpConfigurer::disable)
+      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+      .authorizeHttpRequests(authz -> authz
         .requestMatchers("/api/authenticate").permitAll()
         .requestMatchers("/api/register").permitAll()
         .requestMatchers("/api/activate").permitAll()
@@ -92,10 +88,11 @@ class SecurityConfiguration {
         .requestMatchers("/management/prometheus").permitAll()
         .requestMatchers("/management/**").hasAuthority(Role.ADMIN.key())
         .anyRequest().authenticated()
-        .and()
-        .apply(new JWTConfigurer(authenticationTokenReader()))
-        .and()
-      .build();
+      );
+
+      JWTConfigurer jwtConfigurer = new JWTConfigurer(authenticationTokenReader());
+      http.apply(jwtConfigurer);
+      return http.build();
     // @formatter:on
   }
 

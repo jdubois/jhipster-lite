@@ -13,7 +13,6 @@ import { ProjectHistory } from '@/module/domain/ProjectHistory';
 import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
 import { ProjectActionsVue } from '../project-actions';
 import { castValue, empty } from '../PropertyValue';
-import { ModuleParameterType } from '@/module/domain/ModuleParameters';
 import { ModuleParameter } from '@/module/domain/ModuleParameter';
 import { Landscape } from '@/module/domain/landscape/Landscape';
 import { IconVue } from '@/common/primary/icon';
@@ -27,6 +26,7 @@ import { LandscapeElementId } from '@/module/domain/landscape/LandscapeElementId
 import { LandscapeFeatureSlug } from '@/module/domain/landscape/LandscapeFeatureSlug';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
+import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
 
 export default defineComponent({
   name: 'LandscapeVue',
@@ -44,7 +44,7 @@ export default defineComponent({
     const landscape = ref(Loader.loading<Landscape>());
     const levels = ref(Loader.loading<LandscapeLevel[]>());
 
-    const landscapeContainer = ref<HTMLElement>();
+    const landscapeContainer = ref<HTMLElement>(document.createElement('div'));
     const landscapeConnectors = ref<LandscapeConnector[]>([]);
     const landscapeSize = ref<LandscapeConnectorsSize>(emptyLandscapeSize());
     const landscapeElements = ref(new Map<string, HTMLElement>());
@@ -52,7 +52,9 @@ export default defineComponent({
     const emphasizedModule = ref<ModuleSlug>();
 
     const folderPath = ref('');
-    const valuatedModuleParameters = ref(new Map<string, ModuleParameterType>());
+
+    const moduleParameters = inject('moduleParameters') as ModuleParametersRepository;
+    const moduleParametersValues = ref(moduleParameters.get());
 
     let commitModule = true;
 
@@ -65,8 +67,14 @@ export default defineComponent({
     const operationInProgress = ref(false);
 
     onMounted(() => {
-      modules.landscape().then(response => loadLandscape(response));
-      projectFolders.get().then(projectFolder => (folderPath.value = projectFolder));
+      modules
+        .landscape()
+        .then(response => loadLandscape(response))
+        .catch(error => console.error(error));
+      projectFolders
+        .get()
+        .then(projectFolder => (folderPath.value = projectFolder))
+        .catch(error => console.error(error));
     });
 
     const startGrabbing = (mouseEvent: MouseEvent): void => {
@@ -77,8 +85,8 @@ export default defineComponent({
       startX.value = mouseEvent.clientX;
       startY.value = mouseEvent.clientY;
       const rect = landscapeContainer.value;
-      currentScrollX.value = rect?.scrollLeft || 0;
-      currentScrollY.value = rect?.scrollTop || 0;
+      currentScrollX.value = rect.scrollLeft;
+      currentScrollY.value = rect.scrollTop;
       cursorUpdater.set('grabbing');
     };
 
@@ -93,16 +101,14 @@ export default defineComponent({
       }
       const scrollX = currentScrollX.value + (startX.value - mouseEvent.clientX);
       const scrollY = currentScrollY.value + (startY.value - mouseEvent.clientY);
-      landscapeScroller.scroll(landscapeContainer.value!, scrollX, scrollY);
+      landscapeScroller.scroll(landscapeContainer.value, scrollX, scrollY);
     };
 
-    const loadLandscape = (response: Landscape): void => {
+    const loadLandscape = async (response: Landscape): Promise<void> => {
       landscape.value.loaded(response);
       levels.value.loaded(response.standaloneLevels());
 
-      nextTick(() => {
-        updateConnectors();
-      });
+      await nextTick().then(updateConnectors);
 
       applicationListener.addEventListener('resize', updateConnectors);
     };
@@ -162,12 +168,10 @@ export default defineComponent({
       return '-not-selected';
     };
 
-    const selectMode = (mode: DisplayMode): void => {
+    const selectMode = async (mode: DisplayMode): Promise<void> => {
       selectedMode.value = mode;
 
-      nextTick(() => {
-        updateConnectors();
-      });
+      await nextTick().then(updateConnectors);
     };
 
     const elementFlavor = (module: LandscapeElementId): string => {
@@ -320,7 +324,7 @@ export default defineComponent({
 
     const missingMandatoryProperty = () => {
       return selectedModulesProperties().some(
-        property => property.mandatory && empty(valuatedModuleParameters.value.get(property.key)) && empty(property.defaultValue)
+        property => property.mandatory && empty(moduleParametersValues.value.get(property.key)) && empty(property.defaultValue)
       );
     };
 
@@ -350,21 +354,24 @@ export default defineComponent({
 
       projectHistory.properties.forEach(property => {
         if (unknownProperty(property.key)) {
-          valuatedModuleParameters.value.set(property.key, property.value);
+          moduleParametersValues.value.set(property.key, property.value);
         }
       });
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const unknownProperty = (key: string) => {
-      return !valuatedModuleParameters.value.has(key);
+      return !moduleParametersValues.value.has(key);
     };
 
     const updateProperty = (property: ModuleParameter): void => {
-      valuatedModuleParameters.value.set(property.key, property.value);
+      moduleParametersValues.value.set(property.key, property.value);
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const deleteProperty = (key: string): void => {
-      valuatedModuleParameters.value.delete(key);
+      moduleParametersValues.value.delete(key);
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const applyNewModules = (): void => {
@@ -389,7 +396,7 @@ export default defineComponent({
           modules: modulesToApply,
           projectFolder: folderPath.value,
           commit: commitModule,
-          parameters: valuatedModuleParameters.value,
+          parameters: moduleParametersValues.value,
         })
         .then(() => {
           operationEnded();
@@ -441,7 +448,7 @@ export default defineComponent({
       selectedModulesCount,
       folderPath,
       selectedModulesProperties,
-      valuatedModuleParameters,
+      moduleParametersValues,
       updateModuleCommit,
       updateFolderPath,
       projectFolderUpdated,

@@ -14,21 +14,26 @@ import { stubAlertBus } from '../../../common/domain/AlertBus.fixture';
 import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersRepository';
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { Modules } from '@/module/domain/Modules';
 import { Module } from '@/module/domain/Module';
+import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
+import { LocalStorageModuleParametersRepository } from '@/module/secondary/LocalStorageModuleParametersRepository';
+import sinon from 'sinon';
 
 interface WrapperOptions {
   modules: ModulesRepository;
   projectFolders: ProjectFoldersRepository;
+  moduleParameters: ModuleParametersRepository;
 }
 
 const alertBus = stubAlertBus();
 
 const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
-  const { modules, projectFolders }: WrapperOptions = {
+  const { modules, projectFolders, moduleParameters }: WrapperOptions = {
     modules: repositoryWithModules(),
     projectFolders: repositoryWithProjectFolders(),
+    moduleParameters: repositoryWithModuleParameters(),
     ...options,
   };
   return mount(ModulesVue, {
@@ -36,6 +41,7 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
       provide: {
         modules,
         projectFolders,
+        moduleParameters,
         alertBus,
         globalWindow: stubWindow(),
       },
@@ -51,12 +57,64 @@ const makeTaggedModule = (tag: string): Module => ({
 });
 
 describe('Modules', () => {
+  beforeAll(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
   describe('Loading', () => {
     it('Should display loader when waiting for modules', () => {
       const wrapper = wrap();
 
       expect(wrapper.find(wrappedElement('modules-loader')).exists()).toBe(true);
       expect(wrapper.find(wrappedElement('modules-list')).exists()).toBe(false);
+    });
+
+    it('Should catch error when waiting for modules error', () => {
+      try {
+        const { modules, projectFolders, moduleParameters }: WrapperOptions = {
+          modules: repositoryWithModulesError(),
+          projectFolders: repositoryWithProjectFolders(),
+          moduleParameters: repositoryWithModuleParameters(),
+        };
+        return mount(ModulesVue, {
+          global: {
+            provide: {
+              modules,
+              projectFolders,
+              moduleParameters,
+              alertBus,
+              globalWindow: stubWindow(),
+            },
+          },
+        });
+      } catch (e) {
+        expect(e.message).toEqual('repositoryWithModulesError');
+        expect(console.error).toHaveBeenCalled();
+      }
+    });
+
+    it('Should catch error when waiting for project folders error', () => {
+      try {
+        const { modules, projectFolders, moduleParameters }: WrapperOptions = {
+          modules: repositoryWithModules(),
+          projectFolders: repositoryWithProjectFoldersError(),
+          moduleParameters: repositoryWithModuleParameters(),
+        };
+        return mount(ModulesVue, {
+          global: {
+            provide: {
+              modules,
+              projectFolders,
+              moduleParameters,
+              alertBus,
+              globalWindow: stubWindow(),
+            },
+          },
+        });
+      } catch (e) {
+        expect(e.message).toEqual('repositoryWithProjectFoldersError');
+        expect(console.error).toHaveBeenCalled();
+      }
     });
 
     it('Should load modules at startup', async () => {
@@ -622,7 +680,8 @@ const componentWithModules = async (): Promise<VueWrapper> => {
   const modules = repositoryWithModules();
 
   const projectFolders = repositoryWithProjectFolders();
-  const wrapper = wrap({ modules, projectFolders });
+  const moduleParameters = repositoryWithModuleParameters();
+  const wrapper = wrap({ modules, projectFolders, moduleParameters });
 
   await flushPromises();
 
@@ -668,6 +727,13 @@ const repositoryWithModules = (): ModulesRepositoryStub => {
   return modules;
 };
 
+const repositoryWithModulesError = (): ModulesRepositoryStub => {
+  const modules = stubModulesRepository();
+  modules.list.rejects(new Error('repositoryWithModulesError'));
+
+  return modules;
+};
+
 const repositoryWithModulesAndNonDefaultProperties = (): ModulesRepositoryStub => {
   const modules = stubModulesRepository();
   modules.list.resolves(defaultModulesWithNonDefaultProperties());
@@ -680,6 +746,27 @@ const repositoryWithProjectFolders = (): ProjectFoldersRepositoryStub => {
   projectFolders.get.resolves('/tmp/jhlite/1234');
 
   return projectFolders;
+};
+
+const repositoryWithProjectFoldersError = (): ProjectFoldersRepositoryStub => {
+  const projectFolders = stubProjectFoldersRepository();
+  projectFolders.get.rejects(new Error('repositoryWithProjectFoldersError'));
+
+  return projectFolders;
+};
+
+const repositoryWithModuleParameters = (): LocalStorageModuleParametersRepository => {
+  const stubLocalStorage = {
+    getItem: sinon.stub(),
+    setItem: sinon.stub(),
+    removeItem: sinon.stub(),
+    clear: sinon.stub(),
+    length: 0,
+    key: sinon.stub(),
+  };
+  const moduleParameters = new LocalStorageModuleParametersRepository(stubLocalStorage);
+
+  return moduleParameters;
 };
 
 const updatePath = async (wrapper: VueWrapper): Promise<void> => {

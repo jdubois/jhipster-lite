@@ -13,10 +13,10 @@ import { ModulePropertyDefinition } from '@/module/domain/ModulePropertyDefiniti
 import { ModulePropertiesFormVue } from '../module-properties-form';
 import { ModulePropertyKey } from '@/module/domain/ModulePropertyKey';
 import { ProjectActionsVue } from '../project-actions';
-import { ModuleParameterType } from '@/module/domain/ModuleParameters';
 import { ModuleParameter } from '@/module/domain/ModuleParameter';
 import { ModuleParametersVue } from '../module-parameters';
 import { castValue } from '../PropertyValue';
+import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
 
 export default defineComponent({
   name: 'ModulesPatchVue',
@@ -35,17 +35,24 @@ export default defineComponent({
     const operationInProgress = ref(false);
     const folderPath = ref('');
     const selectedModule = ref<ComponentModule>();
-    const moduleParameters = ref(new Map<string, ModuleParameterType>());
+    const moduleParameters = inject('moduleParameters') as ModuleParametersRepository;
+    const moduleParametersValues = ref(moduleParameters.get());
     const commitModule = ref(true);
     const appliedModules = ref([] as string[]);
     let searchedText = '';
 
     onMounted(() => {
-      modules.list().then(response => {
-        applicationModules.all.loaded(ComponentModules.fromModules(response));
-        applicationModules.displayed.loaded(ComponentModules.fromModules(response));
-      });
-      projectFolders.get().then(projectFolder => (folderPath.value = projectFolder));
+      modules
+        .list()
+        .then(response => {
+          applicationModules.all.loaded(ComponentModules.fromModules(response));
+          applicationModules.displayed.loaded(ComponentModules.fromModules(response));
+        })
+        .catch(error => console.error(error));
+      projectFolders
+        .get()
+        .then(projectFolder => (folderPath.value = projectFolder))
+        .catch(error => console.error(error));
     });
 
     const operationStarted = (): void => {
@@ -99,7 +106,7 @@ export default defineComponent({
     };
 
     const isNotSet = (propertyKey: string): boolean => {
-      const value = moduleParameters.value.get(propertyKey);
+      const value = moduleParametersValues.value.get(propertyKey);
 
       if (typeof value === 'string') {
         return empty(value);
@@ -127,11 +134,13 @@ export default defineComponent({
     };
 
     const updateProperty = (property: ModuleParameter): void => {
-      moduleParameters.value.set(property.key, property.value);
+      moduleParametersValues.value.set(property.key, property.value);
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const deleteProperty = (key: ModulePropertyKey): void => {
-      moduleParameters.value.delete(key);
+      moduleParametersValues.value.delete(key);
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const mandatoryProperties = (module: string): ModulePropertyDefinition[] => {
@@ -216,7 +225,7 @@ export default defineComponent({
         .apply(new ModuleSlug(module), {
           projectFolder: folderPath.value,
           commit: commitModule.value,
-          parameters: moduleParameters.value,
+          parameters: moduleParametersValues.value,
         })
         .then(() => {
           operationInProgress.value = false;
@@ -243,13 +252,14 @@ export default defineComponent({
 
       projectHistory.properties.forEach(property => {
         if (unknownProperty(property.key)) {
-          moduleParameters.value.set(property.key, property.value);
+          moduleParametersValues.value.set(property.key, property.value);
         }
       });
+      moduleParameters.store(moduleParametersValues.value);
     };
 
     const unknownProperty = (key: string) => {
-      return !moduleParameters.value.has(key);
+      return !moduleParametersValues.value.has(key);
     };
 
     const appliedModule = (slug: string): boolean => {
@@ -265,7 +275,7 @@ export default defineComponent({
       disabledApplication,
       mandatoryProperties,
       optionalProperties,
-      moduleParameters,
+      moduleParametersValues,
       displayedModulesCount,
       totalModulesCount,
       isTagSelected,

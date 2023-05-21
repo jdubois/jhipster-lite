@@ -11,9 +11,11 @@ import { defaultLandscape } from '../../domain/landscape/Landscape.fixture';
 import { ModulesRepositoryStub, projectHistoryWithInit, stubModulesRepository } from '../../domain/Modules.fixture';
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
+import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
+import { LocalStorageModuleParametersRepository } from '@/module/secondary/LocalStorageModuleParametersRepository';
 
 interface ApplicationListenerStub extends ApplicationListener {
   addEventListener: SinonStub;
@@ -44,16 +46,18 @@ interface WrapperOptions {
   landscapeScroller: LandscapeScroller;
   modules: ModulesRepository;
   applicationListener: ApplicationListener;
+  moduleParameters: ModuleParametersRepository;
 }
 
 const alertBus = stubAlertBus();
 
 const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
-  const { applicationListener, cursorUpdater, landscapeScroller, modules }: WrapperOptions = {
+  const { applicationListener, cursorUpdater, landscapeScroller, modules, moduleParameters }: WrapperOptions = {
     cursorUpdater: stubBodyCursorUpdater(),
     landscapeScroller: stubLandscapeScroller(),
     modules: repositoryWithLandscape(),
     applicationListener: stubApplicationListener(),
+    moduleParameters: repositoryWithModuleParameters(),
     ...options,
   };
 
@@ -67,6 +71,7 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
         landscapeScroller,
         modules,
         projectFolders: repositoryWithProjectFolders(),
+        moduleParameters,
       },
     },
   });
@@ -92,6 +97,15 @@ const repositoryWithLandscape = (): ModulesRepositoryStub => {
   return modules;
 };
 
+const repositoryWithLandscapeError = (): ModulesRepositoryStub => {
+  const modules = stubModulesRepository();
+  modules.landscape.rejects(new Error('repositoryWithLandscapeError'));
+  modules.applyAll.resolves(undefined);
+  modules.history.resolves(projectHistoryWithInit());
+
+  return modules;
+};
+
 const repositoryWithProjectFolders = (): ProjectFoldersRepositoryStub => {
   const projectFolders = stubProjectFoldersRepository();
   projectFolders.get.resolves('/tmp/jhlite/1234');
@@ -99,13 +113,98 @@ const repositoryWithProjectFolders = (): ProjectFoldersRepositoryStub => {
   return projectFolders;
 };
 
+const repositoryWithProjectFoldersError = (): ProjectFoldersRepositoryStub => {
+  const projectFolders = stubProjectFoldersRepository();
+  projectFolders.get.rejects(new Error('repositoryWithProjectFoldersError'));
+
+  return projectFolders;
+};
+
+const repositoryWithModuleParameters = (): LocalStorageModuleParametersRepository => {
+  const stubLocalStorage = {
+    getItem: sinon.stub(),
+    setItem: sinon.stub(),
+    removeItem: sinon.stub(),
+    clear: sinon.stub(),
+    length: 0,
+    key: sinon.stub(),
+  };
+  const moduleParameters = new LocalStorageModuleParametersRepository(stubLocalStorage);
+
+  return moduleParameters;
+};
+
 describe('Landscape', () => {
+  beforeAll(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
   describe('Loading', () => {
     it('Should display loader when loading landscape', () => {
       const wrapper = wrap();
 
       expect(wrapper.find(wrappedElement('landscape-loader')).exists()).toBe(true);
       expect(wrapper.find(wrappedElement('landscape')).exists()).toBe(false);
+    });
+
+    it('Should catch error when waiting for modules error', () => {
+      try {
+        const { applicationListener, cursorUpdater, landscapeScroller, modules, moduleParameters }: WrapperOptions = {
+          cursorUpdater: stubBodyCursorUpdater(),
+          landscapeScroller: stubLandscapeScroller(),
+          modules: repositoryWithLandscapeError(),
+          applicationListener: stubApplicationListener(),
+          moduleParameters: repositoryWithModuleParameters(),
+        };
+
+        return mount(LandscapeVue, {
+          global: {
+            provide: {
+              alertBus,
+              applicationListener,
+              cursorUpdater,
+              globalWindow: stubWindow(),
+              landscapeScroller,
+              modules,
+              projectFolders: repositoryWithProjectFolders(),
+              moduleParameters,
+            },
+          },
+        });
+      } catch (e) {
+        expect(e.message).toEqual('repositoryWithLandscapeError');
+        expect(console.error).toHaveBeenCalled();
+      }
+    });
+
+    it('Should catch error when waiting for project folders error', () => {
+      try {
+        const { applicationListener, cursorUpdater, landscapeScroller, modules, moduleParameters }: WrapperOptions = {
+          cursorUpdater: stubBodyCursorUpdater(),
+          landscapeScroller: stubLandscapeScroller(),
+          modules: repositoryWithLandscape(),
+          applicationListener: stubApplicationListener(),
+          moduleParameters: repositoryWithModuleParameters(),
+        };
+
+        return mount(LandscapeVue, {
+          global: {
+            provide: {
+              alertBus,
+              applicationListener,
+              cursorUpdater,
+              globalWindow: stubWindow(),
+              landscapeScroller,
+              modules,
+              projectFolders: repositoryWithProjectFoldersError(),
+              moduleParameters,
+            },
+          },
+        });
+      } catch (e) {
+        expect(e.message).toEqual('repositoryWithProjectFoldersErrorww');
+        expect(console.error).toHaveBeenCalled();
+      }
     });
 
     it('Should load landscape at startup', async () => {

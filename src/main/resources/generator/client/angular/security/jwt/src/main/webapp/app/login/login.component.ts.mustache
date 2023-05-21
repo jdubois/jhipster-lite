@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../auth/account.service';
@@ -17,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   styleUrls: ['./login.component.css'],
 })
-export default class LoginComponent implements OnInit, OnDestroy {
+export default class LoginComponent implements OnInit {
   private readonly destroy$ = new Subject<void>();
 
   account: Account | null = null;
@@ -33,6 +33,11 @@ export default class LoginComponent implements OnInit, OnDestroy {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
+    const destroyRef = inject(DestroyRef);
+    destroyRef.onDestroy(() => {
+      this.destroy$.next();
+      this.destroy$.complete();
+    });
   }
 
   ngOnInit(): void {
@@ -40,11 +45,6 @@ export default class LoginComponent implements OnInit, OnDestroy {
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   login(): void {

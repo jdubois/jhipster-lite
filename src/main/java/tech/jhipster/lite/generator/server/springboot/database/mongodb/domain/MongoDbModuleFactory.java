@@ -57,7 +57,7 @@ public class MongoDbModuleFactory {
         .and()
       .springMainProperties()
         .set(propertyKey("spring.data.mongodb.database"), propertyValue(properties.projectBaseName().get()))
-        .set(propertyKey("spring.data.mongodb.uri"), propertyValue("mongodb://localhost:27017"))
+        .set(propertyKey("spring.data.mongodb.uri"), propertyValue("mongodb://localhost:27017/" + properties.projectBaseName().get()))
         .and()
       .springTestProperties()
         .set(propertyKey("spring.data.mongodb.uri"), propertyValue("${TEST_MONGODB_URI}"))

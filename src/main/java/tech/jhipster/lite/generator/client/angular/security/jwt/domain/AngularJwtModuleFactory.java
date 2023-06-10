@@ -43,8 +43,6 @@ public class AngularJwtModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    Indentation indentation = properties.indentation();
-
     //@formatter:off
     return moduleBuilder(properties)
       .files()

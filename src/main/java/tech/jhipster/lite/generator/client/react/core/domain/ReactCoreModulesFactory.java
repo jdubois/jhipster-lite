@@ -47,6 +47,7 @@ public class ReactCoreModulesFactory {
         .addDevDependency(packageName("typescript"), REACT)
         .addDevDependency(packageName("ts-node"), REACT)
         .addDevDependency(packageName("vite"), REACT)
+        .addDevDependency(packageName("vite-tsconfig-paths"), REACT)
         .addDevDependency(packageName("vitest"), REACT)
         .addDevDependency(packageName("vitest-sonar-reporter"), REACT)
         .addDependency(packageName("react"), REACT)

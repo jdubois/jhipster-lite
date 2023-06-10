@@ -10,12 +10,12 @@ import { wrappedElement } from '../../../WrappedElement';
 import { defaultLandscape } from '../../domain/landscape/Landscape.fixture';
 import { ModulesRepositoryStub, projectHistoryWithInit, stubModulesRepository } from '../../domain/Modules.fixture';
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
+import { ModuleParametersRepositoryStub, stubModuleParametersRepository } from '../../domain/ModuleParameters.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
 import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
-import { LocalStorageModuleParametersRepository } from '@/module/secondary/LocalStorageModuleParametersRepository';
 
 interface ApplicationListenerStub extends ApplicationListener {
   addEventListener: SinonStub;
@@ -120,17 +120,12 @@ const repositoryWithProjectFoldersError = (): ProjectFoldersRepositoryStub => {
   return projectFolders;
 };
 
-const repositoryWithModuleParameters = (): LocalStorageModuleParametersRepository => {
-  const stubLocalStorage = {
-    getItem: sinon.stub(),
-    setItem: sinon.stub(),
-    removeItem: sinon.stub(),
-    clear: sinon.stub(),
-    length: 0,
-    key: sinon.stub(),
-  };
-  const moduleParameters = new LocalStorageModuleParametersRepository(stubLocalStorage);
-
+const repositoryWithModuleParameters = (): ModuleParametersRepositoryStub => {
+  const moduleParameters = stubModuleParametersRepository();
+  moduleParameters.store.resolves(undefined);
+  moduleParameters.storeCurrentFolderPath.resolves('');
+  moduleParameters.getCurrentFolderPath.returns('');
+  moduleParameters.get.returns(new Map());
   return moduleParameters;
 };
 
@@ -227,6 +222,17 @@ describe('Landscape', () => {
       wrapper.unmount();
 
       expect(applicationListener.removeEventListener.calledOnce).toBe(true);
+    });
+
+    it('Should load folder path from local storage', async () => {
+      const moduleParameters = repositoryWithModuleParameters();
+      moduleParameters.getCurrentFolderPath.returns('/tmp/jhlite/5678');
+
+      const wrapper = wrap({ moduleParameters });
+      await flushPromises();
+
+      const pathField = wrapper.find(wrappedElement('folder-path-field')).element as HTMLInputElement;
+      expect(pathField.value).toBe('/tmp/jhlite/5678');
     });
   });
 
@@ -707,7 +713,7 @@ describe('Landscape', () => {
       const wrapper = wrap({ modules });
       await flushPromises();
 
-      const consoleErrors = vi.spyOn(console, 'error').mockImplementation();
+      const consoleErrors = vi.spyOn(console, 'error').mockImplementation(() => {});
       await updatePath(wrapper);
 
       expect(console.error).toHaveBeenCalledTimes(0);
@@ -808,7 +814,7 @@ describe('Landscape', () => {
         preventDefault: undefined,
       };
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousedown', mouseEvent);
 
       const { args } = cursorUpdater.set.getCall(0);
@@ -826,7 +832,7 @@ describe('Landscape', () => {
         preventDefault: sinon.stub(),
       };
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousedown', mouseEvent);
 
       expect(mouseEvent.preventDefault.called).toBe(true);
@@ -838,7 +844,7 @@ describe('Landscape', () => {
       const wrapper = wrap({ modules, cursorUpdater });
       await flushPromises();
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mouseup');
 
       expect(cursorUpdater.reset.called).toBe(true);
@@ -850,7 +856,7 @@ describe('Landscape', () => {
       const wrapper = wrap({ modules, cursorUpdater });
       await flushPromises();
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mouseleave');
 
       expect(cursorUpdater.reset.called).toBe(true);
@@ -871,7 +877,7 @@ describe('Landscape', () => {
         clientY: 10,
       };
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousedown', mouseEventStart);
       await landscape.trigger('mousemove', mouseEventGrabbed);
 
@@ -889,7 +895,7 @@ describe('Landscape', () => {
         clientY: 10,
       };
 
-      const landscape = await wrapper.find(wrappedElement('landscape-container'))!;
+      const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousemove', mouseEventGrabbed);
 
       expect(landscapeScroller.scroll.called).toBe(false);

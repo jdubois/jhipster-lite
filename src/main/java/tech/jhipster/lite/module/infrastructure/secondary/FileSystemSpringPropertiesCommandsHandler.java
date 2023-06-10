@@ -48,9 +48,7 @@ class FileSystemSpringPropertiesCommandsHandler {
   @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco thinks there is a missed branch")
   private static Supplier<Path> defaultPropertiesFile(JHipsterProjectFolder projectFolder, SpringProperty property) {
     return switch (property.type()) {
-      case MAIN_PROPERTIES -> () ->
-        projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_MAIN_FOLDER + propertiesFilename(property));
-      case MAIN_BOOTSTRAP_PROPERTIES -> () ->
+      case MAIN_PROPERTIES, MAIN_BOOTSTRAP_PROPERTIES -> () ->
         projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_MAIN_FOLDER + propertiesFilename(property));
       case TEST_PROPERTIES -> () ->
         projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_TEST_FOLDER + propertiesFilename(property));

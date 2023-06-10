@@ -5,7 +5,7 @@ import ReactLogo from '@assets/ReactLogo.png';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <div id="app">
         <img alt="React logo" src={ReactLogo} />
         <br />

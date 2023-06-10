@@ -31,7 +31,7 @@ public class ReactJwtModuleFactory {
       display: flex;
       flex-direction: column;
       justify-content:center;
-      align-items: center;
+      align-items: center;\
     """;
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {

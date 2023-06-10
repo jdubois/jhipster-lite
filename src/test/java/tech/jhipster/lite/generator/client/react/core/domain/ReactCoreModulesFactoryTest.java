@@ -36,6 +36,7 @@ class ReactCoreModulesFactoryTest {
       .containing(nodeDependency("typescript"))
       .containing(nodeDependency("ts-node"))
       .containing(nodeDependency("vite"))
+      .containing(nodeDependency("vite-tsconfig-paths"))
       .containing(nodeDependency("vitest"))
       .containing(nodeDependency("vitest-sonar-reporter"))
       .containing(nodeDependency("react"))

@@ -3,7 +3,7 @@ package tech.jhipster.lite.module.domain.file;
 import java.nio.file.Path;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleContext;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public class JHipsterTemplatedFile {
@@ -35,7 +35,7 @@ public class JHipsterTemplatedFile {
     return file.destination().pathInProject(projectFolder);
   }
 
-  public byte[] content(ProjectFilesReader files) {
+  public byte[] content(ProjectFiles files) {
     return file.content().read(files, context);
   }
 

@@ -7,7 +7,7 @@ import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleApplied;
 import tech.jhipster.lite.module.domain.JHipsterModuleChanges;
 import tech.jhipster.lite.module.domain.JHipsterModulesRepository;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.landscape.JHipsterLandscape;
 import tech.jhipster.lite.module.domain.npm.NpmVersions;
@@ -49,7 +49,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
   private final JHipsterLandscape landscape;
 
   public FileSystemJHipsterModulesRepository(
-    ProjectFilesReader filesReader,
+    ProjectFiles filesReader,
     NpmVersions npmVersions,
     JavaProjects projects,
     JHipsterModulesResources resources
@@ -81,8 +81,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     springComments.handle(changes.projectFolder(), changes.springComments(), changes.springPropertiesBlockComments());
     springFactories.handle(changes.projectFolder(), changes.springFactories());
     packageJson.handle(changes.indentation(), changes.projectFolder(), changes.packageJson());
-    replacer.handle(changes.projectFolder(), changes.mandatoryReplacements());
-    replacer.handle(changes.projectFolder(), changes.optionalReplacements());
+    replacer.handle(changes.projectFolder(), changes.replacers());
 
     changes.postActions().run(new JHipsterModuleExecutionContext(changes.projectFolder()));
   }

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.module.infrastructure.secondary;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.*;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 import tech.jhipster.lite.module.infrastructure.secondary.git.GitTestUtil;
 import tech.jhipster.lite.module.infrastructure.secondary.javadependency.JavaDependenciesFixture;
@@ -41,7 +41,7 @@ public final class TestJHipsterModules {
     }
 
     private static JHipsterModulesApplicationService buildApplicationService(JHipsterModule module) {
-      ProjectFilesReader filesReader = new FileSystemProjectFilesReader();
+      ProjectFiles filesReader = new FileSystemProjectFiles();
 
       FileSystemJHipsterModulesRepository modulesRepository = new FileSystemJHipsterModulesRepository(
         filesReader,
@@ -58,7 +58,8 @@ public final class TestJHipsterModules {
         modulesRepository,
         JavaDependenciesFixture.javaVersionsRepository(filesReader),
         JavaDependenciesFixture.projectVersionsRepository(),
-        GitTestUtil.gitRepository()
+        GitTestUtil.gitRepository(),
+        new FileSystemGeneratedProjectRepository()
       );
     }
 

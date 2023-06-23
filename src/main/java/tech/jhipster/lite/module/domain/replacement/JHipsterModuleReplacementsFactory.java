@@ -7,29 +7,35 @@ import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
-public abstract class JHipsterModuleReplacements {
+public abstract class JHipsterModuleReplacementsFactory {
 
-  private final Collection<ContentReplacer> replacements;
+  private final Collection<ContentReplacer> replacers;
 
-  protected JHipsterModuleReplacements(JHipsterModuleReplacementsBuilder<?, ?> builder) {
+  protected JHipsterModuleReplacementsFactory(JHipsterModuleReplacementsFactoryBuilder<?, ?> builder) {
     Assert.notNull("builder", builder);
-    Assert.notNull("replacements", builder.replacements);
+    Assert.notNull("replacers", builder.replacers);
 
-    replacements = JHipsterCollections.immutable(builder.replacements);
+    this.replacers = JHipsterCollections.immutable(builder.replacers);
   }
 
-  public Collection<ContentReplacer> replacements() {
-    return replacements;
+  protected JHipsterModuleReplacementsFactory(Collection<ContentReplacer> replacers) {
+    Assert.notNull("replacers", replacers);
+
+    this.replacers = JHipsterCollections.immutable(replacers);
   }
 
-  public abstract static class JHipsterModuleReplacementsBuilder<
-    Replacements extends JHipsterModuleReplacements, FileReplacementsBuilder extends JHipsterModuleFileReplacementsBuilder<?, ?>
+  protected Collection<ContentReplacer> getReplacers() {
+    return replacers;
+  }
+
+  public abstract static class JHipsterModuleReplacementsFactoryBuilder<
+    Replacements extends JHipsterModuleReplacementsFactory, FileReplacementsBuilder extends JHipsterModuleFileReplacementsBuilder<?, ?>
   > {
 
     private final JHipsterModuleBuilder module;
-    private final Collection<ContentReplacer> replacements = new ArrayList<>();
+    private final Collection<ContentReplacer> replacers = new ArrayList<>();
 
-    protected JHipsterModuleReplacementsBuilder(JHipsterModuleBuilder module) {
+    protected JHipsterModuleReplacementsFactoryBuilder(JHipsterModuleBuilder module) {
       Assert.notNull("module", module);
 
       this.module = module;
@@ -42,7 +48,7 @@ public abstract class JHipsterModuleReplacements {
     void add(ContentReplacer fileReplacer) {
       Assert.notNull("fileReplacer", fileReplacer);
 
-      replacements.add(fileReplacer);
+      replacers.add(fileReplacer);
     }
 
     public abstract FileReplacementsBuilder in(JHipsterProjectFilePath file);
@@ -51,7 +57,7 @@ public abstract class JHipsterModuleReplacements {
   }
 
   public abstract static class JHipsterModuleFileReplacementsBuilder<
-    ReplacementsBuilder extends JHipsterModuleReplacementsBuilder<?, ?>,
+    ReplacementsBuilder extends JHipsterModuleReplacementsFactoryBuilder<?, ?>,
     Builder extends JHipsterModuleFileReplacementsBuilder<ReplacementsBuilder, Builder>
   > {
 

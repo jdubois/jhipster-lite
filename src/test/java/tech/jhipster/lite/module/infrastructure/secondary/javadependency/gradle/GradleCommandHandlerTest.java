@@ -69,10 +69,6 @@ class GradleCommandHandlerTest {
     }
   }
 
-  private static String buildGradleContent(JHipsterProjectFolder projectFolder) {
-    return content(Paths.get(projectFolder.get()).resolve("build.gradle.kts"));
-  }
-
   private static String versionCatalogContent(JHipsterProjectFolder projectFolder) {
     return content(Paths.get(projectFolder.get()).resolve("gradle/libs.versions.toml"));
   }

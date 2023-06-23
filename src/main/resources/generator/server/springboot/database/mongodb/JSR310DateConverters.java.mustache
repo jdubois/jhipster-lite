@@ -12,6 +12,7 @@ public final class JSR310DateConverters {
 
   private JSR310DateConverters() {}
 
+  @SuppressWarnings("java:S6548")
   public static class ZonedDateTimeToDateConverter implements Converter<ZonedDateTime, Date> {
 
     public static final ZonedDateTimeToDateConverter INSTANCE = new ZonedDateTimeToDateConverter();
@@ -24,6 +25,7 @@ public final class JSR310DateConverters {
     }
   }
 
+  @SuppressWarnings("java:S6548")
   public static class DateToZonedDateTimeConverter implements Converter<Date, ZonedDateTime> {
 
     public static final DateToZonedDateTimeConverter INSTANCE = new DateToZonedDateTimeConverter();

@@ -12,6 +12,7 @@ import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommand;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javabuild.command.RemoveDirectJavaDependency;
+import tech.jhipster.lite.module.domain.javabuild.command.RemoveJavaDependencyManagement;
 import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
 
 public class JHipsterModuleJavaDependencies {
@@ -19,12 +20,14 @@ public class JHipsterModuleJavaDependencies {
   private final Collection<JavaDependencyVersion> versions;
   private final Collection<DependencyId> dependenciesToRemove;
   private final Collection<JavaDependencyManagement> dependenciesManagement;
+  private final Collection<DependencyId> dependenciesManagementToRemove;
   private final Collection<DirectJavaDependency> dependencies;
 
   private JHipsterModuleJavaDependencies(JHipsterModuleJavaDependenciesBuilder builder) {
     versions = builder.versions;
     dependenciesToRemove = builder.dependenciesToRemove;
     dependenciesManagement = builder.dependenciesManagement;
+    dependenciesManagementToRemove = builder.dependenciesManagementToRemove;
     dependencies = builder.dependencies;
   }
 
@@ -41,6 +44,7 @@ public class JHipsterModuleJavaDependencies {
         settedVersionsCommands(),
         dependenciesToRemoveCommands(),
         dependenciesManagementChanges(versions, projectDependencies),
+        dependenciesManagementToRemoveCommands(),
         dependenciesChanges(versions, projectDependencies)
       )
       .flatMap(Function.identity())
@@ -70,6 +74,14 @@ public class JHipsterModuleJavaDependencies {
     return dependenciesManagement.stream().map(dependency -> dependency.changeCommands(currentVersions, projectDependencies));
   }
 
+  private Stream<JavaBuildCommands> dependenciesManagementToRemoveCommands() {
+    return Stream.of(new JavaBuildCommands(dependenciesManagementToRemove.stream().map(toDependencyManagementToRemove()).toList()));
+  }
+
+  private Function<DependencyId, JavaBuildCommand> toDependencyManagementToRemove() {
+    return (Function<DependencyId, JavaBuildCommand>) RemoveJavaDependencyManagement::new;
+  }
+
   private Stream<JavaBuildCommands> dependenciesChanges(
     JavaDependenciesVersions currentVersions,
     ProjectJavaDependencies projectDependencies
@@ -86,6 +98,7 @@ public class JHipsterModuleJavaDependencies {
     private final Collection<DependencyId> dependenciesToRemove = new ArrayList<>();
     private final Collection<DirectJavaDependency> dependencies = new ArrayList<>();
     private final Collection<JavaDependencyManagement> dependenciesManagement = new ArrayList<>();
+    private final Collection<DependencyId> dependenciesManagementToRemove = new ArrayList<>();
 
     private JHipsterModuleJavaDependenciesBuilder(JHipsterModuleBuilder module) {
       Assert.notNull("module", module);
@@ -131,6 +144,14 @@ public class JHipsterModuleJavaDependencies {
       Assert.notNull(DEPENDENCY, dependency);
 
       dependenciesManagement.add(new JavaDependencyManagement(dependency));
+
+      return this;
+    }
+
+    public JHipsterModuleJavaDependenciesBuilder removeDependencyManagement(DependencyId dependency) {
+      Assert.notNull(DEPENDENCY, dependency);
+
+      dependenciesManagementToRemove.add(dependency);
 
       return this;
     }

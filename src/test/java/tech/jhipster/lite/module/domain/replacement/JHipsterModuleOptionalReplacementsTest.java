@@ -1,15 +1,17 @@
 package tech.jhipster.lite.module.domain.replacement;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.module.domain.GeneratedProjectRepository;
+import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
@@ -25,20 +27,14 @@ class JHipsterModuleOptionalReplacementsTest {
     JHipsterProjectFolder folder = new JHipsterProjectFolder("src/test/resources/projects");
     JHipsterModuleBuilder module = moduleBuilder(JHipsterModulesFixture.propertiesBuilder(folder.get()).build());
 
-    Collection<ContentReplacer> replacements = JHipsterModuleOptionalReplacements
+    return JHipsterModuleOptionalReplacementsFactory
       .builder(module)
       .in(path(file))
       .add(new TextReplacer(always(), "old"), "new")
       .and()
       .build()
-      .replacements();
-
-    String result = readContent(file);
-    for (ContentReplacer replacement : replacements) {
-      result = replacement.apply(result);
-    }
-
-    return result;
+      .buildReplacers(new JHipsterProjectFolder("dummy"), mock(GeneratedProjectRepository.class))
+      .reduce(readContent(file), (content, replacer) -> replacer.apply(content), (first, second) -> first);
   }
 
   private static String readContent(String file) {

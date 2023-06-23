@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.stubbing.Answer;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
 
 @UnitTest
@@ -19,7 +19,7 @@ class FileSystemJavaDependenciesReaderTest {
 
   @BeforeEach
   void loadReader() {
-    ProjectFilesReader files = mock(ProjectFilesReader.class);
+    ProjectFiles files = mock(ProjectFiles.class);
     when(files.readString(anyString())).thenAnswer(fileContent());
 
     reader = new FileSystemJavaDependenciesReader(files);

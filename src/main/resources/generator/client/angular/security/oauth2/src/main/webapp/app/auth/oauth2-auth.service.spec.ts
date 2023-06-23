@@ -209,6 +209,7 @@ describe('Oauth2 Auth Service', () => {
       // Given
       Object.defineProperty(keycloakInstance, 'authenticated', {
         value: true,
+        configurable: true,
       });
 
       // When + Then
@@ -219,6 +220,7 @@ describe('Oauth2 Auth Service', () => {
       // Given
       Object.defineProperty(keycloakInstance, 'authenticated', {
         value: false,
+        configurable: true,
       });
 
       // When + Then

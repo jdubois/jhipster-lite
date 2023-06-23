@@ -1,42 +1,47 @@
 package tech.jhipster.lite.module.domain.replacement;
 
+import java.util.stream.Stream;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
-public class JHipsterModuleMandatoryReplacements extends JHipsterModuleReplacements {
+public class JHipsterModuleMandatoryReplacementsFactory extends JHipsterModuleReplacementsFactory {
 
-  private JHipsterModuleMandatoryReplacements(JHipsterModuleMandatoryReplacementsBuilder builder) {
+  private JHipsterModuleMandatoryReplacementsFactory(JHipsterModuleMandatoryReplacementsFactoryBuilder builder) {
     super(builder);
   }
 
-  public static JHipsterModuleMandatoryReplacementsBuilder builder(JHipsterModuleBuilder module) {
-    return new JHipsterModuleMandatoryReplacementsBuilder(module);
+  public static JHipsterModuleMandatoryReplacementsFactoryBuilder builder(JHipsterModuleBuilder module) {
+    return new JHipsterModuleMandatoryReplacementsFactoryBuilder(module);
   }
 
-  public static class JHipsterModuleMandatoryReplacementsBuilder
-    extends JHipsterModuleReplacementsBuilder<JHipsterModuleMandatoryReplacements, JHipsterModuleFileMandatoryReplacementsBuilder> {
+  public Stream<ContentReplacer> replacers() {
+    return getReplacers().stream();
+  }
 
-    private JHipsterModuleMandatoryReplacementsBuilder(JHipsterModuleBuilder module) {
+  public static class JHipsterModuleMandatoryReplacementsFactoryBuilder
+    extends JHipsterModuleReplacementsFactoryBuilder<JHipsterModuleMandatoryReplacementsFactory, JHipsterModuleFileMandatoryReplacementsFactoryBuilder> {
+
+    private JHipsterModuleMandatoryReplacementsFactoryBuilder(JHipsterModuleBuilder module) {
       super(module);
     }
 
     @Override
-    public JHipsterModuleFileMandatoryReplacementsBuilder in(JHipsterProjectFilePath file) {
-      return new JHipsterModuleFileMandatoryReplacementsBuilder(this, file);
+    public JHipsterModuleFileMandatoryReplacementsFactoryBuilder in(JHipsterProjectFilePath file) {
+      return new JHipsterModuleFileMandatoryReplacementsFactoryBuilder(this, file);
     }
 
     @Override
-    public JHipsterModuleMandatoryReplacements build() {
-      return new JHipsterModuleMandatoryReplacements(this);
+    public JHipsterModuleMandatoryReplacementsFactory build() {
+      return new JHipsterModuleMandatoryReplacementsFactory(this);
     }
   }
 
-  public static class JHipsterModuleFileMandatoryReplacementsBuilder
-    extends JHipsterModuleFileReplacementsBuilder<JHipsterModuleMandatoryReplacementsBuilder, JHipsterModuleFileMandatoryReplacementsBuilder> {
+  public static class JHipsterModuleFileMandatoryReplacementsFactoryBuilder
+    extends JHipsterModuleFileReplacementsBuilder<JHipsterModuleMandatoryReplacementsFactoryBuilder, JHipsterModuleFileMandatoryReplacementsFactoryBuilder> {
 
-    private JHipsterModuleFileMandatoryReplacementsBuilder(
-      JHipsterModuleMandatoryReplacementsBuilder replacements,
+    private JHipsterModuleFileMandatoryReplacementsFactoryBuilder(
+      JHipsterModuleMandatoryReplacementsFactoryBuilder replacements,
       JHipsterProjectFilePath file
     ) {
       super(replacements, file);

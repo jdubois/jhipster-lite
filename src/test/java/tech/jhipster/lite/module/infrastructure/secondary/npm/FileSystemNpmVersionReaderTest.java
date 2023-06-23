@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.npm.NpmPackageName;
 import tech.jhipster.lite.module.domain.npm.NpmPackageVersion;
 import tech.jhipster.lite.module.domain.npm.NpmVersionSource;
@@ -19,7 +19,7 @@ import tech.jhipster.lite.module.domain.npm.NpmVersionSource;
 class FileSystemNpmVersionReaderTest {
 
   @Mock
-  private ProjectFilesReader projectFiles;
+  private ProjectFiles projectFiles;
 
   @InjectMocks
   private FileSystemNpmVersionReader reader;

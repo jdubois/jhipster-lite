@@ -3,7 +3,7 @@ package tech.jhipster.lite.module.domain.file;
 import java.nio.charset.StandardCharsets;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleContext;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 
 class JHipsterFileContent {
 
@@ -15,7 +15,7 @@ class JHipsterFileContent {
     this.source = source;
   }
 
-  public byte[] read(ProjectFilesReader files, JHipsterModuleContext context) {
+  public byte[] read(ProjectFiles files, JHipsterModuleContext context) {
     Assert.notNull("files", files);
     Assert.notNull("context", context);
 

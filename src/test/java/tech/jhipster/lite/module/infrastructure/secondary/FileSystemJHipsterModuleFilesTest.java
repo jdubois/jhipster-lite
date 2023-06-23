@@ -28,7 +28,7 @@ import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 @ExtendWith(LogsSpy.class)
 class FileSystemJHipsterModuleFilesTest {
 
-  private static final FileSystemJHipsterModuleFiles files = new FileSystemJHipsterModuleFiles(new FileSystemProjectFilesReader());
+  private static final FileSystemJHipsterModuleFiles files = new FileSystemJHipsterModuleFiles(new FileSystemProjectFiles());
 
   private final LogsSpy logs;
 

@@ -5,10 +5,10 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.jhipster.lite.TestFileUtils;
+import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
 import tech.jhipster.lite.module.domain.javabuild.ArtifactId;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javabuild.command.AddDirectJavaDependency;
@@ -81,6 +81,7 @@ public final class JHipsterModulesFixture {
       .addDependency(springBootStarterWebDependency())
       .addDependencyManagement(springBootDependencyManagement())
       .addDependencyManagement(springBootDefaultTypeDependencyManagement())
+      .removeDependencyManagement(dependencyId("org.springdoc", "springdoc-openapi-ui"))
       .and()
     .javaBuildPlugins()
       .pluginManagement(mavenEnforcerPluginManagement())
@@ -156,7 +157,12 @@ public final class JHipsterModulesFixture {
   }
 
   public static DependencyId springBootDependencyId() {
-    return new DependencyId(groupId("org.springframework.boot"), artifactId("spring-boot-dependencies"), Optional.empty());
+    return DependencyId
+      .builder()
+      .groupId(groupId("org.springframework.boot"))
+      .artifactId(artifactId("spring-boot-dependencies"))
+      .type(JavaDependencyType.POM)
+      .build();
   }
 
   public static JavaDependency defaultVersionDependency() {
@@ -170,7 +176,7 @@ public final class JHipsterModulesFixture {
   public static JavaBuildCommands javaDependenciesCommands() {
     SetVersion setVersion = new SetVersion(springBootVersion());
     RemoveDirectJavaDependency remove = new RemoveDirectJavaDependency(
-      new DependencyId(new GroupId("spring-boot"), new ArtifactId("1.2.3"), Optional.empty())
+      DependencyId.of(new GroupId("spring-boot"), new ArtifactId("1.2.3"))
     );
     AddDirectJavaDependency add = new AddDirectJavaDependency(optionalTestDependency());
 
@@ -192,7 +198,7 @@ public final class JHipsterModulesFixture {
   }
 
   public static DependencyId jsonWebTokenDependencyId() {
-    return new DependencyId(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"), Optional.empty());
+    return DependencyId.of(new GroupId("io.jsonwebtoken"), new ArtifactId("jjwt-api"));
   }
 
   public static JHipsterModuleContext context() {
@@ -341,6 +347,15 @@ public final class JHipsterModulesFixture {
 
   public static JHipsterFeatureSlug featureSlug(String slug) {
     return new JHipsterFeatureSlug(slug);
+  }
+
+  public static JHipsterModuleUpgrade upgrade() {
+    return JHipsterModuleUpgrade
+      .builder()
+      .doNotAdd(to(".gitignore"))
+      .delete(path("documentation/cucumber-integration.md"))
+      .replace(filesWithExtension("java"), fileStart(), "// This is an updated file\n\n")
+      .build();
   }
 
   public static class JHipsterModulePropertiesBuilder {

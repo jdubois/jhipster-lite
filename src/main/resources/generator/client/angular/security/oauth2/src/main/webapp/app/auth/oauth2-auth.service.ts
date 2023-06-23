@@ -4,7 +4,6 @@ import { from, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 const MIN_TOKEN_VALIDITY_SECONDS = 70;
-const REFRESH_TOKEN_TIMEOUT_MS = 6000;
 
 @Injectable({ providedIn: 'root' })
 export class Oauth2AuthService {
@@ -45,21 +44,17 @@ export class Oauth2AuthService {
   }
 
   private initUpdateTokenRefresh(): void {
-    setInterval(
-      () =>
-        this.keycloak
-          .updateToken(MIN_TOKEN_VALIDITY_SECONDS)
-          .then(refreshed => {
-            if (refreshed) {
-              console.debug('Token refreshed');
-            } else {
-              const exp = this.keycloak.tokenParsed!.exp!;
-              const timeSkew = this.keycloak.timeSkew!;
-              console.debug('Token not refreshed, valid for ' + Math.round(exp + timeSkew - Date.now() / 1000) + ' seconds');
-            }
-          })
-          .catch(e => console.error('Failed to refresh token: ' + e)),
-      REFRESH_TOKEN_TIMEOUT_MS
-    );
+    this.keycloak
+      .updateToken(MIN_TOKEN_VALIDITY_SECONDS)
+      .then(refreshed => {
+        if (refreshed) {
+          console.debug('Token refreshed');
+        } else {
+          const exp = this.keycloak.tokenParsed!.exp!;
+          const timeSkew = this.keycloak.timeSkew!;
+          console.debug('Token not refreshed, valid for ' + Math.round(exp + timeSkew - Date.now() / 1000) + ' seconds');
+        }
+      })
+      .catch(e => console.error('Failed to refresh token: ' + e));
   }
 }

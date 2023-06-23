@@ -16,14 +16,14 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 
 @UnitTest
 @ExtendWith(MockitoExtension.class)
 class JHipsterFileContentTest {
 
   @Mock
-  private ProjectFilesReader files;
+  private ProjectFiles files;
 
   @BeforeEach
   void loadFiles() {

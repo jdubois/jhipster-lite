@@ -184,12 +184,7 @@ class JavaDependencyMangementTest {
 
     JavaBuildCommands changes = changes().dependency(springBootDependencyManagement()).projectDependencies(projectDependencies).build();
 
-    assertThat(changes.get())
-      .containsExactly(
-        new RemoveJavaDependencyManagement(noTypeDependencyManagment.id()),
-        new AddJavaDependencyManagement(springBootDependencyManagement()),
-        new AddJavaDependencyManagement(noTypeDependencyManagment)
-      );
+    assertThat(changes.get()).containsExactly(new AddJavaDependencyManagement(springBootDependencyManagement()));
   }
 
   @Test

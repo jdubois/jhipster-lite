@@ -68,10 +68,9 @@ jobs:
       - name: 'Test: run backend tests'
         run: |
           chmod +x mvnw
-          ./mvnw clean verify sonar:sonar
+          ./mvnw clean verify -Dsonar.qualitygate.wait=true sonar:sonar
       - name: 'Analysis: local Sonar'
         run: |
-          ./tests-ci/wait_sonar_analysis.sh
           ./tests-ci/sonar.sh
       - name: 'Analysis: SonarCloud'
         if: github.repository == 'jhipster/jhipster-lite' && github.ref == 'refs/heads/main'
@@ -202,7 +201,7 @@ jobs:
         working-directory: /tmp/jhlite/${{ matrix.app }}/
         run: |
           if [ -f 'mvnw' ]; then
-            ./mvnw clean verify sonar:sonar
+            ./mvnw clean verify -Dsonar.qualitygate.wait=true sonar:sonar
           elif [ -f 'gradlew' ]; then
             ./gradlew build --no-daemon
           else
@@ -212,7 +211,6 @@ jobs:
       - name: 'Test: check local Sonar Analysis'
         run: |
           if [ -f '/tmp/jhlite/${{ matrix.app }}/src/main/docker/sonar.yml' ]; then
-            ${{ github.workspace }}/tests-ci/wait_sonar_analysis.sh
             ./tests-ci/sonar.sh ${{ matrix.app }}
           fi
       - name: 'Test: copy shell scripts'

@@ -9,12 +9,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
   </parent>
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.34.1-SNAPSHOT</version>
+  <version>0.35.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -49,8 +49,8 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <node.version>v18.16.0</node.version>
-    <npm.version>9.6.4</npm.version>
+    <node.version>v18.16.1</node.version>
+    <npm.version>9.7.2</npm.version>
 
     <maven.version>3.6.0</maven.version>
     <maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>
@@ -64,7 +64,7 @@
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
     <jacoco.version>0.8.10</jacoco.version>
-    <jgit.version>6.5.0.202303070854-r</jgit.version>
+    <jgit.version>6.6.0.202305301015-r</jgit.version>
     <archunit-junit5.version>1.0.1</archunit-junit5.version>
     <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
     <properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
@@ -77,7 +77,7 @@
     <dom4j.version>2.1.4</dom4j.version>
     <night-config.version>3.6.6</night-config.version>
     <testcontainers.version>1.18.3</testcontainers.version>
-    <mongock.version>5.3.0</mongock.version>
+    <mongock.version>5.3.1</mongock.version>
     <git-commit-id-plugin.version>6.0.0</git-commit-id-plugin.version>
 
     <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>

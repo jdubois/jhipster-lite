@@ -13,7 +13,7 @@ public class JavaBuildPlugin {
   private final Optional<JavaBuildPluginAdditionalElements> additionalElements;
 
   private JavaBuildPlugin(JavaBuildPluginBuilder builder) {
-    dependencyId = new DependencyId(builder.groupId, builder.artifactId, Optional.empty());
+    dependencyId = DependencyId.of(builder.groupId, builder.artifactId);
     versionSlug = Optional.ofNullable(builder.versionSlug);
     additionalElements = Optional.ofNullable(builder.additionalElements);
   }

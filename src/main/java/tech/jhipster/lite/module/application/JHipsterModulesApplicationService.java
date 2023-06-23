@@ -2,6 +2,7 @@ package tech.jhipster.lite.module.application;
 
 import java.util.Collection;
 import org.springframework.stereotype.Service;
+import tech.jhipster.lite.module.domain.GeneratedProjectRepository;
 import tech.jhipster.lite.module.domain.JHipsterModuleApplied;
 import tech.jhipster.lite.module.domain.JHipsterModuleEvents;
 import tech.jhipster.lite.module.domain.JHipsterModuleToApply;
@@ -26,12 +27,13 @@ public class JHipsterModulesApplicationService {
     JHipsterModulesRepository modules,
     JavaDependenciesVersionsRepository currentVersions,
     ProjectJavaDependenciesRepository projectDependencies,
-    GitRepository git
+    GitRepository git,
+    GeneratedProjectRepository generatedProject
   ) {
     this.events = events;
     this.modules = modules;
 
-    applyer = new JHipsterModulesApplyer(modules, currentVersions, projectDependencies, git);
+    applyer = new JHipsterModulesApplyer(modules, currentVersions, projectDependencies, git, generatedProject);
   }
 
   public void apply(JHipsterModulesToApply modulesToApply) {

@@ -12,8 +12,7 @@ import tech.jhipster.lite.module.domain.javaproperties.SpringPropertiesBlockComm
 import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
 import tech.jhipster.lite.module.domain.postaction.JHipsterModulePostActions;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacements;
+import tech.jhipster.lite.module.domain.replacement.ContentReplacers;
 
 @SuppressWarnings("java:S6539")
 public class JHipsterModuleChanges {
@@ -23,8 +22,7 @@ public class JHipsterModuleChanges {
   private final JHipsterTemplatedFiles filesToAdd;
   private final JHipsterFilesToMove filesToMove;
   private final JHipsterFilesToDelete filesToDelete;
-  private final JHipsterModuleMandatoryReplacements mandatoryReplacements;
-  private final JHipsterModuleOptionalReplacements optionalReplacements;
+  private final ContentReplacers replacers;
   private final JavaBuildCommands javaBuildCommands;
   private final JHipsterModulePackageJson packageJson;
   private final JHipsterModulePreActions preActions;
@@ -42,8 +40,7 @@ public class JHipsterModuleChanges {
     filesToAdd = builder.filesToAdd;
     filesToMove = builder.filesToMove;
     filesToDelete = builder.filesToDelete;
-    mandatoryReplacements = builder.mandatoryReplacements;
-    optionalReplacements = builder.optionalReplacements;
+    replacers = builder.replacers;
     javaBuildCommands = builder.javaBuildCommands;
     packageJson = builder.packageJson;
     preActions = builder.preActions;
@@ -60,8 +57,7 @@ public class JHipsterModuleChanges {
     Assert.notNull("filesToAdd", builder.filesToAdd);
     Assert.notNull("filesToMove", builder.filesToMove);
     Assert.notNull("filesToDelete", builder.filesToDelete);
-    Assert.notNull("mandatoryReplacements", builder.mandatoryReplacements);
-    Assert.notNull("optionalReplacements", builder.optionalReplacements);
+    Assert.notNull("replacers", builder.replacers);
     Assert.notNull("javaBuildCommands", builder.javaBuildCommands);
     Assert.notNull("preActions", builder.preActions);
     Assert.notNull("postActions", builder.postActions);
@@ -93,12 +89,8 @@ public class JHipsterModuleChanges {
     return filesToDelete;
   }
 
-  public JHipsterModuleMandatoryReplacements mandatoryReplacements() {
-    return mandatoryReplacements;
-  }
-
-  public JHipsterModuleOptionalReplacements optionalReplacements() {
-    return optionalReplacements;
+  public ContentReplacers replacers() {
+    return replacers;
   }
 
   public JavaBuildCommands javaBuildCommands() {
@@ -140,8 +132,7 @@ public class JHipsterModuleChanges {
       JHipsterModuleChangesFilesToAddBuilder,
       JHipsterModuleChangesFilesToMoveBuilder,
       JHipsterModuleChangesFilesToDeleteBuilder,
-      JHipsterModuleChangesMandatoryReplacementsBuilder,
-      JHipsterModuleChangesOptionalReplacementsBuilder,
+      JHipsterModuleChangesReplacersBuilder,
       JHipsterModuleChangesJavaBuildCommandsBuilder,
       JHipsterModuleChangesPackageJsonBuilder,
       JHipsterModuleChangesPreActionsBuilder,
@@ -155,8 +146,7 @@ public class JHipsterModuleChanges {
     private JHipsterTemplatedFiles filesToAdd;
     private JHipsterFilesToMove filesToMove;
     private JHipsterFilesToDelete filesToDelete;
-    private JHipsterModuleMandatoryReplacements mandatoryReplacements;
-    private JHipsterModuleOptionalReplacements optionalReplacements;
+    private ContentReplacers replacers;
     private JavaBuildCommands javaBuildCommands;
     private JHipsterModulePackageJson packageJson;
     private Indentation indentation;
@@ -198,24 +188,15 @@ public class JHipsterModuleChanges {
     }
 
     @Override
-    public JHipsterModuleChangesMandatoryReplacementsBuilder filesToDelete(JHipsterFilesToDelete filesToDelete) {
+    public JHipsterModuleChangesReplacersBuilder filesToDelete(JHipsterFilesToDelete filesToDelete) {
       this.filesToDelete = filesToDelete;
 
       return this;
     }
 
     @Override
-    public JHipsterModuleChangesOptionalReplacementsBuilder mandatoryReplacements(
-      JHipsterModuleMandatoryReplacements mandatoryReplacements
-    ) {
-      this.mandatoryReplacements = mandatoryReplacements;
-
-      return this;
-    }
-
-    @Override
-    public JHipsterModuleChangesJavaBuildCommandsBuilder optionalReplacements(JHipsterModuleOptionalReplacements optionalReplacements) {
-      this.optionalReplacements = optionalReplacements;
+    public JHipsterModuleChangesJavaBuildCommandsBuilder replacers(ContentReplacers replacers) {
+      this.replacers = replacers;
 
       return this;
     }
@@ -296,15 +277,11 @@ public class JHipsterModuleChanges {
   }
 
   public interface JHipsterModuleChangesFilesToDeleteBuilder {
-    JHipsterModuleChangesMandatoryReplacementsBuilder filesToDelete(JHipsterFilesToDelete filesToDelete);
+    JHipsterModuleChangesReplacersBuilder filesToDelete(JHipsterFilesToDelete filesToDelete);
   }
 
-  public interface JHipsterModuleChangesMandatoryReplacementsBuilder {
-    JHipsterModuleChangesOptionalReplacementsBuilder mandatoryReplacements(JHipsterModuleMandatoryReplacements mandatoryReplacements);
-  }
-
-  public interface JHipsterModuleChangesOptionalReplacementsBuilder {
-    JHipsterModuleChangesJavaBuildCommandsBuilder optionalReplacements(JHipsterModuleOptionalReplacements optionalReplacements);
+  public interface JHipsterModuleChangesReplacersBuilder {
+    JHipsterModuleChangesJavaBuildCommandsBuilder replacers(ContentReplacers replacers);
   }
 
   public interface JHipsterModuleChangesJavaBuildCommandsBuilder {

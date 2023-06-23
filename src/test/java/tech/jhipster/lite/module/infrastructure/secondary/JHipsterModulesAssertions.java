@@ -3,9 +3,13 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 import static org.assertj.core.api.Assertions.*;
 
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -13,9 +17,12 @@ import java.util.stream.Stream;
 import org.assertj.core.api.SoftAssertions;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.JHipsterModuleUpgrade;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 public final class JHipsterModulesAssertions {
+
+  private static final FileTime FILE_APPLICATION_TIME = FileTime.fromMillis(0);
 
   private JHipsterModulesAssertions() {}
 
@@ -59,6 +66,16 @@ public final class JHipsterModulesAssertions {
     addFilesToproject(module.projectFolder(), files);
 
     return new JHipsterModuleAsserter(module);
+  }
+
+  public static JHipsterModuleUpgradeAsserter assertThatModuleUpgrade(
+    JHipsterModule module,
+    JHipsterModuleUpgrade upgrade,
+    ModuleFile... files
+  ) {
+    addFilesToproject(module.projectFolder(), files);
+
+    return new JHipsterModuleUpgradeAsserter(module, upgrade);
   }
 
   public static String nodeDependency(String dependency) {
@@ -164,69 +181,13 @@ public final class JHipsterModulesAssertions {
       return path -> assertions.assertThat(Files.notExists(path)).as(fileFoundMessage(path, projectFolder)).isTrue();
     }
 
-    public JHipsterModuleFileAsserter hasFile(String file) {
-      return new JHipsterModuleFileAsserter(this, file);
-    }
-  }
-
-  public static class JHipsterModuleFileAsserter {
-
-    private final JHipsterModuleAsserter moduleAsserter;
-    private final String file;
-
-    private JHipsterModuleFileAsserter(JHipsterModuleAsserter moduleAsserter, String file) {
-      assertThat(file).as("Can't check file without file path").isNotBlank();
-
-      this.moduleAsserter = moduleAsserter;
-      this.file = file;
-      assertFileExists();
-    }
-
-    private void assertFileExists() {
-      Path path = moduleAsserter.projectFolder.filePath(file);
-
-      assertThat(Files.exists(path)).as(fileNotFoundMessage(path, moduleAsserter.projectFolder)).isTrue();
-    }
-
-    public JHipsterModuleFileAsserter containing(String content) {
-      assertThat(content).as("Can't check blank content").isNotBlank();
-
-      try {
-        Path path = moduleAsserter.projectFolder.filePath(file);
-
-        assertThat(Files.readString(path)).as(() -> "Can't find " + content + " in " + path.toString()).contains(content);
-      } catch (IOException e) {
-        throw new AssertionError("Can't check file content: " + e.getMessage(), e);
-      }
-
-      return this;
-    }
-
-    public JHipsterModuleFileAsserter notContaining(String content) {
-      assertThat(content).as("Can't check blank content").isNotBlank();
-
-      try {
-        Path path = moduleAsserter.projectFolder.filePath(file);
-
-        assertThat(Files.readString(path)).as(() -> "Found " + content + " in " + path.toString()).doesNotContain(content);
-      } catch (IOException e) {
-        throw new AssertionError("Can't check file content: " + e.getMessage(), e);
-      }
-
-      return this;
-    }
-
-    public JHipsterModuleAsserter and() {
-      return moduleAsserter;
+    public JHipsterModuleFileAsserter<JHipsterModuleAsserter> hasFile(String file) {
+      return new JHipsterModuleFileAsserter<>(this, projectFolder, file);
     }
   }
 
   private static Supplier<String> fileNotFoundMessage(Path path, JHipsterProjectFolder projectFolder) {
     return () -> "Can't find file " + path + " in project folder, found " + projectFiles(projectFolder);
-  }
-
-  private static Supplier<String> fileFoundMessage(Path path, JHipsterProjectFolder projectFolder) {
-    return () -> "Found file " + path + " in project folder, found " + projectFiles(projectFolder);
   }
 
   private static String projectFiles(JHipsterProjectFolder projectFolder) {
@@ -238,6 +199,159 @@ public final class JHipsterModulesAssertions {
         .collect(Collectors.joining(", "));
     } catch (IOException e) {
       return "unreadable folder";
+    }
+  }
+
+  public static class JHipsterModuleUpgradeAsserter {
+
+    private final JHipsterProjectFolder projectFolder;
+
+    public JHipsterModuleUpgradeAsserter(JHipsterModule module, JHipsterModuleUpgrade upgrade) {
+      assertThat(module).as("Can't make assertions on a upgrade without module").isNotNull();
+      assertThat(upgrade).as("Can't make assertions on a upgrade without upgrade").isNotNull();
+
+      applyModuleInPast(module);
+      TestJHipsterModules.apply(module.withUpgrade(upgrade));
+      projectFolder = module.projectFolder();
+    }
+
+    private void applyModuleInPast(JHipsterModule module) {
+      TestJHipsterModules.apply(module);
+
+      try {
+        Files.walkFileTree(module.projectFolder().filePath("."), new FileModifiedTimeUpdater());
+      } catch (IOException e) {
+        throw new AssertionError(e);
+      }
+    }
+
+    public JHipsterModuleUpgradeAsserter doNotUpdate(String file) {
+      FileTime lastModifiedTime = readFileTime(file);
+
+      assertThat(lastModifiedTime)
+        .as(() -> "File " + projectFolder.filePath(file) + " was updated (should not be)")
+        .isEqualTo(FILE_APPLICATION_TIME);
+
+      return this;
+    }
+
+    public JHipsterModuleUpgradeAsserter update(String file) {
+      FileTime lastModifiedTime = readFileTime(file);
+
+      assertThat(lastModifiedTime)
+        .as(() -> "File " + projectFolder.filePath(file) + " was not updated (should have been)")
+        .isNotEqualTo(FILE_APPLICATION_TIME);
+
+      return this;
+    }
+
+    public JHipsterModuleUpgradeAsserter doNotHaveFiles(String... files) {
+      assertThat(files).as("Can't check null files as not upgrade").isNotNull();
+
+      SoftAssertions assertions = new SoftAssertions();
+      Stream.of(files).map(projectFolder::filePath).forEach(assertFileNotExist(assertions));
+      assertions.assertAll();
+
+      return this;
+    }
+
+    private Consumer<Path> assertFileNotExist(SoftAssertions assertions) {
+      return path -> assertions.assertThat(Files.notExists(path)).as(fileFoundMessage(path, projectFolder)).isTrue();
+    }
+
+    private FileTime readFileTime(String file) {
+      try {
+        return Files.getLastModifiedTime(projectFolder.filePath(file));
+      } catch (IOException e) {
+        throw new AssertionError(e);
+      }
+    }
+
+    public JHipsterModuleFileAsserter<JHipsterModuleUpgradeAsserter> hasFile(String path) {
+      return new JHipsterModuleFileAsserter<>(this, projectFolder, path);
+    }
+  }
+
+  public static class JHipsterModuleFileAsserter<T> {
+
+    private final T moduleAsserter;
+    private final JHipsterProjectFolder projectFolder;
+    private final String file;
+
+    private JHipsterModuleFileAsserter(T moduleAsserter, JHipsterProjectFolder projectFolder, String file) {
+      this.projectFolder = projectFolder;
+      assertThat(file).as("Can't check file without file path").isNotBlank();
+
+      this.moduleAsserter = moduleAsserter;
+      this.file = file;
+      assertFileExists();
+    }
+
+    private void assertFileExists() {
+      Path path = projectFolder.filePath(file);
+
+      assertThat(Files.exists(path)).as(fileNotFoundMessage(path, projectFolder)).isTrue();
+    }
+
+    public JHipsterModuleFileAsserter<T> containing(String content) {
+      assertThat(content).as("Can't check blank content").isNotBlank();
+
+      try {
+        Path path = projectFolder.filePath(file);
+
+        assertThat(Files.readString(path)).as(() -> "Can't find " + content + " in " + path.toString()).contains(content);
+      } catch (IOException e) {
+        throw new AssertionError("Can't check file content: " + e.getMessage(), e);
+      }
+
+      return this;
+    }
+
+    public JHipsterModuleFileAsserter<T> notContaining(String content) {
+      assertThat(content).as("Can't check blank content").isNotBlank();
+
+      try {
+        Path path = projectFolder.filePath(file);
+
+        assertThat(Files.readString(path)).as(() -> "Found " + content + " in " + path.toString()).doesNotContain(content);
+      } catch (IOException e) {
+        throw new AssertionError("Can't check file content: " + e.getMessage(), e);
+      }
+
+      return this;
+    }
+
+    public T and() {
+      return moduleAsserter;
+    }
+  }
+
+  private static Supplier<String> fileFoundMessage(Path path, JHipsterProjectFolder projectFolder) {
+    return () -> "Found file " + path + " in project folder, found " + projectFiles(projectFolder);
+  }
+
+  private static class FileModifiedTimeUpdater implements FileVisitor<Path> {
+
+    @Override
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+      return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+      Files.setLastModifiedTime(file, FILE_APPLICATION_TIME);
+
+      return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+      return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+      return FileVisitResult.CONTINUE;
     }
   }
 

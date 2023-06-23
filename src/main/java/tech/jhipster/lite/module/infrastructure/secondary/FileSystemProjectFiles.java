@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.error.domain.GeneratorException;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 
 @Service
-class FileSystemProjectFilesReader implements ProjectFilesReader {
+class FileSystemProjectFiles implements ProjectFiles {
 
   private static final String SLASH = "/";
 
@@ -59,7 +59,7 @@ class FileSystemProjectFilesReader implements ProjectFilesReader {
   }
 
   private InputStream getInputStream(String path) {
-    return FileSystemProjectFilesReader.class.getResourceAsStream(path.replace("\\", SLASH));
+    return FileSystemProjectFiles.class.getResourceAsStream(path.replace("\\", SLASH));
   }
 
   @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")

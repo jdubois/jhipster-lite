@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import org.apache.commons.lang3.StringUtils;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModuleContext.JHipsterModuleContextBuilder;
 import tech.jhipster.lite.module.domain.JHipsterModulePreActions.JHipsterModulePreActionsBuilder;
@@ -40,8 +41,8 @@ import tech.jhipster.lite.module.domain.postaction.JHipsterModulePostActions.JHi
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.module.domain.replacement.*;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements.JHipsterModuleMandatoryReplacementsBuilder;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacements.JHipsterModuleOptionalReplacementsBuilder;
+import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacementsFactory.JHipsterModuleMandatoryReplacementsFactoryBuilder;
+import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacementsFactory.JHipsterModuleOptionalReplacementsFactoryBuilder;
 
 @SuppressWarnings("java:S6539")
 public class JHipsterModule {
@@ -50,8 +51,8 @@ public class JHipsterModule {
 
   private final JHipsterModuleProperties properties;
   private final JHipsterModuleFiles files;
-  private final JHipsterModuleMandatoryReplacements mandatoryReplacements;
-  private final JHipsterModuleOptionalReplacements optionalReplacements;
+  private final JHipsterModuleMandatoryReplacementsFactory mandatoryReplacements;
+  private final JHipsterModuleOptionalReplacementsFactory optionalReplacements;
   private final JHipsterModuleContext context;
   private final JHipsterModuleJavaDependencies javaDependencies;
   private final JHipsterModuleJavaBuildPlugin javaBuildPlugins;
@@ -79,6 +80,25 @@ public class JHipsterModule {
     springComments = buildSpringComments(builder);
     springPropertiesBlockComments = buildSpringPropertiesBlockComments(builder);
     springFactories = buildSpringFactories(builder);
+  }
+
+  private JHipsterModule(JHipsterModule source, JHipsterModuleUpgrade upgrade) {
+    Assert.notNull("upgrade", upgrade);
+
+    properties = source.properties;
+    files = source.files.forUpgrade(upgrade);
+    mandatoryReplacements = source.mandatoryReplacements;
+    optionalReplacements = source.optionalReplacements.add(upgrade.replacements());
+    context = source.context;
+    javaDependencies = source.javaDependencies;
+    javaBuildPlugins = source.javaBuildPlugins;
+    packageJson = source.packageJson;
+    preActions = source.preActions;
+    postActions = source.postActions;
+    springProperties = source.springProperties;
+    springComments = source.springComments;
+    springPropertiesBlockComments = source.springPropertiesBlockComments;
+    springFactories = source.springFactories;
   }
 
   private SpringProperties buildSpringProperties(JHipsterModuleBuilder builder) {
@@ -171,7 +191,7 @@ public class JHipsterModule {
   }
 
   public static DependencyId dependencyId(String groupId, String artifactId) {
-    return new DependencyId(groupId(groupId), artifactId(artifactId), Optional.empty());
+    return DependencyId.of(groupId(groupId), artifactId(artifactId));
   }
 
   public static JavaBuildPluginGroupIdBuilder javaBuildPlugin() {
@@ -206,6 +226,10 @@ public class JHipsterModule {
 
   public static JHipsterDestination toSrcMainResources() {
     return JHipsterDestination.SRC_MAIN_RESOURCES;
+  }
+
+  public static JHipsterFileMatcher filesWithExtension(String extension) {
+    return path -> StringUtils.endsWithIgnoreCase(path.get(), "." + extension);
   }
 
   public static GroupId groupId(String groupId) {
@@ -284,6 +308,10 @@ public class JHipsterModule {
     return new PackageName(packageName);
   }
 
+  public JHipsterModule withUpgrade(JHipsterModuleUpgrade upgrade) {
+    return new JHipsterModule(this, upgrade);
+  }
+
   public JHipsterProjectFolder projectFolder() {
     return properties.projectFolder();
   }
@@ -314,11 +342,11 @@ public class JHipsterModule {
     return files.filesToDelete();
   }
 
-  public JHipsterModuleMandatoryReplacements mandatoryReplacements() {
+  public JHipsterModuleMandatoryReplacementsFactory mandatoryReplacements() {
     return mandatoryReplacements;
   }
 
-  public JHipsterModuleOptionalReplacements optionalReplacements() {
+  public JHipsterModuleOptionalReplacementsFactory optionalReplacements() {
     return optionalReplacements;
   }
 
@@ -366,8 +394,11 @@ public class JHipsterModule {
     private final JHipsterModuleProperties properties;
     private final JHipsterModuleContextBuilder context;
     private final JHipsterModuleFilesBuilder files = JHipsterModuleFiles.builder(this);
-    private final JHipsterModuleMandatoryReplacementsBuilder mandatoryReplacements = JHipsterModuleMandatoryReplacements.builder(this);
-    private final JHipsterModuleOptionalReplacementsBuilder optionalReplacements = JHipsterModuleOptionalReplacements.builder(this);
+    private final JHipsterModuleMandatoryReplacementsFactoryBuilder mandatoryReplacements =
+      JHipsterModuleMandatoryReplacementsFactory.builder(this);
+    private final JHipsterModuleOptionalReplacementsFactoryBuilder optionalReplacements = JHipsterModuleOptionalReplacementsFactory.builder(
+      this
+    );
     private final JHipsterModuleJavaDependenciesBuilder javaDependencies = JHipsterModuleJavaDependencies.builder(this);
     private final JHipsterModuleJavaBuildPluginBuilder javaBuildPlugins = JHipsterModuleJavaBuildPlugin.builder(this);
     private final JHipsterModulePackageJsonBuilder packageJson = JHipsterModulePackageJson.builder(this);
@@ -414,7 +445,7 @@ public class JHipsterModule {
       return files;
     }
 
-    public JHipsterModuleMandatoryReplacementsBuilder mandatoryReplacements() {
+    public JHipsterModuleMandatoryReplacementsFactoryBuilder mandatoryReplacements() {
       return mandatoryReplacements;
     }
 
@@ -436,7 +467,7 @@ public class JHipsterModule {
       return this;
     }
 
-    public JHipsterModuleOptionalReplacementsBuilder optionalReplacements() {
+    public JHipsterModuleOptionalReplacementsFactoryBuilder optionalReplacements() {
       return optionalReplacements;
     }
 

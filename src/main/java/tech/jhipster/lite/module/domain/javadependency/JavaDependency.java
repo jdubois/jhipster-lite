@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import tech.jhipster.lite.common.domain.Generated;
@@ -23,16 +22,24 @@ public class JavaDependency {
   private final Optional<VersionSlug> versionSlug;
   private final JavaDependencyScope scope;
   private final boolean optional;
-  private final Optional<JavaDependencyType> type;
   private final Collection<DependencyId> exclusions;
 
   private JavaDependency(JavaDependencyBuilder builder) {
-    id = new DependencyId(builder.groupId, builder.artifactId, Optional.ofNullable(builder.classifier));
+    id = buildId(builder);
     versionSlug = Optional.ofNullable(builder.versionSlug);
     scope = JavaDependencyScope.from(builder.scope);
     optional = builder.optional;
-    type = Optional.ofNullable(builder.type);
     exclusions = JHipsterCollections.immutable(builder.exclusions);
+  }
+
+  private DependencyId buildId(JavaDependencyBuilder builder) {
+    return DependencyId
+      .builder()
+      .groupId(builder.groupId)
+      .artifactId(builder.artifactId)
+      .classifier(builder.classifier)
+      .type(builder.type)
+      .build();
   }
 
   public static JavaDependencyGroupIdBuilder builder() {
@@ -74,30 +81,17 @@ public class JavaDependency {
 
   private Function<JavaDependency, Collection<JavaBuildCommand>> toDependenciesCommands(DependenciesCommandsFactory commands) {
     return projectDependency -> {
-      Collection<JavaDependency> resultingDependencies = merge(projectDependency);
+      JavaDependency resultingDependency = merge(projectDependency);
 
-      if (resultingDependencies.size() == 1 && resultingDependencies.contains(projectDependency)) {
+      if (resultingDependency.equals(projectDependency)) {
         return List.of();
       }
 
-      return Stream
-        .concat(Stream.of(commands.removeDependency(id())), resultingDependencies.stream().map(commands::addDependency))
-        .toList();
+      return List.of(commands.removeDependency(id()), commands.addDependency(resultingDependency));
     };
   }
 
-  private Collection<JavaDependency> merge(JavaDependency other) {
-    Collection<JavaDependency> resultingDependencies = new ArrayList<>();
-    resultingDependencies.add(merge(other, type));
-
-    if (!type.equals(other.type)) {
-      resultingDependencies.add(merge(other, other.type));
-    }
-
-    return resultingDependencies;
-  }
-
-  private JavaDependency merge(JavaDependency other, Optional<JavaDependencyType> resultingType) {
+  private JavaDependency merge(JavaDependency other) {
     return JavaDependency
       .builder()
       .groupId(groupId())
@@ -106,7 +100,7 @@ public class JavaDependency {
       .classifier(classifier().orElse(null))
       .scope(mergeScopes(other))
       .optional(mergeOptionalFlag(other))
-      .type(resultingType.orElse(null))
+      .type(type().orElse(null))
       .build();
   }
 
@@ -143,7 +137,7 @@ public class JavaDependency {
   }
 
   public Optional<JavaDependencyType> type() {
-    return type;
+    return id.type();
   }
 
   public Collection<DependencyId> exclusions() {
@@ -161,7 +155,7 @@ public class JavaDependency {
   @Override
   @Generated
   public int hashCode() {
-    return new HashCodeBuilder().append(id).append(versionSlug).append(scope).append(optional).append(type).hashCode();
+    return new HashCodeBuilder().append(id).append(versionSlug).append(scope).append(optional).hashCode();
   }
 
   @Override
@@ -182,7 +176,6 @@ public class JavaDependency {
       .append(versionSlug, other.versionSlug)
       .append(scope, other.scope)
       .append(optional, other.optional)
-      .append(type, other.type)
       .isEquals();
   }
 
@@ -308,7 +301,7 @@ public class JavaDependency {
     }
 
     default JavaDependencyOptionalValueBuilder addExclusion(GroupId groupId, ArtifactId artifactId) {
-      return addExclusion(new DependencyId(groupId, artifactId, Optional.empty()));
+      return addExclusion(DependencyId.of(groupId, artifactId));
     }
   }
 }

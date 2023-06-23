@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.error.domain.GeneratorException;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 
 @UnitTest
-class FileSystemProjectFilesReaderTest {
+class FileSystemProjectFilesTest {
 
-  private static final ProjectFilesReader files = new FileSystemProjectFilesReader();
+  private static final ProjectFiles files = new FileSystemProjectFiles();
 
   @Nested
   @DisplayName("String")

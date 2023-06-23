@@ -2,9 +2,11 @@ package tech.jhipster.lite.module.domain.file;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import tech.jhipster.lite.common.domain.JHipsterCollections;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule.JHipsterModuleBuilder;
+import tech.jhipster.lite.module.domain.JHipsterModuleUpgrade;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 
 public class JHipsterModuleFiles {
@@ -19,8 +21,24 @@ public class JHipsterModuleFiles {
     filesToDelete = new JHipsterFilesToDelete(builder.filesToDelete);
   }
 
+  private JHipsterModuleFiles(JHipsterModuleFiles source, JHipsterModuleUpgrade upgrade) {
+    Assert.notNull("ignoredFiles", upgrade);
+
+    filesToAdd = buildFilesToAdd(source, upgrade.skippedFiles());
+    filesToDelete = source.filesToDelete.add(upgrade.filesToDelete());
+    filesToMove = source.filesToMove;
+  }
+
+  private List<JHipsterModuleFile> buildFilesToAdd(JHipsterModuleFiles source, JHipsterDestinations skippedFiles) {
+    return source.filesToAdd.stream().filter(file -> skippedFiles.doesNotContain(file.destination())).toList();
+  }
+
   public static JHipsterModuleFilesBuilder builder(JHipsterModuleBuilder module) {
     return new JHipsterModuleFilesBuilder(module);
+  }
+
+  public JHipsterModuleFiles forUpgrade(JHipsterModuleUpgrade upgrade) {
+    return new JHipsterModuleFiles(this, upgrade);
   }
 
   public Collection<JHipsterModuleFile> filesToAdd() {

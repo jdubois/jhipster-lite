@@ -48,6 +48,13 @@ class FileSystemJHipsterModulesRepositoryTest {
                 <artifactId>logstash-logback-encoder</artifactId>
               </dependency>
           """)
+      .notContaining("""
+                <dependency>
+                  <groupId>org.springdoc</groupId>
+                  <artifactId>springdoc-openapi-ui</artifactId>
+                  <version>${springdoc-openapi.version}</version>
+                </dependency>
+          """)
       .containing(
           """
                 <dependency>
@@ -79,8 +86,6 @@ class FileSystemJHipsterModulesRepositoryTest {
                   <scope>import</scope>
                   <type>pom</type>
                 </dependency>
-              </dependencies>
-            </dependencyManagement>
           """
         )
         .containing(
@@ -259,5 +264,21 @@ class FileSystemJHipsterModulesRepositoryTest {
     logs.shouldHave(Level.DEBUG, "Fixture module applied");
     logs.shouldHave(Level.DEBUG, "Applied on");
     logs.shouldHave(Level.DEBUG, System.getProperty("java.io.tmpdir"));
+  }
+
+  @Test
+  void shouldApplyUpgrade() {
+    assertThatModuleUpgrade(
+      module(),
+      upgrade(),
+      file("src/test/resources/projects/maven/pom.xml", "pom.xml"),
+      packageJsonFile(),
+      file("src/test/resources/projects/files/dummy.txt", "dummy.txt")
+    )
+      .doNotUpdate(".gitignore")
+      .update("src/main/java/com/company/myapp/MyApp.java")
+      .doNotHaveFiles("documentation/cucumber-integration.md")
+      .hasFile("src/main/java/com/company/myapp/errors/Assert.java")
+      .containing("// This is an updated file");
   }
 }

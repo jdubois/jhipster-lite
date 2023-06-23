@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesVersions;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
 
@@ -16,9 +16,9 @@ class FileSystemJavaDependenciesReader implements JavaDependenciesReader {
   private static final String CURRENT_VERSIONS_FILE = "/generator/dependencies/pom.xml";
   private static final Pattern VERSIONS_PATTERN = Pattern.compile("<([^>]+)\\.version>([^>]+)<\\/");
 
-  private final ProjectFilesReader files;
+  private final ProjectFiles files;
 
-  public FileSystemJavaDependenciesReader(ProjectFilesReader files) {
+  public FileSystemJavaDependenciesReader(ProjectFiles files) {
     this.files = files;
   }
 

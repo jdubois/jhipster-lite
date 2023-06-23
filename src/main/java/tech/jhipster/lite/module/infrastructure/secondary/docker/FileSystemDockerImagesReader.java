@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersions;
 
@@ -17,9 +17,9 @@ class FileSystemDockerImagesReader implements DockerImagesReader {
 
   private static final String DOCKER_FROM = "from ";
 
-  private final ProjectFilesReader files;
+  private final ProjectFiles files;
 
-  public FileSystemDockerImagesReader(ProjectFilesReader files) {
+  public FileSystemDockerImagesReader(ProjectFiles files) {
     this.files = files;
   }
 

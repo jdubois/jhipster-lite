@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import tech.jhipster.lite.common.domain.ExcludeFromGeneratedCodeCoverage;
 import tech.jhipster.lite.error.domain.GeneratorException;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
-import tech.jhipster.lite.module.domain.ProjectFilesReader;
+import tech.jhipster.lite.module.domain.ProjectFiles;
 import tech.jhipster.lite.module.domain.file.JHipsterFileToMove;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToDelete;
 import tech.jhipster.lite.module.domain.file.JHipsterFilesToMove;
@@ -29,9 +29,9 @@ class FileSystemJHipsterModuleFiles {
   private static final Logger log = LoggerFactory.getLogger(FileSystemJHipsterModuleFiles.class);
   private static final Set<PosixFilePermission> EXECUTABLE_FILE_PERMISSIONS = buildExecutableFilePermission();
 
-  private final ProjectFilesReader files;
+  private final ProjectFiles files;
 
-  public FileSystemJHipsterModuleFiles(ProjectFilesReader files) {
+  public FileSystemJHipsterModuleFiles(ProjectFiles files) {
     this.files = files;
   }
 

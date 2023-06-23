@@ -1,6 +1,7 @@
 package tech.jhipster.lite.module.infrastructure.secondary;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import static tech.jhipster.lite.module.domain.JHipsterModulesFixture.*;
 import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.*;
 
@@ -10,10 +11,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import tech.jhipster.lite.LogsSpy;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.module.domain.GeneratedProjectRepository;
 import tech.jhipster.lite.module.domain.JHipsterProjectFilePath;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacements;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacements;
+import tech.jhipster.lite.module.domain.replacement.ContentReplacers;
+import tech.jhipster.lite.module.domain.replacement.JHipsterModuleMandatoryReplacementsFactory;
+import tech.jhipster.lite.module.domain.replacement.JHipsterModuleOptionalReplacementsFactory;
 import tech.jhipster.lite.module.domain.replacement.MandatoryReplacementException;
 import tech.jhipster.lite.module.domain.replacement.TextReplacer;
 
@@ -36,12 +39,16 @@ class FileSystemReplacerTest {
     assertThatThrownBy(() ->
         replacer.handle(
           new JHipsterProjectFolder(path),
-          JHipsterModuleMandatoryReplacements
-            .builder(emptyModuleBuilder())
-            .in(new JHipsterProjectFilePath("unknown"))
-            .add(new TextReplacer(always(), "old"), "new")
-            .and()
-            .build()
+          new ContentReplacers(
+            JHipsterModuleMandatoryReplacementsFactory
+              .builder(emptyModuleBuilder())
+              .in(new JHipsterProjectFilePath("unknown"))
+              .add(new TextReplacer(always(), "old"), "new")
+              .and()
+              .build()
+              .replacers()
+              .toList()
+          )
         )
       )
       .isExactlyInstanceOf(MandatoryReplacementException.class);
@@ -54,12 +61,16 @@ class FileSystemReplacerTest {
     assertThatCode(() ->
         replacer.handle(
           new JHipsterProjectFolder(path),
-          JHipsterModuleOptionalReplacements
-            .builder(emptyModuleBuilder())
-            .in(new JHipsterProjectFilePath("unknown"))
-            .add(new TextReplacer(always(), "old"), "new")
-            .and()
-            .build()
+          new ContentReplacers(
+            JHipsterModuleOptionalReplacementsFactory
+              .builder(emptyModuleBuilder())
+              .in(new JHipsterProjectFilePath("unknown"))
+              .add(new TextReplacer(always(), "old"), "new")
+              .and()
+              .build()
+              .buildReplacers(new JHipsterProjectFolder("dummy"), mock(GeneratedProjectRepository.class))
+              .toList()
+          )
         )
       )
       .doesNotThrowAnyException();

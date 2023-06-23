@@ -10,18 +10,18 @@ import java.util.function.Consumer;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.module.domain.replacement.ContentReplacer;
-import tech.jhipster.lite.module.domain.replacement.JHipsterModuleReplacements;
+import tech.jhipster.lite.module.domain.replacement.ContentReplacers;
 
 class FileSystemReplacer {
 
-  public void handle(JHipsterProjectFolder projectFolder, JHipsterModuleReplacements replacements) {
+  public void handle(JHipsterProjectFolder projectFolder, ContentReplacers replacers) {
     Assert.notNull("projectFolder", projectFolder);
-    Assert.notNull("replacements", replacements);
+    Assert.notNull("replacers", replacers);
 
-    replacements.replacements().forEach(applyReplacement(projectFolder));
+    replacers.forEach(applyReplacer(projectFolder));
   }
 
-  private Consumer<ContentReplacer> applyReplacement(JHipsterProjectFolder projectFolder) {
+  private Consumer<ContentReplacer> applyReplacer(JHipsterProjectFolder projectFolder) {
     return replacement -> {
       Path filePath = projectFolder.filePath(replacement.file().get());
 

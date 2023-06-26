@@ -32,7 +32,7 @@ jobs:
         run: |
           chmod +x mvnw
           ./mvnw clean verify
-          rm target/*-javadoc.jar target/*-sources.jar
+          rm target/*-javadoc.jar target/*-sources.jar target/*-tests.jar
       - name: 'Artifact: upload JAR'
         uses: actions/upload-artifact@v3
         with:

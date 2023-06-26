@@ -1,6 +1,6 @@
 {
   "name": "jhlite",
-  "version": "0.35.1-SNAPSHOT",
+  "version": "0.36.1-SNAPSHOT",
   "description": "JHipster Lite",
   "homepage": "https://www.jhipster.tech/",
   "bugs": "https://github.com/jhipster/jhipster-lite/issues",
@@ -63,7 +63,7 @@
     "cypress": "12.15.0",
     "eslint": "8.43.0",
     "eslint-plugin-cypress": "2.13.3",
-    "eslint-plugin-vue": "9.15.0",
+    "eslint-plugin-vue": "9.15.1",
     "fontello-cli": "0.6.2",
     "husky": "8.0.3",
     "jsdom": "22.1.0",

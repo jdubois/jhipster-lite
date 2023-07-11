@@ -15,6 +15,7 @@ import { WindowApplicationListener } from './common/primary/applicationlistener/
 import { Timeout } from '@/common/primary/timeout/Timeout';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
+import { LocalWindowThemeRepository } from './module/secondary/LocalWindowThemeRepository';
 import { LocalStorageModuleParametersRepository } from './module/secondary/LocalStorageModuleParametersRepository';
 
 const app = createApp(App);
@@ -29,6 +30,7 @@ const landscapeScroller = new LandscapeScroller();
 const modulesRepository = new RestModulesRepository(axiosHttp);
 const projectFoldersRepository = new RestProjectFoldersRepository(axiosHttp);
 const applicationListener = new WindowApplicationListener(window);
+const localWindowThemeRepository = new LocalWindowThemeRepository(window, localStorage);
 const moduleParametersRepository = new LocalStorageModuleParametersRepository(localStorage);
 const timeout = () => new Timeout();
 
@@ -41,6 +43,7 @@ app.provide('landscapeScroller', landscapeScroller);
 app.provide('modules', modulesRepository);
 app.provide('projectFolders', projectFoldersRepository);
 app.provide('applicationListener', applicationListener);
+app.provide('themeRepository', localWindowThemeRepository);
 app.provide('moduleParameters', moduleParametersRepository);
 app.provide('timeout', timeout);
 app.use(router);

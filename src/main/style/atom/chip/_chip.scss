@@ -5,9 +5,9 @@
   margin-bottom: 5px;
   border: 1px solid $jhlite-global-color-fill-primary-dark;
   border-radius: 6px;
-  background: rgba($color: $jhlite-global-color-fill-light, $alpha: 70%);
+  background: var(--jhlite-chip-bg-color);
   text-align: center;
-  color: $jhlite-global-color-text-dark;
+  color: var(--jhlite-global-color-text);
 
   &--title {
     padding-top: 6px;

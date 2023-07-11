@@ -1,6 +1,32 @@
 :root {
+  --jhlite-brand: #045085;
+  --jhlite-white: #fff;
+  --jhlite-modules-label: #000;
+  --jhlite-line-color: #475569;
+  --jhlite-bg-color: #fff;
+  --jhlite-global-color-text: #1e293b;
+  --jhlite-chip-bg-color: rgb(255 255 255 / 70%);
+  --jhlite-bg-color-primary: #ebebeb;
+  --jhlite-bg-color-secondary: #fafafa;
+  --jhlite-accent-color: #cacaca;
+  --jhlite-text-color-primary: #222;
+  --jhlite-element-size: 4rem;
+
   font-family: $jhlite-global-font-primary-family;
   font-size: $jhlite-global-font-text-size;
+}
+
+:root.dark-theme {
+  --jhlite-brand: #153751;
+  --jhlite-modules-label: #fff;
+  --jhlite-line-color: #9da9bf;
+  --jhlite-bg-color: #0f172a;
+  --jhlite-global-color-text: #fff;
+  --jhlite-chip-bg-color: #121212;
+  --jhlite-bg-color-primary: #1e1e1e;
+  --jhlite-bg-color-secondary: #2d2d30;
+  --jhlite-accent-color: #3f3f3f;
+  --jhlite-text-color-primary: #ddd;
 }
 
 @media screen and (min-width: $jhlite-global-breakpoint-small-medium) {

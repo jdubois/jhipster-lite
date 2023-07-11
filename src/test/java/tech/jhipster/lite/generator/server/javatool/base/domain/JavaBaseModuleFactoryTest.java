@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.javatool.base.domain;
 
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleWithFiles;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.readmeFile;
 
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.TestFileUtils;
@@ -63,7 +64,7 @@ class JavaBaseModuleFactoryTest {
       .hasFiles(
         "src/main/java/com/jhipster/test/error/package-info.java",
         "src/main/java/com/jhipster/test/common/package-info.java",
-        "src/main/java/com/jhipster/test/common/domain/Generated.java"
+        "src/main/java/com/jhipster/test/common/domain/ExcludeFromGeneratedCodeCoverage.java"
       )
       .hasFile("src/main/java/com/jhipster/test/common/domain/MyappCollections.java")
       .containing("class MyappCollections")

@@ -19,7 +19,7 @@ $jhipster-landscape-padding: 20px;
   left: $jhipster-landscape-padding;
   position: absolute;
   z-index: 3;
-  background: rgba($color: $jhipster-lite-color-fill-light, $alpha: 0.7);
+  background: var(--jhlite-chip-bg-color);
   padding: 10px;
   border: 1px dotted $jhipster-lite-line-color;
   border-radius: $jhipster-lite-box-radius;
@@ -33,7 +33,7 @@ $jhipster-landscape-padding: 20px;
     background-color: transparent;
     border: 0;
     border-radius: 1.5em;
-    color: $jhipster-lite-color-text-dark;
+    color: var(--jhlite-global-color-text);
     padding: 7px 15px;
     cursor: pointer;
 
@@ -112,6 +112,7 @@ $jhipster-landscape-padding: 20px;
     text-align: center;
     font-size: 1em;
     font-weight: bold;
+    color: var(--jhlite-global-color-text);
 
     &.-extended {
       margin: 5px;

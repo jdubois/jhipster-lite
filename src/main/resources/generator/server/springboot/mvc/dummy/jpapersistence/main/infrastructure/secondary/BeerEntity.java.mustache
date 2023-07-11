@@ -12,7 +12,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import {{packageName}}.common.domain.Generated;
+import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
 import {{packageName}}.dummy.domain.BeerId;
 import {{packageName}}.dummy.domain.beer.Beer;
 import {{packageName}}.dummy.domain.beer.BeerSellingState;
@@ -71,13 +71,13 @@ class BeerEntity {
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public int hashCode() {
     return new HashCodeBuilder().append(id).hashCode();
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

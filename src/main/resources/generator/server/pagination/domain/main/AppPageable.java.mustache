@@ -3,7 +3,7 @@ package {{packageName}}.pagination.domain;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import {{packageName}}.common.domain.Generated;
+import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
 import {{packageName}}.error.domain.Assert;
 
 public class {{baseName}}Pageable {
@@ -34,13 +34,13 @@ public class {{baseName}}Pageable {
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public int hashCode() {
     return new HashCodeBuilder().append(page).append(pageSize).build();
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

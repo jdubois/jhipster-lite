@@ -1,6 +1,10 @@
 package tech.jhipster.lite.generator.server.javatool.base.domain;
 
-import static tech.jhipster.lite.module.domain.JHipsterModule.*;
+import static tech.jhipster.lite.module.domain.JHipsterModule.documentationTitle;
+import static tech.jhipster.lite.module.domain.JHipsterModule.from;
+import static tech.jhipster.lite.module.domain.JHipsterModule.moduleBuilder;
+import static tech.jhipster.lite.module.domain.JHipsterModule.toSrcMainJava;
+import static tech.jhipster.lite.module.domain.JHipsterModule.toSrcTestJava;
 
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -87,7 +91,7 @@ public class JavaBaseModuleFactory {
           .and()
         .add(MAIN_SOURCE.template("package-info-error.java"), packageInfoDestination(mainDestination, Destination.ERROR))
         .add(MAIN_SOURCE.template("package-info-common.java"), packageInfoDestination(mainDestination,  Destination.COMMON))
-        .add(MAIN_SOURCE.template("Generated.java"), mainDestination.append(Destination.COMMON_DOMAIN.path).append("Generated.java"))
+        .add(MAIN_SOURCE.template("ExcludeFromGeneratedCodeCoverage.java"), mainDestination.append(Destination.COMMON_DOMAIN.path).append("ExcludeFromGeneratedCodeCoverage.java"))
         .add(MAIN_SOURCE.template("ProjectCollections.java"), collectionsDestination(baseName, mainDestination))
         .add(TEST_SOURCE.template("ProjectCollectionsTest.java"), collectionsTestDestination(baseName, testDestination))
         .and()

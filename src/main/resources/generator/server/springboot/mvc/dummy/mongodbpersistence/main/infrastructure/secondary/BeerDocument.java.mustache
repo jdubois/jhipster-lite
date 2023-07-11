@@ -1,6 +1,6 @@
 package {{packageName}}.dummy.infrastructure.secondary;
 
-import {{packageName}}.common.domain.Generated;
+import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
 import {{packageName}}.dummy.domain.BeerId;
 import {{packageName}}.dummy.domain.beer.Beer;
 import {{packageName}}.dummy.domain.beer.BeerSellingState;
@@ -68,13 +68,13 @@ class BeerDocument {
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public int hashCode() {
     return new HashCodeBuilder().append(id).hashCode();
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

@@ -4,8 +4,7 @@
 
 <style lang="scss">
 .jhipster-modules {
-  background-color: $jhipster-lite-secondary-color;
-  color: $jhipster-lite-primary-text-color;
+  color: var(--jhlite-global-color-text);
 }
 
 .jhipster-modules-list {
@@ -33,8 +32,6 @@
 
   &--filter {
     font-size: 1.4em;
-    background-color: $jhipster-lite-secondary-color;
-    color: $jhipster-lite-primary-input-color;
     border: 1px solid $jhipster-lite-line-color;
     border-radius: $jhipster-lite-box-radius;
     padding: 0 10px;
@@ -46,6 +43,7 @@
     background-color: $jhipster-lite-primary-color;
     padding: 3px 1em;
     border-radius: 1em;
+    color: #ffffff;
   }
 }
 
@@ -64,6 +62,7 @@
 
   &.selected {
     background-color: $jhipster-lite-primary-color;
+    color: var(--jhlite-white);
   }
 
   &--content {

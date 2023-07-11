@@ -1,10 +1,11 @@
 <template>
   <header class="jhlite-header">
-    <div class="jhlite-header--slot">
+    <div class="jhlite-header--slot jhlite-with-theme-switch">
       <router-link class="jhlite-logo" to="/">
         <img class="jhlite-logo--icon" src="../../../../content/JHipster-Lite-neon-blue.png" alt="JHipster bow tie" width="48" />
         <span class="jhlite-logo--text">JHipster lite</span>
       </router-link>
+      <ThemeButtonVue />
     </div>
     <div class="jhlite-header--slot -expand"></div>
     <div class="jhlite-header--slot">
@@ -87,3 +88,11 @@
 </template>
 
 <script lang="ts" src="./Header.component.ts"></script>
+
+<style lang="scss">
+.jhlite-with-theme-switch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+</style>

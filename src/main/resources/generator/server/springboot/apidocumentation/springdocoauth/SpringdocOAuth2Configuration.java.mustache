@@ -12,11 +12,11 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import {{packageName}}.common.domain.Generated;
+import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
 
 @Configuration
 @AutoConfigureBefore(SpringdocConfiguration.class)
-@Generated(reason = "Not called by integration tests")
+@ExcludeFromGeneratedCodeCoverage(reason = "Not called by integration tests")
 class SpringdocOAuth2Configuration {
 
   @Value("${springdoc.oauth2.authorization-url}")

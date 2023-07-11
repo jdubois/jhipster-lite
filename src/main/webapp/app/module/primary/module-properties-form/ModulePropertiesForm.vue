@@ -5,6 +5,7 @@
 <style lang="scss">
 .jhipster-modules-properties-form {
   &--properties-title {
+    color: var(--jhlite-global-color-text);
     font-size: 1.4em;
     margin-top: 15px;
   }
@@ -16,6 +17,7 @@
   &--commit-modules-label {
     margin-left: 10px;
     cursor: pointer;
+    color: var(--jhlite-modules-label);
   }
 
   &--field {

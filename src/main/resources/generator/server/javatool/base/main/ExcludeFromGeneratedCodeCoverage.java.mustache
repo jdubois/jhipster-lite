@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.METHOD, ElementType.TYPE, ElementType.CONSTRUCTOR })
-public @interface Generated {
+public @interface ExcludeFromGeneratedCodeCoverage {
   String reason() default "";
 }

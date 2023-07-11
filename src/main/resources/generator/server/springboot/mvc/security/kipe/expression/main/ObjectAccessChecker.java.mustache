@@ -1,6 +1,6 @@
 package {{packageName}}.kipe.application;
 
-import {{packageName}}.common.domain.Generated;
+import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ class ObjectAccessChecker implements AccessChecker<Object> {
   private static final Logger logger = LoggerFactory.getLogger(ObjectAccessChecker.class);
 
   @Override
-  @Generated(reason = "Ignored log conditional")
-  public boolean can(AccessContext<Object> access) {    
+  @ExcludeFromGeneratedCodeCoverage(reason = "Ignored log conditional")
+  public boolean can(AccessContext<Object> access) {
     if (logger.isWarnEnabled()) {
       logger.warn("No access checker found for {}, using default for action {}", getElementClass(access.element()), access.action());
     }

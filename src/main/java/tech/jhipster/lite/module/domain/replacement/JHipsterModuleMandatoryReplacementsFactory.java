@@ -53,7 +53,7 @@ public class JHipsterModuleMandatoryReplacementsFactory extends JHipsterModuleRe
     }
   }
 
-  private static record MandatoryFileReplacer(JHipsterProjectFilePath file, MandatoryReplacer replacement) implements ContentReplacer {
+  private record MandatoryFileReplacer(JHipsterProjectFilePath file, MandatoryReplacer replacement) implements ContentReplacer {
     public MandatoryFileReplacer {
       Assert.notNull("file", file);
       Assert.notNull("replacement", replacement);
@@ -70,7 +70,7 @@ public class JHipsterModuleMandatoryReplacementsFactory extends JHipsterModuleRe
     }
   }
 
-  private static record MandatoryReplacer(ElementReplacer replacer, String updatedValue) {
+  private record MandatoryReplacer(ElementReplacer replacer, String updatedValue) {
     public MandatoryReplacer {
       Assert.notNull("replacer", replacer);
       Assert.notNull("updatedValue", updatedValue);

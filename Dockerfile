@@ -4,14 +4,16 @@ RUN \
     # configure the "jhipster" user
     groupadd jhipster && \
     useradd jhipster -s /bin/bash -m -g jhipster -G sudo && \
-    echo 'jhipster:jhipster' |chpasswd && \
+    echo 'jhipster:jhipster'|chpasswd && \
+    # build project
     cd /code/jhipster-app/ && \
-    rm -Rf target node_modules && \
+    rm -rf target node_modules && \
     chmod +x mvnw && \
     ./mvnw package -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip && \
+    # copy jar and clean unused files and folders
     mv /code/jhipster-app/target/*.jar /code/ && \
-    rm -Rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/* /code/*-tests.jar 
-
+    rm -rf /code/*-javadoc.jar /code/*-sources.jar /code/*-tests.jar && \
+    rm -rf /code/jhipster-app/ /root/.m2 /root/.cache /tmp/* /var/tmp/*
 ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS="" \
     SPRING_PROFILES_ACTIVE=cloud

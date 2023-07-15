@@ -19,7 +19,7 @@ public class JHipsterServerPort {
       return DEFAULT_PORT;
     }
 
-    return port.intValue();
+    return port;
   }
 
   public int get() {

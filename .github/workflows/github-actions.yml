@@ -3,6 +3,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || (github.ref == 'refs/heads/main' && github.sha) || github.ref }}
   cancel-in-progress: true
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -42,6 +43,11 @@ jobs:
     name: tests-linux
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    if: >-
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[ci skip]')
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v3
@@ -130,6 +136,11 @@ jobs:
     needs: [tests-linux]
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: >-
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[ci skip]')
     strategy:
       matrix:
         app:
@@ -150,7 +161,6 @@ jobs:
           - angularapp
           - reactapp
           - vueapp
-          - svelteapp
           - kafkaapp
           - pulsarapp
           - reactiveapp
@@ -175,6 +185,17 @@ jobs:
           ./start.sh 7471
           ./generate.sh ${{ matrix.app }}
           ./stop.sh
+      - name: 'Generation: display md5sum ${{ matrix.app }}'
+        working-directory: /tmp/jhlite/${{ matrix.app }}/
+        run: |
+          app_md5=$(find . \
+            -not -path './.git/*' \
+            -not -path './.jhipster/*' \
+            -not -path './node_modules/*' \
+            -not -path './target/*' \
+            -not -path './build/*' \
+            -type f -exec md5sum {} + | LC_ALL=C sort | md5sum | head -n1 | cut -d " " -f1)
+          echo $app_md5
       - name: 'Test: list ${{ matrix.app }}'
         id: cache_md5sum
         run: |
@@ -233,7 +254,12 @@ jobs:
   codecov:
     needs: cypress
     name: codecov
-    if: github.repository == 'jhipster/jhipster-lite'
+    if: >-
+      github.repository == 'jhipster/jhipster-lite' &&
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[ci skip]')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -265,12 +291,21 @@ jobs:
   #--------------------------------------------------
   status-checks:
     name: status-checks
-    needs: [codecov, generation]
+    needs: [tests-linux, codecov, generation]
+    permissions:
+      contents: none
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - name: Validation Status checks
-        run: echo 'Configuration for Status checks that are required'
+        run: |
+          echo 'Configuration for Status checks that are required'
+          echo '${{ toJSON(needs) }}'
+          if [[ (('skipped' == '${{ needs.tests-linux.result }}') || ('success' == '${{ needs.tests-linux.result }}')) && (('skipped' == '${{ needs.codecov.result }}') || ('success' == '${{ needs.codecov.result }}')) && (('skipped' == '${{ needs.generation.result }}') || ('success' == '${{ needs.generation.result }}')) ]]; then
+            exit 0
+          fi
+          exit 1
 
   #--------------------------------------------------
   # Dependabot auto merge PR

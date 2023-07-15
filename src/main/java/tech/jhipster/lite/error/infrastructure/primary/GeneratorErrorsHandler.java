@@ -1,6 +1,7 @@
 package tech.jhipster.lite.error.infrastructure.primary;
 
 import java.util.Locale;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,7 +34,7 @@ class GeneratorErrorsHandler {
 
   @ExceptionHandler(GeneratorException.class)
   ProblemDetail handleGeneratorException(GeneratorException exception) {
-    HttpStatus status = Enums.map(exception.status(), HttpStatus.class);
+    HttpStatus status = Optional.ofNullable(Enums.map(exception.status(), HttpStatus.class)).orElse(HttpStatus.INTERNAL_SERVER_ERROR);
     ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, buildDetail(exception));
 
     problem.setTitle(getMessage(exception.key(), "title"));

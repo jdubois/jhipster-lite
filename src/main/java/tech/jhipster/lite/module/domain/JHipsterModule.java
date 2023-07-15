@@ -554,5 +554,5 @@ public class JHipsterModule {
     }
   }
 
-  private static record PropertiesKey(SpringProfile profile, SpringPropertyType type) {}
+  private record PropertiesKey(SpringProfile profile, SpringPropertyType type) {}
 }

@@ -1,4 +1,4 @@
-package tech.jhipster.lite.module.domain.properties;
+package tech.jhipster.lite.module.domain;
 
 import static org.assertj.core.api.Assertions.*;
 

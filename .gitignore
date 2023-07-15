@@ -184,3 +184,8 @@ dist/
 # Svelte
 ######################
 .svelte-kit/
+
+######################
+# Spring personal profile
+######################
+src/main/resources/config/application-perso.*

@@ -362,7 +362,6 @@ from the main (upstream) repository:
   - angularoauth2app
   - reactapp
   - vueapp
-  - svelteapp
   - kafkaapp
   - pulsarapp
   - reactiveapp

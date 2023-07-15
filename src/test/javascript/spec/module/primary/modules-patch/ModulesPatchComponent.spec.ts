@@ -15,7 +15,7 @@ import { ProjectFoldersRepository } from '@/module/domain/ProjectFoldersReposito
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { ModuleParametersRepositoryStub, stubModuleParametersRepository } from '../../domain/ModuleParameters.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { Modules } from '@/module/domain/Modules';
 import { Module } from '@/module/domain/Module';
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
@@ -584,7 +584,7 @@ describe('Modules', () => {
             name: 'Three filters',
             modules: tags.map(makeTaggedModule),
           },
-        ])
+        ]),
       );
       const wrapper = wrap({ modules: repository });
       await flushForm(wrapper);

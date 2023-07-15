@@ -40,8 +40,8 @@ public final class Memoizers {
       return new MemoizedResult<>(function.apply(input.input()));
     }
 
-    private static record MemoizedInput<Input>(Input input) {}
+    private record MemoizedInput<Input>(Input input) {}
 
-    private static record MemoizedResult<Result>(Result result) {}
+    private record MemoizedResult<Result>(Result result) {}
   }
 }

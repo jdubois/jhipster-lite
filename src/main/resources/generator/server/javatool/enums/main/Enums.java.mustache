@@ -45,6 +45,6 @@ public final class Enums {
       };
     }
 
-    private static record CacheKey<From extends Enum<From>, To extends Enum<To>>(Class<From> from, Class<To> to) {}
+    private record CacheKey<From extends Enum<From>, To extends Enum<To>>(Class<From> from, Class<To> to) {}
   }
 }

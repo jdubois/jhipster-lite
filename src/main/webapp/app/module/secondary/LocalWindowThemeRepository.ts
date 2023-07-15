@@ -1,10 +1,13 @@
 import { ThemeRepository } from '../domain/ThemeRepository';
-import { ThemePreference as Theme, getMediaPreference } from './GetMediaPreference';
+import { getMediaPreference, ThemePreference as Theme } from './GetMediaPreference';
 
 const THEME_STORAGE_KEY = 'theme';
 
 export class LocalWindowThemeRepository implements ThemeRepository {
-  constructor(private readonly win: Window, private readonly storage: Storage) {}
+  constructor(
+    private readonly win: Window,
+    private readonly storage: Storage,
+  ) {}
 
   get(): Theme {
     return (this.storage.getItem(THEME_STORAGE_KEY) as Theme) || getMediaPreference(this.win);

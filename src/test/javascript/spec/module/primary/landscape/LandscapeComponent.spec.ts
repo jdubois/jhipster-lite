@@ -12,7 +12,7 @@ import { ModulesRepositoryStub, projectHistoryWithInit, stubModulesRepository } 
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { ModuleParametersRepositoryStub, stubModuleParametersRepository } from '../../domain/ModuleParameters.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
-import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
@@ -30,7 +30,7 @@ const stubBodyCursorUpdater = (): BodyCursorUpdaterStub =>
   ({
     set: sinon.stub(),
     reset: sinon.stub(),
-  } as BodyCursorUpdaterStub);
+  }) as BodyCursorUpdaterStub;
 
 const stubApplicationListener = (): ApplicationListenerStub => ({
   addEventListener: sinon.stub(),
@@ -924,7 +924,7 @@ const assertConnectorsCount = (wrapper: VueWrapper, cssClass: string, count: num
     wrapper
       .find(wrappedElement('landscape-connectors'))
       .findAll('path')
-      .filter(line => line.classes().includes(cssClass)).length
+      .filter(line => line.classes().includes(cssClass)).length,
   ).toBe(count);
 };
 

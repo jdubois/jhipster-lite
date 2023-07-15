@@ -2,7 +2,7 @@ import sinon, { SinonStub } from 'sinon';
 import { Emitter } from 'mitt';
 import { MittAlertBus } from '@/common/secondary/alert/MittAlertBus';
 import { AlertType } from '@/common/secondary/alert/AlertType';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 interface EmitterStub extends Emitter<any> {
   emit: SinonStub;
@@ -11,7 +11,7 @@ interface EmitterStub extends Emitter<any> {
 const stubEmitter = (): EmitterStub =>
   ({
     emit: sinon.stub(),
-  } as EmitterStub);
+  }) as EmitterStub;
 
 describe('MittAlertBus', () => {
   it('should emit success', () => {

@@ -13,7 +13,7 @@ import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 @UnitTest
 class FlywayModuleFactoryTest {
 
-  private static final Instant INVOCATION_DATE = Instant.parse("2007-12-03T10:15:30.00Z");
+  private static final String INVOCATION_DATE = "2007-12-03T10:15:30.00Z";
 
   private static final FlywayModuleFactory factory = new FlywayModuleFactory();
 
@@ -22,9 +22,10 @@ class FlywayModuleFactoryTest {
     JHipsterModuleProperties properties = JHipsterModulesFixture
       .propertiesBuilder(TestFileUtils.tmpDirForTest())
       .basePackage("com.jhipster.test")
+      .put("date", INVOCATION_DATE)
       .build();
 
-    JHipsterModule module = factory.buildInitializationModule(properties, INVOCATION_DATE);
+    JHipsterModule module = factory.buildInitializationModule(properties);
 
     assertThatModuleWithFiles(module, pomFile())
       .hasFile("pom.xml")

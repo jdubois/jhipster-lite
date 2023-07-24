@@ -19,9 +19,10 @@ public class FlywayModuleFactory {
 
   private static final GroupId FLYWAY_GROUP_ID = groupId("org.flywaydb");
 
-  public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties, Instant date) {
+  public JHipsterModule buildInitializationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
-    Assert.notNull("date", date);
+
+    Instant date = properties.getInstantOrDefault("date", Instant.now());
 
     //@formatter:off
     return moduleBuilder(properties)

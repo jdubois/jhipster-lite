@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration scan="true">
-  <include resource="org/springframework/boot/logging/logback/base.xml" />
-
-  <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-  <!--
-  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
-      <maxHistory>90</maxHistory>
-    </rollingPolicy>
-    <encoder>
-      <charset>utf-8</charset>
-      <Pattern>%d %-5level [%thread] %logger{0}: %msg%n</Pattern>
-    </encoder>
-  </appender>
-
-  <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-    <queueSize>512</queueSize>
-    <appender-ref ref="FILE"/>
-  </appender>
-
-  <root level="${logging.level.root}">
-    <appender-ref ref="ASYNC"/>
-  </root>
-  -->
+  <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
   <logger name="tech.jhipster.lite" level="INFO" />
 
@@ -35,8 +14,9 @@
   <logger name="com.jackson" level="WARN" />
   <!-- jhipster-needle-logback-add-log -->
 
-  <!-- https://logback.qos.ch/manual/configuration.html#shutdownHook and https://jira.qos.ch/browse/LOGBACK-1090 -->
-  <shutdownHook class="ch.qos.logback.core.hook.DefaultShutdownHook" />
+  <root level="${log.level}">
+    <appender-ref ref="CONSOLE" />
+  </root>
 
   <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
     <resetJUL>true</resetJUL>

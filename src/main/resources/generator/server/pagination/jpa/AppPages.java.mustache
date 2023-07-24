@@ -29,9 +29,8 @@ public final class {{baseName}}Pages {
   public static <S, T> {{baseName}}Page<T> from(Page<S> springPage, Function<S, T> mapper) {
     Assert.notNull("springPage", springPage);
     Assert.notNull("mapper", mapper);
-
     return {{baseName}}Page
-      .builder(springPage.getContent().parallelStream().map(mapper).toList())
+      .builder(springPage.getContent().stream().map(mapper).toList())
       .currentPage(springPage.getNumber())
       .pageSize(springPage.getSize())
       .totalElementsCount(springPage.getTotalElements())

@@ -17,9 +17,12 @@ class DummyFlywayModuleFactoryTest {
 
   @Test
   void shouldBuildModuleForPostGreSQL() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .put("date", "2021-12-03T10:15:30.00Z")
+      .build();
 
-    JHipsterModule module = factory.buildPostgresqlModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
+    JHipsterModule module = factory.buildPostgresqlModule(properties);
 
     assertThatModule(module)
       .hasFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")
@@ -28,9 +31,12 @@ class DummyFlywayModuleFactoryTest {
 
   @Test
   void shouldBuildModuleForNotPostGreSQL() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .put("date", "2021-12-03T10:15:30.00Z")
+      .build();
 
-    JHipsterModule module = factory.buildNotPostgresqlModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
+    JHipsterModule module = factory.buildNotPostgresqlModule(properties);
 
     assertThatModule(module)
       .hasFile("src/main/resources/db/migration/V20211203101531__dummy_feature_schema.sql")

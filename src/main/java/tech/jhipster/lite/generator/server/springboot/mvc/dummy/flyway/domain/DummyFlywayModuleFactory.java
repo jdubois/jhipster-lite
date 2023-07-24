@@ -21,9 +21,10 @@ public class DummyFlywayModuleFactory {
   private static final String NOT_POSTGRESQL_CHANGELOG = "00000000000_dummy_feature_schema.sql";
   private static final String POSTGRESQL_CHANGELOG = "00000000000_postgresql_dummy_feature_schema.sql";
 
-  public JHipsterModule buildPostgresqlModule(JHipsterModuleProperties properties, Instant date) {
+  public JHipsterModule buildPostgresqlModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
-    Assert.notNull("date", date);
+
+    Instant date = properties.getInstantOrDefault("date", Instant.now());
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -34,9 +35,10 @@ public class DummyFlywayModuleFactory {
     //@formatter:on
   }
 
-  public JHipsterModule buildNotPostgresqlModule(JHipsterModuleProperties properties, Instant date) {
+  public JHipsterModule buildNotPostgresqlModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
-    Assert.notNull("date", date);
+
+    Instant date = properties.getInstantOrDefault("date", Instant.now());
 
     //@formatter:off
     return moduleBuilder(properties)

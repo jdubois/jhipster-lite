@@ -118,6 +118,26 @@ class JwtAuthenticationModuleFactoryTest {
       .containing("<logger name=\"org.springframework.security\" level=\"WARN\" />");
   }
 
+  @Test
+  void shouldBuildModuleWithJwtBase64Secret() {
+    String jwtBase64Secret = "Y2EyZjQ2YmNmZjMwMTE5YjcxOTBjYzZiYWVjZjY0NzZlMzNmNjY5MjgwMjUxZDNjOTA3N2M5YjAyYTg3ODEzMA==";
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("jhipster")
+      .put("jwtBase64Secret", jwtBase64Secret)
+      .build();
+
+    JHipsterModule module = factory.buildModule(properties);
+
+    assertThatModuleWithFiles(module, pomFile(), integrationTestFile(), logbackFile(), testLogbackFile())
+      .hasFile("src/main/resources/config/application.properties")
+      .containing("application.security.jwt-base64-secret=" + jwtBase64Secret)
+      .and()
+      .hasFile("src/test/resources/config/application.properties")
+      .containing("application.security.jwt-base64-secret=" + jwtBase64Secret);
+  }
+
   private ModuleFile integrationTestFile() {
     return file("src/test/resources/projects/files/IntegrationTest.java", "src/test/java/com/jhipster/test/IntegrationTest.java");
   }

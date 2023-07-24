@@ -21,10 +21,10 @@ public class DummyLiquibaseModuleFactory {
 
   private static final TextNeedleBeforeReplacer CHANGELOG_NEEDLE = lineBeforeText("<!-- jhipster-needle-liquibase-add-changelog -->");
 
-  public JHipsterModule buildModule(JHipsterModuleProperties properties, Instant date) {
+  public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
-    Assert.notNull("date", date);
 
+    Instant date = properties.getInstantOrDefault("date", Instant.now());
     String changelogFilename = changelogFilename(date);
 
     //@formatter:off

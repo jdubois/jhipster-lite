@@ -9,12 +9,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.1.1</version>
+    <version>3.1.2</version>
   </parent>
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.38.1-SNAPSHOT</version>
+  <version>0.39.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -49,8 +49,8 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <node.version>v18.16.1</node.version>
-    <npm.version>9.7.2</npm.version>
+    <node.version>v18.17.0</node.version>
+    <npm.version>9.8.1</npm.version>
 
     <maven.version>3.6.0</maven.version>
     <maven-enforcer-plugin.version>3.3.0</maven-enforcer-plugin.version>

@@ -1,5 +1,7 @@
 package tech.jhipster.lite.module.domain.properties;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.Map;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.Indentation;
@@ -50,6 +52,15 @@ public class JHipsterModuleProperties {
     Assert.notBlank("defaultValue", defaultValue);
 
     return parameters.getOrDefault(key, defaultValue, String.class, String::isBlank);
+  }
+
+  public Instant getInstantOrDefault(String key, Instant defaultValue) {
+    String date = getOrDefaultString(key, defaultValue.toString());
+    try {
+      return Instant.parse(date);
+    } catch (DateTimeParseException ex) {
+      throw InvalidPropertyTypeException.builder().key(key).expectedType(Instant.class).actualType(String.class);
+    }
   }
 
   public boolean getBoolean(String key) {

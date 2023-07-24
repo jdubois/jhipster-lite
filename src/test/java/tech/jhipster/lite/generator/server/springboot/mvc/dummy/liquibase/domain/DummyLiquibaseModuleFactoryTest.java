@@ -17,9 +17,12 @@ class DummyLiquibaseModuleFactoryTest {
 
   @Test
   void shouldBuildModule() {
-    JHipsterModuleProperties properties = JHipsterModulesFixture.propertiesBuilder(TestFileUtils.tmpDirForTest()).build();
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .put("date", "2021-12-03T10:15:30.00Z")
+      .build();
 
-    JHipsterModule module = factory.buildModule(properties, Instant.parse("2021-12-03T10:15:30.00Z"));
+    JHipsterModule module = factory.buildModule(properties);
 
     assertThatModuleWithFiles(module, masterChangelog())
       .hasFile("src/main/resources/config/liquibase/master.xml")

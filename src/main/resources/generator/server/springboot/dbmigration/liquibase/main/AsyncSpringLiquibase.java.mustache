@@ -42,7 +42,7 @@ public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
    * @param liquibaseProperties
    */
   public AsyncSpringLiquibase(Executor executor, Environment env, LiquibaseProperties liquibaseProperties) {
-      this(executor, env, liquibaseProperties, Duration.ofSeconds(5));
+    this(executor, env, liquibaseProperties, Duration.ofSeconds(5));
   }
 
   /**
@@ -53,10 +53,10 @@ public class AsyncSpringLiquibase extends DataSourceClosingSpringLiquibase {
    * @param slownessThreshold
    */
   protected AsyncSpringLiquibase(Executor executor, Environment env, LiquibaseProperties liquibaseProperties, Duration slownessThreshold) {
-      this.executor = executor;
-      this.env = env;
-      this.liquibaseProperties = liquibaseProperties;
-      this.slownessThreshold = slownessThreshold;
+    this.executor = executor;
+    this.env = env;
+    this.liquibaseProperties = liquibaseProperties;
+    this.slownessThreshold = slownessThreshold;
   }
 
   @Override

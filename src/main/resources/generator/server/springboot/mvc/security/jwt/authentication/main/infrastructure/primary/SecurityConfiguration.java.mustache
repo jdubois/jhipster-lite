@@ -1,5 +1,7 @@
 package {{packageName}}.authentication.infrastructure.primary;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.*;
+
 import {{packageName}}.authentication.domain.Role;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -22,7 +24,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
@@ -32,10 +36,16 @@ class SecurityConfiguration {
 
   private final JwtAuthenticationProperties properties;
   private final CorsFilter corsFilter;
+  private final HandlerMappingIntrospector introspector;
 
-  public SecurityConfiguration(JwtAuthenticationProperties properties, CorsFilter corsFilter) {
+  public SecurityConfiguration(
+    JwtAuthenticationProperties properties,
+    CorsFilter corsFilter,
+    HandlerMappingIntrospector introspector
+  ) {
     this.properties = properties;
     this.corsFilter = corsFilter;
+    this.introspector = introspector;
   }
 
   @Bean
@@ -48,14 +58,14 @@ class SecurityConfiguration {
     return web ->
       web
         .ignoring()
-        .requestMatchers(HttpMethod.OPTIONS, "/**")
-        .requestMatchers("/app/**")
-        .requestMatchers("/i18n/**")
-        .requestMatchers("/content/**")
-        .requestMatchers("/swagger-ui/**")
-        .requestMatchers("/swagger-ui.html")
-        .requestMatchers("/v3/api-docs/**")
-        .requestMatchers("/test/**");
+        .requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**"))
+        .requestMatchers(antMatcher("/app/**"))
+        .requestMatchers(antMatcher("/i18n/**"))
+        .requestMatchers(antMatcher("/content/**"))
+        .requestMatchers(antMatcher("/swagger-ui/**"))
+        .requestMatchers(antMatcher("/swagger-ui.html"))
+        .requestMatchers(antMatcher("/v3/api-docs/**"))
+        .requestMatchers(antMatcher("/test/**"));
   }
 
   @Bean
@@ -75,18 +85,18 @@ class SecurityConfiguration {
       .httpBasic(AbstractHttpConfigurer::disable)
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .authorizeHttpRequests(authz -> authz
-        .requestMatchers("/api/authenticate").permitAll()
-        .requestMatchers("/api/register").permitAll()
-        .requestMatchers("/api/activate").permitAll()
-        .requestMatchers("/api/account/reset-password/init").permitAll()
-        .requestMatchers("/api/account/reset-password/finish").permitAll()
-        .requestMatchers("/api/admin/**").hasAuthority(Role.ADMIN.key())
-        .requestMatchers("/api/**").authenticated()
-        .requestMatchers("/management/health").permitAll()
-        .requestMatchers("/management/health/**").permitAll()
-        .requestMatchers("/management/info").permitAll()
-        .requestMatchers("/management/prometheus").permitAll()
-        .requestMatchers("/management/**").hasAuthority(Role.ADMIN.key())
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/authenticate")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/register")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/activate")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/account/reset-password/init")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/account/reset-password/finish")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/admin/**")).hasAuthority(Role.ADMIN.key())
+        .requestMatchers(new MvcRequestMatcher(introspector, "/api/**")).authenticated()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/management/health")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/management/health/**")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/management/info")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/management/prometheus")).permitAll()
+        .requestMatchers(new MvcRequestMatcher(introspector, "/management/**")).hasAuthority(Role.ADMIN.key())
         .anyRequest().authenticated()
       );
 

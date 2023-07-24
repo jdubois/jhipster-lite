@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration scan="true">
-  <include resource="org/springframework/boot/logging/logback/base.xml" />
+  <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
   <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
   <!--
@@ -20,10 +22,6 @@
     <queueSize>512</queueSize>
     <appender-ref ref="FILE"/>
   </appender>
-
-  <root level="${logging.level.root}">
-    <appender-ref ref="ASYNC"/>
-  </root>
   -->
 
   <logger name="{{packageName}}" level="INFO" />
@@ -33,8 +31,15 @@
   <logger name="org.springframework" level="WARN" />
   <!-- jhipster-needle-logback-add-log -->
 
-  <!-- https://logback.qos.ch/manual/configuration.html#shutdownHook and https://jira.qos.ch/browse/LOGBACK-1090 -->
-  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook" />
+  <root level="${log.level}">
+    <appender-ref ref="CONSOLE" />
+
+    <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
+    <!--
+    <appender-ref ref="FILE" />
+    <appender-ref ref="ASYNC"/>
+    -->
+  </root>
 
   <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
     <resetJUL>true</resetJUL>

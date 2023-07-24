@@ -29,6 +29,7 @@ public class JwtAuthenticationModuleFactory {
   private static final String PRIMARY = "infrastructure/primary";
 
   private static final PropertyKey BASE_SECRET_64_PROPERTY_KEY = propertyKey("application.security.jwt-base64-secret");
+  private static final String JWT_BASE_64_SECRET = "jwtBase64Secret";
 
   private static final String SPRING_SECURITY_PACKAGE = "org.springframework.security";
 
@@ -36,6 +37,9 @@ public class JwtAuthenticationModuleFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();
+
+    String mainJwtBase64secret = properties.getOrDefaultString(JWT_BASE_64_SECRET, Base64Utils.getBase64Secret());
+    String testJwtBase64secret = properties.getOrDefaultString(JWT_BASE_64_SECRET, Base64Utils.getBase64Secret());
 
     JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("authentication");
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append("authentication");
@@ -64,10 +68,10 @@ public class JwtAuthenticationModuleFactory {
           .and()
         .and()
       .springMainProperties()
-        .set(BASE_SECRET_64_PROPERTY_KEY, propertyValue(Base64Utils.getBase64Secret()))
+        .set(BASE_SECRET_64_PROPERTY_KEY, propertyValue(mainJwtBase64secret))
         .and()
       .springTestProperties()
-        .set(BASE_SECRET_64_PROPERTY_KEY, propertyValue(Base64Utils.getBase64Secret()))
+        .set(BASE_SECRET_64_PROPERTY_KEY, propertyValue(testJwtBase64secret))
         .and()
       .springMainLogger(SPRING_SECURITY_PACKAGE, LogLevel.WARN)
       .springTestLogger(SPRING_SECURITY_PACKAGE, LogLevel.WARN)

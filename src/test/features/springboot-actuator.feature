@@ -9,6 +9,5 @@ Feature: Spring Boot Actuator modules
       | management.endpoints.web.base-path                    |
       | management.endpoints.web.exposure.include             |
       | management.endpoint.health.probes.enabled             |
-      | spring.security.oauth2.client.registration.oidc.scope |
       | management.endpoint.health.show-details               |
 

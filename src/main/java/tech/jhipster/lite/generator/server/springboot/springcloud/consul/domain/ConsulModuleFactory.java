@@ -5,6 +5,7 @@ import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.generator.base64.domain.Base64Utils;
 import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
@@ -78,7 +79,9 @@ public class ConsulModuleFactory {
       .springTestBootstrapProperties()
         .set(propertyKey("spring.cloud.consul.enabled"), FALSE_VALUE)
         .set(propertyKey("spring.cloud.compatibility-verifier.enabled"), FALSE_VALUE)
-        .and();
+        .and()
+      .springMainLogger("org.apache", LogLevel.ERROR)
+      .springTestLogger("org.apache", LogLevel.ERROR);
     //@formatter:on
 
     return builder.build();

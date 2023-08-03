@@ -38,7 +38,7 @@ class ConsulModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, pomFile(), readmeFile())
+    assertThatModuleWithFiles(module, pomFile(), logbackFile(), testLogbackFile(), readmeFile())
       .hasFile("src/main/docker/consul.yml")
       .containing("consul:1.12.2")
       .containing("jhipster/consul-config-loader:v0.4.1")
@@ -100,6 +100,12 @@ class ConsulModuleFactoryTest {
         ```bash
         docker compose -f src/main/docker/consul.yml up -d
         ```
-        """);
+        """)
+      .and()
+      .hasFile("src/main/resources/logback-spring.xml")
+      .containing("  <logger name=\"org.apache\" level=\"ERROR\" />")
+      .and()
+      .hasFile("src/test/resources/logback.xml")
+      .containing("  <logger name=\"org.apache\" level=\"ERROR\" />");
   }
 }

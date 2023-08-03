@@ -13,7 +13,7 @@ public class GitInfoModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/technicaltools/gitinfo");
   private static final JHipsterSource MAIN_SOURCE = SOURCE.append("main");
-  private static final String GIT_INFO_PRIMARY = "gitinfo/infrastructure/primary";
+  private static final String GIT_INFO_PRIMARY = "technical/infrastructure/primary/gitinfo";
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);

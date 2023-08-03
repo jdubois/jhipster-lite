@@ -36,7 +36,6 @@ class SpringBootActuatorModuleFactoryTest {
       .containing("management.endpoints.web.base-path=/management")
       .containing("management.endpoints.web.exposure.include=configprops,env,health,info,logfile,loggers,threaddump")
       .containing("management.endpoint.health.probes.enabled=true")
-      .containing("spring.security.oauth2.client.registration.oidc.scope=openid,profile,email")
       .containing("management.endpoint.health.show-details=always");
   }
 }

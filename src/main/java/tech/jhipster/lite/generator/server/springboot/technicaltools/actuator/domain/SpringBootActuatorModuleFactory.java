@@ -26,7 +26,6 @@ public class SpringBootActuatorModuleFactory {
           propertyValue("configprops", "env", "health", "info", "logfile", "loggers", "threaddump")
         )
         .set(propertyKey("management.endpoint.health.probes.enabled"), propertyValue("true"))
-        .set(propertyKey("spring.security.oauth2.client.registration.oidc.scope"), propertyValue("openid", "profile", "email"))
         .set(propertyKey("management.endpoint.health.show-details"), propertyValue("always"))
         .and()
       .build();

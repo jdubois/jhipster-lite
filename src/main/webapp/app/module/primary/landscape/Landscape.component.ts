@@ -28,6 +28,7 @@ import { LandscapeFeatureSlug } from '@/module/domain/landscape/LandscapeFeature
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
+import { LandscapeNavigation } from './LandscapeNavigation';
 
 export default defineComponent({
   name: 'LandscapeVue',
@@ -49,6 +50,7 @@ export default defineComponent({
     const landscapeConnectors = ref<LandscapeConnector[]>([]);
     const landscapeSize = ref<LandscapeConnectorsSize>(emptyLandscapeSize());
     const landscapeElements = ref(new Map<string, HTMLElement>());
+    const landscapeNavigation = ref(Loader.loading<LandscapeNavigation>());
 
     const emphasizedModule = ref<ModuleSlug>();
 
@@ -113,17 +115,65 @@ export default defineComponent({
       landscapeScroller.scroll(landscapeContainer.value, scrollX, scrollY);
     };
 
+    const landscapeNavigationValue = (): LandscapeNavigation => {
+      return landscapeNavigation.value.value();
+    };
+
     const loadLandscape = async (response: Landscape): Promise<void> => {
       landscape.value.loaded(response);
       levels.value.loaded(response.standaloneLevels());
 
       await nextTick().then(updateConnectors);
-
+      landscapeNavigation.value.loaded(new LandscapeNavigation(landscapeElements.value, levels.value.value()));
+      document.addEventListener('keydown', handleKeyboard);
       applicationListener.addEventListener('resize', updateConnectors);
+    };
+
+    type Navigation = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'ArrowDown' | 'Space';
+    type NavigationAction = {
+      [key in Navigation]: keyof LandscapeNavigation;
+    };
+
+    const isNavigation = (code: string): code is Navigation => {
+      return ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Space'].includes(code);
+    };
+
+    const prepareNavigationActions = (ctrl: boolean): NavigationAction => {
+      return {
+        ArrowUp: 'goUp',
+        ArrowDown: 'goDown',
+        ArrowLeft: ctrl ? 'goToDependency' : 'goLeft',
+        ArrowRight: ctrl ? 'goToDependent' : 'goRight',
+        Space: 'getSlug',
+      };
+    };
+
+    const handleNavigation = (code: Navigation, ctrl: boolean): void => {
+      const navigationActions = prepareNavigationActions(ctrl);
+
+      const module = landscapeNavigationValue()[navigationActions[code]]();
+      if (module) {
+        toggleModule(module);
+      }
+    };
+
+    const handleKeyboard = (event: Event): void => {
+      // Disable arrows action in input field
+      if (isInputActiveElement()) {
+        return;
+      }
+
+      const keyboardEvent = event as KeyboardEvent;
+
+      if (isNavigation(keyboardEvent.code)) {
+        handleNavigation(keyboardEvent.code, keyboardEvent.ctrlKey);
+        emphasizeModule(landscapeNavigationValue().getSlug());
+      }
     };
 
     onBeforeUnmount(() => {
       applicationListener.removeEventListener('resize', updateConnectors);
+      document.removeEventListener('keydown', handleKeyboard);
     });
 
     const updateConnectors = (): void => {
@@ -288,6 +338,10 @@ export default defineComponent({
     };
 
     const toggleModule = (module: ModuleSlug): void => {
+      // Remove the focus on input field
+      if (isInputActiveElement()) {
+        (document?.activeElement as HTMLElement).blur();
+      }
       landscape.value.loaded(landscapeValue().toggle(module));
     };
 
@@ -435,6 +489,10 @@ export default defineComponent({
 
     const isApplied = (moduleId: string): boolean => {
       return landscapeValue().isApplied(new ModuleSlug(moduleId));
+    };
+
+    const isInputActiveElement = (): boolean => {
+      return document?.activeElement?.tagName === 'INPUT';
     };
 
     return {

@@ -56,7 +56,7 @@ public class JHipsterModuleJavaDependencies {
   }
 
   private Function<JavaDependencyVersion, JavaBuildCommand> toSetVersionCommand() {
-    return (Function<JavaDependencyVersion, JavaBuildCommand>) SetVersion::new;
+    return SetVersion::new;
   }
 
   private Stream<JavaBuildCommands> dependenciesToRemoveCommands() {
@@ -64,7 +64,7 @@ public class JHipsterModuleJavaDependencies {
   }
 
   private Function<DependencyId, JavaBuildCommand> toDependencyToRemove() {
-    return (Function<DependencyId, JavaBuildCommand>) RemoveDirectJavaDependency::new;
+    return RemoveDirectJavaDependency::new;
   }
 
   private Stream<JavaBuildCommands> dependenciesManagementChanges(
@@ -79,7 +79,7 @@ public class JHipsterModuleJavaDependencies {
   }
 
   private Function<DependencyId, JavaBuildCommand> toDependencyManagementToRemove() {
-    return (Function<DependencyId, JavaBuildCommand>) RemoveJavaDependencyManagement::new;
+    return RemoveJavaDependencyManagement::new;
   }
 
   private Stream<JavaBuildCommands> dependenciesChanges(

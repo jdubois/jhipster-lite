@@ -12,7 +12,7 @@ import { ModulesRepositoryStub, projectHistoryWithInit, stubModulesRepository } 
 import { ProjectFoldersRepositoryStub, stubProjectFoldersRepository } from '../../domain/ProjectFolders.fixture';
 import { ModuleParametersRepositoryStub, stubModuleParametersRepository } from '../../domain/ModuleParameters.fixture';
 import { stubWindow } from '../GlobalWindow.fixture';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BodyCursorUpdater } from '@/common/primary/cursor/BodyCursorUpdater';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
@@ -899,6 +899,181 @@ describe('Landscape', () => {
       await landscape.trigger('mousemove', mouseEventGrabbed);
 
       expect(landscapeScroller.scroll.called).toBe(false);
+    });
+  });
+
+  describe('Keyboard navigation', () => {
+    beforeEach(() => {
+      Object.defineProperty(document, 'activeElement', { value: document.body, configurable: true });
+    });
+
+    it('should navigate down and then up.', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should not navigate when the depenedent not exist', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight', ctrlKey: true }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should navigate to a dependant', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight', ctrlKey: true }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('vue-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should not navigate when the module do not have any dependencies', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft', ctrlKey: true }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should call blur if input field has focus and click on a module', async () => {
+      const wrapper = await componentWithLandscape();
+      vi.spyOn(wrapper.find(wrappedElement('folder-path-field')).element as HTMLElement, 'blur').mockImplementation(() => {});
+
+      Object.defineProperty(document, 'activeElement', {
+        value: wrapper.find(wrappedElement('folder-path-field')).element as HTMLElement,
+        configurable: true,
+      });
+
+      await clickModule('init-props', wrapper);
+      await flushPromises();
+      await wrapper.vm.$nextTick();
+
+      expect((wrapper.find(wrappedElement('folder-path-field')).element as HTMLElement).blur).toHaveBeenCalled();
+    });
+
+    it('should not navigate when an input field has focus', async () => {
+      const wrapper = await componentWithLandscape();
+
+      Object.defineProperty(document, 'activeElement', {
+        value: wrapper.find(wrappedElement('folder-path-field')).element as HTMLElement,
+        configurable: true,
+      });
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight', ctrlKey: true }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('prettier-module')).classes()).not.toContain('-selectable-highlighted');
+    });
+
+    it('should navigate to the first dependency of a module', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('vue-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft', ctrlKey: true }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should toggle a module', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-selected');
+    });
+
+    it('should navigate to a module that is in the same element', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('vue-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('react-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('vue-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should navigate to right then goback to left', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('vue-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should not navigate if current module is the top or the bottom', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowUp' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-selectable-highlighted');
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowDown' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('prettier-module')).classes()).toContain('-selectable-highlighted');
+    });
+
+    it('should not respond to a non navigation key', async () => {
+      const wrapper = await componentWithLandscape();
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyNotExist' }));
+      await wrapper.vm.$nextTick();
+
+      expect(wrapper.find(wrappedElement('landscape-container')).classes()).not.toContain('has-emphasized-module');
     });
   });
 });

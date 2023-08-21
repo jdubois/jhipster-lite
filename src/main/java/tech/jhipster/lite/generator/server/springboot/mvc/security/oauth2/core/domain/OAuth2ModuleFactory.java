@@ -3,7 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.core.
 import static tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.AuthenticationModulesFactory.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
@@ -13,6 +12,7 @@ import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class OAuth2ModuleFactory {
 
@@ -29,6 +29,7 @@ public class OAuth2ModuleFactory {
 
   private static final String APPLICATION = "application";
   private static final String PRIMARY = "infrastructure/primary";
+  private static final String AUTHENTICATION_DESTINATION = "shared/authentication";
 
   private static final PropertyValue CLIENT_ID = propertyValue("web_app");
   private static final PropertyValue CLIENT_SECRET = propertyValue("web_app");
@@ -69,8 +70,8 @@ public class OAuth2ModuleFactory {
 
   private void appendJavaFiles(JHipsterModuleBuilder builder, JHipsterModuleProperties properties) {
     String packagePath = properties.basePackage().path();
-    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("authentication");
-    JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append("authentication");
+    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append(AUTHENTICATION_DESTINATION);
+    JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append(AUTHENTICATION_DESTINATION);
 
     //@formatter:off
     builder
@@ -137,7 +138,7 @@ public class OAuth2ModuleFactory {
     return new StringBuilder()
       .append("import ")
       .append(properties.basePackage().get())
-      .append(".authentication.infrastructure.primary.TestSecurityConfiguration;")
+      .append(".shared.authentication.infrastructure.primary.TestSecurityConfiguration;")
       .toString();
   }
 }

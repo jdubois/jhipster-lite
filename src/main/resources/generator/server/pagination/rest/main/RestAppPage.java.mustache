@@ -1,10 +1,10 @@
-package {{packageName}}.pagination.infrastructure.primary;
+package {{packageName}}.shared.pagination.infrastructure.primary;
 
 import java.util.List;
 import java.util.function.Function;
 
-import {{packageName}}.error.domain.Assert;
-import {{packageName}}.pagination.domain.{{baseName}}Page;
+import {{packageName}}.shared.error.domain.Assert;
+import {{packageName}}.shared.pagination.domain.{{baseName}}Page;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -33,7 +33,8 @@ public class Rest{{baseName}}Page<T> {
   public static <S, T> Rest{{baseName}}Page<T> from({{baseName}}Page<S> source, Function<S, T> mapper) {
     Assert.notNull("source", source);
     Assert.notNull("mapper", mapper);
-      return new Rest{{baseName}}PageBuilder<>(source.content().stream().map(mapper).toList())
+
+    return new Rest{{baseName}}PageBuilder<>(source.content().stream().map(mapper).toList())
       .currentPage(source.currentPage())
       .pageSize(source.pageSize())
       .totalElementsCount(source.totalElementsCount())

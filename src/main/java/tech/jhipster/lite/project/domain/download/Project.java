@@ -2,8 +2,8 @@ package tech.jhipster.lite.project.domain.download;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import tech.jhipster.lite.common.domain.Generated;
-import tech.jhipster.lite.error.domain.Assert;
+import tech.jhipster.lite.shared.error.domain.Assert;
+import tech.jhipster.lite.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 public record Project(ProjectName name, byte[] content) {
   public Project {
@@ -16,13 +16,13 @@ public record Project(ProjectName name, byte[] content) {
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public int hashCode() {
     return new HashCodeBuilder().append(name).append(content).hashCode();
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;
@@ -37,7 +37,7 @@ public record Project(ProjectName name, byte[] content) {
   }
 
   @Override
-  @Generated
+  @ExcludeFromGeneratedCodeCoverage
   public String toString() {
     return "Project [name=" + name + "]";
   }

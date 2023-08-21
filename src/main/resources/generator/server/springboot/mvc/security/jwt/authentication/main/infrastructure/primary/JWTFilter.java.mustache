@@ -1,4 +1,4 @@
-package {{packageName}}.authentication.infrastructure.primary;
+package {{packageName}}.shared.authentication.infrastructure.primary;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,7 +15,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import {{packageName}}.error.domain.Assert;
+import {{packageName}}.shared.error.domain.Assert;
 
 class JWTFilter extends GenericFilterBean {
 

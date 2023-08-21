@@ -1,4 +1,4 @@
-package {{packageName}}.technical.infrastructure.primary.springdoc;
+package {{packageName}}.wire.springdoc.infrastructure.primary;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -8,7 +8,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import {{packageName}}.common.domain.ExcludeFromGeneratedCodeCoverage;
+import {{packageName}}.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 @Configuration
 @ExcludeFromGeneratedCodeCoverage(reason = "Not testing technical configuration")

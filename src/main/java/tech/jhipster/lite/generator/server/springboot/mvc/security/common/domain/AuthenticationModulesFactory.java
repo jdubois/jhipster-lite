@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.common.domai
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
@@ -10,8 +9,11 @@ import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public final class AuthenticationModulesFactory {
+
+  private static final String AUTHENTICATION_DESTINATION = "shared/authentication";
 
   private static final JHipsterSource SOURCE = from("server/springboot/mvc/security/common");
 
@@ -35,8 +37,8 @@ public final class AuthenticationModulesFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.basePackage().path();
-    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("authentication");
-    JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append("authentication");
+    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append(AUTHENTICATION_DESTINATION);
+    JHipsterDestination testDestination = toSrcTestJava().append(packagePath).append(AUTHENTICATION_DESTINATION);
 
     //@formatter:off
     return moduleBuilder(properties)

@@ -2,10 +2,10 @@ package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdo
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class SpringDocOauth2ModuleFactory {
 
@@ -21,7 +21,7 @@ public class SpringDocOauth2ModuleFactory {
           SOURCE.template("SpringdocOAuth2Configuration.java"),
           toSrcMainJava()
             .append(properties.packagePath())
-            .append("technical/infrastructure/primary/springdoc/SpringdocOAuth2Configuration.java")
+            .append("wire/springdoc/infrastructure/primary/SpringdocOAuth2Configuration.java")
         )
         .and()
       .springMainProperties()

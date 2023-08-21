@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@Generated(reason = "Not testing logs")
+@ExcludeFromGeneratedCodeCoverage(reason = "Not testing logs")
 public class MyappApp {
 
   private static final Logger log = LoggerFactory.getLogger(MyappApp.class);

@@ -20,8 +20,8 @@
     <spring-boot.version>3.1.2</spring-boot.version>
     <spring-cloud.version>2022.0.0</spring-cloud.version>
     <spring-cloud-netflix-eureka-client.version>4.0.3</spring-cloud-netflix-eureka-client.version>
-    <springdoc-openapi-starter-webmvc.version>2.1.0</springdoc-openapi-starter-webmvc.version>
-    <springdoc-openapi-starter-webflux.version>2.1.0</springdoc-openapi-starter-webflux.version>
+    <springdoc-openapi-starter-webmvc.version>2.2.0</springdoc-openapi-starter-webmvc.version>
+    <springdoc-openapi-starter-webflux.version>2.2.0</springdoc-openapi-starter-webflux.version>
     <testcontainers.version>1.17.6</testcontainers.version>
     <kafka-clients.version>3.2.0</kafka-clients.version>
     <frontend-maven-plugin.version>1.13.4</frontend-maven-plugin.version>
@@ -33,18 +33,18 @@
     <jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
     <mongock.version>5.2.2</mongock.version>
     <neo4j-migrations.version>1.13.0</neo4j-migrations.version>
-    <archunit-junit5.version>1.0.1</archunit-junit5.version>
+    <archunit-junit5.version>1.1.0</archunit-junit5.version>
     <cucumber.version>7.13.0</cucumber.version>
     <testng.version>7.8.0</testng.version>
     <pulsar.version>2.10.0</pulsar.version>
-    <liquibase.version>4.23.0</liquibase.version>
+    <liquibase.version>4.23.1</liquibase.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <surefire-plugin.version>3.1.2</surefire-plugin.version>
     <failsafe-plugin.version>3.0.0-M5</failsafe-plugin.version>
     <jacoco.version>0.8.10</jacoco.version>
     <reflections.version>0.10.2</reflections.version>
     <json-web-token.version>0.11.5</json-web-token.version>
-    <jhlite.version>0.39.0</jhlite.version>
+    <jhlite.version>0.40.0</jhlite.version>
     <commons-lang3.version>3.13.0</commons-lang3.version>
     <ehcache.version>3.10.8</ehcache.version>
     <git-commit-id-plugin.version>6.0.0</git-commit-id-plugin.version>

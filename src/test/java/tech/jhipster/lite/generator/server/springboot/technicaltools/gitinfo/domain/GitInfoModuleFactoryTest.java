@@ -3,8 +3,6 @@ package tech.jhipster.lite.generator.server.springboot.technicaltools.gitinfo.do
 import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -12,7 +10,6 @@ import tech.jhipster.lite.module.domain.JHipsterModulesFixture;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 @UnitTest
-@ExtendWith(MockitoExtension.class)
 class GitInfoModuleFactoryTest {
 
   private static final GitInfoModuleFactory factory = new GitInfoModuleFactory();
@@ -45,7 +42,7 @@ class GitInfoModuleFactoryTest {
         .containing("management.info.git.enabled=true")
         .containing("management.info.env.enabled=true")
         .and()
-      .hasFile("src/main/java/tech/jhipster/myapp/technical/infrastructure/primary/gitinfo/GitInfoConfiguration.java");
+      .hasPrefixedFiles("src/main/java/tech/jhipster/myapp/wire/gitinfo", "infrastructure/primary/GitInfoConfiguration.java", "package-info.java");
     //@formatter:on
   }
 }

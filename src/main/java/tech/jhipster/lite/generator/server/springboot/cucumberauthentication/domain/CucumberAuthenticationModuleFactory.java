@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.cucumberauthentication.do
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
@@ -10,6 +9,7 @@ import tech.jhipster.lite.module.domain.javabuild.VersionSlug;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class CucumberAuthenticationModuleFactory {
 
@@ -20,7 +20,7 @@ public class CucumberAuthenticationModuleFactory {
   private static final GroupId JSON_WEBTOKEN_GROUP = groupId("io.jsonwebtoken");
   private static final VersionSlug JSON_WEBTOKEN_VERSION = versionSlug("json-web-token");
 
-  private static final String AUTHENTICATION_STEP = "authentication/infrastructure/primary/AuthenticationSteps.java";
+  private static final String AUTHENTICATION_STEP = "shared/authentication/infrastructure/primary/AuthenticationSteps.java";
 
   public JHipsterModule buildOauth2Module(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
@@ -63,7 +63,7 @@ public class CucumberAuthenticationModuleFactory {
   }
 
   private String securityConfigurationImport(JHipsterModuleProperties properties) {
-    return "import " + properties.basePackage().get() + ".authentication.infrastructure.primary.TestSecurityConfiguration;";
+    return "import " + properties.basePackage().get() + ".shared.authentication.infrastructure.primary.TestSecurityConfiguration;";
   }
 
   private JavaDependency jsonWebTokenDependency(String artifactId) {

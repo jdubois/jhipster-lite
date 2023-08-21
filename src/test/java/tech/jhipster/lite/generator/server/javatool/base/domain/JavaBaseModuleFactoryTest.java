@@ -28,7 +28,7 @@ class JavaBaseModuleFactoryTest {
     assertThatModuleWithFiles(module, readmeFile())
       .hasPrefixedFiles("src/main/java/com/jhipster/test", "BusinessContext.java", "SharedKernel.java")
       .hasPrefixedFiles(
-        "src/main/java/com/jhipster/test/error/domain",
+        "src/main/java/com/jhipster/test/shared/error/domain",
         "Assert.java",
         "AssertionErrorType.java",
         "MissingMandatoryValueException.java",
@@ -43,7 +43,7 @@ class JavaBaseModuleFactoryTest {
         "TooManyElementsException.java"
       )
       .hasPrefixedFiles(
-        "src/test/java/com/jhipster/test/error/domain/",
+        "src/test/java/com/jhipster/test/shared/error/domain/",
         "AssertTest.java",
         "MissingMandatoryValueExceptionTest.java",
         "NotAfterTimeExceptionTest.java",
@@ -56,17 +56,18 @@ class JavaBaseModuleFactoryTest {
         "TooManyElementsExceptionTest.java"
       )
       .hasJavaTests(
-        "com/jhipster/test/common/domain/MyappCollectionsTest.java",
+        "com/jhipster/test/shared/collection/domain/MyappCollectionsTest.java",
         "com/jhipster/test/UnitTest.java",
         "com/jhipster/test/ComponentTest.java",
         "com/jhipster/test/ReplaceCamelCase.java"
       )
       .hasFiles(
-        "src/main/java/com/jhipster/test/error/package-info.java",
-        "src/main/java/com/jhipster/test/common/package-info.java",
-        "src/main/java/com/jhipster/test/common/domain/ExcludeFromGeneratedCodeCoverage.java"
+        "src/main/java/com/jhipster/test/shared/error/package-info.java",
+        "src/main/java/com/jhipster/test/shared/collection/package-info.java",
+        "src/main/java/com/jhipster/test/shared/generation/package-info.java",
+        "src/main/java/com/jhipster/test/shared/generation/domain/ExcludeFromGeneratedCodeCoverage.java"
       )
-      .hasFile("src/main/java/com/jhipster/test/common/domain/MyappCollections.java")
+      .hasFile("src/main/java/com/jhipster/test/shared/collection/domain/MyappCollections.java")
       .containing("class MyappCollections")
       .and()
       .hasPrefixedFiles("documentation", "package-types.md")

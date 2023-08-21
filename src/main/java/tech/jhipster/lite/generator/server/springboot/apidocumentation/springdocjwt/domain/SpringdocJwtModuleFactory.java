@@ -2,10 +2,10 @@ package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdo
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class SpringdocJwtModuleFactory {
 
@@ -21,7 +21,7 @@ public class SpringdocJwtModuleFactory {
           SOURCE.template("SpringdocJWTConfiguration.java"),
           toSrcMainJava()
             .append(properties.packagePath())
-            .append("technical/infrastructure/primary/springdoc")
+            .append("wire/springdoc/infrastructure/primary")
             .append("SpringdocJWTConfiguration.java")
         )
         .and()

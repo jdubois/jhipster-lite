@@ -2,12 +2,12 @@ package tech.jhipster.lite.generator.server.springboot.cache.ehcache.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class EHCacheModulesFactory {
 
@@ -18,7 +18,7 @@ public class EHCacheModulesFactory {
 
   private static final String EHCACHE_GROUP = "org.ehcache";
 
-  private static final String CACHE_SECONDARY = "technical/infrastructure/secondary/cache";
+  private static final String CACHE_SECONDARY = "wire/cache/infrastructure/secondary";
 
   public JHipsterModule buildJavaConfigurationModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);

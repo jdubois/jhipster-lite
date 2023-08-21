@@ -2,11 +2,11 @@ package tech.jhipster.lite.generator.server.pagination.rest.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class RestPaginationModuleFactory {
 
@@ -14,7 +14,7 @@ public class RestPaginationModuleFactory {
   private static final JHipsterSource MAIN_SOURCE = SOURCE.append("main");
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
 
-  private static final String PRIMARY_DESTINATION = "pagination/infrastructure/primary";
+  private static final String PRIMARY_DESTINATION = "shared/pagination/infrastructure/primary";
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);

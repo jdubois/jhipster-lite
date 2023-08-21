@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.webflux.web.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javabuild.GroupId;
@@ -10,6 +9,7 @@ import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class SpringBootWebfluxModuleFactory {
 
@@ -20,7 +20,7 @@ public class SpringBootWebfluxModuleFactory {
 
   private static final GroupId SPRING_GROUP = groupId("org.springframework.boot");
 
-  private static final String EXCEPTION_PRIMARY = "technical/infrastructure/primary/exception";
+  private static final String EXCEPTION_PRIMARY = "shared/error/infrastructure/primary";
 
   public JHipsterModule buildEmptyModule(JHipsterModuleProperties properties) {
     return moduleBuilder(properties).build();

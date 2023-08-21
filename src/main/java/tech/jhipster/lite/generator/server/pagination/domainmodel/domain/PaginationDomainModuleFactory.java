@@ -2,11 +2,11 @@ package tech.jhipster.lite.generator.server.pagination.domainmodel.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class PaginationDomainModuleFactory {
 
@@ -19,10 +19,10 @@ public class PaginationDomainModuleFactory {
 
     String packagePath = properties.packagePath();
 
-    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("pagination");
+    JHipsterDestination mainDestination = toSrcMainJava().append(packagePath).append("shared/pagination");
     JHipsterDestination mainDomainDestination = mainDestination.append("domain");
 
-    JHipsterDestination testDomainDestination = toSrcTestJava().append(packagePath).append("pagination/domain");
+    JHipsterDestination testDomainDestination = toSrcTestJava().append(packagePath).append("shared/pagination/domain");
 
     String baseName = properties.projectBaseName().capitalized();
 

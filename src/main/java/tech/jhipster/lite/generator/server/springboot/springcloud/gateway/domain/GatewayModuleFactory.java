@@ -3,16 +3,16 @@ package tech.jhipster.lite.generator.server.springboot.springcloud.gateway.domai
 import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class GatewayModuleFactory {
 
-  private static final String GATEWAY_PACKAGE = "technical/infrastructure/primary/rest";
+  private static final String GATEWAY_PACKAGE = "wire/gateway/infrastructure/primary";
   private static final JHipsterSource SOURCE = from("server/springboot/springcloud/gateway/java");
   private static final PropertyValue TRUE_VALUE = propertyValue("true");
 

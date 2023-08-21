@@ -2,16 +2,16 @@ package tech.jhipster.lite.generator.server.springboot.cache.simple.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class SimpleCacheModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/cache/simple/src/");
 
-  private static final String CACHE_SECONDARY = "technical/infrastructure/secondary/cache";
+  private static final String CACHE_SECONDARY = "wire/cache/infrastructure/secondary";
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);

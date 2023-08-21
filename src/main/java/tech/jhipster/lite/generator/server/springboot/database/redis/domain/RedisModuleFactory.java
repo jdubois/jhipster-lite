@@ -2,7 +2,6 @@ package tech.jhipster.lite.generator.server.springboot.database.redis.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
@@ -10,12 +9,13 @@ import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class RedisModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/database/redis");
 
-  private static final String REDIS_SECONDARY = "technical/infrastructure/secondary/redis";
+  private static final String REDIS_SECONDARY = "wire/redis/infrastructure/secondary";
   private static final String DOCKER_COMPOSE_COMMAND = "docker compose -f src/main/docker/redis.yml up -d";
   private static final String REFLECTIONS_GROUP = "org.reflections";
 

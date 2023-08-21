@@ -2,11 +2,11 @@ package tech.jhipster.lite.generator.server.springboot.async.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.error.domain.Assert;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class SpringBootAsyncModuleFactory {
 
@@ -15,9 +15,7 @@ public class SpringBootAsyncModuleFactory {
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
 
-    JHipsterDestination mainDestination = toSrcMainJava()
-      .append(properties.packagePath())
-      .append("technical/infrastructure/secondary/async");
+    JHipsterDestination mainDestination = toSrcMainJava().append(properties.packagePath()).append("wire/async/infrastructure/secondary");
     String baseName = properties.projectBaseName().get();
 
     //@formatter:off

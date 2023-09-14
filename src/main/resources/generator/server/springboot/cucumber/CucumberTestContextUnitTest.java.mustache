@@ -89,7 +89,7 @@ class CucumberTestContextUnitTest {
   }
 
   @Test
-  void shouldNotReadStatusCodeForUreadableStatusCode() throws UnsupportedEncodingException {
+  void shouldNotReadStatusCodeForUnreadableStatusCode() throws UnsupportedEncodingException {
     ClientHttpResponse httpResponse = mock(ClientHttpResponse.class);
     try {
       when(httpResponse.getStatusCode()).thenThrow(IOException.class);
@@ -104,7 +104,7 @@ class CucumberTestContextUnitTest {
   }
 
   @Test
-  void shouldNotReadResponseCodeForUreadableResponse() throws UnsupportedEncodingException {
+  void shouldNotReadResponseCodeForUnreadableResponse() throws UnsupportedEncodingException {
     ClientHttpResponse httpResponse = mock(ClientHttpResponse.class);
     try {
       when(httpResponse.getStatusCode()).thenReturn(HttpStatus.OK);

@@ -25,7 +25,7 @@ class DummyCassandraPersistenceModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, dummyInMemoryRepository(), inMemoryBeersReseter(), customPropertiesFile())
+    assertThatModuleWithFiles(module, dummyInMemoryRepository(), inMemoryBeersResetter(), customPropertiesFile())
       .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerCatalogTable.java",
@@ -38,10 +38,10 @@ class DummyCassandraPersistenceModuleFactoryTest {
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerCatalogTableTest.java",
         "BeerTableTest.java",
-        "CassandraBeerCatalogRepositoryIntTest.java",
-        "CassandraBeerRepositoryIntTest.java",
+        "CassandraBeerCatalogRepositoryIT.java",
+        "CassandraBeerRepositoryIT.java",
         "CassandraBeersResetter.java",
-        "SpringDataRepositoryIntTest.java"
+        "SpringDataRepositoryIT.java"
       )
       .hasPrefixedFiles("src/main/resources/config/cql/changelog", "00000000000000_create-keyspace.cql", "00000000000001_create-tables.cql")
       .hasFile("src/main/resources/config/application.properties")
@@ -49,7 +49,7 @@ class DummyCassandraPersistenceModuleFactoryTest {
       .and()
       .doNotHaveFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersRepository.java",
-        "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
+        "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersResetter.java"
       );
   }
 
@@ -64,10 +64,10 @@ class DummyCassandraPersistenceModuleFactoryTest {
     );
   }
 
-  private ModuleFile inMemoryBeersReseter() {
+  private ModuleFile inMemoryBeersResetter() {
     return file(
-      "src/test/resources/projects/dummy-feature/InMemoryBeersReseter.java",
-      "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
+      "src/test/resources/projects/dummy-feature/InMemoryBeersResetter.java",
+      "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersResetter.java"
     );
   }
 }

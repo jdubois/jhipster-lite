@@ -9,7 +9,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 class {{ baseName }}ErrorsConfiguration {
 
   @Bean("applicationErrorMessageSource")
-  MessageSource applictionErrorMessageSource() {
+  MessageSource applicationErrorMessageSource() {
     ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
 
     source.setBasename("classpath:/messages/errors/{{ baseFileName }}-errors-messages");

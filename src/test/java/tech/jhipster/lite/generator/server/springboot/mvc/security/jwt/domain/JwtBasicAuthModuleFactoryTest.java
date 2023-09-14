@@ -43,7 +43,7 @@ class JwtBasicAuthModuleFactoryTest {
         """
       )
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("application.security.token-validity=P1D")
       .containing("application.security.remember-me-token-validity=P365D")
       .containing("spring.security.user.name=admin")

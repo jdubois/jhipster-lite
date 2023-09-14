@@ -113,7 +113,7 @@ class JwtAuthenticationModuleFactoryTest {
       .hasFile("src/main/resources/config/application.properties")
       .containing("application.security.jwt-base64-secret=")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("application.security.jwt-base64-secret=")
       .and()
       .hasFile("src/main/resources/logback-spring.xml")
@@ -139,7 +139,7 @@ class JwtAuthenticationModuleFactoryTest {
       .hasFile("src/main/resources/config/application.properties")
       .containing("application.security.jwt-base64-secret=" + jwtBase64Secret)
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("application.security.jwt-base64-secret=" + jwtBase64Secret);
   }
 

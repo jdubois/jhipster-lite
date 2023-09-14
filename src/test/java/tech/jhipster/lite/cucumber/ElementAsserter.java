@@ -24,7 +24,7 @@ public interface ElementAsserter<T extends ResponseAsserter> {
   T and();
 
   default ElementAsserter<T> withValues(String... values) {
-    assertThat(values).as("Can't check object agains null values").isNotNull();
+    assertThat(values).as("Can't check object against null values").isNotNull();
 
     return withValues(List.of(values));
   }

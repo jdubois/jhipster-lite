@@ -48,12 +48,12 @@ class MariaDBModuleFactoryTest {
       .containing("<artifactId>spring-boot-starter-data-jpa</artifactId>")
       .containing(
         """
-              <dependency>
-                <groupId>org.mariadb.jdbc</groupId>
-                <artifactId>mariadb-java-client</artifactId>
-                <scope>runtime</scope>
-              </dependency>
-          """
+            <dependency>
+              <groupId>org.mariadb.jdbc</groupId>
+              <artifactId>mariadb-java-client</artifactId>
+              <scope>runtime</scope>
+            </dependency>
+        """
       )
       .containing("<groupId>com.zaxxer</groupId>")
       .containing("<artifactId>HikariCP</artifactId>")
@@ -84,14 +84,11 @@ class MariaDBModuleFactoryTest {
       .containing("spring.jpa.properties.hibernate.query.fail_on_pagination_over_collection_fetch=true")
       .containing("spring.jpa.properties.hibernate.query.in_clause_parameter_padding=true")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("spring.datasource.url=jdbc:tc:mariadb")
       .containing("spring.datasource.username=myapp")
       .containing("spring.datasource.password=")
       .containing("spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver")
-      .containing("spring.datasource.hikari.maximum-pool-size=2")
-      .containing("spring.jpa.open-in-view=false")
-      .containing("spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true")
-      .containing("spring.datasource.hikari.auto-commit=false");
+      .containing("spring.datasource.hikari.maximum-pool-size=2");
   }
 }

@@ -7,7 +7,7 @@ import tech.jhipster.lite.shared.error.domain.GeneratorException;
 
 class InvalidLandscapeException extends GeneratorException {
 
-  private InvalidLandscapeException(GeneratorExeptionBuilder builder) {
+  private InvalidLandscapeException(GeneratorExceptionBuilder builder) {
     super(builder);
   }
 
@@ -25,7 +25,7 @@ class InvalidLandscapeException extends GeneratorException {
       .toString();
   }
 
-  static InvalidLandscapeException unknownDepdencency(Collection<JHipsterSlug> knownSlugs, Collection<JHipsterSlug> remainingElements) {
+  static InvalidLandscapeException unknownDependency(Collection<JHipsterSlug> knownSlugs, Collection<JHipsterSlug> remainingElements) {
     return new InvalidLandscapeException(
       internalServerError(LandscapeErrorKey.UNKNOWN_DEPENDENCY).message(buildUnknownDependencyMessage(knownSlugs, remainingElements))
     );

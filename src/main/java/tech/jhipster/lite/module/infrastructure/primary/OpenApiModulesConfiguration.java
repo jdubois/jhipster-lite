@@ -165,7 +165,7 @@ class OpenApiModulesConfiguration {
   }
 
   private PathItem modulePropertiesDefinition(JHipsterModuleApiDoc apiDoc, JHipsterModuleSlug slug) {
-    Operation getOpetation = new Operation()
+    Operation getOperation = new Operation()
       .operationId(slug.get() + "-properties-definition")
       .summary("Get " + slug.get() + " properties definitions")
       .tags(apiDoc.group().list())
@@ -179,7 +179,7 @@ class OpenApiModulesConfiguration {
           )
       );
 
-    return new PathItem().get(getOpetation);
+    return new PathItem().get(getOperation);
   }
 
   private Map<String, PathItem> modulesApplications(JHipsterModulesResources modules) {

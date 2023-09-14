@@ -42,12 +42,12 @@ class KipeExpressionModuleFactoryTest {
       )
       .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/shared/kipe/application",
-        "AccessCheckerIntTest.java",
+        "AccessCheckerIT.java",
         "AccessContextFactoryTest.java",
         "AccessEvaluatorTest.java",
         "KipeApplicationService.java",
         "KipeDummyAccessChecker.java",
-        "KipeIntTest.java",
+        "KipeIT.java",
         "ObjectAccessCheckerTest.java"
       )
       .hasPrefixedFiles("src/test/java/com/jhipster/test/shared/kipe/domain", "KipeDummy.java", "KipeDummyChild.java");

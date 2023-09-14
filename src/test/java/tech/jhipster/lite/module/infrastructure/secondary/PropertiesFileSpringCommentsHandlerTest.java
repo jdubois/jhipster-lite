@@ -19,9 +19,9 @@ class PropertiesFileSpringCommentsHandlerTest {
   @Test
   void shouldNotCommentWhenFileNotExists() {
     String path = TestFileUtils.tmpDirForTest();
-    Path propetiesFile = Paths.get(path, "src/main/resources/config/application.properties");
+    Path propertiesFile = Paths.get(path, "src/main/resources/config/application.properties");
 
-    new PropertiesFileSpringCommentsHandler(propetiesFile).set(propertyKey("spring.application.name"), comment("This is a comment"));
+    new PropertiesFileSpringCommentsHandler(propertiesFile).set(propertyKey("spring.application.name"), comment("This is a comment"));
 
     Throwable thrown = catchThrowable(() -> {
       content(Paths.get(path, "src/main/resources/config/application.properties"));

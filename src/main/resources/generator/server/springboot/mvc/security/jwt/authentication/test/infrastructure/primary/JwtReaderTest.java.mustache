@@ -54,7 +54,7 @@ class JwtReaderTest {
   }
 
   @Test
-  void shouldNotAutenticateUserFromInvalidToken() {
+  void shouldNotAuthenticateUserFromInvalidToken() {
     assertThat(reader.read("invalid")).isEmpty();
     logs.shouldHave(Level.INFO, "Invalid JWT token");
   }

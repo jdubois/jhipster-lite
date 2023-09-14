@@ -390,7 +390,7 @@ class AssertTest {
 
     @ParameterizedTest
     @ValueSource(floats = { -0.1F, 0 })
-    void shouldNotValidateNegativeAndZeroValueAsStricltyPositive(float value) {
+    void shouldNotValidateNegativeAndZeroValueAsStrictlyPositive(float value) {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, value).strictlyPositive())
         .isExactlyInstanceOf(NumberValueTooLowException.class)
         .hasMessageContaining(FIELD_NAME)
@@ -400,7 +400,7 @@ class AssertTest {
 
     @ParameterizedTest
     @ValueSource(floats = { 0.1F, 1 })
-    void shouldValidatePositiveValueAsStricltyPositive(float value) {
+    void shouldValidatePositiveValueAsStrictlyPositive(float value) {
       assertThatCode(() -> Assert.field(FIELD_NAME, value).strictlyPositive()).doesNotThrowAnyException();
     }
 
@@ -523,7 +523,7 @@ class AssertTest {
 
     @ParameterizedTest
     @ValueSource(doubles = { -0.1F, 0 })
-    void shouldNotValidateNegativeAndZeroValueAsStricltyPositive(double value) {
+    void shouldNotValidateNegativeAndZeroValueAsStrictlyPositive(double value) {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, value).strictlyPositive())
         .isExactlyInstanceOf(NumberValueTooLowException.class)
         .hasMessageContaining(FIELD_NAME)
@@ -533,7 +533,7 @@ class AssertTest {
 
     @ParameterizedTest
     @ValueSource(doubles = { 0.1F, 1 })
-    void shouldValidatePositiveValueAsStricltyPositive(double value) {
+    void shouldValidatePositiveValueAsStrictlyPositive(double value) {
       assertThatCode(() -> Assert.field(FIELD_NAME, value).strictlyPositive()).doesNotThrowAnyException();
     }
 
@@ -666,7 +666,7 @@ class AssertTest {
     }
 
     @Test
-    void shouldNotBeStricltyPositiveForNegativeValue() {
+    void shouldNotBeStrictlyPositiveForNegativeValue() {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, new BigDecimal(-1)).strictlyPositive())
         .isExactlyInstanceOf(NumberValueTooLowException.class)
         .hasMessageContaining(FIELD_NAME)
@@ -675,7 +675,7 @@ class AssertTest {
     }
 
     @Test
-    void shouldNotBeStricltyPositiveForZero() {
+    void shouldNotBeStrictlyPositiveForZero() {
       assertThatThrownBy(() -> Assert.field(FIELD_NAME, BigDecimal.ZERO).strictlyPositive())
         .isExactlyInstanceOf(NumberValueTooLowException.class)
         .hasMessageContaining(FIELD_NAME)
@@ -683,7 +683,7 @@ class AssertTest {
     }
 
     @Test
-    void shouldBeStricltyPositiveForOne() {
+    void shouldBeStrictlyPositiveForOne() {
       assertThatCode(() -> Assert.field(FIELD_NAME, BigDecimal.ONE).strictlyPositive()).doesNotThrowAnyException();
     }
 

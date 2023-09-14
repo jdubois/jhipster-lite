@@ -59,13 +59,6 @@ public class KafkaModuleFactory {
         .and()
       .springTestProperties()
         .set(propertyKey("kafka.bootstrap-servers"), propertyValue("localhost:9092"))
-        .set(propertyKey("kafka.consumer.'[key.deserializer]'"), propertyValue(STRING_DESERIALIZER))
-        .set(propertyKey("kafka.consumer.'[value.deserializer]'"), propertyValue(STRING_DESERIALIZER))
-        .set(propertyKey("kafka.consumer.'[group.id]'"), propertyValue("myapp"))
-        .set(propertyKey("kafka.consumer.'[auto.offset.reset]'"), propertyValue("earliest"))
-        .set(propertyKey("kafka.producer.'[key.serializer]'"), propertyValue(STRING_SERIALIZER))
-        .set(propertyKey("kafka.producer.'[value.serializer]'"), propertyValue(STRING_SERIALIZER))
-        .set(propertyKey("kafka.polling.timeout"), propertyValue("10000"))
         .and()
       .build();
     //@formatter:on
@@ -77,9 +70,6 @@ public class KafkaModuleFactory {
     //@formatter:off
     return moduleBuilder(properties)
       .springMainProperties()
-        .set(propertyKey("kafka.topic.dummy"), propertyValue("queue." + properties.projectBaseName().name() + ".dummy"))
-        .and()
-      .springTestProperties()
         .set(propertyKey("kafka.topic.dummy"), propertyValue("queue." + properties.projectBaseName().name() + ".dummy"))
         .and()
       .files()

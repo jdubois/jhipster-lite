@@ -78,7 +78,7 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
 };
 
 const componentWithLandscape = async (applicationListener?: ApplicationListener): Promise<VueWrapper> => {
-  const listener = applicationListener || stubApplicationListener();
+  const listener = applicationListener ?? stubApplicationListener();
   const modules = repositoryWithLandscape();
 
   const wrapper = wrap({ modules, applicationListener: listener });

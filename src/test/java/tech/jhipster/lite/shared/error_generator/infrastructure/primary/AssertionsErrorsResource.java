@@ -53,9 +53,9 @@ class AssertionsErrorsResource {
     Assert.field("myField", Arrays.asList("dummy", null)).noNullElement();
   }
 
-  @GetMapping("string-with-witespaces")
-  void stringWithWitespace() {
-    Assert.field("myField", "with witespace").noWhitespace();
+  @GetMapping("string-with-whitespaces")
+  void stringWithWhitespace() {
+    Assert.field("myField", "with whitespace").noWhitespace();
   }
 
   @GetMapping("not-after-time")

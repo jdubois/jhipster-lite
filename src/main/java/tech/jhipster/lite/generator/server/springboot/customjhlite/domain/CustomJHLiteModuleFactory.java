@@ -64,7 +64,6 @@ public class CustomJHLiteModuleFactory {
         .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite"))
         .and()
       .springTestProperties()
-        .set(EXCEPTION_PACKAGE_KEY, exceptionPackages)
         .set(SERVER_PORT_KEY, propertyValue("0"))
         .set(BEAN_DEFINITION_OVERRIDING_PROPERTY_KEY, propertyValue("true"))
         .and()

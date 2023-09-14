@@ -41,9 +41,6 @@ public class MongockModuleFactory {
       .springMainProperties()
         .set(propertyKey("mongock.migration-scan-package"), propertyValue(properties.basePackage().get()))
         .and()
-      .springTestProperties()
-        .set(propertyKey("mongock.migration-scan-package"), propertyValue(properties.basePackage().get()))
-        .and()
       .build();
     //@formatter:on
   }

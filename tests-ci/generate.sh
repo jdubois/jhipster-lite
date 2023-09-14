@@ -50,6 +50,7 @@ spring_boot() {
   "maven-java" \
   "github-actions" \
   "java-base" \
+  "checkstyle" \
   "jacoco-check-min-coverage" \
   "spring-boot"
 }
@@ -108,7 +109,8 @@ elif [[ $application == 'gradleapp' ]]; then
   applyModules \
     "init" \
     "gradle-java" \
-    "java-base"
+    "java-base" \
+    "pagination-domain"
 
 elif [[ $application == 'fullapp' ]]; then
   spring_boot_mvc

@@ -60,7 +60,7 @@ We said earlier that pairs feedbacks were the fastest ones but what about busine
 
 ### Delay infrastructure choices
 
-It's common to start a project with meetings to "build the architecture" which, in that case, means chosing the infrastructure elements. So, at day 0, we are trying to figure out if we need a MongoDB, a PostgreSQL or both (and what about an Elasticsearch?).
+It's common to start a project with meetings to "build the architecture" which, in that case, means choosing the infrastructure elements. So, at day 0, we are trying to figure out if we need a MongoDB, a PostgreSQL or both (and what about an Elasticsearch?).
 
 Problem is: we often make these choices without enough information and we'll just make our best guesses (since the real needs will come from the code). The other problem is that we spend a lot of time doing that. Another option would be to pick only one thing: the language (do we go Java?). Picking the language can be challenging enough but it's easier than picking a gazillion technologies along with the language.
 

@@ -14,12 +14,12 @@ class JHipsterProjectBaseNameTest {
   }
 
   @Test
-  void shouldGetDefaultPojectNameFromNullBaseName() {
+  void shouldGetDefaultProjectNameFromNullBaseName() {
     assertThat(new JHipsterProjectBaseName(null).get()).isEqualTo("jhipster");
   }
 
   @Test
-  void shouldGetDefaultPojectBaseNameFromBlankName() {
+  void shouldGetDefaultProjectBaseNameFromBlankName() {
     assertThat(new JHipsterProjectBaseName(" ").get()).isEqualTo("jhipster");
   }
 

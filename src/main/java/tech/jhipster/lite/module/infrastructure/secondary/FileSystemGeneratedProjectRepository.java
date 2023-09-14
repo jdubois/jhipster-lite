@@ -27,7 +27,7 @@ class FileSystemGeneratedProjectRepository implements GeneratedProjectRepository
         content
           .filter(file -> !Files.isDirectory(file))
           .map(Path::toString)
-          .map(file -> file.substring(folder.get().length() + 1, file.length()))
+          .map(file -> file.substring(folder.get().length() + 1))
           .map(JHipsterProjectFilePath::new)
           .filter(files::match)
           .toList()

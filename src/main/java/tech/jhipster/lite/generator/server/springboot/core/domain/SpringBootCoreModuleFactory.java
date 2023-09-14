@@ -71,7 +71,7 @@ public class SpringBootCoreModuleFactory {
         .add(TEST_SOURCE.template("IntegrationTest.java"), testDestination.append("IntegrationTest.java"))
         .add(MAIN_SOURCE.template(APPLICATION_PROPERTIES), MAIN_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
         .add(MAIN_SOURCE.template("application-local.properties"), MAIN_CONFIG_DESTINATION.append("application-local.properties"))
-        .add(TEST_SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
+        .add(TEST_SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append("application-test.properties"))
         .add(MAIN_SOURCE.template("logback-spring.xml"), MAIN_RESOURCE_DESTINATION.append("logback-spring.xml"))
         .add(TEST_SOURCE.template("logback.xml"), TEST_RESOURCES_DESTINATION.append("logback.xml"))
         .add(TEST_SOURCE.template("LogsSpy.java"), toSrcTestJava().append(properties.packagePath()).append("LogsSpy.java"))
@@ -128,9 +128,7 @@ public class SpringBootCoreModuleFactory {
         <configuration>
           <mainClass>%s</mainClass>
         </configuration>
-        """.formatted(
-            fullyQualifiedMainClass
-          )
+        """.formatted(fullyQualifiedMainClass)
       )
       .build();
   }

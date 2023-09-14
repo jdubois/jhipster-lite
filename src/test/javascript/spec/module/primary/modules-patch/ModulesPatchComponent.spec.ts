@@ -381,7 +381,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should enable applications after failling application', async () => {
+    it('Should enable applications after failing application', async () => {
       const modules = repositoryWithModules();
       modules.apply.rejects('this is an error');
       const wrapper = await filledModuleForm(modules);

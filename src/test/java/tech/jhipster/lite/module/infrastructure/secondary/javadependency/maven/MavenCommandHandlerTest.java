@@ -141,7 +141,7 @@ class MavenCommandHandlerTest {
   class MavenCommandHandlerAddDependencyManagementTest {
 
     @Test
-    void shouldAddDepencyInPomWithoutDependenciesManagement() {
+    void shouldAddDependencyInPomWithoutDependenciesManagement() {
       Path pom = projectWithPom("src/test/resources/projects/empty-maven/pom.xml");
 
       new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddJavaDependencyManagement(springBootDependencyManagement()));
@@ -271,7 +271,7 @@ class MavenCommandHandlerTest {
   class MavenCommandHandlerAddDependencyTest {
 
     @Test
-    void shouldAddDepencyInPomWithoutDependencies() {
+    void shouldAddDependencyInPomWithoutDependencies() {
       Path pom = projectWithPom("src/test/resources/projects/empty-maven/pom.xml");
 
       new MavenCommandHandler(Indentation.DEFAULT, pom).handle(new AddDirectJavaDependency(optionalTestDependency()));
@@ -328,17 +328,17 @@ class MavenCommandHandlerTest {
       assertThat(content)
         .contains(
           """
-               <dependency>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-starter-web</artifactId>
-                 <exclusions>
-                   <exclusion>
-                     <groupId>org.springframework.boot</groupId>
-                     <artifactId>spring-boot-starter-tomcat</artifactId>
-                   </exclusion>
-                 </exclusions>
-               </dependency>
-           """
+              <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <exclusions>
+                  <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                  </exclusion>
+                </exclusions>
+              </dependency>
+          """
         );
     }
 
@@ -440,15 +440,17 @@ class MavenCommandHandlerTest {
 
       assertThat(content(pom))
         .contains(pluginManagement())
-        .doesNotContain("""
-                <build>
-                </build>
-              """);
+        .doesNotContain(
+          """
+            <build>
+            </build>
+          """
+        );
     }
 
     @Test
     void shouldAddBuildPluginManagementToPomWithEmptyPluginManagement() {
-      Path pom = projectWithPom("src/test/resources/projects/maven-empty-plugin-managment/pom.xml");
+      Path pom = projectWithPom("src/test/resources/projects/maven-empty-plugin-management/pom.xml");
 
       addMavenEnforcerPlugin(pom);
 
@@ -456,11 +458,11 @@ class MavenCommandHandlerTest {
         .contains(pluginManagement())
         .doesNotContain(
           """
-                <build>
-                  <pluginManagement>
-                  </pluginManagement>
-                </build>
-              """
+            <build>
+              <pluginManagement>
+              </pluginManagement>
+            </build>
+          """
         );
     }
 
@@ -479,47 +481,47 @@ class MavenCommandHandlerTest {
 
     private String pluginManagement() {
       return """
-                  <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
-                    <executions>
-                      <execution>
-                        <id>enforce-versions</id>
-                        <goals>
-                          <goal>enforce</goal>
-                        </goals>
-                      </execution>
-                      <execution>
-                        <id>enforce-dependencyConvergence</id>
-                        <configuration>
-                          <rules>
-                            <DependencyConvergence/>
-                          </rules>
-                          <fail>false</fail>
-                        </configuration>
-                        <goals>
-                          <goal>enforce</goal>
-                        </goals>
-                      </execution>
-                    </executions>
+              <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer-plugin.version}</version>
+                <executions>
+                  <execution>
+                    <id>enforce-versions</id>
+                    <goals>
+                      <goal>enforce</goal>
+                    </goals>
+                  </execution>
+                  <execution>
+                    <id>enforce-dependencyConvergence</id>
                     <configuration>
                       <rules>
-                        <requireMavenVersion>
-                          <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>
-                          <version>[${maven.version},)</version>
-                        </requireMavenVersion>
-                        <requireJavaVersion>
-                          <message>You are running an incompatible version of Java. JHipster supports JDK 17.</message>
-                          <version>[17,18)</version>
-                        </requireJavaVersion>
+                        <DependencyConvergence/>
                       </rules>
+                      <fail>false</fail>
                     </configuration>
-                  </plugin>
-                </plugins>
-              </pluginManagement>
-            </build>
-          """;
+                    <goals>
+                      <goal>enforce</goal>
+                    </goals>
+                  </execution>
+                </executions>
+                <configuration>
+                  <rules>
+                    <requireMavenVersion>
+                      <message>You are running an older version of Maven. JHipster requires at least Maven ${maven.version}</message>
+                      <version>[${maven.version},)</version>
+                    </requireMavenVersion>
+                    <requireJavaVersion>
+                      <message>You are running an incompatible version of Java. JHipster supports JDK 17.</message>
+                      <version>[17,18)</version>
+                    </requireJavaVersion>
+                  </rules>
+                </configuration>
+              </plugin>
+            </plugins>
+          </pluginManagement>
+        </build>
+      """;
     }
   }
 
@@ -542,10 +544,14 @@ class MavenCommandHandlerTest {
 
       addMavenEnforcerPlugin(pom);
 
-      assertThat(content(pom)).contains(plugins()).doesNotContain("""
-                <build>
-                </build>
-              """);
+      assertThat(content(pom))
+        .contains(plugins())
+        .doesNotContain(
+          """
+            <build>
+            </build>
+          """
+        );
     }
 
     @Test
@@ -558,13 +564,13 @@ class MavenCommandHandlerTest {
         .contains(plugins())
         .doesNotContain(
           """
-                  <plugins>
-                    <plugin>
-                      <groupId>org.springframework.boot</groupId>
-                      <artifactId>spring-boot-maven-plugin</artifactId>
-                    </plugin>
-                  </plugins>
-              """
+              <plugins>
+                <plugin>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+              </plugins>
+          """
         );
     }
 
@@ -574,12 +580,12 @@ class MavenCommandHandlerTest {
 
     private String plugins() {
       return """
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-enforcer-plugin</artifactId>
-                </plugin>
-              </plugins>
-          """;
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+          </plugins>
+      """;
     }
   }
 

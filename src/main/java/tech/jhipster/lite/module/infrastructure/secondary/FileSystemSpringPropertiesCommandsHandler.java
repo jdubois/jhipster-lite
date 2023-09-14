@@ -50,9 +50,7 @@ class FileSystemSpringPropertiesCommandsHandler {
     return switch (property.type()) {
       case MAIN_PROPERTIES, MAIN_BOOTSTRAP_PROPERTIES -> () ->
         projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_MAIN_FOLDER + propertiesFilename(property));
-      case TEST_PROPERTIES -> () ->
-        projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_TEST_FOLDER + propertiesFilename(property));
-      case TEST_BOOTSTRAP_PROPERTIES -> () ->
+      case TEST_PROPERTIES, TEST_BOOTSTRAP_PROPERTIES -> () ->
         projectFolder.filePath(FileSystemJHipsterModulesRepository.DEFAULT_TEST_FOLDER + propertiesFilename(property));
     };
   }

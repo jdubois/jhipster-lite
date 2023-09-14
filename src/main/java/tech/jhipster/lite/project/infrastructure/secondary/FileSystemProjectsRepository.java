@@ -60,7 +60,7 @@ class FileSystemProjectsRepository implements ProjectsRepository {
       Files.createDirectories(historyPath.getParent());
       Files.write(historyPath, writer.writeValueAsBytes(PersistedProjectHistory.from(history)));
     } catch (IOException e) {
-      throw GeneratorException.technicalError("Eror saving history: " + e.getMessage(), e);
+      throw GeneratorException.technicalError("Error saving history: " + e.getMessage(), e);
     }
   }
 

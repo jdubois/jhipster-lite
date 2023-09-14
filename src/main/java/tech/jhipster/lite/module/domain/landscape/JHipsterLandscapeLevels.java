@@ -130,7 +130,7 @@ public record JHipsterLandscapeLevels(Collection<JHipsterLandscapeLevel> levels)
       List<JHipsterLandscapeElement> levelElements = levelElements(withAllKnownDependencies(knownSlugs));
 
       if (levelElements.isEmpty()) {
-        throw InvalidLandscapeException.unknownDepdencency(
+        throw InvalidLandscapeException.unknownDependency(
           knownSlugs,
           elementsToDispatch.stream().map(JHipsterLandscapeElement::slug).toList()
         );

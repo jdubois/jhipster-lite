@@ -17,9 +17,11 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import {{packageName}}.{{ baseName }}App;
 import {{packageName}}.cucumber.CucumberConfiguration.CucumberRestTemplateConfiguration;
 
+@ActiveProfiles("test")
 @CucumberContextConfiguration
 @SpringBootTest(classes = { {{ baseName }}App.class, CucumberRestTemplateConfiguration.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class CucumberConfiguration {

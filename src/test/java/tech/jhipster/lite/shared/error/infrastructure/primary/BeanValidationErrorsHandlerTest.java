@@ -30,18 +30,18 @@ class BeanValidationErrorsHandlerTest {
   void shouldLogMethodArgumentNotValidInInfo() throws NoSuchMethodException, SecurityException {
     handler.handleMethodArgumentNotValid(
       new MethodArgumentNotValidException(
-        new MethodParameter(BeanValidationErrorsHandlerTest.class.getMethod("faillingMethod"), -1),
+        new MethodParameter(BeanValidationErrorsHandlerTest.class.getMethod("failingMethod"), -1),
         mock(BindingResult.class)
       )
     );
 
-    logs.shouldHave(Level.INFO, "faillingMethod");
+    logs.shouldHave(Level.INFO, "failingMethod");
   }
 
-  public void faillingMethod() {}
+  public void failingMethod() {}
 
   @Test
-  void shouldLogConstraintViolationInInfo() throws NoSuchMethodException, SecurityException {
+  void shouldLogConstraintViolationInInfo() throws SecurityException {
     handler.handleConstraintViolationException(
       new ConstraintViolationException(Validation.buildDefaultValidatorFactory().getValidator().validate(new ValidatedBean()))
     );

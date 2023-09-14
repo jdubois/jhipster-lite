@@ -35,7 +35,7 @@ class ElementAssertions {
   }
 
   <Data> void containing(Map<String, Data> response) {
-    assertThat(response).as("Can't check object agains a null response").isNotNull();
+    assertThat(response).as("Can't check object against a null response").isNotNull();
 
     response.entrySet().forEach(entry -> assertPathValue(jsonPath + "." + CucumberJson.toCamelCase(entry.getKey()), entry.getValue()));
   }
@@ -57,7 +57,7 @@ class ElementAssertions {
   }
 
   <Data> void containing(List<Map<String, Data>> responses) {
-    assertThat(responses).as("Can't check object agains null responses").isNotNull();
+    assertThat(responses).as("Can't check object against null responses").isNotNull();
 
     for (int line = 0; line < responses.size(); line++) {
       for (Map.Entry<String, Data> entry : responses.get(line).entrySet()) {
@@ -69,7 +69,7 @@ class ElementAssertions {
   }
 
   void withValues(Collection<String> values) {
-    assertThat(values).as("Can't check object agains null values").isNotNull();
+    assertThat(values).as("Can't check object against null values").isNotNull();
 
     Object responseValue = CucumberTestContext.getElement(jsonPath);
 

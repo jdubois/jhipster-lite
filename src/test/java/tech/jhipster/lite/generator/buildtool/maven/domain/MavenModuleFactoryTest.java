@@ -58,7 +58,6 @@ class MavenModuleFactoryTest {
                   <runOrder>alphabetical</runOrder>
                   <excludes>
                     <exclude>**/*IT*</exclude>
-                    <exclude>**/*IntTest*</exclude>
                     <exclude>**/*CucumberTest*</exclude>
                   </excludes>
                 </configuration>
@@ -70,7 +69,6 @@ class MavenModuleFactoryTest {
               <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
               </plugin>
         """
       )
@@ -88,7 +86,6 @@ class MavenModuleFactoryTest {
                   <runOrder>alphabetical</runOrder>
                   <includes>
                     <include>**/*IT*</include>
-                    <include>**/*IntTest*</include>
                     <include>**/*CucumberTest*</include>
                   </includes>
                 </configuration>
@@ -182,6 +179,27 @@ class MavenModuleFactoryTest {
       .hasPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties")
       .hasFile("README.md")
       .containing("./mvnw");
+  }
+
+  @Test
+  void shouldDeclareJacocoPluginAfterFailsafePluginInPomXml() {
+    JHipsterModuleProperties properties = JHipsterModulesFixture
+      .propertiesBuilder(TestFileUtils.tmpDirForTest())
+      .basePackage("com.jhipster.test")
+      .projectBaseName("myApp")
+      .projectName("JHipster test")
+      .build();
+
+    JHipsterModule module = factory.buildMavenModule(properties);
+
+    assertThatModuleWithFiles(module, readmeFile())
+      .hasFile("pom.xml")
+      .containingInSequence(
+        "</pluginManagement>",
+        "<plugins>",
+        "<artifactId>maven-failsafe-plugin</artifactId>",
+        "<artifactId>jacoco-maven-plugin</artifactId>"
+      );
   }
 
   @Test

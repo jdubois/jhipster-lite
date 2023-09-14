@@ -10,7 +10,7 @@ import tech.jhipster.lite.UnitTest;
 class NpmPackagesVersionsTest {
 
   @Test
-  void shouldNotVersionFromUnkownSource() {
+  void shouldNotVersionFromUnknownSource() {
     NpmPackagesVersions versions = NpmPackagesVersions.builder().build();
 
     assertThatThrownBy(() -> versions.get(new NpmPackageName("unknown"), NpmVersionSource.COMMON))

@@ -81,8 +81,8 @@ public class InternationalizedErrorsModuleFactory {
           MESSAGES_DESTINATION.append("errors").append(baseFileName + "-errors-messages_fr.properties")
         )
         .add(
-          TEST_SOURCE.template("ApplicationErrorsHandlerIntTest.java"),
-          testPrimaryDestination.append(baseName + "ErrorsHandlerIntTest.java")
+          TEST_SOURCE.template("ApplicationErrorsHandlerIT.java"),
+          testPrimaryDestination.append(baseName + "ErrorsHandlerIT.java")
         )
         .add(TEST_SOURCE.template("ApplicationErrorsHandlerTest.java"), testPrimaryDestination.append(baseName + "ErrorsHandlerTest.java"))
         .add(TEST_SOURCE.template("ApplicationErrorsMessagesTest.java"), testPrimaryDestination.append(baseName + "ErrorsMessagesTest.java"))
@@ -90,7 +90,7 @@ public class InternationalizedErrorsModuleFactory {
         .batch(TEST_SOURCE, testPrimaryDestination)
           .addTemplate("ArgumentsReplacerTest.java")
           .addTemplate("AssertionErrorMessagesTest.java")
-          .addTemplate("AssertionErrorsHandlerIntTest.java")
+          .addTemplate("AssertionErrorsHandlerIT.java")
           .addTemplate("AssertionErrorsHandlerTest.java")
           .and()
         .add(TEST_SOURCE.template("ApplicationExceptionTest.java"), testDomainDestination.append(baseName + "ExceptionTest.java"))

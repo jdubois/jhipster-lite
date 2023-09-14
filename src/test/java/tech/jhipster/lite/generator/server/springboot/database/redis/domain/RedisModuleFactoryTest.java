@@ -40,11 +40,13 @@ class RedisModuleFactoryTest {
     assertThatModuleWithFiles(module, pomFile(), logbackFile(), testLogbackFile(), readmeFile())
       .hasFiles("documentation/redis.md")
       .hasFile("README.md")
-      .containing("""
-            ```bash
-            docker compose -f src/main/docker/redis.yml up -d
-            ```
-            """)
+      .containing(
+        """
+        ```bash
+        docker compose -f src/main/docker/redis.yml up -d
+        ```
+        """
+      )
       .and()
       .hasFile("pom.xml")
       .containing(
@@ -92,7 +94,7 @@ class RedisModuleFactoryTest {
       .containing("spring.data.redis.database=0")
       .containing("spring.data.redis.url=redis://localhost:6379")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("spring.data.redis.url=${TEST_REDIS_URL}")
       .and()
       .hasFile("src/main/resources/logback-spring.xml")

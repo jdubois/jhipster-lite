@@ -353,7 +353,7 @@ public class MavenCommandHandler implements JavaDependenciesCommandHandler {
   }
 
   private Function<DependencyId, Match> toExclusionNode(int level) {
-    return exculsion -> appendDependencyId($("exclusion"), exculsion, level + 2).append(LINE_BREAK).append(indentation.times(level + 2));
+    return exclusion -> appendDependencyId($("exclusion"), exclusion, level + 2).append(LINE_BREAK).append(indentation.times(level + 2));
   }
 
   private Consumer<Match> appendExclusionNode(int level, Match exclusionsNode) {

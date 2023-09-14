@@ -38,7 +38,7 @@ public class EurekaModuleFactory {
         .and()
       .javaDependencies()
         .addDependencyManagement(springCloudDependenciesManagement())
-        .addDependency( SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
+        .addDependency(SPRING_CLOUD_GROUP, artifactId("spring-cloud-starter-bootstrap"))
         .addDependency(
           SPRING_CLOUD_GROUP,
           artifactId("spring-cloud-starter-netflix-eureka-client"),

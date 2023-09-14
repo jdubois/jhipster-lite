@@ -25,7 +25,7 @@ class InvalidLandscapeExceptionTest {
 
   @Test
   void shouldGetUnknownDependencyExceptionInformation() {
-    InvalidLandscapeException exception = InvalidLandscapeException.unknownDepdencency(
+    InvalidLandscapeException exception = InvalidLandscapeException.unknownDependency(
       Set.of(new JHipsterModuleSlug("known")),
       List.of(new JHipsterModuleSlug("remaining"))
     );

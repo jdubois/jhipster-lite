@@ -126,13 +126,13 @@ class SpringBootCoreModuleFactoryTest {
       )
       .notContaining(
         """
-           <dependency>
-             <groupId>org.mockito</groupId>
-             <artifactId>mockito-junit-jupiter</artifactId>
-             <version>${mockito.version}</version>
-             <scope>test</scope>
-           </dependency>
-       """
+            <dependency>
+              <groupId>org.mockito</groupId>
+              <artifactId>mockito-junit-jupiter</artifactId>
+              <version>${mockito.version}</version>
+              <scope>test</scope>
+            </dependency>
+        """
       )
       .containing("    <defaultGoal>spring-boot:run</defaultGoal>")
       .and()
@@ -144,7 +144,7 @@ class SpringBootCoreModuleFactoryTest {
       .hasFiles(
         "src/main/resources/config/application.properties",
         "src/main/resources/config/application-local.properties",
-        "src/test/resources/config/application.properties"
+        "src/test/resources/config/application-test.properties"
       )
       .hasFiles("src/test/resources/logback.xml", "src/main/resources/logback-spring.xml")
       .hasFiles("documentation/logs-spy.md")

@@ -76,7 +76,7 @@ class CustomClaimConverterTest {
   }
 
   @Test
-  void shouldNotGetClaimFromInputClaimWithTimeoutResquest() {
+  void shouldNotGetClaimFromInputClaimWithTimeoutRequest() {
     mockRestTimeout();
     loadRequestAttributes();
 

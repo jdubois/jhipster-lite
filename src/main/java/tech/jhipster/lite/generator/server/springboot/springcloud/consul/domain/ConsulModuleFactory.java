@@ -8,6 +8,7 @@ import tech.jhipster.lite.module.domain.LogLevel;
 import tech.jhipster.lite.module.domain.docker.DockerImageVersion;
 import tech.jhipster.lite.module.domain.docker.DockerImages;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
+import tech.jhipster.lite.module.domain.javabuild.GroupId;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
@@ -19,7 +20,7 @@ public class ConsulModuleFactory {
 
   private static final JHipsterSource SOURCE = from("server/springboot/springcloud/consul");
 
-  private static final String SPRING_CLOUD_GROUP_ID = "org.springframework.cloud";
+  private static final GroupId SPRING_CLOUD_GROUP_ID = groupId("org.springframework.cloud");
   private static final PropertyValue FALSE_VALUE = propertyValue("false");
   private static final PropertyValue TRUE_VALUE = propertyValue("true");
   private static final String DOCKER_IMAGE_CONSUL = "consul";
@@ -52,9 +53,9 @@ public class ConsulModuleFactory {
         .and()
       .javaDependencies()
         .addDependencyManagement(springCloudDependencyManagement())
-        .addDependency(springCloudStarterBootstrapDependency())
-        .addDependency(springCloudConsulDiscoveryDependency())
-        .addDependency(springCloudConsulConfigDependency())
+        .addDependency(SPRING_CLOUD_GROUP_ID, artifactId("spring-cloud-starter-bootstrap"))
+        .addDependency(SPRING_CLOUD_GROUP_ID, artifactId("spring-cloud-starter-consul-discovery"))
+        .addDependency(SPRING_CLOUD_GROUP_ID, artifactId("spring-cloud-starter-consul-config"))
         .and()
       .startupCommand(DOCKER_COMPOSE_COMMAND)
       .springMainBootstrapProperties()
@@ -89,23 +90,11 @@ public class ConsulModuleFactory {
 
   private static JavaDependency springCloudDependencyManagement() {
     return javaDependency()
-      .groupId(SPRING_CLOUD_GROUP_ID)
+      .groupId("org.springframework.cloud")
       .artifactId("spring-cloud-dependencies")
       .versionSlug("spring-cloud.version")
       .type(JavaDependencyType.POM)
       .scope(JavaDependencyScope.IMPORT)
       .build();
-  }
-
-  private static JavaDependency springCloudStarterBootstrapDependency() {
-    return javaDependency().groupId(SPRING_CLOUD_GROUP_ID).artifactId("spring-cloud-starter-bootstrap").build();
-  }
-
-  private static JavaDependency springCloudConsulDiscoveryDependency() {
-    return javaDependency().groupId(SPRING_CLOUD_GROUP_ID).artifactId("spring-cloud-starter-consul-discovery").build();
-  }
-
-  private static JavaDependency springCloudConsulConfigDependency() {
-    return javaDependency().groupId(SPRING_CLOUD_GROUP_ID).artifactId("spring-cloud-starter-consul-config").build();
   }
 }

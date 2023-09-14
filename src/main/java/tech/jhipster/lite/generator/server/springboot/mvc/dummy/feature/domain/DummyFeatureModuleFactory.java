@@ -100,7 +100,7 @@ public class DummyFeatureModuleFactory {
           .addTemplate("RestBeerTest.java")
           .addTemplate("RestBeerToCreateTest.java")
           .and()
-        .add(DUMMY_TEST_SOURCE.append(SECONDARY).template("InMemoryBeersReseter.java"), testDestination.append(SECONDARY).append("InMemoryBeersReseter.java"))
+        .add(DUMMY_TEST_SOURCE.append(SECONDARY).template("InMemoryBeersResetter.java"), testDestination.append(SECONDARY).append("InMemoryBeersResetter.java"))
         .add(TEST_SOURCE.file("beers-catalog.feature"), to("src/test/features/beers-catalog.feature"))
         .add(TEST_SOURCE.template("HttpSteps.java"), toSrcTestJava().append(packagePath).append("HttpSteps.java"))
         .and()

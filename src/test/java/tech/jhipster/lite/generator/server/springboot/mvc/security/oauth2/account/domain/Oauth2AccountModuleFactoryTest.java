@@ -59,7 +59,7 @@ class Oauth2AccountModuleFactoryTest {
       .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/account/infrastructure/primary",
         "RestAccountTest.java",
-        "AccountsResourceIntTest.java",
+        "AccountsResourceIT.java",
         "AccountsResourceTest.java"
       )
       .hasFile("src/test/java/com/jhipster/test/account/infrastructure/secondary/OAuth2AuthenticationReaderTest.java")

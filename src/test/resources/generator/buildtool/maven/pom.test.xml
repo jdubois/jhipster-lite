@@ -89,7 +89,6 @@
           <runOrder>alphabetical</runOrder>
           <excludes>
             <exclude>**/*IT*</exclude>
-            <exclude>**/*IntTest*</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -115,7 +114,6 @@
           <runOrder>alphabetical</runOrder>
           <includes>
             <include>**/*IT*</include>
-            <include>**/*IntTest*</include>
           </includes>
         </configuration>
         <executions>

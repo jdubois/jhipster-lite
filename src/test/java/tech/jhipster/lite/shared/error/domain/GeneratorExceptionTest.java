@@ -16,7 +16,7 @@ class GeneratorExceptionTest {
 
     assertThat(exception.key()).isEqualTo(StandardErrorKey.INTERNAL_SERVER_ERROR);
     assertThat(exception.status()).isEqualTo(ErrorStatus.INTERNAL_SERVER_ERROR);
-    assertThat(exception.getMessage()).isEqualTo("An error occured");
+    assertThat(exception.getMessage()).isEqualTo("An error occurred");
     assertThat(exception.getCause()).isNull();
     assertThat(exception.parameters()).isEmpty();
   }
@@ -27,7 +27,7 @@ class GeneratorExceptionTest {
 
     assertThat(exception.key()).isEqualTo(StandardErrorKey.INTERNAL_SERVER_ERROR);
     assertThat(exception.status()).isEqualTo(ErrorStatus.BAD_REQUEST);
-    assertThat(exception.getMessage()).isEqualTo("An error occured");
+    assertThat(exception.getMessage()).isEqualTo("An error occurred");
     assertThat(exception.getCause()).isNull();
     assertThat(exception.parameters()).isEmpty();
   }

@@ -50,7 +50,7 @@ class DirectJavaDependencyTest {
   }
 
   @Test
-  void shouldUpgradeDepencencyOptionality() {
+  void shouldUpgradeDependencyOptionality() {
     ProjectJavaDependencies projectJavaDependencies = ProjectJavaDependencies
       .builder()
       .versions(projectVersions())
@@ -67,7 +67,7 @@ class DirectJavaDependencyTest {
   }
 
   @Test
-  void shouldNotDowngradeDepencencyOptionality() {
+  void shouldNotDowngradeDependencyOptionality() {
     ProjectJavaDependencies projectJavaDependencies = ProjectJavaDependencies
       .builder()
       .versions(projectVersions())

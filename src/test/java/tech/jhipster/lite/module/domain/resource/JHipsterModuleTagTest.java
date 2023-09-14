@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.shared.error.domain.MissingMandatoryValueException;
 import tech.jhipster.lite.shared.error.domain.StringTooLongException;
-import tech.jhipster.lite.shared.error.domain.StringWithWitespacesException;
+import tech.jhipster.lite.shared.error.domain.StringWithWhitespacesException;
 
 @UnitTest
 class JHipsterModuleTagTest {
@@ -21,7 +21,7 @@ class JHipsterModuleTagTest {
 
   @Test
   void shouldNotBuildWithWhitespace() {
-    assertThatThrownBy(() -> new JHipsterModuleTag("my tag")).isInstanceOf(StringWithWitespacesException.class);
+    assertThatThrownBy(() -> new JHipsterModuleTag("my tag")).isInstanceOf(StringWithWhitespacesException.class);
   }
 
   @Test

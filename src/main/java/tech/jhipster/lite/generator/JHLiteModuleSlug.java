@@ -1,5 +1,10 @@
 package tech.jhipster.lite.generator;
 
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleSlugFactory;
 
 public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
@@ -16,6 +21,7 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   CAFFEINE_CACHE("caffeine-cache"),
   CASSANDRA("cassandra"),
   CASSANDRA_MIGRATION("cassandra-migration"),
+  CHECKSTYLE("checkstyle"),
   CONSUL("consul"),
   CUSTOM_JHLITE("custom-jhlite"),
   CYPRESS("cypress"),
@@ -113,6 +119,9 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   VUE_CORE("vue-core"),
   VUE_PINIA("vue-pinia");
 
+  private static final Map<String, JHLiteModuleSlug> moduleSlugMap = Stream
+    .of(values())
+    .collect(Collectors.toMap(JHLiteModuleSlug::get, Function.identity()));
   private final String slug;
 
   JHLiteModuleSlug(String slug) {
@@ -122,5 +131,9 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   @Override
   public String get() {
     return slug;
+  }
+
+  public static Optional<JHLiteModuleSlug> fromString(String slug) {
+    return Optional.ofNullable(moduleSlugMap.get(slug));
   }
 }

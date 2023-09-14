@@ -57,7 +57,7 @@ class SpringBootWebfluxModuleFactoryTest {
       .containing("application.exception.details=false")
       .containing("application.exception.package=org.,java.,net.,jakarta.,com.,io.,de.,com.jhipster.test")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("server.port=0")
       .containing("application.exception.package=org.,java.")
       .and()

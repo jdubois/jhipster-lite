@@ -7,5 +7,5 @@ export const stubWindow = (query?: string) => ({
     body: { style: { cursor: undefined }, appendChild: sinon.stub(), removeChild: sinon.stub() },
     documentElement: { className: undefined },
   },
-  matchMedia: () => ({ matches: query === '(prefers-color-scheme: dark)' ? true : false }),
+  matchMedia: () => ({ matches: query === '(prefers-color-scheme: dark)' }),
 });

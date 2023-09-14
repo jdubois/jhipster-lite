@@ -364,7 +364,7 @@ public class Assert {
 
       Matcher matcher = PATTERN_SPACE.matcher(value);
       if (matcher.find()) {
-        throw new StringWithWitespacesException(field);
+        throw new StringWithWhitespacesException(field);
       }
 
       return this;

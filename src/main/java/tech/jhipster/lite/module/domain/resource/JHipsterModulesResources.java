@@ -98,18 +98,18 @@ public class JHipsterModulesResources {
     JHipsterModuleSlug slug,
     Collection<JHipsterModuleResource> modulesResources
   ) {
-    Collection<JHipsterModuleResource> childrensDependencies = this.getChildrensDependencies(slug, modulesResources);
-    if (noMoreNestedResource(childrensDependencies)) {
+    Collection<JHipsterModuleResource> childrenDependencies = this.getChildrenDependencies(slug, modulesResources);
+    if (noMoreNestedResource(childrenDependencies)) {
       return Stream.of();
     }
     return Stream.concat(
-      childrensDependencies.stream(),
-      childrensDependencies.stream().map(moveToNextNestedResource(modulesResources)).flatMap(t -> t)
+      childrenDependencies.stream(),
+      childrenDependencies.stream().map(moveToNextNestedResource(modulesResources)).flatMap(t -> t)
     );
   }
 
-  private boolean noMoreNestedResource(Collection<JHipsterModuleResource> childrensDependencies) {
-    return childrensDependencies.isEmpty();
+  private boolean noMoreNestedResource(Collection<JHipsterModuleResource> childrenDependencies) {
+    return childrenDependencies.isEmpty();
   }
 
   private Function<JHipsterModuleResource, Stream<JHipsterModuleResource>> moveToNextNestedResource(
@@ -118,14 +118,14 @@ public class JHipsterModulesResources {
     return resource -> this.allResourcesNestedDependenciesOf(resource.slug(), modulesResources);
   }
 
-  private Collection<JHipsterModuleResource> getChildrensDependencies(
+  private Collection<JHipsterModuleResource> getChildrenDependencies(
     JHipsterModuleSlug slug,
     Collection<JHipsterModuleResource> modulesResources
   ) {
-    return modulesResources.stream().filter(moduleResource -> isChildrensOf(slug, moduleResource)).toList();
+    return modulesResources.stream().filter(moduleResource -> isChildrenOf(slug, moduleResource)).toList();
   }
 
-  private boolean isChildrensOf(JHipsterModuleSlug slug, JHipsterModuleResource moduleResource) {
+  private boolean isChildrenOf(JHipsterModuleSlug slug, JHipsterModuleResource moduleResource) {
     return moduleResource.organization().dependencies().stream().anyMatch(dependency -> dependency.slug().equals(slug));
   }
 

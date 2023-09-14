@@ -63,11 +63,13 @@ class CassandraModuleFactoryTest {
       .hasFile("documentation/cassandra.md")
       .and()
       .hasFile("README.md")
-      .containing("""
+      .containing(
+        """
         ```bash
         docker compose -f src/main/docker/cassandra.yml up -d
         ```
-        """)
+        """
+      )
       .and()
       .hasFile("src/main/docker/cassandra.yml")
       .containing("cassandra:4.0.7")
@@ -90,12 +92,11 @@ class CassandraModuleFactoryTest {
         "CassandraJSR310DateConverters.java"
       )
       .hasFiles("src/test/java/com/jhipster/test/wire/cassandra/infrastructure/secondary/CassandraJSR310DateConvertersTest.java")
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("spring.cassandra.port=${TEST_CASSANDRA_PORT}")
       .containing("spring.cassandra.contact-points=${TEST_CASSANDRA_CONTACT_POINT}")
       .containing("spring.cassandra.local-datacenter=${TEST_CASSANDRA_DC}")
       .containing("spring.cassandra.keyspace-name=${TEST_CASSANDRA_KEYSPACE}")
-      .containing("spring.cassandra.schema-action=none")
       .and()
       .hasFile("src/test/resources/META-INF/spring.factories")
       .containing("org.springframework.context.ApplicationListener=com.jhipster.test.TestCassandraManager")

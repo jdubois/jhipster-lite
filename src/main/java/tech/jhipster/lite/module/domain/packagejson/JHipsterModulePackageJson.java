@@ -84,24 +84,48 @@ public class JHipsterModulePackageJson {
     }
 
     public JHipsterModulePackageJsonBuilder addDependency(PackageName packageName, VersionSource versionSource) {
-      dependencies.add(new PackageJsonDependency(packageName, versionSource));
+      dependencies.add(PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).build());
+
+      return this;
+    }
+
+    public JHipsterModulePackageJsonBuilder addDependency(
+      PackageName packageName,
+      VersionSource versionSource,
+      PackageName versionPackageName
+    ) {
+      dependencies.add(
+        PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).versionPackageName(versionPackageName).build()
+      );
 
       return this;
     }
 
     public JHipsterModulePackageJsonBuilder removeDependency(PackageName packageName, VersionSource versionSource) {
-      dependenciesToRemove.add(new PackageJsonDependency(packageName, versionSource));
+      dependenciesToRemove.add(PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).build());
       return this;
     }
 
     public JHipsterModulePackageJsonBuilder addDevDependency(PackageName packageName, VersionSource versionSource) {
-      devDependencies.add(new PackageJsonDependency(packageName, versionSource));
+      devDependencies.add(PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).build());
+
+      return this;
+    }
+
+    public JHipsterModulePackageJsonBuilder addDevDependency(
+      PackageName packageName,
+      VersionSource versionSource,
+      PackageName versionPackageName
+    ) {
+      devDependencies.add(
+        PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).versionPackageName(versionPackageName).build()
+      );
 
       return this;
     }
 
     public JHipsterModulePackageJsonBuilder removeDevDependency(PackageName packageName, VersionSource versionSource) {
-      devDependenciesToRemove.add(new PackageJsonDependency(packageName, versionSource));
+      devDependenciesToRemove.add(PackageJsonDependency.builder().packageName(packageName).versionSource(versionSource).build());
       return this;
     }
 

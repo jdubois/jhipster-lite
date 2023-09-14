@@ -70,7 +70,7 @@ class DummyFeatureModuleFactoryTest {
         "RestBeerTest.java",
         "RestBeerToCreateTest.java"
       )
-      .hasFiles("src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java")
+      .hasFiles("src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersResetter.java")
       .hasFiles("src/test/java/com/jhipster/test/HttpSteps.java")
       .hasFiles("src/test/features/beers-catalog.feature");
   }

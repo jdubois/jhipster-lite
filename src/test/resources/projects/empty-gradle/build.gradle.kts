@@ -28,7 +28,6 @@ dependencies {
 tasks.test {
   filter {
     includeTestsMatching("*Test.*")
-    excludeTestsMatching("*IntTest.*")
     excludeTestsMatching("*IT.*")
   }
   useJUnitPlatform()
@@ -39,7 +38,6 @@ val integrationTest = task<Test>("integrationTest") {
   group = "verification"
   shouldRunAfter("test")
   filter {
-    includeTestsMatching("*IntTest.*")
     includeTestsMatching("*IT.*")
     excludeTestsMatching("*Test.*")
   }

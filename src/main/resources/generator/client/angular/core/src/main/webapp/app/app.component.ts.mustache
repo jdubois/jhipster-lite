@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,7 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'jhi-root',
   templateUrl: './app.component.html',
-  imports: [CommonModule, RouterModule, MatMenuModule, MatToolbarModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, MatMenuModule, MatToolbarModule, MatIconModule, MatButtonModule, NgOptimizedImage],
   standalone: true,
   styleUrls: ['./app.component.css'],
 })

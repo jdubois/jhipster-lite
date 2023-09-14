@@ -88,7 +88,7 @@ public final class JHipsterModulesFixture {
       .and()
     .packageJson()
       .addScript(scriptKey("serve"), scriptCommand("tikui-core serve"))
-      .addDependency(packageName("@angular/animations"), VersionSource.ANGULAR)
+      .addDependency(packageName("@angular/animations"), VersionSource.ANGULAR, packageName("@angular/core"))
       .addDevDependency(packageName("@playwright/test"), VersionSource.COMMON)
       .and()
     .preActions()

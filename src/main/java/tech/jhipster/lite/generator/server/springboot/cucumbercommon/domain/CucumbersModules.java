@@ -16,18 +16,17 @@ public final class CucumbersModules {
   public static JHipsterModuleBuilder cucumberModuleBuilder(JHipsterModuleProperties properties) {
     return moduleBuilder(properties)
       .javaDependencies()
-      .addDependency(cucumberJunitDependency())
+      .addDependency(cucumberJunitPlatformEngineDependency())
       .addDependency(cucumberJavaDependency())
       .addDependency(cucumberSpringDependency())
-      .addDependency(junitVintageDependency())
-      .addDependency(testNgDependency())
+      .addDependency(junitPlatformSuiteDependency())
       .and();
   }
 
-  private static JavaDependency cucumberJunitDependency() {
+  private static JavaDependency cucumberJunitPlatformEngineDependency() {
     return javaDependency()
       .groupId(CUCUMBER_GROUP_ID)
-      .artifactId("cucumber-junit")
+      .artifactId("cucumber-junit-platform-engine")
       .versionSlug(CUCUMBER_VERSION)
       .scope(JavaDependencyScope.TEST)
       .build();
@@ -51,16 +50,7 @@ public final class CucumbersModules {
       .build();
   }
 
-  private static JavaDependency junitVintageDependency() {
-    return javaDependency().groupId("org.junit.vintage").artifactId("junit-vintage-engine").scope(JavaDependencyScope.TEST).build();
-  }
-
-  private static JavaDependency testNgDependency() {
-    return javaDependency()
-      .groupId("org.testng")
-      .artifactId("testng")
-      .versionSlug("testng.version")
-      .scope(JavaDependencyScope.TEST)
-      .build();
+  private static JavaDependency junitPlatformSuiteDependency() {
+    return javaDependency().groupId("org.junit.platform").artifactId("junit-platform-suite").scope(JavaDependencyScope.TEST).build();
   }
 }

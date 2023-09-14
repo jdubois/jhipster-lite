@@ -7,6 +7,7 @@ import tech.jhipster.lite.generator.client.common.domain.ClientsModulesFactory;
 import tech.jhipster.lite.module.domain.Indentation;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
+import tech.jhipster.lite.module.domain.packagejson.PackageName;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 
 public class AngularModuleFactory {
@@ -16,21 +17,22 @@ public class AngularModuleFactory {
   private static final JHipsterSource COMMON_ESLINT = from("client/common/eslint");
 
   private static final String CACHE_NEEDLE = "  \"cacheDirectories\":";
+  private static final PackageName ANGULAR_CORE_PACKAGE = packageName("@angular/core");
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     //@formatter:off
     return ClientsModulesFactory.clientModuleBuilder(properties)
       .packageJson()
-        .addDependency(packageName("@angular/animations"), ANGULAR)
+        .addDependency(packageName("@angular/animations"), ANGULAR, ANGULAR_CORE_PACKAGE)
         .addDependency(packageName("@angular/cdk"), ANGULAR)
-        .addDependency(packageName("@angular/common"), ANGULAR)
-        .addDependency(packageName("@angular/compiler"), ANGULAR)
-        .addDependency(packageName("@angular/core"), ANGULAR)
+        .addDependency(packageName("@angular/common"), ANGULAR, ANGULAR_CORE_PACKAGE)
+        .addDependency(packageName("@angular/compiler"), ANGULAR, ANGULAR_CORE_PACKAGE)
+        .addDependency(ANGULAR_CORE_PACKAGE, ANGULAR)
         .addDependency(packageName("@angular/material"), ANGULAR)
-        .addDependency(packageName("@angular/forms"), ANGULAR)
-        .addDependency(packageName("@angular/platform-browser"), ANGULAR)
-        .addDependency(packageName("@angular/platform-browser-dynamic"), ANGULAR)
-        .addDependency(packageName("@angular/router"), ANGULAR)
+        .addDependency(packageName("@angular/forms"), ANGULAR, ANGULAR_CORE_PACKAGE)
+        .addDependency(packageName("@angular/platform-browser"), ANGULAR, ANGULAR_CORE_PACKAGE)
+        .addDependency(packageName("@angular/platform-browser-dynamic"), ANGULAR, ANGULAR_CORE_PACKAGE)
+        .addDependency(packageName("@angular/router"), ANGULAR, ANGULAR_CORE_PACKAGE)
         .addDependency(packageName("rxjs"), ANGULAR)
         .addDependency(packageName("tslib"), ANGULAR)
         .addDependency(packageName("zone.js"), ANGULAR)
@@ -45,7 +47,7 @@ public class AngularModuleFactory {
         .addDevDependency(packageName("@angular-builders/jest"), ANGULAR)
         .addDevDependency(packageName("@angular-devkit/build-angular"), ANGULAR)
         .addDevDependency(packageName("@angular/cli"), ANGULAR)
-        .addDevDependency(packageName("@angular/compiler-cli"), ANGULAR)
+        .addDevDependency(packageName("@angular/compiler-cli"), ANGULAR, ANGULAR_CORE_PACKAGE)
         .addDevDependency(packageName("@types/node"), ANGULAR)
         .addDevDependency(packageName("@types/jest"), ANGULAR)
         .addDevDependency(packageName("jest"), ANGULAR)

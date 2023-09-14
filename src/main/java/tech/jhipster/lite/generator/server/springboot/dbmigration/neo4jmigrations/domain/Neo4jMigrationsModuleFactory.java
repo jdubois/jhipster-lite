@@ -30,9 +30,6 @@ public class Neo4jMigrationsModuleFactory {
       .springMainProperties()
         .set(propertyKey("org.neo4j.migrations.check-location"), propertyValue("false"))
         .and()
-      .springTestProperties()
-        .set(propertyKey("org.neo4j.migrations.check-location"), propertyValue("false"))
-        .and()
       .build();
     //@formatter:on
   }

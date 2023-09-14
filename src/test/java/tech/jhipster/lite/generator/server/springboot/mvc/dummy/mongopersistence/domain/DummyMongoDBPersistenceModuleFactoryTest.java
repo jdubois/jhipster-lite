@@ -23,7 +23,7 @@ class DummyMongoDBPersistenceModuleFactoryTest {
 
     JHipsterModule module = factory.buildModule(properties);
 
-    assertThatModuleWithFiles(module, dummyInMemoryRepository(), inMemoryBeersReseter())
+    assertThatModuleWithFiles(module, dummyInMemoryRepository(), inMemoryBeersResetter())
       .hasPrefixedFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerDocument.java",
@@ -34,12 +34,12 @@ class DummyMongoDBPersistenceModuleFactoryTest {
       .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/dummy/infrastructure/secondary",
         "BeerDocumentTest.java",
-        "MongoDBBeersRepositoryIntTest.java",
-        "MongoDBBeersReseter.java"
+        "MongoDBBeersRepositoryIT.java",
+        "MongoDBBeersResetter.java"
       )
       .doNotHaveFiles(
         "src/main/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersRepository.java",
-        "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
+        "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersResetter.java"
       );
   }
 
@@ -50,10 +50,10 @@ class DummyMongoDBPersistenceModuleFactoryTest {
     );
   }
 
-  private ModuleFile inMemoryBeersReseter() {
+  private ModuleFile inMemoryBeersResetter() {
     return file(
-      "src/test/resources/projects/dummy-feature/InMemoryBeersReseter.java",
-      "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersReseter.java"
+      "src/test/resources/projects/dummy-feature/InMemoryBeersResetter.java",
+      "src/test/java/com/jhipster/test/dummy/infrastructure/secondary/InMemoryBeersResetter.java"
     );
   }
 }

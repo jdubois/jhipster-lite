@@ -64,15 +64,8 @@ class KafkaModuleFactoryTest {
       .containing("kafka.producer.'[value.serializer]'=org.apache.kafka.common.serialization.StringSerializer")
       .containing("kafka.polling.timeout=10000")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("kafka.bootstrap-servers=localhost:9092")
-      .containing("kafka.consumer.'[key.deserializer]'=org.apache.kafka.common.serialization.StringDeserializer")
-      .containing("kafka.consumer.'[value.deserializer]'=org.apache.kafka.common.serialization.StringDeserializer")
-      .containing("kafka.consumer.'[group.id]'=myapp")
-      .containing("kafka.consumer.'[auto.offset.reset]'=earliest")
-      .containing("kafka.producer.'[key.serializer]'=org.apache.kafka.common.serialization.StringSerializer")
-      .containing("kafka.producer.'[value.serializer]'=org.apache.kafka.common.serialization.StringSerializer")
-      .containing("kafka.polling.timeout=10000")
       .and()
       .hasFile("src/test/java/com/jhipster/test/KafkaTestContainerExtension.java")
       .and()
@@ -88,11 +81,13 @@ class KafkaModuleFactoryTest {
       .hasPrefixedFiles("documentation", "apache-kafka.md")
       .hasFile("README.md")
       .containing("[Apache Kafka](documentation/apache-kafka.md)")
-      .containing("""
+      .containing(
+        """
         ```bash
         docker compose -f src/main/docker/kafka.yml up -d
         ```
-        """)
+        """
+      )
       .and();
   }
 
@@ -111,9 +106,6 @@ class KafkaModuleFactoryTest {
 
     assertThatModuleWithFiles(module, pomFile())
       .hasFile("src/main/resources/config/application.properties")
-      .containing("kafka.topic.dummy=queue.myapp.dummy")
-      .and()
-      .hasFile("src/test/resources/config/application.properties")
       .containing("kafka.topic.dummy=queue.myapp.dummy")
       .and()
       .hasPrefixedFiles(
@@ -147,10 +139,12 @@ class KafkaModuleFactoryTest {
       .hasFile("src/main/docker/akhq.yml")
       .and()
       .hasFile("README.md")
-      .containing("""
+      .containing(
+        """
         ```bash
         docker compose -f src/main/docker/akhq.yml up -d
         ```
-        """);
+        """
+      );
   }
 }

@@ -65,13 +65,13 @@ class InternationalizedErrorsModuleFactoryTest {
       )
       .hasPrefixedFiles(
         "src/test/java/com/jhipster/test/shared/error/infrastructure/primary",
-        "JhipsterErrorsHandlerIntTest.java",
+        "JhipsterErrorsHandlerIT.java",
         "JhipsterErrorsHandlerTest.java",
         "JhipsterErrorsMessagesTest.java",
         "JhipsterExceptionFactory.java",
         "ArgumentsReplacerTest.java",
         "AssertionErrorMessagesTest.java",
-        "AssertionErrorsHandlerIntTest.java",
+        "AssertionErrorsHandlerIT.java",
         "AssertionErrorsHandlerTest.java"
       )
       .hasPrefixedFiles("src/test/java/com/jhipster/test/shared/error/domain", "JhipsterExceptionTest.java", "ErrorKeyTest.java")

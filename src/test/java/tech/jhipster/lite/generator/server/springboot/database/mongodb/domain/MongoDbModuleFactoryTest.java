@@ -40,11 +40,13 @@ class MongoDbModuleFactoryTest {
     assertThatModuleWithFiles(module, pomFile(), logbackFile(), testLogbackFile(), readmeFile())
       .hasFiles("documentation/mongo-db.md")
       .hasFile("README.md")
-      .containing("""
-            ```bash
-            docker compose -f src/main/docker/mongodb.yml up -d
-            ```
-            """)
+      .containing(
+        """
+        ```bash
+        docker compose -f src/main/docker/mongodb.yml up -d
+        ```
+        """
+      )
       .and()
       .hasFile("pom.xml")
       .containing(
@@ -92,7 +94,7 @@ class MongoDbModuleFactoryTest {
       .containing("spring.data.mongodb.database=jhipster")
       .containing("spring.data.mongodb.uri=mongodb://localhost:27017/jhipster")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("spring.data.mongodb.uri=${TEST_MONGODB_URI}")
       .and()
       .hasFile("src/main/resources/logback-spring.xml")

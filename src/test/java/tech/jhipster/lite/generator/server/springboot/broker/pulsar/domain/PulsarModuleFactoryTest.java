@@ -65,7 +65,7 @@ class PulsarModuleFactoryTest {
       .hasFile("src/main/resources/config/application.properties")
       .containing("pulsar.client.service-url=pulsar://localhost:6650")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("pulsar.client.num-io-threads=8")
       .containing("pulsar.producer.topic-name=test-topic")
       .containing("pulsar.consumer.topic-names[0]=test-topic")
@@ -83,11 +83,13 @@ class PulsarModuleFactoryTest {
       )
       .hasFiles("src/test/java/com/jhipster/test/wire/pulsar/infrastructure/config/PulsarConfigurationIT.java")
       .hasFile("README.md")
-      .containing("""
-          ```bash
-          docker compose -f src/main/docker/pulsar.yml up -d
-          ```
-          """);
+      .containing(
+        """
+        ```bash
+        docker compose -f src/main/docker/pulsar.yml up -d
+        ```
+        """
+      );
   }
 
   private ModuleFile integrationTestAnnotation() {

@@ -26,7 +26,7 @@ class OAuth2AuthenticationReaderTest {
   }
 
   @Test
-  void shouldNotReadAuthenticationFromUnkownAuthenticationType() {
+  void shouldNotReadAuthenticationFromUnknownAuthenticationType() {
     Authentication authentication = mock(Authentication.class);
     when(authentication.getPrincipal()).thenReturn("hey");
 

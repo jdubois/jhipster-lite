@@ -106,7 +106,7 @@ public class SpringBootMvcsModulesFactory {
         .and()
         .add(MAIN_SOURCE.template("BeanValidationErrorsHandler.java"), mainDestination.append("shared/error/infrastructure/primary/BeanValidationErrorsHandler.java"))
         .batch(TEST_SOURCE, testDestination.append("shared/error/infrastructure/primary"))
-          .addTemplate("BeanValidationErrorsHandlerIntTest.java")
+          .addTemplate("BeanValidationErrorsHandlerIT.java")
           .addTemplate("BeanValidationErrorsHandlerTest.java")
           .and()
         .batch(TEST_SOURCE, testDestination.append("shared/error_generator/infrastructure/primary"))

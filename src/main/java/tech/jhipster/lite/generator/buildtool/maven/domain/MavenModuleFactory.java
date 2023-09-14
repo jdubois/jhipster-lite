@@ -42,8 +42,8 @@ public class MavenModuleFactory {
       .javaBuildPlugins()
         .plugin(mavenCompilerPlugin())
         .plugin(surefirePlugin())
-        .plugin(jacocoPlugin())
         .plugin(failsafePlugin())
+        .plugin(jacocoPlugin())
         .pluginManagement(jacocoPluginManagement())
         .pluginManagement(enforcerPluginManagement())
         .and()
@@ -138,7 +138,6 @@ public class MavenModuleFactory {
           <runOrder>alphabetical</runOrder>
           <excludes>
             <exclude>**/*IT*</exclude>
-            <exclude>**/*IntTest*</exclude>
             <exclude>**/*CucumberTest*</exclude>
           </excludes>
         </configuration>
@@ -148,7 +147,7 @@ public class MavenModuleFactory {
   }
 
   private JavaBuildPlugin jacocoPlugin() {
-    return javaBuildPlugin().groupId(JACOCO_GROUP).artifactId(JACOCO_ARTIFACT_ID).versionSlug(JACOCO_VERSION).build();
+    return javaBuildPlugin().groupId(JACOCO_GROUP).artifactId(JACOCO_ARTIFACT_ID).build();
   }
 
   private JavaBuildPlugin failsafePlugin() {
@@ -166,7 +165,6 @@ public class MavenModuleFactory {
           <runOrder>alphabetical</runOrder>
           <includes>
             <include>**/*IT*</include>
-            <include>**/*IntTest*</include>
             <include>**/*CucumberTest*</include>
           </includes>
         </configuration>

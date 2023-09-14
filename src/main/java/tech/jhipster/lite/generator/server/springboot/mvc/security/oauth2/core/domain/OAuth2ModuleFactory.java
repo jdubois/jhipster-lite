@@ -120,7 +120,6 @@ public class OAuth2ModuleFactory {
     builder
       .springTestProperties()
       .set(propertyKey("spring.main.allow-bean-definition-overriding"), propertyValue("true"))
-      .set(propertyKey("spring.security.oauth2.client.registration.oidc.client-id"), CLIENT_ID)
       .set(propertyKey("spring.security.oauth2.client.provider.oidc.issuer-uri"), propertyValue("http://DO_NOT_CALL:9080/realms/jhipster"));
   }
 

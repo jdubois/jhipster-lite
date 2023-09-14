@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: 'Setup: checkout project'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Setup: environment'
         id: setup
         uses: ./.github/actions/setup
@@ -50,7 +50,7 @@ jobs:
       !contains(github.event.pull_request.title, '[ci skip]')
     steps:
       - name: 'Setup: checkout project'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: 'Setup: environment'
@@ -111,7 +111,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 'Setup: checkout project'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Setup: environment'
         id: setup
         uses: ./.github/actions/setup
@@ -170,7 +170,7 @@ jobs:
           - gradleapp
     steps:
       - name: 'Setup: checkout project'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Setup: environment'
         id: setup
         uses: ./.github/actions/setup
@@ -264,7 +264,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: 'Setup: checkout project'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: 'Artifact: download JaCoCo report'
         uses: actions/download-artifact@v3
         with:

@@ -227,7 +227,7 @@ class FileSystemJHipsterModulesRepositoryTest {
             springdoc.swagger-ui.tryItOutEnabled""")
       .containing("springdoc.swagger-ui.tryItOutEnabled=false")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("""
             # This is a comment
             springdoc.swagger-ui.operationsSorter""")

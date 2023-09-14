@@ -35,7 +35,7 @@ class AnnotationArchTest {
       .that()
         .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
         .and().haveSimpleNameEndingWith("Test")
-        .and(not(simpleNameEndingWith("IntTest")))
+        .and(not(simpleNameEndingWith("IT")))
         .and().areTopLevelClasses()
       .should().beAnnotatedWith(UnitTest.class)
       .orShould().beAnnotatedWith(ComponentTest.class)
@@ -51,7 +51,6 @@ class AnnotationArchTest {
       .that()
         .resideInAnyPackage(ROOT_PACKAGE_PROJECT)
         .and().haveSimpleNameEndingWith("IT")
-        .or().haveSimpleNameEndingWith("IntTest")
         .and().areTopLevelClasses()
       .should().beAnnotatedWith(IntegrationTest.class)
       .check(classes);

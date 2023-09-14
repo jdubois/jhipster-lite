@@ -19,7 +19,7 @@ class GatewayModuleConfiguration {
       .slug(GATEWAY)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().build())
       .apiDoc("Spring Boot - Spring Cloud", "Add Spring Cloud Gateway")
-      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_CLOUD).build())
+      .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT_WEBFLUX_EMPTY).addDependency(SPRING_CLOUD).build())
       .tags("server", "spring", "spring-boot", "cloud")
       .factory(gateway::buildModule);
   }

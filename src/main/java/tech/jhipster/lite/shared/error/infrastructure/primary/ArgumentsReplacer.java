@@ -7,13 +7,13 @@ final class ArgumentsReplacer {
   private static final String OPEN = "{{";
   private static final String CLOSE = "}}";
 
-  private final Map<String, ? extends Object> arguments;
+  private final Map<String, ?> arguments;
 
-  private ArgumentsReplacer(Map<String, ? extends Object> arguments) {
+  private ArgumentsReplacer(Map<String, ?> arguments) {
     this.arguments = arguments;
   }
 
-  public static String replaceParameters(String message, Map<String, ? extends Object> arguments) {
+  public static String replaceParameters(String message, Map<String, ?> arguments) {
     if (message == null || arguments == null) {
       return message;
     }

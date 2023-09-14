@@ -15,7 +15,7 @@ public class OAuth2AccountModuleFactory {
   private static final String INFRASTRUCTURE = "infrastructure";
   private static final String PRIMARY = INFRASTRUCTURE + "/primary";
   private static final String SECONDARY = INFRASTRUCTURE + "/secondary";
-  private static final String USERIDENTITY_DESTINTION = "shared/useridentity";
+  private static final String USERIDENTITY_DESTINATION = "shared/useridentity";
 
   private static final JHipsterSource ACCOUNT_SOURCE = from("server/springboot/mvc/security/oauth2/account");
   private static final JHipsterSource ACCOUNT_MAIN_SOURCE = ACCOUNT_SOURCE.append("main");
@@ -30,8 +30,8 @@ public class OAuth2AccountModuleFactory {
     JHipsterDestination accountMainDestination = toSrcMainJava().append(packagePath).append("account");
     JHipsterDestination accountTestDestination = toSrcTestJava().append(packagePath).append("account");
 
-    JHipsterDestination userIdentityMainDestination = toSrcMainJava().append(packagePath).append(USERIDENTITY_DESTINTION);
-    JHipsterDestination userIdentityTestDestination = toSrcTestJava().append(packagePath).append(USERIDENTITY_DESTINTION);
+    JHipsterDestination userIdentityMainDestination = toSrcMainJava().append(packagePath).append(USERIDENTITY_DESTINATION);
+    JHipsterDestination userIdentityTestDestination = toSrcTestJava().append(packagePath).append(USERIDENTITY_DESTINATION);
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -54,7 +54,7 @@ public class OAuth2AccountModuleFactory {
           .add(ACCOUNT_TEST_SOURCE.append(DOMAIN).template("AccountsFixture.java"), accountTestDestination.append(DOMAIN).append("AccountsFixture.java"))
           .batch(ACCOUNT_TEST_SOURCE.append(PRIMARY), accountTestDestination.append(PRIMARY))
             .addTemplate("RestAccountTest.java")
-            .addTemplate("AccountsResourceIntTest.java")
+            .addTemplate("AccountsResourceIT.java")
             .addTemplate("AccountsResourceTest.java")
             .and()
           .add(ACCOUNT_TEST_SOURCE.append(SECONDARY).template("OAuth2AuthenticationReaderTest.java"), accountTestDestination.append(SECONDARY).append("OAuth2AuthenticationReaderTest.java"))

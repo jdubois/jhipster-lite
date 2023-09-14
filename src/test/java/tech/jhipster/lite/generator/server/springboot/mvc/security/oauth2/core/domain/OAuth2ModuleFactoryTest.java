@@ -100,7 +100,7 @@ class OAuth2ModuleFactoryTest {
       .containing("spring.security.oauth2.client.registration.oidc.scope=openid,profile,email")
       .containing("application.security.oauth2.audience=account,api://default")
       .and()
-      .hasFile("src/test/resources/config/application.properties")
+      .hasFile("src/test/resources/config/application-test.properties")
       .containing("spring.main.allow-bean-definition-overriding=true")
       .containing("spring.security.oauth2.client.provider.oidc.issuer-uri=http://DO_NOT_CALL:9080/realms/jhipster")
       .and()

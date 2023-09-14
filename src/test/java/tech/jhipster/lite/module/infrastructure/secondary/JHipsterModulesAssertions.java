@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -299,7 +300,24 @@ public final class JHipsterModulesAssertions {
       try {
         Path path = projectFolder.filePath(file);
 
-        assertThat(Files.readString(path)).as(() -> "Can't find " + content + " in " + path.toString()).contains(content);
+        assertThat(Files.readString(path)).as(() -> "Can't find " + content + " in " + path).contains(content);
+      } catch (IOException e) {
+        throw new AssertionError("Can't check file content: " + e.getMessage(), e);
+      }
+
+      return this;
+    }
+
+    public JHipsterModuleFileAsserter<T> containingInSequence(CharSequence... values) {
+      assertThat(values).as("Can't check blank content").isNotEmpty();
+      assertThat(values).as("Can't check blank content").allSatisfy(value -> assertThat(value).isNotBlank());
+
+      try {
+        Path path = projectFolder.filePath(file);
+
+        assertThat(Files.readString(path))
+          .as(() -> "Can't find " + Arrays.toString(values) + " in sequence in " + path)
+          .containsSubsequence(values);
       } catch (IOException e) {
         throw new AssertionError("Can't check file content: " + e.getMessage(), e);
       }
@@ -313,7 +331,7 @@ public final class JHipsterModulesAssertions {
       try {
         Path path = projectFolder.filePath(file);
 
-        assertThat(Files.readString(path)).as(() -> "Found " + content + " in " + path.toString()).doesNotContain(content);
+        assertThat(Files.readString(path)).as(() -> "Found " + content + " in " + path).doesNotContain(content);
       } catch (IOException e) {
         throw new AssertionError("Can't check file content: " + e.getMessage(), e);
       }
@@ -333,7 +351,7 @@ public final class JHipsterModulesAssertions {
   private static class FileModifiedTimeUpdater implements FileVisitor<Path> {
 
     @Override
-    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
       return FileVisitResult.CONTINUE;
     }
 
@@ -345,12 +363,12 @@ public final class JHipsterModulesAssertions {
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+    public FileVisitResult visitFileFailed(Path file, IOException exc) {
       return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
       return FileVisitResult.CONTINUE;
     }
   }

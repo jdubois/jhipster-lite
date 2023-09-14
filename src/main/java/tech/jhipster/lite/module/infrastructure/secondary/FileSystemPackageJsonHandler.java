@@ -20,6 +20,7 @@ import tech.jhipster.lite.module.domain.packagejson.JHipsterModulePackageJson;
 import tech.jhipster.lite.module.domain.packagejson.PackageJsonDependencies;
 import tech.jhipster.lite.module.domain.packagejson.PackageJsonDependency;
 import tech.jhipster.lite.module.domain.packagejson.PackageJsonType;
+import tech.jhipster.lite.module.domain.packagejson.PackageName;
 import tech.jhipster.lite.module.domain.packagejson.Scripts;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.shared.enumeration.domain.Enums;
@@ -135,7 +136,8 @@ class FileSystemPackageJsonHandler {
   }
 
   private String getNpmVersion(PackageJsonDependency dependency) {
-    return npmVersions.get(dependency.packageName().get(), Enums.map(dependency.versionSource(), NpmVersionSource.class)).get();
+    PackageName packageName = dependency.versionPackageName().orElse(dependency.packageName());
+    return npmVersions.get(packageName.get(), Enums.map(dependency.versionSource(), NpmVersionSource.class)).get();
   }
 
   @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")

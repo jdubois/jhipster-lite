@@ -53,10 +53,10 @@ public class JHipsterLandscape {
   }
 
   private List<JHipsterLandscapeLevel> nestedDependenciesFreeLevels() {
-    return levels.stream().map(toLevelsWithoutNestedDepdendencies()).toList();
+    return levels.stream().map(toLevelsWithoutNestedDependencies()).toList();
   }
 
-  private Function<JHipsterLandscapeLevel, JHipsterLandscapeLevel> toLevelsWithoutNestedDepdendencies() {
+  private Function<JHipsterLandscapeLevel, JHipsterLandscapeLevel> toLevelsWithoutNestedDependencies() {
     return level -> new JHipsterLandscapeLevel(level.elements().stream().map(this::toElementWithoutNestedDependencies).toList());
   }
 

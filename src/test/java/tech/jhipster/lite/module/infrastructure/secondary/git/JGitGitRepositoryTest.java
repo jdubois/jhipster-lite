@@ -15,22 +15,21 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.api.extension.ExtendWith;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class JGitGitRepositoryTest {
 
   private static final JGitGitRepository git = new JGitGitRepository();
 
-  private final LogsSpy logs;
-
-  public JGitGitRepositoryTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Nested
   @DisplayName("init")

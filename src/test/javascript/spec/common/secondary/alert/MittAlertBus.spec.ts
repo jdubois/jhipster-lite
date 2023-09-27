@@ -1,16 +1,15 @@
-import sinon, { SinonStub } from 'sinon';
 import { Emitter } from 'mitt';
 import { MittAlertBus } from '@/common/secondary/alert/MittAlertBus';
 import { AlertType } from '@/common/secondary/alert/AlertType';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 interface EmitterStub extends Emitter<any> {
-  emit: SinonStub;
+  emit: vi.fn;
 }
 
 const stubEmitter = (): EmitterStub =>
   ({
-    emit: sinon.stub(),
+    emit: vi.fn(),
   }) as EmitterStub;
 
 describe('MittAlertBus', () => {
@@ -20,9 +19,8 @@ describe('MittAlertBus', () => {
 
     mittAlertBus.success('A message');
 
-    const [type, message] = emitterStub.emit.getCall(0).args;
-    expect(type).toBe(AlertType.SUCCESS);
-    expect(message).toBe('A message');
+    expect(emitterStub.emit).toHaveBeenCalledTimes(1);
+    expect(emitterStub.emit).toBeCalledWith(AlertType.SUCCESS, 'A message');
   });
 
   it('should emit error', () => {
@@ -31,8 +29,7 @@ describe('MittAlertBus', () => {
 
     mittAlertBus.error('A message');
 
-    const [type, message] = emitterStub.emit.getCall(0).args;
-    expect(type).toBe(AlertType.ERROR);
-    expect(message).toBe('A message');
+    expect(emitterStub.emit).toHaveBeenCalledTimes(1);
+    expect(emitterStub.emit).toBeCalledWith(AlertType.ERROR, 'A message');
   });
 });

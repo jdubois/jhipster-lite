@@ -8,7 +8,9 @@ import static tech.jhipster.lite.module.domain.replacement.ReplacementCondition.
 import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.TestFileUtils;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.GeneratedProjectRepository;
@@ -21,16 +23,13 @@ import tech.jhipster.lite.module.domain.replacement.MandatoryReplacementExceptio
 import tech.jhipster.lite.module.domain.replacement.TextReplacer;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class FileSystemReplacerTest {
 
   private static final FileSystemReplacer replacer = new FileSystemReplacer();
 
-  private final LogsSpy logs;
-
-  public FileSystemReplacerTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldHandleMandatoryReplacementError() {

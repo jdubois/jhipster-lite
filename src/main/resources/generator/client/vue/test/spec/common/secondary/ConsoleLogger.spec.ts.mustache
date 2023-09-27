@@ -1,21 +1,18 @@
-import { describe, it, expect } from 'vitest';
-import sinon from 'sinon';
+import { describe, it, expect, vi } from 'vitest';
 
 import ConsoleLogger from '@/common/secondary/ConsoleLogger';
 
 describe('ConsoleLogger', () => {
   it('should log an error', () => {
     const logger = {
-      error: sinon.stub(),
+      error: vi.fn(),
     };
     const consoleLogger = new ConsoleLogger(logger as any);
     const error = new Error('Error message');
 
     consoleLogger.error('An error occurs', error);
 
-    const [message, errorPassed] = logger.error.getCall(0).args;
-    expect(message).toBe('An error occurs\n');
-    expect(errorPassed).toBeInstanceOf(Error);
-    expect(errorPassed.message).toBe('Error message');
+    expect(logger.error).toHaveBeenCalledTimes(1);
+    expect(logger.error).toBeCalledWith('An error occurs\n', error);
   });
 });

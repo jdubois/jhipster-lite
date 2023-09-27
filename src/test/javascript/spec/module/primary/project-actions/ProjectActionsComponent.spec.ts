@@ -5,8 +5,7 @@ import { defaultProject, stubModulesRepository } from '../../domain/Modules.fixt
 import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { wrappedElement } from '../../../WrappedElement';
 import { stubWindow } from '../GlobalWindow.fixture';
-import sinon from 'sinon';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 interface WrapperOptions {
   folderPath: string;
@@ -36,7 +35,7 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
 
 const stubLink = () => ({
   href: '',
-  click: sinon.stub(),
+  click: vi.fn(),
   download: '',
 });
 

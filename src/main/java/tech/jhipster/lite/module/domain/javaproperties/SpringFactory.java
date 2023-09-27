@@ -8,7 +8,7 @@ public class SpringFactory {
   private final PropertyKey key;
   private final PropertyValue value;
 
-  public SpringFactory(SpringFactoryBuilder builder) {
+  private SpringFactory(SpringFactoryBuilder builder) {
     Assert.notNull("type", builder.type);
     Assert.notNull("key", builder.key);
     Assert.notNull("value", builder.value);

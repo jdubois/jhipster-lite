@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.UnitTest;
 
 @UnitTest
-@ExtendWith({ MockitoExtension.class, LogsSpy.class })
+@ExtendWith({ MockitoExtension.class, LogsSpyExtension.class })
 class ProjectFormatterConfigurationTest {
 
   private static final ProjectFormatterConfiguration configuration = new ProjectFormatterConfiguration();
@@ -20,11 +22,8 @@ class ProjectFormatterConfigurationTest {
   @Mock
   private NpmInstallationReader npmInstallation;
 
-  private final LogsSpy logs;
-
-  public ProjectFormatterConfigurationTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldGetTraceFormatterWithoutInstalledNpm() {

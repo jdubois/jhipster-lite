@@ -3,7 +3,6 @@ package tech.jhipster.lite.module.infrastructure.secondary.git;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -38,7 +37,7 @@ class JGitGitRepository implements GitRepository {
   }
 
   private boolean isGit(JHipsterProjectFolder folder) {
-    return Files.exists(Paths.get(folder.get()).resolve(".git"));
+    return Files.exists(folder.filePath(".git"));
   }
 
   @Override

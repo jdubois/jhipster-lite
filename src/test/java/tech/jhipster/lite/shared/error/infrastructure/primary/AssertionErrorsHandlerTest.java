@@ -6,23 +6,22 @@ import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.MessageSource;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.shared.error.domain.AssertionErrorType;
 import tech.jhipster.lite.shared.error.domain.AssertionException;
 import tech.jhipster.lite.shared.error_generator.domain.MissingMandatoryValueFactory;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class AssertionErrorsHandlerTest {
 
   private static final AssertionErrorsHandler handler = new AssertionErrorsHandler(mock(MessageSource.class));
 
-  private final LogsSpy logs;
-
-  public AssertionErrorsHandlerTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldLogPrimaryAssertionExceptionInInfo() {

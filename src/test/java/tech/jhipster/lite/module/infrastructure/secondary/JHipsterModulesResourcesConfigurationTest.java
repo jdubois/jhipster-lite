@@ -7,21 +7,20 @@ import ch.qos.logback.classic.Level;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class JHipsterModulesResourcesConfigurationTest {
 
   private static final JHipsterModulesResourcesConfiguration configuration = new JHipsterModulesResourcesConfiguration();
 
-  private final LogsSpy logs;
-
-  public JHipsterModulesResourcesConfigurationTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldGetAllResourcesWithoutHiddenResources() {

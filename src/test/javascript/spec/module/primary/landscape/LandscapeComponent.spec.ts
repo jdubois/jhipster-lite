@@ -4,7 +4,6 @@ import { ModulesRepository } from '@/module/domain/ModulesRepository';
 import { ModulesToApply } from '@/module/domain/ModulesToApply';
 import { LandscapeVue } from '@/module/primary/landscape';
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
-import sinon, { SinonStub } from 'sinon';
 import { stubAlertBus } from '../../../common/domain/AlertBus.fixture';
 import { wrappedElement } from '../../../WrappedElement';
 import { defaultLandscape } from '../../domain/landscape/Landscape.fixture';
@@ -18,27 +17,27 @@ import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller'
 import { ModuleParametersRepository } from '@/module/domain/ModuleParametersRepository';
 
 interface ApplicationListenerStub extends ApplicationListener {
-  addEventListener: SinonStub;
-  removeEventListener: SinonStub;
+  addEventListener: vi.fn;
+  removeEventListener: vi.fn;
 }
 interface BodyCursorUpdaterStub extends BodyCursorUpdater {
-  set: SinonStub;
-  reset: SinonStub;
+  set: vi.fn;
+  reset: vi.fn;
 }
 
 const stubBodyCursorUpdater = (): BodyCursorUpdaterStub =>
   ({
-    set: sinon.stub(),
-    reset: sinon.stub(),
+    set: vi.fn(),
+    reset: vi.fn(),
   }) as BodyCursorUpdaterStub;
 
 const stubApplicationListener = (): ApplicationListenerStub => ({
-  addEventListener: sinon.stub(),
-  removeEventListener: sinon.stub(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
 });
 
 const stubLandscapeScroller = (): any => ({
-  scroll: sinon.stub(),
+  scroll: vi.fn(),
 });
 
 interface WrapperOptions {
@@ -209,7 +208,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('landscape-loader')).exists()).toBe(false);
       expect(wrapper.find(wrappedElement('landscape')).exists()).toBe(true);
       expect(wrapper.find(wrappedElement('landscape-connectors')).findAll('path').length).toBe(17);
-      expect(applicationListener.addEventListener.calledOnce).toBe(true);
+      expect(applicationListener.addEventListener).toHaveBeenCalledTimes(1);
 
       const pathField = wrapper.find(wrappedElement('folder-path-field')).element as HTMLInputElement;
       expect(pathField.value).toBe('/tmp/jhlite/1234');
@@ -221,7 +220,7 @@ describe('Landscape', () => {
 
       wrapper.unmount();
 
-      expect(applicationListener.removeEventListener.calledOnce).toBe(true);
+      expect(applicationListener.removeEventListener).toHaveBeenCalledTimes(1);
     });
 
     it('Should load folder path from local storage', async () => {
@@ -817,8 +816,8 @@ describe('Landscape', () => {
       const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousedown', mouseEvent);
 
-      const { args } = cursorUpdater.set.getCall(0);
-      expect(args).toEqual(['grabbing']);
+      expect(cursorUpdater.set).toHaveBeenCalledTimes(1);
+      expect(cursorUpdater.set).toBeCalledWith('grabbing');
     });
 
     it('should prevent default clicking event when defined', async () => {
@@ -829,13 +828,13 @@ describe('Landscape', () => {
       const mouseEvent = {
         pageX: 0,
         pageY: 0,
-        preventDefault: sinon.stub(),
+        preventDefault: vi.fn(),
       };
 
       const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousedown', mouseEvent);
 
-      expect(mouseEvent.preventDefault.called).toBe(true);
+      expect(mouseEvent.preventDefault).toHaveBeenCalledTimes(1);
     });
 
     it('should stop grabbing on mouseup', async () => {
@@ -847,7 +846,7 @@ describe('Landscape', () => {
       const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mouseup');
 
-      expect(cursorUpdater.reset.called).toBe(true);
+      expect(cursorUpdater.reset).toHaveBeenCalledTimes(1);
     });
 
     it('should stop grabbing on mouseleave', async () => {
@@ -859,7 +858,7 @@ describe('Landscape', () => {
       const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mouseleave');
 
-      expect(cursorUpdater.reset.called).toBe(true);
+      expect(cursorUpdater.reset).toHaveBeenCalledTimes(1);
     });
 
     it('should be scrolling', async () => {
@@ -881,8 +880,8 @@ describe('Landscape', () => {
       await landscape.trigger('mousedown', mouseEventStart);
       await landscape.trigger('mousemove', mouseEventGrabbed);
 
-      const { args } = landscapeScroller.scroll.getCall(0);
-      expect(args).toEqual([expect.anything(), 20, 20]);
+      expect(landscapeScroller.scroll).toHaveBeenCalledTimes(1);
+      expect(landscapeScroller.scroll).toBeCalledWith(expect.anything(), 20, 20);
     });
 
     it('should not scroll without starting grabbing', async () => {
@@ -898,7 +897,7 @@ describe('Landscape', () => {
       const landscape = wrapper.find(wrappedElement('landscape-container'))!;
       await landscape.trigger('mousemove', mouseEventGrabbed);
 
-      expect(landscapeScroller.scroll.called).toBe(false);
+      expect(landscapeScroller.scroll).toHaveBeenCalledTimes(0);
     });
   });
 

@@ -11,20 +11,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.core.MethodParameter;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.UnitTest;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class BeanValidationErrorsHandlerTest {
 
   private static final BeanValidationErrorsHandler handler = new BeanValidationErrorsHandler();
 
-  private final LogsSpy logs;
-
-  public BeanValidationErrorsHandlerTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldLogMethodArgumentNotValidInInfo() throws NoSuchMethodException, SecurityException {

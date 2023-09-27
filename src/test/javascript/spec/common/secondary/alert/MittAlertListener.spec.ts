@@ -1,24 +1,23 @@
-import sinon from 'sinon';
 import mitt from 'mitt';
 import { MittAlertListener } from '@/common/secondary/alert/MittAlertListener';
 import { AlertType } from '@/common/secondary/alert/AlertType';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 describe('MittAlertListener', () => {
   it('should listen sent success message', () => {
-    const spyAlerted = sinon.spy();
+    const spyAlerted = vi.fn();
     const emitter = mitt();
     const mittAlertBus = new MittAlertListener(emitter);
     mittAlertBus.onSuccess(spyAlerted);
 
     emitter.emit(AlertType.SUCCESS, 'A message');
 
-    const [alerted] = spyAlerted.getCall(0).args;
-    expect(alerted).toBe('A message');
+    expect(spyAlerted).toHaveBeenCalledTimes(1);
+    expect(spyAlerted).toBeCalledWith('A message');
   });
 
   it('should unsubscribe success', () => {
-    const spyAlerted = sinon.spy();
+    const spyAlerted = vi.fn();
     const emitter = mitt();
     const mittAlertBus = new MittAlertListener(emitter);
     const unsubscribe = mittAlertBus.onSuccess(spyAlerted);
@@ -29,23 +28,23 @@ describe('MittAlertListener', () => {
     emitter.emit(AlertType.SUCCESS, 'A message');
     emitter.emit(AlertType.SUCCESS, 'A message');
 
-    expect(spyAlerted.callCount).toBe(2);
+    expect(spyAlerted).toHaveBeenCalledTimes(2);
   });
 
   it('should listen sent error message', () => {
-    const spyAlerted = sinon.spy();
+    const spyAlerted = vi.fn();
     const emitter = mitt();
     const mittAlertBus = new MittAlertListener(emitter);
     mittAlertBus.onError(spyAlerted);
 
     emitter.emit(AlertType.ERROR, 'A message');
 
-    const [alerted] = spyAlerted.getCall(0).args;
-    expect(alerted).toBe('A message');
+    expect(spyAlerted).toHaveBeenCalledTimes(1);
+    expect(spyAlerted).toBeCalledWith('A message');
   });
 
   it('should unsubscribe error', () => {
-    const spyAlerted = sinon.spy();
+    const spyAlerted = vi.fn();
     const emitter = mitt();
     const mittAlertBus = new MittAlertListener(emitter);
     const unsubscribe = mittAlertBus.onError(spyAlerted);
@@ -56,6 +55,6 @@ describe('MittAlertListener', () => {
     emitter.emit(AlertType.ERROR, 'A message');
     emitter.emit(AlertType.ERROR, 'A message');
 
-    expect(spyAlerted.callCount).toBe(2);
+    expect(spyAlerted).toHaveBeenCalledTimes(2);
   });
 });

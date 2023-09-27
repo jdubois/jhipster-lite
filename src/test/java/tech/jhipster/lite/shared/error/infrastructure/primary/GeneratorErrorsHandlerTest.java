@@ -6,22 +6,21 @@ import ch.qos.logback.classic.Level;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.MessageSource;
+import tech.jhipster.lite.Logs;
 import tech.jhipster.lite.LogsSpy;
+import tech.jhipster.lite.LogsSpyExtension;
 import tech.jhipster.lite.UnitTest;
 import tech.jhipster.lite.shared.error.domain.GeneratorException;
 import tech.jhipster.lite.shared.error.domain.StandardErrorKey;
 
 @UnitTest
-@ExtendWith(LogsSpy.class)
+@ExtendWith(LogsSpyExtension.class)
 class GeneratorErrorsHandlerTest {
 
   private static final GeneratorErrorsHandler handler = new GeneratorErrorsHandler(mock(MessageSource.class));
 
-  private final LogsSpy logs;
-
-  public GeneratorErrorsHandlerTest(LogsSpy logs) {
-    this.logs = logs;
-  }
+  @Logs
+  private LogsSpy logs;
 
   @Test
   void shouldLogServerErrorAsError() {

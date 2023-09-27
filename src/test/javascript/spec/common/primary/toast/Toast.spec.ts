@@ -1,12 +1,11 @@
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { ToastVue } from '@/common/primary/toast';
-import sinon, { SinonStub } from 'sinon';
 import { ToastType } from '@/common/primary/toast/ToastType';
 import { AlertListener } from '@/common/domain/alert/AlertListener';
 import { AlertListenerFixture, stubAlertListener } from '../../domain/AlertListener.fixure';
 import { TimeoutListener } from '@/common/primary/timeout/Timeout';
 import { stubTimeout } from '../timeout/Timeout.fixture';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 let wrapper: VueWrapper;
 let component: any;
@@ -38,7 +37,7 @@ const wrap = (wrapperOptions?: Partial<WrapperOptions>) => {
 };
 
 const openToast =
-  (listen: (alertListener: AlertListenerFixture) => SinonStub) =>
+  (listen: (alertListener: AlertListenerFixture) => vi.fn) =>
   async (wrapperOptions: OpenToastOptions = {}): Promise<void> => {
     const alertListener = stubAlertListener();
     const message = wrapperOptions.message ?? 'message';
@@ -90,16 +89,16 @@ describe('Toast', () => {
 
   it('should unsubscribe on before unmount', () => {
     const alertListener = stubAlertListener();
-    const unsubscribeSuccess = sinon.stub();
+    const unsubscribeSuccess = vi.fn();
     alertListener.onSuccess.returns(unsubscribeSuccess);
-    const unsubscribeError = sinon.stub();
+    const unsubscribeError = vi.fn();
     alertListener.onError.returns(unsubscribeError);
     wrap({ alertListener });
 
     wrapper.unmount();
 
-    expect(unsubscribeSuccess.calledOnce).toBe(true);
-    expect(unsubscribeError.calledOnce).toBe(true);
+    expect(unsubscribeSuccess).toHaveBeenCalledTimes(1);
+    expect(unsubscribeError).toHaveBeenCalledTimes(1);
   });
 
   describe('Timeout', () => {

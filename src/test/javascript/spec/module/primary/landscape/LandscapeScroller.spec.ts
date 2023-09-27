@@ -1,13 +1,12 @@
-import { describe, expect, it } from 'vitest';
-import sinon, { SinonStub } from 'sinon';
+import { describe, expect, it, vi } from 'vitest';
 import { LandscapeScroller } from '@/module/primary/landscape/LandscapeScroller';
 
 interface HTMLElementStub extends HTMLElement {
-  scroll: SinonStub;
+  scroll: vi.fn;
 }
 const stubHtmlElement = (): HTMLElementStub =>
   ({
-    scroll: sinon.stub(),
+    scroll: vi.fn(),
   }) as HTMLElementStub;
 
 describe('LandscapeScroller', () => {
@@ -17,7 +16,7 @@ describe('LandscapeScroller', () => {
 
     landscapeScroller.scroll(element, 10, 10);
 
-    const { args } = element.scroll.getCall(0);
-    expect(args).toEqual([10, 10]);
+    expect(element.scroll).toHaveBeenCalledTimes(1);
+    expect(element.scroll).toBeCalledWith(10, 10);
   });
 });

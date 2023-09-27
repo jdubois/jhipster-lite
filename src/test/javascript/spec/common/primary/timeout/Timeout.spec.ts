@@ -1,5 +1,4 @@
 import { Timeout } from '@/common/primary/timeout/Timeout';
-import sinon from 'sinon';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
 const TIMEOUT_TIME = 3000;
@@ -15,32 +14,32 @@ describe('Timeout', () => {
   });
 
   it('Should launch timeout after passed time', () => {
-    const stub = sinon.stub();
+    const stub = vi.fn();
     new Timeout().register(stub, TIMEOUT_TIME);
 
     vi.advanceTimersByTime(TIMEOUT_TIME);
 
-    expect(stub.callCount).toBe(1);
+    expect(stub).toHaveBeenCalledTimes(1);
   });
 
   it('Should not launch timeout with less some time', () => {
-    const stub = sinon.stub();
+    const stub = vi.fn();
     new Timeout().register(stub, TIMEOUT_TIME);
 
     vi.advanceTimersByTime(LESS_TIME);
 
-    expect(stub.callCount).toBe(0);
+    expect(stub).toHaveBeenCalledTimes(0);
   });
 
   it('Should not launch timeout with unsubscribe', () => {
-    const stub = sinon.stub();
+    const stub = vi.fn();
     const timeout = new Timeout();
     timeout.register(stub, TIMEOUT_TIME);
 
     timeout.unregister();
     vi.advanceTimersByTime(TIMEOUT_TIME);
 
-    expect(stub.callCount).toBe(0);
+    expect(stub).toHaveBeenCalledTimes(0);
   });
 
   it('Should not fail to unregister when not registered', () => {
@@ -51,15 +50,15 @@ describe('Timeout', () => {
 
   it('Should clear previous registration before register another one', () => {
     const timeout = new Timeout();
-    const firstCall = sinon.stub();
-    const secondCall = sinon.stub();
+    const firstCall = vi.fn();
+    const secondCall = vi.fn();
 
     timeout.register(firstCall, TIMEOUT_TIME);
     vi.advanceTimersByTime(LESS_TIME);
     timeout.register(secondCall, TIMEOUT_TIME);
     vi.advanceTimersByTime(TIMEOUT_TIME);
 
-    expect(firstCall.callCount).toBe(0);
-    expect(secondCall.callCount).toBe(1);
+    expect(firstCall).toHaveBeenCalledTimes(0);
+    expect(secondCall).toHaveBeenCalledTimes(1);
   });
 });

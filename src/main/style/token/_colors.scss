@@ -14,6 +14,10 @@ $jhlite-global-color-text-primary: $jhlite-color-brand-400 !default;
 $jhlite-global-color-text-dark: $jhlite-color-neutral-800;
 $jhlite-global-color-text-light: #fff !default;
 
+/** From global.scss (to remove in global.scss when Tikui migration is finished) */
+$jhlite-global-primary-color: #0f5b90; /* $jhipster-lite-primary-color */
+$jhlite-global-line-color: var(--jhlite-line-color); /* $jhipster-lite-line-color */
+
 /** Other */
 $jhlite-global-color-fill-disabled-dark: color.change(
   $jhlite-global-color-primary,

@@ -13,7 +13,6 @@ import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
 import tech.jhipster.lite.module.domain.javaproperties.SpringPropertyType;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.shared.error.domain.Assert;
-import tech.jhipster.lite.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 @Service
 class FileSystemSpringPropertiesCommandsHandler {
@@ -45,7 +44,6 @@ class FileSystemSpringPropertiesCommandsHandler {
     return folder -> projectFolder.filePath(folder + propertiesFilename(property));
   }
 
-  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco thinks there is a missed branch")
   private static Supplier<Path> defaultPropertiesFile(JHipsterProjectFolder projectFolder, SpringProperty property) {
     return switch (property.type()) {
       case MAIN_PROPERTIES, MAIN_BOOTSTRAP_PROPERTIES -> () ->

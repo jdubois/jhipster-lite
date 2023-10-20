@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 import tech.jhipster.lite.module.domain.javaproperties.Comment;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
 import tech.jhipster.lite.shared.error.domain.Assert;
@@ -33,7 +35,7 @@ class PropertiesFileSpringCommentsHandler {
     updateComments(key, comment);
   }
 
-  @ExcludeFromGeneratedCodeCoverage
+  @ExcludeFromGeneratedCodeCoverage(reason = "Hard to cover IOException")
   private void updateComments(PropertyKey key, Comment comment) {
     try {
       String properties = buildComments(key, comment);
@@ -102,7 +104,13 @@ class PropertiesFileSpringCommentsHandler {
   }
 
   private String commentLine(Comment comment) {
-    return new StringBuilder().append(HASH).append(BLANK_SPACE).append(comment.get()).append(LINE_BREAK).toString();
+    StringBuilder stringBuilder = new StringBuilder();
+    splitLines(comment).forEach(line -> stringBuilder.append(HASH).append(BLANK_SPACE).append(line).append(LINE_BREAK));
+    return stringBuilder.toString();
+  }
+
+  private static Collection<String> splitLines(Comment comment) {
+    return List.of(comment.get().split("\\r?\\n"));
   }
 
   private String propertyId(PropertyKey key) {

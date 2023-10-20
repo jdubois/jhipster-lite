@@ -1,0 +1,38 @@
+include /molecule/tag-filter/tag-filter.mixin.pug
+include /organism/module-parameters/module-parameters.mixin.pug
+include /organism/module-properties/module-properties.mixin.pug
+
+mixin jhlite-modules-patch
+  .jhipster-modules-patch.jhlite-menu-content-template
+    .jhipster-modules-list.jhlite-menu-content-template--content
+      .jhipster-modules-filters
+        .jhipster-modules-filters--tags
+          +jhlite-tag-filter
+          +jhlite-tag-filter
+          +jhlite-tag-filter
+        input.jhipster-modules-filters--filter(placeholder='Filter')
+        .jhipster-modules-filters--displayed-modules-count 3 / 5
+
+      .jhipster-modules-list--categories
+        div
+          div
+            h2.jhipster-module-category--name Angular
+            .jhipster-module.not-selected.not-applied
+              .jhipster-module--content.not-selected.not-applied
+                .jhipster-module--tags.not-selected.not-applied
+                  .jhipster-module--tag angular
+                  .jhipster-module--tag client
+                .jhipster-module--slug.not-selected.not-applied angular-core
+                .jhipster-module--description.not-selected.not-applied Add Angular + Angular CLI
+                  +jhlite-module-parameters('selected', 'all-valid-parameters')
+              button.jhipster-module--apply-button
+                span
+                  // TODO: IconVue
+                  em.jhlite-icon.jhlite-icon-play
+
+    aside.jhlite-menu-content-template--menu
+      .jhlite-side-menu
+        .jhlite-side-menu--slot.-expand
+          +jhlite-module-properties
+        .jhlite-side-menu--slot
+          // TODO: ProjectActionsVue

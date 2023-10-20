@@ -1,22 +1,28 @@
 package tech.jhipster.lite.module.infrastructure.secondary.javadependency.gradle;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.EnumSource.Mode.EXCLUDE;
 import static tech.jhipster.lite.TestFileUtils.*;
 import static tech.jhipster.lite.module.domain.JHipsterModule.javaDependency;
 import static tech.jhipster.lite.module.domain.JHipsterModulesFixture.*;
 
-import java.nio.file.*;
-
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.*;
-import org.junit.jupiter.params.provider.*;
-
-import tech.jhipster.lite.*;
-import tech.jhipster.lite.module.domain.*;
-import tech.jhipster.lite.module.domain.javabuild.command.*;
-import tech.jhipster.lite.module.domain.javadependency.*;
-import tech.jhipster.lite.module.domain.properties.*;
+import java.nio.file.Paths;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import tech.jhipster.lite.UnitTest;
+import tech.jhipster.lite.module.domain.Indentation;
+import tech.jhipster.lite.module.domain.javabuild.command.AddDirectJavaDependency;
+import tech.jhipster.lite.module.domain.javabuild.command.AddJavaDependencyManagement;
+import tech.jhipster.lite.module.domain.javabuild.command.RemoveDirectJavaDependency;
+import tech.jhipster.lite.module.domain.javabuild.command.RemoveJavaDependencyManagement;
+import tech.jhipster.lite.module.domain.javabuild.command.SetVersion;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyVersion;
+import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 
 @UnitTest
 class GradleCommandHandlerTest {
@@ -325,7 +331,7 @@ class GradleCommandHandlerTest {
   }
 
   private static String versionCatalogContent(JHipsterProjectFolder projectFolder) {
-    return content(Paths.get(projectFolder.get()).resolve("gradle/libs.versions.toml")).replace("\r\n", "\n");
+    return contentNormalizingNewLines(Paths.get(projectFolder.get()).resolve("gradle/libs.versions.toml"));
   }
 
 }

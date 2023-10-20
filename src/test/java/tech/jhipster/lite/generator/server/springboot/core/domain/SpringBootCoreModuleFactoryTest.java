@@ -141,11 +141,18 @@ class SpringBootCoreModuleFactoryTest {
       .and()
       .hasFiles("src/main/java/com/jhipster/test/ApplicationStartupTraces.java")
       .hasPrefixedFiles("src/test/java/com/jhipster/test", "ApplicationStartupTracesTest.java", "IntegrationTest.java")
-      .hasFiles(
-        "src/main/resources/config/application.properties",
-        "src/main/resources/config/application-local.properties",
-        "src/test/resources/config/application-test.properties"
-      )
+      .hasFile("src/main/resources/config/application.properties")
+      .containing("spring.application.name=Myapp")
+      .containing("logging.level.com.jhipster.test=INFO")
+      .and()
+      .hasFile("src/main/resources/config/application-local.properties")
+      .containing("logging.level.com.jhipster.test=DEBUG")
+      .and()
+      .hasFile("src/test/resources/config/application-test.properties")
+      .containing("spring.main.banner-mode=off")
+      .containing("logging.level.com.jhipster.test=OFF")
+      .containing("logging.config=classpath:logback.xml")
+      .and()
       .hasFiles("src/test/resources/logback.xml", "src/main/resources/logback-spring.xml");
   }
 

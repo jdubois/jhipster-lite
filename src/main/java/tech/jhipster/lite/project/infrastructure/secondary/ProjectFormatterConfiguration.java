@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
-import tech.jhipster.lite.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 @Configuration
 @ImportRuntimeHints(NativeHints.class)
@@ -14,7 +13,6 @@ class ProjectFormatterConfiguration {
   private static final Logger log = LoggerFactory.getLogger(ProjectFormatterConfiguration.class);
 
   @Bean
-  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco think there is a missing case")
   public ProjectFormatter projectFormatter(NpmInstallationReader npmInstallation) {
     return switch (npmInstallation.get()) {
       case UNIX -> unixFormatter();

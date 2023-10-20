@@ -10,6 +10,7 @@ import tech.jhipster.lite.module.domain.javabuildplugin.JavaBuildPlugin;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
+import tech.jhipster.lite.module.domain.javaproperties.PropertiesBlockComment;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.module.domain.replacement.TextNeedleBeforeReplacer;
 import tech.jhipster.lite.shared.error.domain.Assert;
@@ -21,7 +22,6 @@ public class SpringBootCoreModuleFactory {
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
 
   private static final GroupId SRPING_BOOT_GROUP = groupId("org.springframework.boot");
-  private static final String APPLICATION_PROPERTIES = "application.properties";
 
   private static final String JUNIT_GROUP = "org.junit.jupiter";
   private static final String MOCKITO_GROUP = "org.mockito";
@@ -32,9 +32,7 @@ public class SpringBootCoreModuleFactory {
   );
 
   private static final JHipsterDestination MAIN_RESOURCE_DESTINATION = to("src/main/resources");
-  private static final JHipsterDestination MAIN_CONFIG_DESTINATION = MAIN_RESOURCE_DESTINATION.append("config");
   private static final JHipsterDestination TEST_RESOURCES_DESTINATION = to("src/test/resources");
-  private static final JHipsterDestination TEST_CONFIG_DESTINATION = TEST_RESOURCES_DESTINATION.append("config");
 
   public JHipsterModule buildModule(JHipsterModuleProperties properties) {
     Assert.notNull("properties", properties);
@@ -43,6 +41,7 @@ public class SpringBootCoreModuleFactory {
     String packagePath = properties.packagePath();
     JHipsterDestination testDestination = toSrcTestJava().append(packagePath);
     String fullyQualifiedMainClass = properties.basePackage().get() + "." + baseName + "App";
+    String basePackageLoggingLevel = "logging.level.%s".formatted(properties.basePackage().get());
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -68,13 +67,26 @@ public class SpringBootCoreModuleFactory {
         .add(MAIN_SOURCE.template("MainApp.java"), toSrcMainJava().append(packagePath).append(baseName + "App.java"))
         .add(MAIN_SOURCE.template("ApplicationStartupTraces.java"), toSrcMainJava().append(packagePath).append("ApplicationStartupTraces.java"))
         .add(TEST_SOURCE.template("IntegrationTest.java"), testDestination.append("IntegrationTest.java"))
-        .add(MAIN_SOURCE.template(APPLICATION_PROPERTIES), MAIN_CONFIG_DESTINATION.append(APPLICATION_PROPERTIES))
-        .add(MAIN_SOURCE.template("application-local.properties"), MAIN_CONFIG_DESTINATION.append("application-local.properties"))
-        .add(TEST_SOURCE.template("application-test.properties"), TEST_CONFIG_DESTINATION.append("application-test.properties"))
         .add(MAIN_SOURCE.template("logback-spring.xml"), MAIN_RESOURCE_DESTINATION.append("logback-spring.xml"))
         .add(TEST_SOURCE.template("logback.xml"), TEST_RESOURCES_DESTINATION.append("logback.xml"))
         .add(TEST_SOURCE.template("ApplicationStartupTracesTest.java"), toSrcTestJava().append(packagePath).append("ApplicationStartupTracesTest.java"))
         .and()
+      .springMainProperties()
+        .set(propertyKey("spring.application.name"), propertyValue(baseName))
+        .set(propertyKey(basePackageLoggingLevel), propertyValue("INFO"))
+        .and()
+      .springLocalProperties()
+        .set(propertyKey(basePackageLoggingLevel), propertyValue("DEBUG"))
+        .and()
+      .springTestProperties()
+        .set(propertyKey("spring.main.banner-mode"), propertyValue("off"))
+        .set(PropertiesBlockComment.builder()
+          .comment(comment("Logging configuration"))
+          .add(propertyKey(basePackageLoggingLevel), propertyValue("OFF"))
+          .add(propertyKey("logging.config"), propertyValue("classpath:logback.xml"))
+          .build()
+        )
+      .and()
       .optionalReplacements()
         .in(path("pom.xml"))
           .add(DEFAULT_GOAL_REPLACER, properties.indentation().times(2) + "<defaultGoal>spring-boot:run</defaultGoal>")

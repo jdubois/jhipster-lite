@@ -12,7 +12,6 @@ import tech.jhipster.lite.module.domain.JHipsterFeatureSlug;
 import tech.jhipster.lite.module.domain.JHipsterModuleSlug;
 import tech.jhipster.lite.module.domain.JHipsterSlug;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulesResources;
-import tech.jhipster.lite.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 public class JHipsterLandscape {
 
@@ -60,7 +59,6 @@ public class JHipsterLandscape {
     return level -> new JHipsterLandscapeLevel(level.elements().stream().map(this::toElementWithoutNestedDependencies).toList());
   }
 
-  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco think there is a missing case")
   private JHipsterLandscapeElement toElementWithoutNestedDependencies(JHipsterLandscapeElement element) {
     return switch (element.type()) {
       case MODULE -> moduleWithoutNestedDependencies((JHipsterLandscapeModule) element);
@@ -138,7 +136,6 @@ public class JHipsterLandscape {
     return level -> new JHipsterLandscapeLevel(level.elements().stream().sorted(levelComparator).toList());
   }
 
-  @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco think there is a missing case")
   private long linksCount(JHipsterLandscapeElement element) {
     return switch (element.type()) {
       case FEATURE -> featureLinksCount((JHipsterLandscapeFeature) element);

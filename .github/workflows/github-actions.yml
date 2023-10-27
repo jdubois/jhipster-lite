@@ -72,7 +72,7 @@ jobs:
       - name: 'Lint: check'
         run: npm run lint:ci
       - name: 'TEMP: enable gradle build tool slug'
-        run: sed -i 's/jhlite-hidden-resources.slugs=gradle-java,/jhlite-hidden-resources.slugs=/' src/main/resources/config/application.properties
+        run: sed -i '/- gradle-java/d' src/main/resources/config/application.yml
       - name: 'Test: run backend tests'
         run: |
           chmod +x mvnw

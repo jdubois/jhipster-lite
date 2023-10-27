@@ -2,7 +2,7 @@ FROM sonarqube:10.2.1-community
 FROM consul:1.15.4
 FROM jhipster/consul-config-loader:v0.4.1
 FROM jhipster/jhipster-registry:v7.4.0
-FROM quay.io/keycloak/keycloak:22.0.4
+FROM quay.io/keycloak/keycloak:22.0.5
 FROM mariadb:11.1.2
 FROM mongo:7.0.2
 FROM mysql:8.1.0
@@ -13,5 +13,5 @@ FROM confluentinc/cp-zookeeper:7.5.1
 FROM confluentinc/cp-kafka:7.5.1
 FROM tchiotludo/akhq:0.24.0
 FROM apachepulsar/pulsar:3.0.1
-FROM neo4j:5.12.0-community
+FROM neo4j:5.13.0-community
 FROM redis:7.2.2

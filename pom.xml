@@ -14,7 +14,7 @@
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.45.1-SNAPSHOT</version>
+  <version>0.46.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -49,8 +49,8 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <node.version>v18.18.2</node.version>
-    <npm.version>10.2.0</npm.version>
+    <node.version>v20.9.0</node.version>
+    <npm.version>10.2.1</npm.version>
 
     <maven.version>3.9.5</maven.version>
     <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
@@ -62,14 +62,14 @@
 
     <byte-buddy.version>1.14.9</byte-buddy.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
-    <surefire-plugin.version>3.1.2</surefire-plugin.version>
+    <surefire-plugin.version>3.2.1</surefire-plugin.version>
     <jacoco.version>0.8.11</jacoco.version>
     <jgit.version>6.7.0.202309050840-r</jgit.version>
     <archunit-junit5.version>1.1.0</archunit-junit5.version>
     <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
-    <properties-maven-plugin.version>1.2.0</properties-maven-plugin.version>
+    <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
-    <apache-commons-io.version>2.14.0</apache-commons-io.version>
+    <apache-commons-io.version>2.15.0</apache-commons-io.version>
     <cucumber.version>7.14.0</cucumber.version>
     <maven-model.version>3.9.5</maven-model.version>
     <joox.version>2.0.0</joox.version>
@@ -77,10 +77,10 @@
     <night-config.version>3.6.7</night-config.version>
     <testcontainers.version>1.19.1</testcontainers.version>
     <mongock.version>5.3.4</mongock.version>
-    <git-commit-id-plugin.version>6.0.0</git-commit-id-plugin.version>
-    <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
+    <git-commit-id-plugin.version>7.0.0</git-commit-id-plugin.version>
+    <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
 
-    <frontend-maven-plugin.version>1.14.0</frontend-maven-plugin.version>
+    <frontend-maven-plugin.version>1.14.2</frontend-maven-plugin.version>
     <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
     <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
   </properties>

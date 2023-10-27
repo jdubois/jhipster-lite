@@ -1,0 +1,92 @@
+#====================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+#====================================================================
+springdoc:
+  swagger-ui:
+    operationsSorter: alpha,beta
+    tagsSorter: alpha
+    tryItOutEnabled: true
+  enable-native-support: true
+
+management:
+  # Spring Boot Actuator
+  endpoints:
+    web:
+      exposure:
+        include:
+          - configprops
+          - env
+          - health
+          - info
+          - logfile
+          - loggers
+          - threaddump
+      base-path: /management
+  # Git Information
+  info:
+    git:
+      mode: full
+      enabled: true
+    env:
+      enabled: true
+  endpoint:
+    health:
+      group:
+        readiness:
+          include: readinessState
+        liveness:
+          include: livenessState
+      probes:
+        enabled: true
+
+application:
+  # Cors configuration
+  cors:
+    allowed-headers: '*'
+    allowed-origin-patterns: https://*.githubpreview.dev
+    max-age: 1800
+    allowed-methods: '*'
+    allowed-origins:
+      - http://localhost:8100
+      - http://localhost:9000
+      - http://localhost:3000
+    allow-credentials: true
+    exposed-headers:
+      - Authorization
+      - Link
+      - X-Total-Count
+      - X-jhlite-alert
+      - X-jhlite-error
+      - X-jhlite-params
+  version: '@project.version@'
+  exception:
+    details: false
+    package:
+      - org.
+      - java.
+      - net.
+      - javax.
+      - com.
+      - io.
+      - de.
+      - tech.jhipster.lite
+  cmd:
+    timeout: 120
+#  forced-project-folder: /tmp/jhlite
+
+jhlite-hidden-resources:
+  tags: banner
+  slugs:
+    - gradle-java # gradle is hidden until it is fully supported
+    - svelte-core
+
+server:
+  port: 7471
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  application:
+    name: jhlite

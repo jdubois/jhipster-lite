@@ -23,6 +23,14 @@ public class MavenModuleFactory {
   private static final ArtifactId JACOCO_ARTIFACT_ID = artifactId("jacoco-maven-plugin");
   private static final VersionSlug JACOCO_VERSION = versionSlug("jacoco");
 
+  private static final String JAVA_PREREQUISITES =
+    """
+
+    ### Java
+
+    You need to have Java 17:
+    - [JDK 17](https://openjdk.java.net/projects/jdk/17/)""";
+
   public JHipsterModule buildMavenModule(JHipsterModuleProperties properties) {
     //@formatter:off
     return mavenWrapperModulesFiles(properties)
@@ -30,6 +38,7 @@ public class MavenModuleFactory {
         .put("dasherizedBaseName", properties.projectBaseName().kebabCase())
         .and()
       .startupCommand("./mvnw")
+      .prerequisites(JAVA_PREREQUISITES)
       .files()
         .add(SOURCE.template("pom.xml"), to("pom.xml"))
         .and()

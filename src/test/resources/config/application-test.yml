@@ -4,15 +4,24 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 #====================================================================
 
-spring.main.banner-mode=off
+application:
+  exception:
+    package:
+      - org.
+      - java.
+  cors:
+    allowed-origins:
+      - http://localhost:8100
+      - http://localhost:9000
 
-server.port=0
-application.exception.package=org.,java.
+jhlite-hidden-resources:
+  tags:
+  slugs:
 
-# Cors configuration
-application.cors.allowed-origins=http://localhost:8100,http://localhost:9000
+server:
+  port: 0
 
-spring.main.allow-bean-definition-overriding=true
-
-jhlite-hidden-resources.tags=
-jhlite-hidden-resources.slugs=
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: 'off'

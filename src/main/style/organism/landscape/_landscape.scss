@@ -1,0 +1,169 @@
+$jhlite-landscape-padding: 20px;
+$jhlite-landscape-line-color: $jhlite-global-line-color;
+$jhlite-landscape-box-radius: $jhlite-global-box-radius;
+$jhlite-landscape-primary-color: $jhlite-global-primary-color;
+$jhlite-landscape-color-text-light: $jhlite-global-color-text-light;
+$jhlite-landscape-selectable-highlight-animation: $jhlite-global-selectable-highlight-animation;
+$jhlite-landscape-not-selectable-highlight-animation: $jhlite-global-not-selectable-highlight-animation;
+$jhlite-landscape-valid-highlight-end-color: $jhlite-global-valid-highlight-end-color;
+$jhlite-landscape-primary-alternative-color: $jhlite-global-primary-alternative-color;
+
+.jhipster-landscape, .jhlite-landscape-minimap {
+  .jhipster-landscape-map {
+    position: relative;
+    padding: $jhlite-landscape-padding;
+  }
+
+  .jhipster-landscape-modes-selection {
+    position: absolute;
+    top: $jhlite-landscape-padding;
+    left: $jhlite-landscape-padding;
+    z-index: 3;
+    border: 1px dotted $jhlite-landscape-line-color;
+    border-radius: $jhlite-landscape-box-radius;
+    background: var(--jhlite-chip-bg-color);
+    padding: 10px;
+
+    &--modes {
+      border: 1px solid $jhlite-landscape-line-color;
+      border-radius: 1.5em;
+    }
+
+    &--modes-switch {
+      border: 0;
+      border-radius: 1.5em;
+      background-color: transparent;
+      cursor: pointer;
+      padding: 7px 15px;
+      color: var(--jhlite-global-color-text);
+
+      &.-selected {
+        background-color: $jhlite-landscape-primary-color;
+        color: $jhlite-landscape-color-text-light;
+      }
+    }
+  }
+
+  .jhipster-landscape-connectors {
+    position: absolute;
+    top: $jhlite-landscape-padding;
+    left: $jhlite-landscape-padding;
+    z-index: 1;
+
+    &--line {
+      stroke: $jhlite-landscape-line-color;
+      stroke-opacity: 0.7;
+      stroke-width: 1px;
+      stroke-dasharray: 2 2;
+      fill: none;
+
+      &.-selectable-highlighted,
+      &.-not-selectable-highlighted,
+      &.-highlighted-unselection,
+      &.-selected {
+        stroke-dasharray: none;
+        stroke-width: 3px;
+        stroke-opacity: 1;
+      }
+
+      &.-selected {
+        stroke: $jhlite-landscape-primary-color;
+      }
+
+      &.-selectable-highlighted {
+        animation: $jhlite-landscape-selectable-highlight-animation;
+      }
+
+      &.-not-selectable-highlighted,
+      &.-highlighted-unselection {
+        animation: $jhlite-landscape-not-selectable-highlight-animation;
+      }
+    }
+  }
+
+  .jhipster-landscape-levels {
+    display: grid;
+    position: relative;
+    place-items: center;
+    z-index: 2;
+
+    &--level {
+      grid-row: 1;
+      padding: 0;
+
+      &.-compacted {
+        margin-right: 20px;
+        min-width: 150px;
+      }
+
+      &.-extended {
+        margin-right: 30px;
+        min-width: 250px;
+      }
+    }
+  }
+
+  .jhipster-landscape-feature {
+    border: 2px dotted $jhlite-landscape-line-color;
+    border-radius: $jhlite-landscape-box-radius;
+    background: rgba($color: $jhlite-landscape-primary-alternative-color, $alpha: 30%);
+
+    &--title {
+      text-align: center;
+      color: var(--jhlite-global-color-text);
+      font-size: 1em;
+      font-weight: bold;
+
+      &.-extended {
+        margin: 5px;
+      }
+
+      &.-compacted {
+        margin: 1px 3px;
+      }
+    }
+
+    &--modules {
+      padding: 0;
+    }
+
+    &--module {
+      list-style-type: none;
+    }
+
+    &.-extended {
+      padding: 10px 5px 0;
+    }
+
+    &.-compacted {
+      padding: 1px 3px 0;
+    }
+
+    &.-selectable-highlighted {
+      animation: $jhlite-landscape-selectable-highlight-animation;
+      color: $jhlite-landscape-color-text-light;
+    }
+
+    &.-not-selectable-highlighted,
+    &.-highlighted-unselection {
+      animation: $jhlite-landscape-not-selectable-highlight-animation;
+      color: $jhlite-landscape-color-text-light;
+    }
+  }
+
+  .jhipster-landscape-element {
+    list-style-type: none;
+
+    &.-compacted {
+      margin-bottom: 5px;
+    }
+
+    &.-extended {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.jhipster-landscape {
+  position: relative;
+}

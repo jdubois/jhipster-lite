@@ -25,6 +25,11 @@ export default defineComponent({
     const startX: Ref<number> = ref(0);
     const startY: Ref<number> = ref(0);
 
+    const observer = new MutationObserver(() => {
+      minimapHTML.value = removeDataSelectorAttrs(landscapeContainer.outerHTML);
+    });
+    observer.observe(landscapeContainer, { attributes: true, childList: true, subtree: true });
+
     onMounted(() => {
       minimapHTML.value = removeDataSelectorAttrs(landscapeContainer.outerHTML);
 

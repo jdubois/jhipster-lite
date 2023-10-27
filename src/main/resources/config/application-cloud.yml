@@ -1,0 +1,4 @@
+application:
+  forced-project-folder: /tmp/jhlite
+mongock:
+  migration-scan-package: tech.jhipster.lite

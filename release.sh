@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 GIT_MAIN_BRANCH='main'
 GIT_REMOTE='upstream'

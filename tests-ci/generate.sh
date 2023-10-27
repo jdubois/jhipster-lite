@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 show_syntax() {
   echo "Usage: $0 <application>" >&2

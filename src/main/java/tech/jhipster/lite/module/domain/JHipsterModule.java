@@ -263,6 +263,10 @@ public class JHipsterModule {
     return new TextNeedleBeforeReplacer(notContainingReplacement(), needle);
   }
 
+  public static TextNeedleAfterReplacer lineAfterText(String needle) {
+    return new TextNeedleAfterReplacer(notContainingReplacement(), needle);
+  }
+
   public static RegexNeedleBeforeReplacer lineBeforeRegex(String regex) {
     return new RegexNeedleBeforeReplacer(notContainingReplacement(), Pattern.compile(regex, Pattern.MULTILINE));
   }
@@ -444,6 +448,12 @@ public class JHipsterModule {
 
     public JHipsterModuleBuilder startupCommand(String startupCommand) {
       shortcuts.startupCommand(startupCommand);
+
+      return this;
+    }
+
+    public JHipsterModuleBuilder prerequisites(String prerequisites) {
+      shortcuts.prerequisites(prerequisites);
 
       return this;
     }

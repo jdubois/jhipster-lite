@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 application=$1
 if [[ $application == '' ]]; then

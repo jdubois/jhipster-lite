@@ -1,6 +1,8 @@
 # Test Project
 
-## Node.js and NPM
+## Prerequisites
+
+### Node.js and NPM
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 

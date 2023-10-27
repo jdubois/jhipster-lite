@@ -1,0 +1,6 @@
+jhlite-hidden-resources.slugs:
+  - gradle-java
+  - spring-boot-kafka-dummy-producer-consumer
+  - angular-core
+  - react-core
+  - svelte-core

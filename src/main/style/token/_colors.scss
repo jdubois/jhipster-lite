@@ -13,16 +13,56 @@ $jhlite-global-color-fill-light: $jhlite-global-color-light !default;
 $jhlite-global-color-text-primary: $jhlite-color-brand-400 !default;
 $jhlite-global-color-text-dark: $jhlite-color-neutral-800;
 $jhlite-global-color-text-light: #fff !default;
+$jhlite-global-primary-color: #0f5b90;
+$jhlite-global-secondary-color: #0f172a; /* TODO: duplicate $jhipster-lite-secondary-color */
+$jhlite-global-line-color: var(--jhlite-line-color); /* TODO: duplicate $jhipster-lite-line-color */
+$jhlite-global-primary-alternative-color: #3e8abf;
+$jhlite-global-primary-input-color: var(--jhlite-primary-input-color);
+$jhlite-global-primary-text-color: #ddeffc;
+$jhlite-global-box-radius: 6px;
+$jhlite-global-applied-module-color: #2f7b17;
+$jhlite-global-disabled-color: #6d6d6d;
+$jhlite-global-color-text-light: #fff;
+$jhlite-global-selectable-highlight-animation: valid-highlight-animation 2s infinite;
+$jhlite-global-valid-highlight-start-color: #3ebf5a;
+$jhlite-global-valid-highlight-end-color: #0f9020;
+$jhlite-global-not-selectable-highlight-animation: invalid-highlight-animation 2s infinite;
+$jhlite-global-invalid-highlight-start-color: #bf3e3e;
+$jhlite-global-invalid-highlight-end-color: #900f0f;
 
-/** From global.scss (to remove in global.scss when Tikui migration is finished) */
-$jhlite-global-primary-color: #0f5b90; /* $jhipster-lite-primary-color */
-$jhlite-global-secondary-color: #0f172a; /* $jhipster-lite-secondary-color */
-$jhlite-global-line-color: var(--jhlite-line-color); /* $jhipster-lite-line-color */
-$jhlite-global-primary-input-color: var(--jhlite-primary-input-color); /* $jhipster-lite-primary-input-color */
-$jhlite-global-primary-text-color: #ddeffc; /* $jhipster-lite-primary-text-color */
-$jhlite-global-box-radius: 6px; /* $jhipster-lite-box-radius */
-$jhlite-global-applied-module-color: #2f7b17; /* $jhipster-lite-applied-module-color */
-$jhlite-global-disabled-color: #6d6d6d; /* $jhipster-lite-disabled-color */
+@keyframes valid-highlight-animation {
+  0% {
+    background-color: $jhlite-global-valid-highlight-start-color;
+    stroke: $jhlite-global-valid-highlight-start-color;
+  }
+
+  50% {
+    background-color: $jhlite-global-valid-highlight-end-color;
+    stroke: $jhlite-global-valid-highlight-end-color;
+  }
+
+  100% {
+    background-color: $jhlite-global-valid-highlight-start-color;
+    stroke: $jhlite-global-valid-highlight-start-color;
+  }
+}
+
+@keyframes invalid-highlight-animation {
+  0% {
+    background-color: $jhlite-global-invalid-highlight-start-color;
+    stroke: $jhlite-global-invalid-highlight-start-color;
+  }
+
+  50% {
+    background-color: $jhlite-global-invalid-highlight-end-color;
+    stroke: $jhlite-global-invalid-highlight-end-color;
+  }
+
+  100% {
+    background-color: $jhlite-global-invalid-highlight-start-color;
+    stroke: $jhlite-global-invalid-highlight-start-color;
+  }
+}
 
 /** Other */
 $jhlite-global-color-fill-disabled-dark: color.change(

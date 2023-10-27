@@ -178,7 +178,15 @@ class MavenModuleFactoryTest {
       .hasExecutableFiles("mvnw", "mvnw.cmd")
       .hasPrefixedFiles(".mvn/wrapper", "maven-wrapper.jar", "maven-wrapper.properties")
       .hasFile("README.md")
-      .containing("./mvnw");
+      .containing("./mvnw")
+      .containing(
+        """
+        ### Java
+
+        You need to have Java 17:
+        - [JDK 17](https://openjdk.java.net/projects/jdk/17/)
+        """
+      );
   }
 
   @Test

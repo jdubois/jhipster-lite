@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "*** Stopping JHipster Lite in 5sec..."
 sleep 5

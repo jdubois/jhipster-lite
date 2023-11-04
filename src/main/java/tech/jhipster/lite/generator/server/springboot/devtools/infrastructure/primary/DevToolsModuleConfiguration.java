@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.devtools.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_DEVTOOLS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,9 @@ class DevToolsModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRING_BOOT_DEVTOOLS)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().build())
+      .propertiesDefinition(
+        JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().addConfigurationFormat().build()
+      )
       .apiDoc("Spring Boot - Tools", "Add Spring Boot devtools.")
       .organization(JHipsterModuleOrganization.SPRINGBOOT_DEPENDENCY)
       .tags("server", "spring", "spring-boot", "devtools")

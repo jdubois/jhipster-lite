@@ -1,13 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.neo4jmigrations.domain;
 
-import static tech.jhipster.lite.module.domain.JHipsterModule.artifactId;
-import static tech.jhipster.lite.module.domain.JHipsterModule.documentationTitle;
-import static tech.jhipster.lite.module.domain.JHipsterModule.from;
-import static tech.jhipster.lite.module.domain.JHipsterModule.groupId;
-import static tech.jhipster.lite.module.domain.JHipsterModule.moduleBuilder;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyKey;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyValue;
-import static tech.jhipster.lite.module.domain.JHipsterModule.versionSlug;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
@@ -28,7 +21,7 @@ public class Neo4jMigrationsModuleFactory {
         .and()
       .documentation(documentationTitle("Neo4j Migrations"), SOURCE.append("neo4j-migrations.md"))
       .springMainProperties()
-        .set(propertyKey("org.neo4j.migrations.check-location"), propertyValue("false"))
+        .set(propertyKey("org.neo4j.migrations.check-location"), propertyValue(false))
         .and()
       .build();
     //@formatter:on

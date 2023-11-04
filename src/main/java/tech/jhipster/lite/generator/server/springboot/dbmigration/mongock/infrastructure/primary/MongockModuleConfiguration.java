@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.mongock.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.MONGOCK;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.MONGODB;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ class MongockModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(MONGOCK)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - Database Migration", "Add Mongock")
       .organization(JHipsterModuleOrganization.builder().addDependency(MONGODB).build())
       .tags("server", "spring", "spring-boot", "database", "migration", "mongo-db")

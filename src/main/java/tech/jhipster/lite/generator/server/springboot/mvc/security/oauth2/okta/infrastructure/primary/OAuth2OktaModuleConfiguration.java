@@ -1,7 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.okta.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.OAUTH_PROVIDER;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2_OKTA;
 import static tech.jhipster.lite.module.domain.resource.JHipsterModulePropertyDefinition.mandatoryStringProperty;
 
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ class OAuth2OktaModuleConfiguration {
       .add(oktaDomain())
       .add(oktaClientId())
       .addIndentation()
+      .addConfigurationFormat()
       .build();
   }
 

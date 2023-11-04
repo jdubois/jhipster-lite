@@ -61,17 +61,6 @@ application:
       - X-jhlite-error
       - X-jhlite-params
   version: '@project.version@'
-  exception:
-    details: false
-    package:
-      - org.
-      - java.
-      - net.
-      - javax.
-      - com.
-      - io.
-      - de.
-      - tech.jhipster.lite
   cmd:
     timeout: 120
 #  forced-project-folder: /tmp/jhlite

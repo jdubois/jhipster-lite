@@ -12,7 +12,7 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 class GitLabCiModuleConfiguration {
 
   @Bean
-  JHipsterModuleResource gitlabCiModule(GitLabCiApplicationService gitlabCi) {
+  JHipsterModuleResource gitLabCiModule(GitLabCiApplicationService gitlabCi) {
     return JHipsterModuleResource
       .builder()
       .slug(GITLAB_CI)

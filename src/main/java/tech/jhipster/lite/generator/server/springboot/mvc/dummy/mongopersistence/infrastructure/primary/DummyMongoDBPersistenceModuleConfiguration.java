@@ -17,7 +17,7 @@ class DummyMongoDBPersistenceModuleConfiguration {
   JHipsterModuleResource dummyMongoDBModule(DummyMongoDBPersistenceApplicationService dummyMongoDBPersistence) {
     return JHipsterModuleResource
       .builder()
-      .slug(DUMMY_MONGODB_PERSITENCE)
+      .slug(DUMMY_MONGODB_PERSISTENCE)
       .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().build())
       .apiDoc("Spring Boot - MVC", "Add MongoDB persistence for dummy feature")
       .organization(

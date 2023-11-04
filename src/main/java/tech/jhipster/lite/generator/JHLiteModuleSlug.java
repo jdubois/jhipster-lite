@@ -30,7 +30,7 @@ public enum JHLiteModuleSlug implements JHipsterModuleSlugFactory {
   DUMMY_FEATURE("dummy-feature"),
   DUMMY_JPA_PERSISTENCE("dummy-jpa-persistence"),
   DUMMY_LIQUIBASE_CHANGELOG("dummy-liquibase-changelog"),
-  DUMMY_MONGODB_PERSITENCE("dummy-mongodb-persistence"),
+  DUMMY_MONGODB_PERSISTENCE("dummy-mongodb-persistence"),
   DUMMY_NOT_POSTGRESQL_FLYWAY_CHANGELOG("dummy-not-postgresql-flyway-changelog"),
   DUMMY_POSTGRESQL_FLYWAY_CHANGELOG("dummy-postgresql-flyway-changelog"),
   EHCACHE_JAVA_CONFIG("ehcache-java-config"),

@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.web.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_MVC_SERVER;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_SERVER;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
@@ -57,7 +58,7 @@ class SpringBootMvcModulesConfiguration {
   }
 
   private JHipsterModulePropertiesDefinition properties() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().build();
+    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().addConfigurationFormat().build();
   }
 
   private JHipsterModuleOrganization mvcServerOrganization() {

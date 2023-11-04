@@ -1,7 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdocoauth.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.AUTHENTICATION_SPRINGDOC;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRINGDOC;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRINGDOC_OAUTH_2;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +20,7 @@ class SpringdocOauth2ModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRINGDOC_OAUTH_2)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - API Documentation", "Add OAuth2 authentication for springdoc")
       .organization(
         JHipsterModuleOrganization

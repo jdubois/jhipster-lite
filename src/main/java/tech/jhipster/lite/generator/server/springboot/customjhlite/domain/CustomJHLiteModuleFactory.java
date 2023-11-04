@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.customjhlite.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.cucumbercommon.domain.CucumbersModules.*;
+import static tech.jhipster.lite.generator.server.springboot.cucumbercommon.domain.CucumbersModules.cucumberModuleBuilder;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -12,7 +12,6 @@ import tech.jhipster.lite.module.domain.javadependency.JavaDependency.JavaDepend
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependencyType;
 import tech.jhipster.lite.module.domain.javaproperties.PropertyKey;
-import tech.jhipster.lite.module.domain.javaproperties.PropertyValue;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
 import tech.jhipster.lite.shared.error.domain.Assert;
 
@@ -23,7 +22,6 @@ public class CustomJHLiteModuleFactory {
 
   private static final String SRC_MAIN_JAVA = "src/main/java";
 
-  private static final PropertyKey EXCEPTION_PACKAGE_KEY = propertyKey("application.exception.package");
   private static final PropertyKey SERVER_PORT_KEY = propertyKey("server.port");
   private static final PropertyKey JACKSON_INCLUSION_KEY = propertyKey("spring.jackson.default-property-inclusion");
 
@@ -35,7 +33,6 @@ public class CustomJHLiteModuleFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();
-    PropertyValue exceptionPackages = exceptionPackages(properties);
     JHipsterDestination cucumberDestination = toSrcTestJava().append(packagePath).append("cucumber");
 
     //@formatter:off
@@ -56,16 +53,15 @@ public class CustomJHLiteModuleFactory {
         .and()
       .and()
       .springMainProperties()
-        .set(EXCEPTION_PACKAGE_KEY, exceptionPackages)
-        .set(SERVER_PORT_KEY, propertyValue(properties.serverPort().stringValue()))
+        .set(SERVER_PORT_KEY, propertyValue(properties.serverPort().get()))
         .set(JACKSON_INCLUSION_KEY, propertyValue("non_null"))
         .set(HIDDEN_TAGS_PROPERTY_KEY, propertyValue("banner"))
         .comment(HIDDEN_SLUGS_PROPERTY_KEY, comment("Disable the modules and its dependencies by slugs"))
         .set(HIDDEN_SLUGS_PROPERTY_KEY, propertyValue("custom-jhlite"))
         .and()
       .springTestProperties()
-        .set(SERVER_PORT_KEY, propertyValue("0"))
-        .set(BEAN_DEFINITION_OVERRIDING_PROPERTY_KEY, propertyValue("true"))
+        .set(SERVER_PORT_KEY, propertyValue(0))
+        .set(BEAN_DEFINITION_OVERRIDING_PROPERTY_KEY, propertyValue(true))
         .and()
       .files()
         .add(SOURCE.template("CucumberTest.java"), cucumberDestination.append("CucumberTest.java"))
@@ -99,9 +95,5 @@ public class CustomJHLiteModuleFactory {
 
   private String mainClassName(JHipsterModuleProperties properties) {
     return properties.projectBaseName().capitalized() + "App";
-  }
-
-  private PropertyValue exceptionPackages(JHipsterModuleProperties properties) {
-    return propertyValue("org.", "java.", "net.", "jakarta.", "com.", "io.", "de.", "tech.jhipster.lite", properties.basePackage().get());
   }
 }

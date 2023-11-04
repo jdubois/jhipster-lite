@@ -4,6 +4,7 @@
       <router-link class="jhlite-logo" to="/">
         <img class="jhlite-logo--icon" src="../../../../content/JHipster-Lite-neon-blue.png" alt="JHipster bow tie" width="48" />
         <span class="jhlite-logo--text">JHipster lite</span>
+        <span class="jhlite-logo-version--text">{{ version }}</span>
       </router-link>
       <ThemeButtonVue />
     </div>

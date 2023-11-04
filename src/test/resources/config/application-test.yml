@@ -5,10 +5,6 @@
 #====================================================================
 
 application:
-  exception:
-    package:
-      - org.
-      - java.
   cors:
     allowed-origins:
       - http://localhost:8100

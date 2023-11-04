@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.webflux.web.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_SERVER;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
@@ -38,6 +38,6 @@ class SpringBootWebfluxModuleConfiguration {
   }
 
   private static JHipsterModulePropertiesDefinition properties() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().build();
+    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addServerPort().addConfigurationFormat().build();
   }
 }

@@ -1,5 +1,8 @@
 package tech.jhipster.lite.module.domain;
 
+import static tech.jhipster.lite.module.domain.properties.SpringConfigurationFormat.YAML;
+import static tech.jhipster.lite.shared.collection.domain.JHipsterCollections.concat;
+
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +12,8 @@ import tech.jhipster.lite.module.domain.git.GitRepository;
 import tech.jhipster.lite.module.domain.javabuild.command.JavaBuildCommands;
 import tech.jhipster.lite.module.domain.javadependency.JavaDependenciesVersionsRepository;
 import tech.jhipster.lite.module.domain.javadependency.ProjectJavaDependenciesRepository;
+import tech.jhipster.lite.module.domain.javaproperties.SpringProperties;
+import tech.jhipster.lite.module.domain.javaproperties.SpringProperty;
 import tech.jhipster.lite.module.domain.properties.JHipsterProjectFolder;
 import tech.jhipster.lite.module.domain.replacement.ContentReplacer;
 import tech.jhipster.lite.module.domain.replacement.ContentReplacers;
@@ -51,7 +56,7 @@ public class JHipsterModulesApplyer {
 
     JHipsterModule module = modules.resources().build(moduleToApply.slug(), moduleToApply.properties());
     //@formatter:off
-    JHipsterModuleChanges changes = JHipsterModuleChanges
+    var builder = JHipsterModuleChanges
       .builder()
       .projectFolder(module.projectFolder())
       .indentation(module.indentation())
@@ -63,11 +68,20 @@ public class JHipsterModulesApplyer {
       .packageJson(module.packageJson())
       .preActions(module.preActions())
       .postActions(module.postActions())
-      .springProperties(module.springProperties())
-      .springComments(module.springComments())
-      .springPropertiesBlockComments(module.springPropertiesBlockComments())
       .springFactories(module.springFactories());
     //@formatter:on
+
+    JHipsterModuleChanges changes;
+    if (moduleToApply.properties().configurationFormat() == YAML) {
+      SpringProperties springProperties = concatSpringPropertiesAndBlockProperties(module);
+      changes = builder.springYamlProperties(springProperties).springYamlComments(module.springComments());
+    } else {
+      changes =
+        builder
+          .springProperties(module.springProperties())
+          .springComments(module.springComments())
+          .springPropertiesBlockComments(module.springPropertiesBlockComments());
+    }
 
     modules.apply(changes);
 
@@ -77,6 +91,29 @@ public class JHipsterModulesApplyer {
     commitIfNeeded(moduleToApply);
 
     return moduleApplied;
+  }
+
+  private static SpringProperties concatSpringPropertiesAndBlockProperties(JHipsterModule module) {
+    List<SpringProperty> blockProperties = module
+      .springPropertiesBlockComments()
+      .get()
+      .stream()
+      .flatMap(springPropertiesBlockComment ->
+        springPropertiesBlockComment
+          .properties()
+          .entrySet()
+          .stream()
+          .map(entry ->
+            SpringProperty
+              .builder(springPropertiesBlockComment.type())
+              .key(entry.getKey())
+              .value(entry.getValue())
+              .profile(springPropertiesBlockComment.profile())
+              .build()
+          )
+      )
+      .toList();
+    return new SpringProperties(concat(module.springProperties().properties(), blockProperties));
   }
 
   private ContentReplacers buildReplacers(JHipsterModule module) {

@@ -1,7 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdocokta.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.OAUTH_PROVIDER_SPRINGDOC;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRINGDOC;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRINGDOC_OAUTH_2_OKTA;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2_OKTA;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +20,7 @@ class SpringDocOktaModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRINGDOC_OAUTH_2_OKTA)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - API Documentation", "Add Okta authentication for springdoc")
       .organization(
         JHipsterModuleOrganization

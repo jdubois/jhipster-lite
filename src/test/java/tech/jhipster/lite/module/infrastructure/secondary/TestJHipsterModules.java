@@ -1,8 +1,9 @@
 package tech.jhipster.lite.module.infrastructure.secondary;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.defaultModuleResourceBuilder;
+import static tech.jhipster.lite.module.domain.resource.JHipsterModulesResourceFixture.emptyHiddenModules;
 
 import java.util.Collections;
 import java.util.List;

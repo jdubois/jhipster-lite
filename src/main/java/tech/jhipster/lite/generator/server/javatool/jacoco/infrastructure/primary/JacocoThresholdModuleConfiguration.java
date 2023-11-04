@@ -13,7 +13,7 @@ import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;
 class JacocoThresholdModuleConfiguration {
 
   @Bean
-  JHipsterModuleResource jacocoModuleThreshold(JacocoApplicationService jacoco) {
+  JHipsterModuleResource jacocoThresholdModule(JacocoApplicationService jacoco) {
     return JHipsterModuleResource
       .builder()
       .slug(JACOCO_CHECK_MIN_COVERAGE)

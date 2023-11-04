@@ -11,7 +11,7 @@ import tech.jhipster.lite.UnitTest;
 class RestProjectHistoryTest {
 
   @Test
-  void shouldSerializetoJson() {
+  void shouldSerializeToJson() {
     assertThat(JsonHelper.writeAsString(RestProjectHistory.from(projectHistory()))).isEqualTo(json());
   }
 

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.customjhlite.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.CUSTOM_JHLITE;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +25,13 @@ class CustomJHLiteModuleConfiguration {
   }
 
   private JHipsterModulePropertiesDefinition propertiesDefinition() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().addServerPort().build();
+    return JHipsterModulePropertiesDefinition
+      .builder()
+      .addBasePackage()
+      .addProjectBaseName()
+      .addIndentation()
+      .addServerPort()
+      .addConfigurationFormat()
+      .build();
   }
 }

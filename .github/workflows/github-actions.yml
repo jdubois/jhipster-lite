@@ -172,10 +172,12 @@ jobs:
           - gradleapp
         include:
           - java-version: 17
+            spring-config-format: yaml
           - java-version: 21
             app: fullapp
           - java-version: 21
             app: customjhlite
+            spring-config-format: properties
     steps:
       - name: 'Setup: checkout project'
         uses: actions/checkout@v4
@@ -193,7 +195,7 @@ jobs:
         working-directory: ./tests-ci/
         run: |
           ./start.sh 7471
-          ./generate.sh ${{ matrix.app }}
+          ./generate.sh ${{ matrix.app }} ${{ matrix.spring-config-format }}
           ./stop.sh
       - name: 'Generation: display md5sum ${{ matrix.app }}'
         working-directory: /tmp/jhlite/${{ matrix.app }}/

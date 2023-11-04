@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.gateway.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.*;
+import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.SPRING_CLOUD_GROUP;
+import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.springCloudDependenciesManagement;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -48,7 +49,7 @@ public class GatewayModuleFactory {
         .and()
       .springTestBootstrapProperties()
         .set(propertyKey("spring.application.name"), propertyValue(properties.projectBaseName().get()))
-        .set(propertyKey("spring.cloud.gateway.discovery.locator.enabled"), propertyValue("false"))
+        .set(propertyKey("spring.cloud.gateway.discovery.locator.enabled"), propertyValue(false))
         .and()
       .files()
         .add(SOURCE.template("GatewayResource.java"), destination.append("GatewayResource.java"))

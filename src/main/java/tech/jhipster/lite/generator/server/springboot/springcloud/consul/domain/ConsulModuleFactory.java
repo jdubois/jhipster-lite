@@ -61,7 +61,7 @@ public class ConsulModuleFactory {
       .springMainBootstrapProperties()
         .set(propertyKey("spring.application.name"), propertyValue(baseName))
         .set(propertyKey("spring.cloud.consul.host"), propertyValue("localhost"))
-        .set(propertyKey("spring.cloud.consul.port"), propertyValue("8500"))
+        .set(propertyKey("spring.cloud.consul.port"), propertyValue(8500))
         .set(propertyKey("spring.cloud.compatibility-verifier.enabled"), FALSE_VALUE)
         .set(propertyKey("spring.cloud.consul.config.format"), propertyValue("yaml"))
         .set(propertyKey("spring.cloud.consul.config.profile-separator"), propertyValue("-"))

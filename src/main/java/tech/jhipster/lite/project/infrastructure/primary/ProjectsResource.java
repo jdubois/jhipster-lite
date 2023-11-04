@@ -51,7 +51,7 @@ class ProjectsResource {
 
   @Operation(summary = "Get project information")
   @GetMapping(path = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<RestProjectHistory> getprojectHistory(
+  ResponseEntity<RestProjectHistory> getProjectHistory(
     @Schema(description = "Path of the project to get information for") @RequestParam("path") String path
   ) {
     return ResponseEntity.ok(RestProjectHistory.from(projects.getHistory(new ProjectPath(path))));

@@ -56,7 +56,6 @@ class CustomJHLiteModuleFactoryTest {
         .and()
       .hasFile("src/main/resources/config/application.properties")
         .containing("server.port=9000")
-        .containing("application.exception.package=org.,java.,net.,jakarta.,com.,io.,de.,tech.jhipster.lite,com.jhipster.test")
         .containing("spring.jackson.default-property-inclusion=non_null")
         .containing("jhlite-hidden-resources.tags=banner")
         .containing("jhlite-hidden-resources.slugs=custom-jhlite")

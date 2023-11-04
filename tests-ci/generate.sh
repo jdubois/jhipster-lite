@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 show_syntax() {
-  echo "Usage: $0 <application>" >&2
+  echo "Usage: $0 <application> <spring-configuration-format>" >&2
   exit 1
 }
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
   show_syntax
 fi
 
@@ -16,11 +16,12 @@ elif test -f tests-ci/modulePayload.json; then
 fi
 
 application=$1
+configuration_format=$2
 
 applyModules() {
   for module in $@
   do
-    local payload="$(sed "s/APP_NAME/$application/g" $payloadFile)"
+    local payload="$(sed -e "s/APP_NAME/$application/g;s/SPRING_CONFIG_FORMAT/$configuration_format/g" $payloadFile)"
     local api="/api/modules/$module/apply-patch"
 
     echo "curl -o /dev/null -s -w "%{http_code}\n" \

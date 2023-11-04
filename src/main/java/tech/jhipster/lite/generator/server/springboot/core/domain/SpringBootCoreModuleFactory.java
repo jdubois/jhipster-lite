@@ -21,7 +21,7 @@ public class SpringBootCoreModuleFactory {
   private static final JHipsterSource MAIN_SOURCE = SOURCE.append("main");
   private static final JHipsterSource TEST_SOURCE = SOURCE.append("test");
 
-  private static final GroupId SRPING_BOOT_GROUP = groupId("org.springframework.boot");
+  private static final GroupId SPRING_BOOT_GROUP = groupId("org.springframework.boot");
 
   private static final String JUNIT_GROUP = "org.junit.jupiter";
   private static final String MOCKITO_GROUP = "org.mockito";
@@ -54,7 +54,7 @@ public class SpringBootCoreModuleFactory {
         .removeDependency(dependencyId("org.assertj", "assertj-core"))
         .removeDependency(dependencyId(MOCKITO_GROUP, "mockito-junit-jupiter"))
         .addDependencyManagement(springBootBom())
-        .addDependency(SRPING_BOOT_GROUP, artifactId("spring-boot-starter"))
+        .addDependency(SPRING_BOOT_GROUP, artifactId("spring-boot-starter"))
         .addDependency(springBootConfigurationProcessor())
         .addDependency(groupId("org.apache.commons"), artifactId("commons-lang3"))
         .addDependency(springBootTest())
@@ -108,13 +108,13 @@ public class SpringBootCoreModuleFactory {
   }
 
   private JavaDependency springBootConfigurationProcessor() {
-    return JavaDependency.builder().groupId(SRPING_BOOT_GROUP).artifactId("spring-boot-configuration-processor").optional().build();
+    return JavaDependency.builder().groupId(SPRING_BOOT_GROUP).artifactId("spring-boot-configuration-processor").optional().build();
   }
 
   private JavaDependency springBootTest() {
     return JavaDependency
       .builder()
-      .groupId(SRPING_BOOT_GROUP)
+      .groupId(SPRING_BOOT_GROUP)
       .artifactId("spring-boot-starter-test")
       .scope(JavaDependencyScope.TEST)
       .build();
@@ -123,7 +123,7 @@ public class SpringBootCoreModuleFactory {
   private JavaBuildPlugin springBootPluginManagement(String fullyQualifiedMainClass) {
     return JavaBuildPlugin
       .builder()
-      .groupId(SRPING_BOOT_GROUP)
+      .groupId(SPRING_BOOT_GROUP)
       .artifactId("spring-boot-maven-plugin")
       .versionSlug("spring-boot")
       .additionalElements(
@@ -144,6 +144,6 @@ public class SpringBootCoreModuleFactory {
   }
 
   private JavaBuildPlugin springBootMavenPlugin() {
-    return JavaBuildPlugin.builder().groupId(SRPING_BOOT_GROUP).artifactId("spring-boot-maven-plugin").build();
+    return JavaBuildPlugin.builder().groupId(SPRING_BOOT_GROUP).artifactId("spring-boot-maven-plugin").build();
   }
 }

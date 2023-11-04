@@ -33,7 +33,7 @@ public class FlywayModuleFactory {
         .add(SOURCE.file("V00000000000000__init.sql"), to("src/main/resources/db/migration").append(initFilename(date)))
         .and()
       .springMainProperties()
-        .set(propertyKey("spring.flyway.enabled"), propertyValue("true"))
+        .set(propertyKey("spring.flyway.enabled"), propertyValue(true))
         .set(propertyKey("spring.flyway.locations"), propertyValue("classpath:db/migration"))
         .and()
       .build();

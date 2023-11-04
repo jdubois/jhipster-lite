@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.technicaltools.actuator.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_SERVER;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_ACTUATOR;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,9 @@ class SpringBootActuatorModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRING_BOOT_ACTUATOR)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().build())
+      .propertiesDefinition(
+        JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addConfigurationFormat().build()
+      )
       .apiDoc("Spring Boot", "Add Spring Boot Actuator to the project")
       .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_SERVER).build())
       .tags("server", "spring", "spring-boot")

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.logging.logstash.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.LOGSTASH;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ class LogstashModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(LOGSTASH)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - Logging", "Add Logstash TCP appender")
       .organization(JHipsterModuleOrganization.SPRINGBOOT_DEPENDENCY)
       .tags("server", "logstash", "spring", "spring-boot")

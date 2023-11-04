@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.core.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.AuthenticationModulesFactory.*;
+import static tech.jhipster.lite.generator.server.springboot.mvc.security.common.domain.AuthenticationModulesFactory.authenticationModuleBuilder;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.module.domain.JHipsterModule;
@@ -119,7 +119,7 @@ public class OAuth2ModuleFactory {
 
     builder
       .springTestProperties()
-      .set(propertyKey("spring.main.allow-bean-definition-overriding"), propertyValue("true"))
+      .set(propertyKey("spring.main.allow-bean-definition-overriding"), propertyValue(true))
       .set(propertyKey("spring.security.oauth2.client.provider.oidc.issuer-uri"), propertyValue("http://DO_NOT_CALL:9080/realms/jhipster"));
   }
 

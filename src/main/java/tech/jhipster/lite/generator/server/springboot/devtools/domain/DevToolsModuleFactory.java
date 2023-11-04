@@ -26,12 +26,12 @@ public class DevToolsModuleFactory {
         .addDependency(springBootDevtoolsDependency())
         .and()
       .springMainProperties()
-        .set(propertyKey("spring.devtools.livereload.enabled"), propertyValue("false"))
-        .set(propertyKey("spring.devtools.restart.enabled"), propertyValue("false"))
+        .set(propertyKey("spring.devtools.livereload.enabled"), propertyValue(false))
+        .set(propertyKey("spring.devtools.restart.enabled"), propertyValue(false))
         .and()
-      .springMainProperties(springProfile("local"))
-        .set(propertyKey("spring.devtools.livereload.enabled"), propertyValue("true"))
-        .set(propertyKey("spring.devtools.restart.enabled"), propertyValue("true"))
+      .springLocalProperties()
+        .set(propertyKey("spring.devtools.livereload.enabled"), propertyValue(true))
+        .set(propertyKey("spring.devtools.restart.enabled"), propertyValue(true))
         .and()
       .build();
     //@formatter:on

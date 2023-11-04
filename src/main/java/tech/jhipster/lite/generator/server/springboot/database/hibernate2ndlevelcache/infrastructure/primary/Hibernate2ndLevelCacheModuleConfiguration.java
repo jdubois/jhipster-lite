@@ -19,7 +19,9 @@ class Hibernate2ndLevelCacheModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(HIBERNATE_2ND_LEVEL_CACHE)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().build())
+      .propertiesDefinition(
+        JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().addConfigurationFormat().build()
+      )
       .apiDoc("Spring Boot - Database", "Add Hibernate second level cache configuration to project")
       .organization(JHipsterModuleOrganization.builder().addDependency(JCACHE).addDependency(JPA_PERSISTENCE).build())
       .tags("server", "spring", "spring-boot", "database", "hibernate", "cache")

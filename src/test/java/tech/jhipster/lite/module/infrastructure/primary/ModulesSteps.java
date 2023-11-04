@@ -300,7 +300,7 @@ public class ModulesSteps {
   }
 
   @Then("I should have landscape level {int} with elements")
-  public void shouldHavelandscapeLevelElements(int level, List<Map<String, String>> elements) {
+  public void shouldHaveLandscapeLevelElements(int level, List<Map<String, String>> elements) {
     assertThatLastResponse().hasOkStatus();
 
     elements.forEach(element -> {

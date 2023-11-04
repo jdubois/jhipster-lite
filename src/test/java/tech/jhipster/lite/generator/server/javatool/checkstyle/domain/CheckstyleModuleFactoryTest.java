@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.javatool.checkstyle.domain;
 
-import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.*;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.assertThatModuleWithFiles;
+import static tech.jhipster.lite.module.infrastructure.secondary.JHipsterModulesAssertions.pomFile;
 
 import org.junit.jupiter.api.Test;
 import tech.jhipster.lite.TestFileUtils;
@@ -49,6 +50,7 @@ class CheckstyleModuleFactoryTest {
       )
       .and()
       .hasFile("checkstyle.xml")
+      .containing("<module name=\"IllegalImport\">")
       .containing("<module name=\"Checker\">")
       .containing("<module name=\"TreeWalker\">")
       .containing("<module name=\"UnusedImports\" />");

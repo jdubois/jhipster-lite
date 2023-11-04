@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.flyway.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.DATABASE_MIGRATION;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.JPA_PERSISTENCE;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ class FlywayModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(FLYWAY)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - Database Migration", "Add Flyway")
       .organization(JHipsterModuleOrganization.builder().feature(DATABASE_MIGRATION).addDependency(JPA_PERSISTENCE).build())
       .tags("server", "spring", "spring-boot", "database", "migration")

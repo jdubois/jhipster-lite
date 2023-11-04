@@ -64,7 +64,7 @@ public final class JHipsterModulesAssertions {
   }
 
   public static JHipsterModuleAsserter assertThatModuleWithFiles(JHipsterModule module, ModuleFile... files) {
-    addFilesToproject(module.projectFolder(), files);
+    addFilesToProject(module.projectFolder(), files);
 
     return new JHipsterModuleAsserter(module);
   }
@@ -74,7 +74,7 @@ public final class JHipsterModulesAssertions {
     JHipsterModuleUpgrade upgrade,
     ModuleFile... files
   ) {
-    addFilesToproject(module.projectFolder(), files);
+    addFilesToProject(module.projectFolder(), files);
 
     return new JHipsterModuleUpgradeAsserter(module, upgrade);
   }
@@ -87,7 +87,7 @@ public final class JHipsterModulesAssertions {
     return "\"" + key + "\": \"" + command + "\"";
   }
 
-  private static void addFilesToproject(JHipsterProjectFolder project, ModuleFile... files) {
+  private static void addFilesToProject(JHipsterProjectFolder project, ModuleFile... files) {
     Stream
       .of(files)
       .forEach(file -> {

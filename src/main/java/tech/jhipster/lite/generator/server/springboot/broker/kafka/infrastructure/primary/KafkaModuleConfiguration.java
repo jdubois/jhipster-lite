@@ -23,7 +23,7 @@ class KafkaModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRING_BOOT_KAFKA)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc(TAG, "Add Kafka dependencies, with testcontainers")
       .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT).build())
       .tags(SERVER, SPRING, SPRING_BOOT_TAG, BROKER)
@@ -35,7 +35,7 @@ class KafkaModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRING_BOOT_KAFKA_DUMMY_PRODUCER_CONSUMER)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc(TAG, "Add dummy Kafka producer and consumer")
       .organization(kafkaDependency())
       .tags(SERVER, SPRING, SPRING_BOOT_TAG, BROKER)

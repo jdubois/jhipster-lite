@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.broker.pulsar.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_PULSAR;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ class PulsarModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(SPRING_BOOT_PULSAR)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build())
+      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build())
       .apiDoc("Spring Boot - Broker", "Add Pulsar dependencies, with testcontainers")
       .organization(JHipsterModuleOrganization.builder().addDependency(SPRING_BOOT).build())
       .tags("server", "spring", "spring-boot", "broker")

@@ -2,20 +2,14 @@ package tech.jhipster.lite.generator.server.springboot.mvc.dummy.cassandrapersis
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import java.util.regex.Pattern;
 import tech.jhipster.lite.module.domain.JHipsterModule;
 import tech.jhipster.lite.module.domain.file.JHipsterDestination;
 import tech.jhipster.lite.module.domain.file.JHipsterSource;
 import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
-import tech.jhipster.lite.module.domain.replacement.ElementReplacer;
-import tech.jhipster.lite.module.domain.replacement.RegexReplacer;
-import tech.jhipster.lite.module.domain.replacement.ReplacementCondition;
 import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class DummyCassandraPersistenceModuleFactory {
 
-  private static final Pattern KEYSPACE_PATTERN = Pattern.compile(".*spring\\.cassandra\\.keyspace-name=.*");
-  private static final ElementReplacer EXISTING_KEYSPACE_NEEDLE = new RegexReplacer(ReplacementCondition.always(), KEYSPACE_PATTERN);
   private static final JHipsterSource SOURCE = from("server/springboot/mvc/dummy/cassandrapersistence");
   private static final String SECONDARY = "infrastructure/secondary";
   private static final String SECONDARY_DESTINATION = "dummy/" + SECONDARY;
@@ -24,7 +18,7 @@ public class DummyCassandraPersistenceModuleFactory {
     Assert.notNull("properties", properties);
 
     String packagePath = properties.packagePath();
-    String pakageName = properties.projectBaseName().get();
+    String packageName = properties.projectBaseName().get();
 
     //@formatter:off
     return moduleBuilder(properties)
@@ -51,10 +45,8 @@ public class DummyCassandraPersistenceModuleFactory {
         .delete(path("src/main/java").append(packagePath).append(SECONDARY_DESTINATION).append("InMemoryBeersRepository.java"))
         .delete(path("src/test/java").append(packagePath).append(SECONDARY_DESTINATION).append("InMemoryBeersResetter.java"))
         .and()
-      .mandatoryReplacements()
-        .in(path("src/main/resources/config/application.properties"))
-          .add(EXISTING_KEYSPACE_NEEDLE, "spring.cassandra.keyspace-name=" + pakageName)
-          .and()
+      .springMainProperties()
+        .set(propertyKey("spring.cassandra.keyspace-name"), propertyValue(packageName))
         .and()
       .build();
     //@formatter:on

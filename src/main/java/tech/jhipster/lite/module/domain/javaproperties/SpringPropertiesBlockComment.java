@@ -45,6 +45,10 @@ public class SpringPropertiesBlockComment implements SpringPropertyTypeFileName 
     return properties;
   }
 
+  public SpringProfile profile() {
+    return profile;
+  }
+
   @Override
   public String filename() {
     if (profile.isDefault()) {

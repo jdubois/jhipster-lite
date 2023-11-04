@@ -41,7 +41,7 @@ class EHCacheModulesConfiguration {
   }
 
   private JHipsterModulePropertiesDefinition properties() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().build();
+    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addConfigurationFormat().build();
   }
 
   private JHipsterModuleOrganization organization() {

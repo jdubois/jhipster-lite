@@ -13,6 +13,7 @@ public class JHipsterModuleProperties {
   public static final String PROJECT_NAME_PARAMETER = "projectName";
   public static final String PROJECT_BASE_NAME_PARAMETER = "baseName";
   public static final String SERVER_PORT_PARAMETER = "serverPort";
+  public static final String SERVER_CONFIGURATION_FORMAT = "configurationFormat";
 
   private final JHipsterProjectFolder projectFolder;
   private final boolean commitModule;
@@ -23,6 +24,7 @@ public class JHipsterModuleProperties {
   private final JHipsterProjectName projectName;
   private final JHipsterProjectBaseName projectBaseName;
   private final JHipsterServerPort serverPort;
+  private final SpringConfigurationFormat configurationFormat;
 
   public JHipsterModuleProperties(String projectFolder, boolean commitModule, Map<String, Object> parameters) {
     this.projectFolder = new JHipsterProjectFolder(projectFolder);
@@ -34,6 +36,7 @@ public class JHipsterModuleProperties {
     projectName = new JHipsterProjectName(this.parameters.getOrDefault(PROJECT_NAME_PARAMETER, null, String.class));
     projectBaseName = new JHipsterProjectBaseName(this.parameters.getOrDefault(PROJECT_BASE_NAME_PARAMETER, null, String.class));
     serverPort = new JHipsterServerPort(this.parameters.getOrDefault(SERVER_PORT_PARAMETER, null, Integer.class));
+    configurationFormat = SpringConfigurationFormat.from(this.parameters.getOrDefault(SERVER_CONFIGURATION_FORMAT, null, String.class));
   }
 
   public JHipsterProjectFolder projectFolder() {
@@ -101,6 +104,10 @@ public class JHipsterModuleProperties {
 
   public JHipsterServerPort serverPort() {
     return serverPort;
+  }
+
+  public SpringConfigurationFormat configurationFormat() {
+    return configurationFormat;
   }
 
   public Map<String, Object> getParameters() {

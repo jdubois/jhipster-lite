@@ -16,7 +16,6 @@ public class SpringBootWebfluxModuleFactory {
   private static final JHipsterSource SOURCE = from("server/springboot/webflux/web");
 
   private static final PropertyKey SERVER_PORT = propertyKey("server.port");
-  private static final PropertyKey EXCEPTION_PACKAGE = propertyKey("application.exception.package");
 
   private static final GroupId SPRING_GROUP = groupId("org.springframework.boot");
 
@@ -39,13 +38,10 @@ public class SpringBootWebfluxModuleFactory {
         .addDependency(SPRING_GROUP, artifactId("spring-boot-starter-validation"))
         .and()
       .springMainProperties()
-        .set(SERVER_PORT, propertyValue(properties.serverPort().stringValue()))
-        .set(propertyKey("application.exception.details"), propertyValue("false"))
-        .set(EXCEPTION_PACKAGE, propertyValue("org.", "java.", "net.", "jakarta.", "com.", "io.", "de.", properties.basePackage().get()))
+        .set(SERVER_PORT, propertyValue(properties.serverPort().get()))
         .and()
       .springTestProperties()
-        .set(SERVER_PORT, propertyValue("0"))
-        .set(EXCEPTION_PACKAGE, propertyValue("org.", "java."))
+        .set(SERVER_PORT, propertyValue(0))
         .and()
       .files()
         .batch(SOURCE.append("main"), toSrcMainJava().append(packagePath).append(EXCEPTION_PRIMARY))

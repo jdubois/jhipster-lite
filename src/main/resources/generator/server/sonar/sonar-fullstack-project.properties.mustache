@@ -19,7 +19,7 @@ sonar.javascript.lcov.reportPaths=target/test-results/lcov.info
 sonar.sourceEncoding=UTF-8
 sonar.exclusions=src/main/webapp/main.ts, src/main/webapp/app/main.ts, src/main/webapp/content/**/*.*, src/main/webapp/i18n/*.js, target/classes/static/**/*.*, src/main/webapp/app/index.tsx, src/main/webapp/routes/+page.svelte
 
-sonar.issue.ignore.multicriteria=S119,S125,S3437,S4502,S4684,S4032,S5778,S1133,S6206,S6564,UndocumentedApi
+sonar.issue.ignore.multicriteria=S119,S125,S3437,S4502,S4684,S4032,S5778,S1133,S6206,S2699,S6564,UndocumentedApi
 
 # Rule: Generic types on one character
 sonar.issue.ignore.multicriteria.S119.resourceKey=src/main/java/**/*
@@ -56,6 +56,11 @@ sonar.issue.ignore.multicriteria.S1133.ruleKey=java:S1133
 # Rule: Use record when possible in primary
 sonar.issue.ignore.multicriteria.S6206.resourceKey=src/main/java/**/infrastructure/primary/**/*
 sonar.issue.ignore.multicriteria.S6206.ruleKey=java:S6206
+
+# Rule: Add at least one assertion to this test case
+# Waiting the fix at https://community.sonarsource.com/t/false-positive-s2699-add-at-least-one-assertion-to-this-test-case/99064
+sonar.issue.ignore.multicriteria.S2699.resourceKey=src/test/javascript/**
+sonar.issue.ignore.multicriteria.S2699.ruleKey=typescript:S2699
 
 # Rule: Delete commented out code in liquibase example
 sonar.issue.ignore.multicriteria.S125.resourceKey=src/main/resources/config/liquibase/master.xml

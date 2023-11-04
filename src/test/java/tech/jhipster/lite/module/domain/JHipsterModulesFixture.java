@@ -103,7 +103,7 @@ public final class JHipsterModulesFixture {
       .comment(propertyKey("springdoc.swagger-ui.operationsSorter"), comment("This is a comment"))
       .set(propertyKey("springdoc.swagger-ui.operationsSorter"), propertyValue("alpha"))
       .and()
-    .springMainProperties(springProfile("local"))
+    .springLocalProperties()
       .comment(propertyKey("springdoc.swagger-ui.tryItOutEnabled"), comment("This is a comment"))
       .set(propertyKey("springdoc.swagger-ui.tryItOutEnabled"), propertyValue("false"))
       .and()

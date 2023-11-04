@@ -15,6 +15,10 @@
     font-family: Pacifico, cursive;
     font-size: 1.2rem;
   }
+
+  &-version--text {
+    font-size: 0.7rem;
+  }
 }
 
 @media screen and (min-width: $jhlite-global-breakpoint-small-medium) {

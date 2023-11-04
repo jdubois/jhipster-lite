@@ -35,7 +35,7 @@ public class Hibernate2ndLevelCacheModuleFactory {
         )
         .and()
       .springMainProperties()
-        .set(propertyKey("spring.jpa.properties.hibernate.cache.use_second_level_cache"), propertyValue("true"))
+        .set(propertyKey("spring.jpa.properties.hibernate.cache.use_second_level_cache"), propertyValue(true))
         .and()
       .files()
         .add(TEST_SOURCE.template("Hibernate2ndLevelCacheConfigurationIT.java"), testDestination.append("Hibernate2ndLevelCacheConfigurationIT.java"))

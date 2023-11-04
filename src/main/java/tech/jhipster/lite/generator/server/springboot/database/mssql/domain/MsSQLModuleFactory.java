@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.mssql.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommonModuleBuilder.*;
+import static tech.jhipster.lite.generator.server.springboot.database.sqlcommon.domain.SQLCommonModuleBuilder.sqlCommonModuleBuilder;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.generator.server.springboot.database.common.domain.DatabaseType;
@@ -52,8 +52,8 @@ public class MsSQLModuleFactory {
         .set(propertyKey("spring.jpa.hibernate.ddl-auto"), propertyValue("update"))
         .set(propertyKey("spring.jpa.properties.hibernate.criteria.literal_handling_mode"), propertyValue("BIND"))
         .set(propertyKey("spring.jpa.properties.hibernate.dialect"), propertyValue("org.hibernate.dialect.SQLServer2012Dialect"))
-        .set(propertyKey("spring.jpa.properties.hibernate.format_sql"), propertyValue("true"))
-        .set(propertyKey("spring.jpa.properties.hibernate.jdbc.fetch_size"), propertyValue("150"))
+        .set(propertyKey("spring.jpa.properties.hibernate.format_sql"), propertyValue(true))
+        .set(propertyKey("spring.jpa.properties.hibernate.jdbc.fetch_size"), propertyValue(150))
         .and()
       .springTestProperties()
         .set(

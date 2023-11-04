@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public final class JHipsterCollections {
 
@@ -23,5 +25,10 @@ public final class JHipsterCollections {
     }
 
     return Collections.unmodifiableMap(map);
+  }
+
+  @SafeVarargs
+  public static <T> Collection<T> concat(Collection<T>... collections) {
+    return Stream.of(collections).filter(Objects::nonNull).flatMap(Collection::stream).toList();
   }
 }

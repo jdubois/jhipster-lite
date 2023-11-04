@@ -21,10 +21,11 @@ Feature: MariaDB module
   Scenario: Should get MariaDB module properties definition
     When I get module "mariadb" properties definition
     Then I should have properties definitions
-      | Key         | Type    | Mandatory |
-      | packageName | STRING  | true      |
-      | baseName    | STRING  | true      |
-      | indentSize  | INTEGER | false     |
+      | Key                 | Type    | Mandatory |
+      | packageName         | STRING  | true      |
+      | baseName            | STRING  | true      |
+      | configurationFormat | STRING  | false     |
+      | indentSize          | INTEGER | false     |
 
   Scenario: Should add MariaDB elements using module url
     When I apply "mariadb" module to default project with maven file

@@ -1,7 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.database.mysql.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.JPA_PERSISTENCE;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.MYSQL;
+import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,9 @@ class MySQLModuleConfiguration {
     return JHipsterModuleResource
       .builder()
       .slug(MYSQL)
-      .propertiesDefinition(JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().build())
+      .propertiesDefinition(
+        JHipsterModulePropertiesDefinition.builder().addBasePackage().addIndentation().addProjectBaseName().addConfigurationFormat().build()
+      )
       .apiDoc("Spring Boot - Database", "Add MySQL to project")
       .organization(JHipsterModuleOrganization.builder().feature(JPA_PERSISTENCE).addDependency(SPRING_BOOT).build())
       .tags("server", "spring", "spring-boot", "database")

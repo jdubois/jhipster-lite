@@ -42,6 +42,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
   private final FileSystemJHipsterModuleFiles files;
   private final FileSystemJavaBuildCommandsHandler javaBuild;
   private final FileSystemSpringPropertiesCommandsHandler springProperties;
+  private final FileSystemYamlSpringPropertiesCommandsHandler yamlSpringProperties;
   private final FileSystemSpringCommentsCommandsHandler springComments;
   private final FileSystemSpringFactoriesCommandsHandler springFactories;
   private final FileSystemPackageJsonHandler packageJson;
@@ -62,6 +63,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     javaBuild = new FileSystemJavaBuildCommandsHandler();
     springProperties = new FileSystemSpringPropertiesCommandsHandler();
     springComments = new FileSystemSpringCommentsCommandsHandler();
+    yamlSpringProperties = new FileSystemYamlSpringPropertiesCommandsHandler();
     springFactories = new FileSystemSpringFactoriesCommandsHandler();
     packageJson = new FileSystemPackageJsonHandler(npmVersions);
     replacer = new FileSystemReplacer();
@@ -79,6 +81,7 @@ class FileSystemJHipsterModulesRepository implements JHipsterModulesRepository {
     javaBuild.handle(changes.indentation(), changes.projectFolder(), changes.javaBuildCommands());
     springProperties.handle(changes.projectFolder(), changes.springProperties());
     springComments.handle(changes.projectFolder(), changes.springComments(), changes.springPropertiesBlockComments());
+    yamlSpringProperties.handle(changes.indentation(), changes.projectFolder(), changes.springYamlProperties());
     springFactories.handle(changes.projectFolder(), changes.springFactories());
     packageJson.handle(changes.indentation(), changes.projectFolder(), changes.packageJson());
     replacer.handle(changes.projectFolder(), changes.replacers());

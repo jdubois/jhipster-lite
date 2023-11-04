@@ -73,6 +73,14 @@ public class JHipsterModulePropertyDefinition {
       .build();
   }
 
+  public static JHipsterModulePropertyDefinition configurationFormatProperty() {
+    return optionalStringProperty(JHipsterModuleProperties.SERVER_CONFIGURATION_FORMAT)
+      .description("Format of the configuration files (yaml or properties)")
+      .defaultValue("properties")
+      .order(500)
+      .build();
+  }
+
   public static JHipsterModulePropertyDefinitionOptionalFieldsBuilder mandatoryStringProperty(String key) {
     return builder().type(JHipsterPropertyType.STRING).mandatory(true).key(key);
   }

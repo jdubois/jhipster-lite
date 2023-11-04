@@ -54,12 +54,9 @@ class SpringBootWebfluxModuleFactoryTest {
       .and()
       .hasFile("src/main/resources/config/application.properties")
       .containing("server.port=9000")
-      .containing("application.exception.details=false")
-      .containing("application.exception.package=org.,java.,net.,jakarta.,com.,io.,de.,com.jhipster.test")
       .and()
       .hasFile("src/test/resources/config/application-test.properties")
       .containing("server.port=0")
-      .containing("application.exception.package=org.,java.")
       .and()
       .hasPrefixedFiles("src/main/java/com/jhipster/test/shared/error/infrastructure/primary", "HeaderUtil.java", "FieldErrorDTO.java")
       .hasPrefixedFiles(

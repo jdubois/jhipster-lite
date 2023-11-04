@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.springcloud.configclient.domain;
 
-import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.*;
+import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.SPRING_CLOUD_GROUP;
+import static tech.jhipster.lite.generator.server.springboot.springcloud.common.domain.SpringCloudModuleDependencies.springCloudDependenciesManagement;
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import tech.jhipster.lite.generator.base64.domain.Base64Utils;
@@ -37,7 +38,7 @@ public class SpringCloudConfigModuleFactory {
     //@formatter:off
     return builder
       .springMainBootstrapProperties()
-        .set(propertyKey("spring.cloud.config.fail-fast"), propertyValue("true"))
+        .set(propertyKey("spring.cloud.config.fail-fast"), propertyValue(true))
         .and()
       .springMainBootstrapProperties(springProfile("local"))
         .set(propertyKey("spring.cloud.config.fail-fast"), FALSE_VALUE)

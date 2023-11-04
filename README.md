@@ -260,27 +260,13 @@ Once started, go to http://localhost:7471, select your option and generate the c
 
 ## Contributing
 
-We are honoured by any contributions you may have small or large. Please refer to our [contribution guidelines and instructions document](https://github.com/jhipster/jhipster-lite/blob/main/CONTRIBUTING.md) for any information about contributing to the project.
+We are honored by any contributions you may have small or large. Please refer to our [contribution guidelines and instructions document](https://github.com/jhipster/jhipster-lite/blob/main/CONTRIBUTING.md) for any information about contributing to the project.
 
 ## Sponsors
 
 Support this project by becoming a sponsor! [Become a sponsor](https://opencollective.com/generator-jhipster) or [learn more about sponsoring the project](https://www.jhipster.tech/sponsors/).
 
 **Thank you to our sponsors!**
-
-### Gold Sponsors
-
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="middle">
-        <a href="https://dev.entando.org/jhipster" target="_blank">
-          <img width="200em" src="https://www.jhipster.tech/images/open-collective/entandoe.png">
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 ### Bronze sponsors
 

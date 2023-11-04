@@ -1,6 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoccore.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.*;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRINGDOC;
+import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_MVC_SERVER;
 import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,12 @@ class SpringdocModuleConfiguration {
   }
 
   private JHipsterModulePropertiesDefinition buildPropertiesDefinition() {
-    return JHipsterModulePropertiesDefinition.builder().addBasePackage().addProjectBaseName().addIndentation().build();
+    return JHipsterModulePropertiesDefinition
+      .builder()
+      .addBasePackage()
+      .addProjectBaseName()
+      .addIndentation()
+      .addConfigurationFormat()
+      .build();
   }
 }

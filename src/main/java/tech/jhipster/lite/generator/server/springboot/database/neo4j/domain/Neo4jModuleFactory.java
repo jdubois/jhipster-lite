@@ -2,12 +2,14 @@ package tech.jhipster.lite.generator.server.springboot.database.neo4j.domain;
 
 import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
-import tech.jhipster.lite.module.domain.*;
-import tech.jhipster.lite.module.domain.docker.*;
-import tech.jhipster.lite.module.domain.file.*;
-import tech.jhipster.lite.module.domain.javadependency.*;
-import tech.jhipster.lite.module.domain.properties.*;
-import tech.jhipster.lite.shared.error.domain.*;
+import tech.jhipster.lite.module.domain.JHipsterModule;
+import tech.jhipster.lite.module.domain.LogLevel;
+import tech.jhipster.lite.module.domain.docker.DockerImages;
+import tech.jhipster.lite.module.domain.file.JHipsterSource;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependency;
+import tech.jhipster.lite.module.domain.javadependency.JavaDependencyScope;
+import tech.jhipster.lite.module.domain.properties.JHipsterModuleProperties;
+import tech.jhipster.lite.shared.error.domain.Assert;
 
 public class Neo4jModuleFactory {
 
@@ -47,7 +49,7 @@ public class Neo4jModuleFactory {
         .and()
       .springMainProperties()
         .set(propertyKey("spring.neo4j.uri"), propertyValue("bolt://localhost:7687"))
-        .set(propertyKey("spring.neo4j.pool.metrics-enabled"), propertyValue("true"))
+        .set(propertyKey("spring.neo4j.pool.metrics-enabled"), propertyValue(true))
         .and()
       .springTestProperties()
         .set(propertyKey("spring.neo4j.uri"), propertyValue("${TEST_NEO4J_URI}"))

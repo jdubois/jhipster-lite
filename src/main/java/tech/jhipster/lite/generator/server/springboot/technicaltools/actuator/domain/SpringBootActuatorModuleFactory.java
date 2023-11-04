@@ -25,7 +25,7 @@ public class SpringBootActuatorModuleFactory {
           propertyKey("management.endpoints.web.exposure.include"),
           propertyValue("configprops", "env", "health", "info", "logfile", "loggers", "threaddump")
         )
-        .set(propertyKey("management.endpoint.health.probes.enabled"), propertyValue("true"))
+        .set(propertyKey("management.endpoint.health.probes.enabled"), propertyValue(true))
         .set(propertyKey("management.endpoint.health.show-details"), propertyValue("always"))
         .and()
       .build();

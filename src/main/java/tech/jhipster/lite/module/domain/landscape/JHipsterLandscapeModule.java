@@ -35,11 +35,6 @@ public final class JHipsterLandscapeModule implements JHipsterLandscapeElement {
   }
 
   @Override
-  public JHipsterLandscapeElementType type() {
-    return JHipsterLandscapeElementType.MODULE;
-  }
-
-  @Override
   public JHipsterModuleSlug slug() {
     return module;
   }

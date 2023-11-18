@@ -9,32 +9,12 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0-RC2</version>
+    <version>3.1.5</version>
   </parent>
-  <repositories>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
 
   <groupId>tech.jhipster.lite</groupId>
   <artifactId>jhlite</artifactId>
-  <version>0.47.1-SNAPSHOT</version>
+  <version>0.48.1-SNAPSHOT</version>
   <name>jhlite</name>
   <description>JHipster Lite</description>
   <packaging>jar</packaging>
@@ -66,7 +46,7 @@
   </scm>
 
   <properties>
-    <java.version>17</java.version>
+    <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <node.version>v20.9.0</node.version>
@@ -75,17 +55,17 @@
     <maven.version>3.9.5</maven.version>
     <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
     <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-    <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
+    <maven-javadoc-plugin.version>3.6.2</maven-javadoc-plugin.version>
     <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
     <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
     <start-class>tech.jhipster.lite.JHLiteApp</start-class>
 
     <byte-buddy.version>1.14.9</byte-buddy.version>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
-    <surefire-plugin.version>3.2.1</surefire-plugin.version>
+    <surefire-plugin.version>3.2.2</surefire-plugin.version>
     <jacoco.version>0.8.11</jacoco.version>
     <jgit.version>6.7.0.202309050840-r</jgit.version>
-    <archunit-junit5.version>1.1.0</archunit-junit5.version>
+    <archunit-junit5.version>1.2.0</archunit-junit5.version>
     <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
     <properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
     <sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
@@ -96,7 +76,7 @@
     <dom4j.version>2.1.4</dom4j.version>
     <night-config.version>3.6.7</night-config.version>
     <testcontainers.version>1.19.1</testcontainers.version>
-    <mongock.version>5.3.4</mongock.version>
+    <mongock.version>5.3.5</mongock.version>
     <git-commit-id-plugin.version>7.0.0</git-commit-id-plugin.version>
     <maven-checkstyle-plugin.version>3.3.1</maven-checkstyle-plugin.version>
 
@@ -699,8 +679,8 @@
                 <version>[${maven.version},)</version>
               </requireMavenVersion>
               <requireJavaVersion>
-                <message>You are running an incompatible version of Java. JHipster supports JDK 17.</message>
-                <version>[17,18)</version>
+                <message>You are running an incompatible version of Java. JHipster engine supports JDK 21+.</message>
+                <version>[21,22)</version>
               </requireJavaVersion>
             </rules>
           </configuration>
@@ -756,7 +736,7 @@
             <configuration>
               <image>
                 <env>
-                  <BP_JVM_VERSION>17</BP_JVM_VERSION>
+                  <BP_JVM_VERSION>21</BP_JVM_VERSION>
                 </env>
                 <buildpacks>
                   <buildpack>gcr.io/paketo-buildpacks/bellsoft-liberica:9.11.0</buildpack>

@@ -5,7 +5,7 @@ import ArrayComponentVue from './ArrayComponentVue.vue';
 import ObjectComponentVue from './ObjectComponentVue.vue';
 describe('VueProp', () => {
   describe('Array', () => {
-    it('Should type', () => {
+    it('should type', () => {
       const mounted = shallowMount(ArrayComponentVue, {
         props: {
           strings: ['first', 'second'],
@@ -17,7 +17,7 @@ describe('VueProp', () => {
   });
 
   describe('Object', () => {
-    it('Should type', () => {
+    it('should type', () => {
       const mounted = shallowMount(ObjectComponentVue, {
         props: {
           customObject: {

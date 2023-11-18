@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.async.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_ASYNC;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRING_BOOT;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRING_BOOT_ASYNC;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

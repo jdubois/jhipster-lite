@@ -2,9 +2,9 @@ package tech.jhipster.lite.generator.server.springboot.mvc.security.kipe.infrast
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tech.jhipster.lite.generator.JHLiteFeatureSlug;
-import tech.jhipster.lite.generator.JHLiteModuleSlug;
 import tech.jhipster.lite.generator.server.springboot.mvc.security.kipe.application.KipeApplicationService;
+import tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug;
+import tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleOrganization;
 import tech.jhipster.lite.module.domain.resource.JHipsterModulePropertiesDefinition;
 import tech.jhipster.lite.module.domain.resource.JHipsterModuleResource;

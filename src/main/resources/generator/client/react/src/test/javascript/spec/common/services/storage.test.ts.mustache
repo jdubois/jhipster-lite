@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/common/services/storage';
 
 describe('setLocalStorage function', () => {
-  it('Should set item in localStorage', () => {
+  it('should set item in localStorage', () => {
     const key = 'key';
     const value = 'value';
     setLocalStorage(key, value);
@@ -12,7 +12,7 @@ describe('setLocalStorage function', () => {
 });
 
 describe('removeLocalStorage function', () => {
-  it('Should remove item from localstorage', () => {
+  it('should remove item from localstorage', () => {
     const key = 'key';
     const value = 'value';
     setLocalStorage(key, value);
@@ -23,7 +23,7 @@ describe('removeLocalStorage function', () => {
 });
 
 describe('getLocalStorage function', () => {
-  it('Should get item from localstorage', () => {
+  it('should get item from localstorage', () => {
     const key = 'key';
     const value = 'value';
     setLocalStorage(key, value);

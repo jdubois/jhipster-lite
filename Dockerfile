@@ -1,11 +1,11 @@
-FROM openjdk:17-slim AS build
+FROM openjdk:21-slim AS build
 COPY . /code/jhipster-app/
 WORKDIR /code/jhipster-app/
 RUN chmod +x mvnw && ./mvnw package -B -DskipTests -Dmaven.javadoc.skip=true -Dmaven.source.skip
 RUN mv /code/jhipster-app/target/*.jar /code/ && \
     rm -rf /code/*-tests.jar
 
-FROM openjdk:17-slim
+FROM openjdk:21-slim
 COPY --from=build /code/*.jar /code/
 RUN \
     # configure the "jhipster" user

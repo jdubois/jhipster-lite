@@ -7,9 +7,4 @@ public record RemoveJavaDependencyManagement(DependencyId dependency) implements
   public RemoveJavaDependencyManagement {
     Assert.notNull("dependency", dependency);
   }
-
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.REMOVE_DEPENDENCY_MANAGEMENT;
-  }
 }

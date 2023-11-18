@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.cassandra.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.CASSANDRA;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.CASSANDRA;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

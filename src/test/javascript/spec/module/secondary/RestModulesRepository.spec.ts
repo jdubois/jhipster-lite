@@ -13,7 +13,7 @@ import { defaultLandscape } from '../domain/landscape/Landscape.fixture';
 import { describe, expect, it } from 'vitest';
 
 describe('Rest modules repository', () => {
-  it('Should list modules using axios', async () => {
+  it('should list modules using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restModules()));
@@ -23,7 +23,7 @@ describe('Rest modules repository', () => {
     expect(modules).toEqual(defaultModules());
   });
 
-  it('Should list module without properties', async () => {
+  it('should list module without properties', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restModulesWithoutProperties()));
@@ -33,7 +33,7 @@ describe('Rest modules repository', () => {
     expect(modules.categories[0].modules[0].properties).toEqual([]);
   });
 
-  it('Should get landscape using axios', async () => {
+  it('should get landscape using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restLandscape()));
@@ -43,7 +43,7 @@ describe('Rest modules repository', () => {
     expect(landscape).toEqual(defaultLandscape());
   });
 
-  it('Should apply modules using axios', async () => {
+  it('should apply modules using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.post.resolves(dataBackendResponse(null));
@@ -53,7 +53,7 @@ describe('Rest modules repository', () => {
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
-  it('Should apply all modules using axios', async () => {
+  it('should apply all modules using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.post.resolves(dataBackendResponse(null));
@@ -63,7 +63,7 @@ describe('Rest modules repository', () => {
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
-  it('Should get empty module history using axios', async () => {
+  it('should get empty module history using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse({}));
@@ -76,7 +76,7 @@ describe('Rest modules repository', () => {
     });
   });
 
-  it('Should get module history using axios', async () => {
+  it('should get module history using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves(dataBackendResponse(restModuleHistory()));
@@ -87,7 +87,7 @@ describe('Rest modules repository', () => {
     expect(appliedModules).toEqual(defaultProjectHistory());
   });
 
-  it('Should format project using axios', async () => {
+  it('should format project using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.post.resolves(dataBackendResponse(null));
@@ -98,7 +98,7 @@ describe('Rest modules repository', () => {
     expect(axiosInstance.post.calledOnce).toBe(true);
   });
 
-  it('Should download project using axios', async () => {
+  it('should download project using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves({ headers: { 'x-suggested-filename': 'file.zip' }, data: [1, 2, 3] });
@@ -110,7 +110,7 @@ describe('Rest modules repository', () => {
     expect(project.content).toEqual([1, 2, 3]);
   });
 
-  it('Should fail to download when there is no suggested filename', async () => {
+  it('should fail to download when there is no suggested filename', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestModulesRepository(axiosInstance);
     axiosInstance.get.resolves({ headers: {}, data: [1, 2, 3] });

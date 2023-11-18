@@ -25,13 +25,13 @@ const wrap = (options?: Partial<WrapperOptions>): VueWrapper => {
 };
 
 describe('ThemeButton', () => {
-  it('Should exist', () => {
+  it('should exist', () => {
     const wrapper = wrap();
 
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('Should switch theme', async () => {
+  it('should switch theme', async () => {
     const themeRepository = stubLocalWindowThemeRepository();
     const wrapper = wrap({ themeRepository });
 

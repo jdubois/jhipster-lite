@@ -7,9 +7,4 @@ public record AddBuildPluginManagement(JavaBuildPlugin javaBuildPlugin) implemen
   public AddBuildPluginManagement {
     Assert.notNull("javaBuildPlugin", javaBuildPlugin);
   }
-
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.ADD_JAVA_BUILD_PLUGIN_MANAGEMENT;
-  }
 }

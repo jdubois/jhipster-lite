@@ -20,7 +20,7 @@ const STORAGE_KEY_MODULE_PARAMETERS_SUFIX = '_moduleParameters';
 const STORAGE_KEY_CURRENT_FOLDER_PATH = 'currentFolderPath';
 
 describe('LocalStorageModuleParametersRepository', () => {
-  it('Should store the module parameters using folder path as the key in localStorage', () => {
+  it('should store the module parameters using folder path as the key in localStorage', () => {
     const folderPath = '/tmp/jhlite/1234';
     const storage = fakeStorage();
     storage.clear();
@@ -35,7 +35,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(JSON.parse(storage.getItem(folderPath + STORAGE_KEY_MODULE_PARAMETERS_SUFIX)!)).toEqual(data);
   });
 
-  it('Should return empty Map when there is not module parameters in localStorage', () => {
+  it('should return empty Map when there is not module parameters in localStorage', () => {
     const folderPath = '/tmp/jhlite/1234';
     const storage = fakeStorage();
     storage.clear();
@@ -45,7 +45,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(repo.get(folderPath)).toEqual(new Map());
   });
 
-  it('Should return module parameters by folder path key from localStorage when it exists', () => {
+  it('should return module parameters by folder path key from localStorage when it exists', () => {
     const folderPath = '/tmp/jhlite/1234';
     const data: [string, ModuleParameterType][] = [
       ['key1', 'value1'],
@@ -60,7 +60,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(repo.get(folderPath)).toEqual(new Map(data));
   });
 
-  it('Should keep the previously module parameters in localStorage when store a new module parameters', () => {
+  it('should keep the previously module parameters in localStorage when store a new module parameters', () => {
     const folderPathOne = '/tmp/jhlite/one-1234';
     const folderPathTwo = '/tmp/jhlite/two-5678';
     const dataOne: [string, ModuleParameterType][] = [
@@ -81,7 +81,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(JSON.parse(storage.getItem(folderPathOne + STORAGE_KEY_MODULE_PARAMETERS_SUFIX)!)).toEqual(dataOne);
   });
 
-  it('Should remove corrent folder path from localStorage when the constructor is called', () => {
+  it('should remove corrent folder path from localStorage when the constructor is called', () => {
     const storage = fakeStorage();
     storage.clear();
     const data: [string, ModuleParameterType][] = [
@@ -95,7 +95,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(repo.getCurrentFolderPath()).toBe('');
   });
 
-  it('Should store last folder path key used to get the module parameters as the current folder path in localStorage', () => {
+  it('should store last folder path key used to get the module parameters as the current folder path in localStorage', () => {
     const storage = fakeStorage();
     storage.clear();
     const repo = new LocalStorageModuleParametersRepository(storage);
@@ -111,7 +111,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(storage.getItem(STORAGE_KEY_CURRENT_FOLDER_PATH)).toEqual(folderPath);
   });
 
-  it('Should return the current folder path from localStorage when it exists', () => {
+  it('should return the current folder path from localStorage when it exists', () => {
     const storage = fakeStorage();
     storage.clear();
     const repo = new LocalStorageModuleParametersRepository(storage);
@@ -122,7 +122,7 @@ describe('LocalStorageModuleParametersRepository', () => {
     expect(repo.getCurrentFolderPath()).toBe(folderPath);
   });
 
-  it('Should return empty string when there is not folder path in localStorage', () => {
+  it('should return empty string when there is not folder path in localStorage', () => {
     const storage = fakeStorage();
     storage.clear();
 

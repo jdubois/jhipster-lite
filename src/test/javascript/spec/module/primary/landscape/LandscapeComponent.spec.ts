@@ -134,14 +134,14 @@ describe('Landscape', () => {
   });
 
   describe('Loading', () => {
-    it('Should display loader when loading landscape', () => {
+    it('should display loader when loading landscape', () => {
       const wrapper = wrap();
 
       expect(wrapper.find(wrappedElement('landscape-loader')).exists()).toBe(true);
       expect(wrapper.find(wrappedElement('landscape')).exists()).toBe(false);
     });
 
-    it('Should catch error when waiting for modules error', () => {
+    it('should catch error when waiting for modules error', () => {
       try {
         const { applicationListener, cursorUpdater, landscapeScroller, modules, moduleParameters }: WrapperOptions = {
           cursorUpdater: stubBodyCursorUpdater(),
@@ -171,7 +171,7 @@ describe('Landscape', () => {
       }
     });
 
-    it('Should catch error when waiting for project folders error', () => {
+    it('should catch error when waiting for project folders error', () => {
       try {
         const { applicationListener, cursorUpdater, landscapeScroller, modules, moduleParameters }: WrapperOptions = {
           cursorUpdater: stubBodyCursorUpdater(),
@@ -201,7 +201,7 @@ describe('Landscape', () => {
       }
     });
 
-    it('Should load landscape at startup', async () => {
+    it('should load landscape at startup', async () => {
       const applicationListener = stubApplicationListener();
       const wrapper = await componentWithLandscape(applicationListener);
 
@@ -214,7 +214,7 @@ describe('Landscape', () => {
       expect(pathField.value).toBe('/tmp/jhlite/1234');
     });
 
-    it('Should unload landscape at destroy', async () => {
+    it('should unload landscape at destroy', async () => {
       const applicationListener = stubApplicationListener();
       const wrapper = await componentWithLandscape(applicationListener);
 
@@ -223,7 +223,7 @@ describe('Landscape', () => {
       expect(applicationListener.removeEventListener).toHaveBeenCalledTimes(1);
     });
 
-    it('Should load folder path from local storage', async () => {
+    it('should load folder path from local storage', async () => {
       const moduleParameters = repositoryWithModuleParameters();
       moduleParameters.getCurrentFolderPath.returns('/tmp/jhlite/5678');
 
@@ -236,7 +236,7 @@ describe('Landscape', () => {
   });
 
   describe('Display modes', () => {
-    it('Should switch to compacted mode', async () => {
+    it('should switch to compacted mode', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('compacted-mode-button')).trigger('click');
@@ -247,7 +247,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('infinitest-module')).classes()).toContain('-compacted');
     });
 
-    it('Should switch to extended mode', async () => {
+    it('should switch to extended mode', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('extended-mode-button')).trigger('click');
@@ -260,7 +260,7 @@ describe('Landscape', () => {
   });
 
   describe('Modules emphasize', () => {
-    it('Should highlight compacted selectable module and dependencies', async () => {
+    it('should highlight compacted selectable module and dependencies', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('vue-module')).trigger('mouseover');
@@ -277,7 +277,7 @@ describe('Landscape', () => {
       assertSelectableHighlightedConnectorsCount(wrapper, 1);
     });
 
-    it('Should highlight extended selectable module and dependencies', async () => {
+    it('should highlight extended selectable module and dependencies', async () => {
       const wrapper = await componentWithLandscape();
       wrapper.find(wrappedElement('extended-mode-button')).trigger('click');
       await wrapper.vm.$nextTick();
@@ -296,7 +296,7 @@ describe('Landscape', () => {
       assertSelectableHighlightedConnectorsCount(wrapper, 1);
     });
 
-    it('Should highlight dependant feature', async () => {
+    it('should highlight dependant feature', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('dummy-feature-module')).trigger('mouseover');
@@ -312,7 +312,7 @@ describe('Landscape', () => {
       assertNotSelectableHighlightedConnectorsCount(wrapper, 2);
     });
 
-    it('Should highlight selection tree', async () => {
+    it('should highlight selection tree', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('maven', wrapper);
@@ -327,7 +327,7 @@ describe('Landscape', () => {
       assertSelectableHighlightedConnectorsCount(wrapper, 4);
     });
 
-    it('Should un-highlight single module and dependencies', async () => {
+    it('should un-highlight single module and dependencies', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('java-base-module')).trigger('mouseover');
@@ -340,7 +340,7 @@ describe('Landscape', () => {
       assertSelectableHighlightedConnectorsCount(wrapper, 0);
     });
 
-    it('Should un-highlight featured module and dependencies', async () => {
+    it('should un-highlight featured module and dependencies', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('vue-module')).trigger('mouseover');
@@ -353,7 +353,7 @@ describe('Landscape', () => {
       assertSelectableHighlightedConnectorsCount(wrapper, 0);
     });
 
-    it('Should highlight unselection tree', async () => {
+    it('should highlight unselection tree', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('maven', wrapper);
@@ -367,7 +367,7 @@ describe('Landscape', () => {
       assertUnSelectionHighlightedConnectorsCount(wrapper, 2);
     });
 
-    it('Should put not emphasized in background', async () => {
+    it('should put not emphasized in background', async () => {
       const wrapper = await componentWithLandscape();
 
       wrapper.find(wrappedElement('infinitest-module')).trigger('mouseover');
@@ -381,7 +381,7 @@ describe('Landscape', () => {
   });
 
   describe('Selectable module', () => {
-    it('Should mark compacted root modules as selectable', async () => {
+    it('should mark compacted root modules as selectable', async () => {
       const wrapper = await componentWithLandscape();
 
       const initClasses = wrapper.find(wrappedElement('init-module')).classes();
@@ -393,7 +393,7 @@ describe('Landscape', () => {
       expect(infinitestClasses).toContain('-compacted');
     });
 
-    it('Should mark extended root modules as selectable', async () => {
+    it('should mark extended root modules as selectable', async () => {
       const wrapper = await componentWithLandscape();
       wrapper.find(wrappedElement('extended-mode-button')).trigger('click');
       await wrapper.vm.$nextTick();
@@ -407,7 +407,7 @@ describe('Landscape', () => {
       expect(infinitestClasses).toContain('-extended');
     });
 
-    it('Should mark feature depending modules as not selectable', async () => {
+    it('should mark feature depending modules as not selectable', async () => {
       const wrapper = await componentWithLandscape();
 
       expect(wrapper.find(wrappedElement('java-base-module')).classes()).toContain('-not-selectable');
@@ -415,7 +415,7 @@ describe('Landscape', () => {
   });
 
   describe('Module selection', () => {
-    it('Should select selectable module', async () => {
+    it('should select selectable module', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('init', wrapper);
@@ -430,7 +430,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).text()).toContain('(1)');
     });
 
-    it('Should select module in feature', async () => {
+    it('should select module in feature', async () => {
       const wrapper = await componentWithLandscape();
       await updatePath(wrapper);
 
@@ -442,7 +442,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).text()).toContain('(3)');
     });
 
-    it('Should not select not selectable module', async () => {
+    it('should not select not selectable module', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('java-base', wrapper);
@@ -452,7 +452,7 @@ describe('Landscape', () => {
   });
 
   describe('Module unselection', () => {
-    it('Should unselect selected module', async () => {
+    it('should unselect selected module', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('init', wrapper);
@@ -463,7 +463,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).text()).toContain('(0)');
     });
 
-    it('Should unselect dependant modules', async () => {
+    it('should unselect dependant modules', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('init', wrapper);
@@ -481,7 +481,7 @@ describe('Landscape', () => {
   });
 
   describe('New modules application', () => {
-    it('Should disable application button without selected modules', async () => {
+    it('should disable application button without selected modules', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -489,7 +489,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button without project path', async () => {
+    it('should disable application button without project path', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('maven', wrapper);
@@ -498,7 +498,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button with missing mandatory properties and no defaults', async () => {
+    it('should disable application button with missing mandatory properties and no defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -507,7 +507,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should not disable application button with missing mandatory properties and available defaults', async () => {
+    it('should not disable application button with missing mandatory properties and available defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -517,7 +517,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-new-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should apply module using repository', async () => {
+    it('should apply module using repository', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -541,7 +541,7 @@ describe('Landscape', () => {
   });
 
   describe('All modules application', () => {
-    it('Should disable application button without selected modules', async () => {
+    it('should disable application button without selected modules', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -549,7 +549,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button without project path', async () => {
+    it('should disable application button without project path', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('maven', wrapper);
@@ -558,7 +558,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable application button with missing mandatory properties and no defaults', async () => {
+    it('should disable application button with missing mandatory properties and no defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -567,7 +567,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should not disable application button with missing mandatory properties and no defaults', async () => {
+    it('should not disable application button with missing mandatory properties and no defaults', async () => {
       const wrapper = await componentWithLandscape();
 
       await wrapper.find(wrappedElement('folder-path-field')).setValue('test');
@@ -579,7 +579,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should apply module using repository', async () => {
+    it('should apply module using repository', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -605,7 +605,7 @@ describe('Landscape', () => {
       expect(message).toBe('Modules applied');
     });
 
-    it('Should apply module using repository with default values for unfilled properties', async () => {
+    it('should apply module using repository with default values for unfilled properties', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -634,7 +634,7 @@ describe('Landscape', () => {
       expect(message).toBe('Modules applied');
     });
 
-    it('Should remove setted boolean parameter', async () => {
+    it('should remove setted boolean parameter', async () => {
       const wrapper = await componentWithLandscape();
 
       await clickModule('maven', wrapper);
@@ -644,7 +644,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should apply modules without committing them', async () => {
+    it('should apply modules without committing them', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -662,7 +662,7 @@ describe('Landscape', () => {
       expect(modulesToApply.commit).toBe(false);
     });
 
-    it('Should handle application error', async () => {
+    it('should handle application error', async () => {
       const modules = repositoryWithLandscape();
       modules.applyAll.rejects();
       const wrapper = wrap({ modules });
@@ -677,7 +677,7 @@ describe('Landscape', () => {
       expect(message).toBe('Modules not applied');
     });
 
-    it('Should disable actions during application', async () => {
+    it('should disable actions during application', async () => {
       const modules = repositoryWithLandscape();
       modules.applyAll.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = wrap({ modules });
@@ -691,7 +691,7 @@ describe('Landscape', () => {
   });
 
   describe('History', () => {
-    it('Should load information from history', async () => {
+    it('should load information from history', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -706,7 +706,7 @@ describe('Landscape', () => {
       expect(initClasses).toContain('-applied');
     });
 
-    it('Should silently handle history loading error', async () => {
+    it('should silently handle history loading error', async () => {
       const modules = repositoryWithLandscape();
       modules.history.rejects(undefined);
       const wrapper = wrap({ modules });
@@ -719,7 +719,7 @@ describe('Landscape', () => {
       consoleErrors.mockRestore();
     });
 
-    it('Should ignore unknown modules from history', async () => {
+    it('should ignore unknown modules from history', async () => {
       const modules = repositoryWithLandscape();
       modules.history.resolves({
         modules: [new ModuleSlug('unknown')],
@@ -732,7 +732,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('init-module')).exists()).toBe(true);
     });
 
-    it('Should not replace user setted properties from history', async () => {
+    it('should not replace user setted properties from history', async () => {
       const modules = repositoryWithLandscape();
       const wrapper = wrap({ modules });
       await flushPromises();
@@ -747,7 +747,7 @@ describe('Landscape', () => {
   });
 
   describe('Formatting', () => {
-    it('Should disable applications during project formatting', async () => {
+    it('should disable applications during project formatting', async () => {
       const modules = repositoryWithLandscape();
       modules.format.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = wrap({ modules });
@@ -760,7 +760,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('init-module')).classes()).toContain('-compacted');
     });
 
-    it('Should enable applications after project formatting', async () => {
+    it('should enable applications after project formatting', async () => {
       const modules = repositoryWithLandscape();
       modules.format.resolves(undefined);
       const wrapper = wrap({ modules });
@@ -775,7 +775,7 @@ describe('Landscape', () => {
   });
 
   describe('Download', () => {
-    it('Should disable applications during download', async () => {
+    it('should disable applications during download', async () => {
       const modules = repositoryWithLandscape();
       modules.download.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = wrap({ modules });
@@ -787,7 +787,7 @@ describe('Landscape', () => {
       expect(wrapper.find(wrappedElement('modules-apply-all-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should enable applications after download', async () => {
+    it('should enable applications after download', async () => {
       const modules = repositoryWithLandscape();
       modules.download.resolves(undefined);
       const wrapper = wrap({ modules });

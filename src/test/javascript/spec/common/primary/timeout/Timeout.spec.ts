@@ -13,7 +13,7 @@ describe('Timeout', () => {
     vi.useRealTimers();
   });
 
-  it('Should launch timeout after passed time', () => {
+  it('should launch timeout after passed time', () => {
     const stub = vi.fn();
     new Timeout().register(stub, TIMEOUT_TIME);
 
@@ -22,7 +22,7 @@ describe('Timeout', () => {
     expect(stub).toHaveBeenCalledTimes(1);
   });
 
-  it('Should not launch timeout with less some time', () => {
+  it('should not launch timeout with less some time', () => {
     const stub = vi.fn();
     new Timeout().register(stub, TIMEOUT_TIME);
 
@@ -31,7 +31,7 @@ describe('Timeout', () => {
     expect(stub).toHaveBeenCalledTimes(0);
   });
 
-  it('Should not launch timeout with unsubscribe', () => {
+  it('should not launch timeout with unsubscribe', () => {
     const stub = vi.fn();
     const timeout = new Timeout();
     timeout.register(stub, TIMEOUT_TIME);
@@ -42,13 +42,13 @@ describe('Timeout', () => {
     expect(stub).toHaveBeenCalledTimes(0);
   });
 
-  it('Should not fail to unregister when not registered', () => {
+  it('should not fail to unregister when not registered', () => {
     const timeout = new Timeout();
 
     expect(() => timeout.unregister()).not.toThrow();
   });
 
-  it('Should clear previous registration before register another one', () => {
+  it('should clear previous registration before register another one', () => {
     const timeout = new Timeout();
     const firstCall = vi.fn();
     const secondCall = vi.fn();

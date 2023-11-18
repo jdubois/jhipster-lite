@@ -41,7 +41,7 @@ const stubLink = () => ({
 
 describe('Project actions', () => {
   describe('Formatting', () => {
-    it('Should disable formatting without project path', async () => {
+    it('should disable formatting without project path', async () => {
       const wrapper = wrap({ folderPath: '' });
 
       await flushForm(wrapper);
@@ -62,7 +62,7 @@ describe('Project actions', () => {
     });
   });
 
-  it('Should format file using repository', async () => {
+  it('should format file using repository', async () => {
     const modules = stubModulesRepository();
     modules.format.resolves(defaultProject());
     const wrapper = wrap({ modules });
@@ -78,7 +78,7 @@ describe('Project actions', () => {
     expect(message).toBe('Project formatted');
   });
 
-  it('Should handle formatting errors', async () => {
+  it('should handle formatting errors', async () => {
     const modules = stubModulesRepository();
     modules.format.rejects();
     const wrapper = wrap({ modules });
@@ -95,7 +95,7 @@ describe('Project actions', () => {
   });
 
   describe('Download', () => {
-    it('Should disable download without project path', async () => {
+    it('should disable download without project path', async () => {
       const wrapper = wrap({ folderPath: '' });
 
       await flushForm(wrapper);
@@ -103,7 +103,7 @@ describe('Project actions', () => {
       expect(wrapper.find(wrappedElement('download-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should download file using repository', async () => {
+    it('should download file using repository', async () => {
       const link = stubLink();
       windowStub.document.createElement.returns(link);
 
@@ -126,7 +126,7 @@ describe('Project actions', () => {
       expect(modules.download.callCount).toBe(1);
     });
 
-    it('Should handle download errors', async () => {
+    it('should handle download errors', async () => {
       const modules = stubModulesRepository();
       modules.download.rejects();
       const wrapper = wrap({ modules });

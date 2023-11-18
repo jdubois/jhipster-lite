@@ -137,7 +137,8 @@ elif [[ $application == 'fullapp' ]]; then
   "java-enums" \
   "internationalized-errors" \
   "spring-boot-cache" \
-  "caffeine-cache"
+  "caffeine-cache" \
+  "license-apache"
 
   cucumber_with_jwt
 
@@ -165,6 +166,7 @@ elif [[ $application == 'oauth2app' ]]; then
 
   applyModules \
   "java-memoizers" \
+  "license-mit"
 
   applyModules \
   "spring-boot-oauth2" \

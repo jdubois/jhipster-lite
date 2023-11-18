@@ -11,9 +11,9 @@ sealed interface RestJHipsterLandscapeElement permits RestJHipsterLandscapeModul
   JHipsterLandscapeElementType getType();
 
   static RestJHipsterLandscapeElement from(JHipsterLandscapeElement element) {
-    return switch (element.type()) {
-      case MODULE -> RestJHipsterLandscapeModule.fromModule((JHipsterLandscapeModule) element);
-      case FEATURE -> RestJHipsterLandscapeFeature.fromFeature((JHipsterLandscapeFeature) element);
+    return switch (element) {
+      case JHipsterLandscapeModule module -> RestJHipsterLandscapeModule.fromModule(module);
+      case JHipsterLandscapeFeature feature -> RestJHipsterLandscapeFeature.fromFeature(feature);
     };
   }
 }

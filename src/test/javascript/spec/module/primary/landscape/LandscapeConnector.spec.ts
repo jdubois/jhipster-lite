@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest';
 
 describe('LandscapeConnector', () => {
   describe('Generate curved path', () => {
-    it('Should generate curved path for bottom-right dependant', () => {
+    it('should generate curved path for bottom-right dependant', () => {
       const positions: LandscapeConnectorPosition[] = [
         {
           x: 0,
@@ -28,7 +28,7 @@ describe('LandscapeConnector', () => {
       expect(landscapeConnector.path).toEqual('M 0 0 L 4 0 C 4 0 10 0 10 6 L 10 94 C 10 94 10 100 16 100 L 100 100');
     });
 
-    it('Should generate curved path for top-right dependant', () => {
+    it('should generate curved path for top-right dependant', () => {
       const positions: LandscapeConnectorPosition[] = [
         {
           x: 100,

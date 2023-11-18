@@ -1,7 +1,7 @@
+import { describe, it, expect } from 'vitest';
 import { AxiosResponse } from 'axios';
 import { AxiosHttp } from '@/http/AxiosHttp';
 import { dataAxiosResponse, stubAxiosInstance } from './AxiosStub';
-import { describe, it, expect } from 'vitest';
 
 interface Payload {
   payload: string;

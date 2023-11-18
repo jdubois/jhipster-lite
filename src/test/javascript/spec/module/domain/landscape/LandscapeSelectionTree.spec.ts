@@ -4,11 +4,11 @@ import { moduleSlug } from '../Modules.fixture';
 import { describe, expect, it } from 'vitest';
 
 describe('Landscape selection tree', () => {
-  it('Should get empty optional for unknown element', () => {
+  it('should get empty optional for unknown element', () => {
     expect(new LandscapeSelectionTree([]).find(moduleSlug('unknown')).isEmpty()).toBe(true);
   });
 
-  it('Should get selection element for known element', () => {
+  it('should get selection element for known element', () => {
     const selection: LandscapeSelectionElement = {
       slug: moduleSlug('init'),
       selectable: true,

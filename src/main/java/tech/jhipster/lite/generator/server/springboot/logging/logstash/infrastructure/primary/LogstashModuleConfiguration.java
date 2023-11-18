@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.logging.logstash.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.LOGSTASH;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.LOGSTASH;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.cassandra.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.CASSANDRA;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.CASSANDRA_MIGRATION;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.CASSANDRA;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.CASSANDRA_MIGRATION;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

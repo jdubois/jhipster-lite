@@ -3,7 +3,6 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 import static tech.jhipster.lite.module.domain.JHipsterModule.LINE_BREAK;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -42,7 +41,7 @@ public class PropertiesFileSpringPropertiesBlockCommentsHandler {
         return;
       }
 
-      Files.write(file, propertiesBlock.getBytes(StandardCharsets.UTF_8));
+      Files.writeString(file, propertiesBlock);
     } catch (IOException e) {
       throw GeneratorException.technicalError("Error updating properties block with comment: " + e.getMessage(), e);
     }

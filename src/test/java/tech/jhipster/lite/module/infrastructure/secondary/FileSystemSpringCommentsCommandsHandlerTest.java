@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static tech.jhipster.lite.TestFileUtils.content;
 import static tech.jhipster.lite.TestFileUtils.loadDefaultProperties;
-import static tech.jhipster.lite.module.domain.JHipsterModule.comment;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyKey;
-import static tech.jhipster.lite.module.domain.JHipsterModule.propertyValue;
+import static tech.jhipster.lite.module.domain.JHipsterModule.*;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -333,7 +330,7 @@ class FileSystemSpringCommentsCommandsHandlerTest {
       Files.createDirectories(propertiesFile.getParent());
       Files.createFile(propertiesFile);
 
-      Files.write(propertiesFile, properties.getBytes(StandardCharsets.UTF_8));
+      Files.writeString(propertiesFile, properties);
     } catch (IOException e) {
       throw new AssertionError(e.getMessage(), e);
     }

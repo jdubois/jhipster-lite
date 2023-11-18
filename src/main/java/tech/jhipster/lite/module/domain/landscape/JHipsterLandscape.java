@@ -60,9 +60,9 @@ public class JHipsterLandscape {
   }
 
   private JHipsterLandscapeElement toElementWithoutNestedDependencies(JHipsterLandscapeElement element) {
-    return switch (element.type()) {
-      case MODULE -> moduleWithoutNestedDependencies((JHipsterLandscapeModule) element);
-      case FEATURE -> element;
+    return switch (element) {
+      case JHipsterLandscapeModule module -> moduleWithoutNestedDependencies(module);
+      case JHipsterLandscapeFeature feature -> feature;
     };
   }
 
@@ -137,9 +137,9 @@ public class JHipsterLandscape {
   }
 
   private long linksCount(JHipsterLandscapeElement element) {
-    return switch (element.type()) {
-      case FEATURE -> featureLinksCount((JHipsterLandscapeFeature) element);
-      case MODULE -> moduleLinksCount((JHipsterLandscapeModule) element);
+    return switch (element) {
+      case JHipsterLandscapeFeature feature -> featureLinksCount(feature);
+      case JHipsterLandscapeModule module -> moduleLinksCount(module);
     };
   }
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import tech.jhipster.lite.UnitTest;
-import tech.jhipster.lite.generator.JHLiteModuleSlug;
+import tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug;
 import tech.jhipster.lite.statistic.domain.AppliedModule;
 import tech.jhipster.lite.statistic.domain.AppliedModuleFixture;
 import tech.jhipster.lite.statistic.domain.criteria.StatisticsCriteria;

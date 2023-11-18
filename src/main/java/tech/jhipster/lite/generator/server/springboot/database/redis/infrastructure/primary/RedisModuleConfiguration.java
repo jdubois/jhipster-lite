@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.redis.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.REDIS;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.REDIS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

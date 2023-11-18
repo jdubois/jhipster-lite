@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.buildtool.gradle.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.JAVA_BUILD_TOOL;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.GRADLE_JAVA;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.GRADLE_WRAPPER;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.INIT;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.JAVA_BUILD_TOOL;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.GRADLE_JAVA;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.GRADLE_WRAPPER;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.INIT;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.mongock.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.MONGOCK;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.MONGODB;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.MONGOCK;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.MONGODB;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

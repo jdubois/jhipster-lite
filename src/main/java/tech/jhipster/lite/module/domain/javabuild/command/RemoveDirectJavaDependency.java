@@ -7,9 +7,4 @@ public record RemoveDirectJavaDependency(DependencyId dependency) implements Jav
   public RemoveDirectJavaDependency {
     Assert.notNull("dependency", dependency);
   }
-
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.REMOVE_DEPENDENCY;
-  }
 }

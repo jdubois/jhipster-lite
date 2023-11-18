@@ -3,7 +3,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "VARIANT": "17-bullseye",
+      "VARIANT": "21-bookworm",
       "INSTALL_MAVEN": "true",
       "MAVEN_VERSION": "3.9.5",
       "INSTALL_GRADLE": "false",

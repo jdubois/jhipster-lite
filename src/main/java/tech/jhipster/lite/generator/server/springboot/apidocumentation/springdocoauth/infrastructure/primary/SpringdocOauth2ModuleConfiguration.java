@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdocoauth.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.AUTHENTICATION_SPRINGDOC;
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRINGDOC;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRINGDOC_OAUTH_2;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.AUTHENTICATION_SPRINGDOC;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.SPRINGDOC;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRINGDOC_OAUTH_2;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRING_BOOT_OAUTH_2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -7,9 +7,4 @@ public record AddJavaDependencyManagement(JavaDependency dependency) implements 
   public AddJavaDependencyManagement {
     Assert.notNull("dependency", dependency);
   }
-
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.ADD_DEPENDENCY_MANAGEMENT;
-  }
 }

@@ -7,9 +7,4 @@ public record AddDirectJavaDependency(JavaDependency dependency) implements Java
   public AddDirectJavaDependency {
     Assert.notNull("dependency", dependency);
   }
-
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.ADD_DEPENDENCY;
-  }
 }

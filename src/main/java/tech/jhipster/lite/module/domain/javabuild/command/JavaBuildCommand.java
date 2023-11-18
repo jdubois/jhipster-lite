@@ -8,6 +8,4 @@ public sealed interface JavaBuildCommand
     RemoveDirectJavaDependency,
     SetVersion,
     AddDirectJavaBuildPlugin,
-    AddBuildPluginManagement {
-  JavaBuildCommandType type();
-}
+    AddBuildPluginManagement {}

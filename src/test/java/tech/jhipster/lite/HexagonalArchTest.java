@@ -161,17 +161,17 @@ class HexagonalArchTest {
     void shouldNotDependOnOutside() {
       classes()
         .that()
-        .resideInAPackage(".domain..")
+        .resideInAPackage("..domain..")
         .should()
         .onlyDependOnClassesThat()
         .resideInAnyPackage(authorizedDomainPackages())
-        .because("Domain model should only depend on himself and a very limited set of external dependencies")
+        .because("Domain model should only depend on domains and a very limited set of external dependencies")
         .check(classes);
     }
 
     private String[] authorizedDomainPackages() {
       return Stream
-        .of(List.of(".domain.."), vanillaPackages, commonToolsAndUtilsPackages, sharedKernelsPackages)
+        .of(List.of("..domain.."), vanillaPackages, commonToolsAndUtilsPackages, sharedKernelsPackages)
         .flatMap(Collection::stream)
         .toArray(String[]::new);
     }

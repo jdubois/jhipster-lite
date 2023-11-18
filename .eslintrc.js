@@ -11,6 +11,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error'],
     'vue/multi-word-component-names': 'off',
     'vue/no-reserved-component-names': 'off',
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['error', { singleQuote: true }],
   },
 };

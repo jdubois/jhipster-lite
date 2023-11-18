@@ -8,11 +8,6 @@ public record SetVersion(JavaDependencyVersion version) implements JavaBuildComm
     Assert.notNull("version", version);
   }
 
-  @Override
-  public JavaBuildCommandType type() {
-    return JavaBuildCommandType.SET_VERSION;
-  }
-
   public String property() {
     return version().slug().propertyName();
   }

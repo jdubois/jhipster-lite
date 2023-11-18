@@ -1,8 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.apidocumentation.springdoccore.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRINGDOC;
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_MVC_SERVER;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.SPRINGDOC;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.SPRING_MVC_SERVER;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,8 @@
 package tech.jhipster.lite.generator.server.springboot.mvc.security.oauth2.core.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.AUTHENTICATION;
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_MVC_SERVER;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.*;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.AUTHENTICATION;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.SPRING_MVC_SERVER;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.*;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

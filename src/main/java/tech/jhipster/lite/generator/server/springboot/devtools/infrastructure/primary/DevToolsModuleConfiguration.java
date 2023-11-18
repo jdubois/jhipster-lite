@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.devtools.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_DEVTOOLS;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRING_BOOT_DEVTOOLS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

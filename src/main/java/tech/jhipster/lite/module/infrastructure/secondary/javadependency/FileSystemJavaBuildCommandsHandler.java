@@ -49,14 +49,14 @@ public class FileSystemJavaBuildCommandsHandler {
 
   @ExcludeFromGeneratedCodeCoverage(reason = "Jacoco thinks there is a missed branch")
   private void handle(JavaDependenciesCommandHandler handler, JavaBuildCommand command) {
-    switch (command.type()) {
-      case SET_VERSION -> handler.handle((SetVersion) command);
-      case REMOVE_DEPENDENCY_MANAGEMENT -> handler.handle((RemoveJavaDependencyManagement) command);
-      case ADD_DEPENDENCY_MANAGEMENT -> handler.handle((AddJavaDependencyManagement) command);
-      case REMOVE_DEPENDENCY -> handler.handle((RemoveDirectJavaDependency) command);
-      case ADD_DEPENDENCY -> handler.handle((AddDirectJavaDependency) command);
-      case ADD_DIRECT_JAVA_BUILD_PLUGIN -> handler.handle((AddDirectJavaBuildPlugin) command);
-      case ADD_JAVA_BUILD_PLUGIN_MANAGEMENT -> handler.handle((AddBuildPluginManagement) command);
+    switch (command) {
+      case SetVersion setVersion -> handler.handle(setVersion);
+      case RemoveJavaDependencyManagement removeJavaDependencyManagement -> handler.handle(removeJavaDependencyManagement);
+      case AddJavaDependencyManagement addJavaDependencyManagement -> handler.handle(addJavaDependencyManagement);
+      case RemoveDirectJavaDependency removeDirectJavaDependency -> handler.handle(removeDirectJavaDependency);
+      case AddDirectJavaDependency addDirectJavaDependency -> handler.handle(addDirectJavaDependency);
+      case AddDirectJavaBuildPlugin addDirectJavaBuildPlugin -> handler.handle(addDirectJavaBuildPlugin);
+      case AddBuildPluginManagement addBuildPluginManagement -> handler.handle(addBuildPluginManagement);
     }
   }
 }

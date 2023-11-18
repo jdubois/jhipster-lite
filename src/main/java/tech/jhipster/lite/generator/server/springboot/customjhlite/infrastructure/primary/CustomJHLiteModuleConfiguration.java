@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.customjhlite.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.CUSTOM_JHLITE;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.CUSTOM_JHLITE;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

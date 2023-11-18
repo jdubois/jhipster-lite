@@ -56,8 +56,6 @@ jobs:
       - name: 'Setup: environment'
         id: setup
         uses: ./.github/actions/setup
-        with:
-          java-version: 21
       - name: 'Init: cache local Maven repository'
         uses: actions/cache@v3
         with:
@@ -184,8 +182,6 @@ jobs:
       - name: 'Setup: environment'
         id: setup
         uses: ./.github/actions/setup
-        with:
-          java-version: ${{ matrix.java-version }}
       - name: 'Artifact: download JAR'
         uses: actions/download-artifact@v3
         with:
@@ -230,6 +226,11 @@ jobs:
             ${{ github.workspace }}/tests-ci/wait_sonar.sh
             docker ps -a
           fi
+      - name: 'Setup: java version ${{ matrix.java-version }} for generated application'
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java-version }}
       - name: 'Test: verify ${{ matrix.app }}'
         working-directory: /tmp/jhlite/${{ matrix.app }}/
         run: |

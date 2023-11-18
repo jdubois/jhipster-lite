@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.technicaltools.actuator.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.SPRING_SERVER;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.SPRING_BOOT_ACTUATOR;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.SPRING_SERVER;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.SPRING_BOOT_ACTUATOR;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

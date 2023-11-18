@@ -3,7 +3,7 @@ import { interceptForever } from '../support/Interceptor';
 
 describe('Patch', () => {
   describe('E2E', () => {
-    it('Should display modules', () => {
+    it('should display modules', () => {
       cy.visit('/patches');
 
       cy.get(dataSelector('modules-list')).should('be.visible');
@@ -13,7 +13,7 @@ describe('Patch', () => {
   describe('Component', () => {
     beforeEach(() => cy.intercept({ path: '/api/project-folders' }, { body: '/tmp/jhlite/1234' }));
 
-    it('Should display loader while loading modules', () => {
+    it('should display loader while loading modules', () => {
       const result = interceptForever({ path: '/api/modules' }, { fixture: 'modules.json' });
 
       cy.visit('/patches');
@@ -31,7 +31,7 @@ describe('Patch', () => {
         });
     });
 
-    it('Should change theme after toggle switch theme button', () => {
+    it('should change theme after toggle switch theme button', () => {
       cy.visit('/patches', {
         onBeforeLoad(win) {
           cy.stub(win, 'matchMedia').withArgs('(prefers-color-scheme: dark)').returns({ matches: true })
@@ -52,7 +52,7 @@ describe('Patch', () => {
       cy.get('[aria-label="dark-theme"]').should('exist');
     });
 
-    it('Should apply module without properties', () => {
+    it('should apply module without properties', () => {
       cy.intercept({ path: '/api/modules' }, { fixture: 'modules.json' });
 
       cy.intercept({
@@ -75,7 +75,7 @@ describe('Patch', () => {
       });
     });
 
-    it('Should apply module with properties', () => {
+    it('should apply module with properties', () => {
       cy.intercept({ path: '/api/modules' }, { fixture: 'modules.json' });
 
       cy.intercept({

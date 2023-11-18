@@ -1,4 +1,4 @@
-ARG VARIANT=17-bullseye
+ARG VARIANT=21-bookworm
 FROM mcr.microsoft.com/vscode/devcontainers/java:0-${VARIANT}
 
 # [Option] Install Maven

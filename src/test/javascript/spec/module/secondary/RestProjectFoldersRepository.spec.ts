@@ -3,7 +3,7 @@ import { RestProjectFoldersRepository } from '@/module/secondary/RestProjectFold
 import { describe, it, expect } from 'vitest';
 
 describe('Rest project folders repository', () => {
-  it('Should get project folder using axios', async () => {
+  it('should get project folder using axios', async () => {
     const axiosInstance = stubAxiosHttp();
     const repository = new RestProjectFoldersRepository(axiosInstance);
     axiosInstance.get.resolves({ data: '/tmp/jhlite/1234' });

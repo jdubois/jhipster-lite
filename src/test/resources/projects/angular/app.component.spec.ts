@@ -1,3 +1,4 @@
+import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -10,6 +11,9 @@ describe('App Component', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([])],
+      providers: [
+        { provide: PRECONNECT_CHECK_BLOCKLIST, useValue: 'https://jestjs.io' }
+      ],
       declarations: [AppComponent],
     }).compileComponents();
   }));

@@ -3,7 +3,6 @@ package tech.jhipster.lite.module.infrastructure.secondary;
 import static tech.jhipster.lite.module.domain.JHipsterModule.LINE_BREAK;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -152,7 +151,7 @@ class FileSystemPackageJsonHandler {
   @ExcludeFromGeneratedCodeCoverage(reason = "The error handling is an hard to test implementation detail")
   private void write(Path file, String content) {
     try {
-      Files.write(file, content.getBytes(StandardCharsets.UTF_8), StandardOpenOption.TRUNCATE_EXISTING);
+      Files.writeString(file, content, StandardOpenOption.TRUNCATE_EXISTING);
     } catch (IOException e) {
       throw GeneratorException.technicalError("Error writing " + file.toAbsolutePath() + ": " + e.getMessage(), e);
     }

@@ -1,6 +1,6 @@
 package tech.jhipster.lite.generator.server.springboot.database.neo4j.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.NEO4J;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.NEO4J;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

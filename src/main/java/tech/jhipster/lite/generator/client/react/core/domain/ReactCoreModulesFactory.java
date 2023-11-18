@@ -65,7 +65,7 @@ public class ReactCoreModulesFactory {
           .addFile("tsconfig.json")
           .addFile("vite.config.ts")
           .addFile("vitest.config.ts")
-          .addFile(".eslintrc.js")
+          .addFile(".eslintrc.cjs")
           .and()
         .batch(COMMON_ESLINT, to("."))
           .addFile(".eslintignore")

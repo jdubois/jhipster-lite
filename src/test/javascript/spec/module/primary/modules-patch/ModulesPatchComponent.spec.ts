@@ -61,14 +61,14 @@ describe('Modules', () => {
   });
 
   describe('Loading', () => {
-    it('Should display loader when waiting for modules', () => {
+    it('should display loader when waiting for modules', () => {
       const wrapper = wrap();
 
       expect(wrapper.find(wrappedElement('modules-loader')).exists()).toBe(true);
       expect(wrapper.find(wrappedElement('modules-list')).exists()).toBe(false);
     });
 
-    it('Should catch error when waiting for modules error', () => {
+    it('should catch error when waiting for modules error', () => {
       try {
         const { modules, projectFolders, moduleParameters }: WrapperOptions = {
           modules: repositoryWithModulesError(),
@@ -92,7 +92,7 @@ describe('Modules', () => {
       }
     });
 
-    it('Should catch error when waiting for project folders error', () => {
+    it('should catch error when waiting for project folders error', () => {
       try {
         const { modules, projectFolders, moduleParameters }: WrapperOptions = {
           modules: repositoryWithModules(),
@@ -116,7 +116,7 @@ describe('Modules', () => {
       }
     });
 
-    it('Should load modules at startup', async () => {
+    it('should load modules at startup', async () => {
       const wrapper = await componentWithModules();
 
       expect(wrapper.find(wrappedElement('modules-loader')).exists()).toBe(false);
@@ -142,7 +142,7 @@ describe('Modules', () => {
       expect(pathField.value).toBe('/tmp/jhlite/1234');
     });
 
-    it('Should load folder path from local storage', async () => {
+    it('should load folder path from local storage', async () => {
       const moduleParameters = repositoryWithModuleParameters();
       moduleParameters.getCurrentFolderPath.returns('/tmp/jhlite/5678');
 
@@ -181,7 +181,7 @@ describe('Modules', () => {
       ]);
     });
 
-    it('Should unselect module', async () => {
+    it('should unselect module', async () => {
       const wrapper = await componentWithModules();
 
       await selectModule(wrapper);
@@ -198,7 +198,7 @@ describe('Modules', () => {
       ]);
     });
 
-    it('Should disable validation button without project folder', async () => {
+    it('should disable validation button without project folder', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -209,7 +209,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should disable validation button without mandatory fields and no defaults', async () => {
+    it('should disable validation button without mandatory fields and no defaults', async () => {
       const wrapper = await componentWithModulesAndNonDefaultProperties();
       await selectModule(wrapper);
 
@@ -219,7 +219,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should not disable validation button without mandatory fields and available defaults', async () => {
+    it('should not disable validation button without mandatory fields and available defaults', async () => {
       const wrapper = await componentWithModulesAndNonDefaultProperties();
       await selectModule(wrapper);
 
@@ -230,7 +230,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should disable module application with empty string on non default mandatory properties', async () => {
+    it('should disable module application with empty string on non default mandatory properties', async () => {
       const wrapper = await componentWithModulesAndNonDefaultProperties();
       await selectModule(wrapper);
 
@@ -243,7 +243,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should enable module application with mandatory fields set', async () => {
+    it('should enable module application with mandatory fields set', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -254,7 +254,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should display setted properties', async () => {
+    it('should display setted properties', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -278,7 +278,7 @@ describe('Modules', () => {
       ]);
     });
 
-    it('Should set boolean parameter to false', async () => {
+    it('should set boolean parameter to false', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -288,7 +288,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-optionalBoolean-parameter-value')).text()).toBe('false');
     });
 
-    it('Should set boolean parameter to undefined', async () => {
+    it('should set boolean parameter to undefined', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -300,7 +300,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-optionalBoolean-parameter-value')).text()).toBe('');
     });
 
-    it('Should set integer parameter to undefine', async () => {
+    it('should set integer parameter to undefine', async () => {
       const wrapper = await componentWithModules();
       await selectModule(wrapper);
 
@@ -314,7 +314,7 @@ describe('Modules', () => {
   });
 
   describe('Module application', () => {
-    it('Should apply module using repository', async () => {
+    it('should apply module using repository', async () => {
       const modules = repositoryWithModules();
       modules.apply.resolves(null);
       const wrapper = wrap({ modules });
@@ -334,7 +334,7 @@ describe('Modules', () => {
       expect(moduleToApply.commit).toBe(true);
     });
 
-    it('Should apply module using repository with default values for unfilled properties', async () => {
+    it('should apply module using repository with default values for unfilled properties', async () => {
       const modules = repositoryWithModulesAndNonDefaultProperties();
       modules.apply.resolves(null);
       const wrapper = wrap({ modules });
@@ -357,7 +357,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-mandatoryInteger-parameter-value')).text()).toBe('1337');
     });
 
-    it('Should disable applications during application', async () => {
+    it('should disable applications during application', async () => {
       const modules = repositoryWithModules();
       modules.apply.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = await filledModuleForm(modules);
@@ -368,7 +368,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should enable applications after successfull application', async () => {
+    it('should enable applications after successfull application', async () => {
       const modules = repositoryWithModules();
       modules.apply.resolves(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -381,7 +381,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should enable applications after failing application', async () => {
+    it('should enable applications after failing application', async () => {
       const modules = repositoryWithModules();
       modules.apply.rejects('this is an error');
       const wrapper = await filledModuleForm(modules);
@@ -394,7 +394,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeUndefined();
     });
 
-    it('Should apply module without commit', async () => {
+    it('should apply module without commit', async () => {
       const modules = repositoryWithModules();
       modules.apply.resolves(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -408,7 +408,7 @@ describe('Modules', () => {
       expect(moduleToApply.commit).toBe(false);
     });
 
-    it('Should send module application notification', async () => {
+    it('should send module application notification', async () => {
       const modules = repositoryWithModules();
       modules.apply.resolves(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -422,7 +422,7 @@ describe('Modules', () => {
       expect(message).toBe('Module "spring-cucumber" applied');
     });
 
-    it('Should send module application error notification', async () => {
+    it('should send module application error notification', async () => {
       const modules = repositoryWithModules();
       modules.apply.rejects(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -438,7 +438,7 @@ describe('Modules', () => {
   });
 
   describe('Applied modules', () => {
-    it('Should mark already applied modules as applied', async () => {
+    it('should mark already applied modules as applied', async () => {
       const modules = repositoryWithModules();
       modules.history.resolves(defaultProjectHistory());
       const wrapper = await filledModuleForm(modules);
@@ -455,7 +455,7 @@ describe('Modules', () => {
       ]);
     });
 
-    it('Should reset modules application for module history error', async () => {
+    it('should reset modules application for module history error', async () => {
       const modules = repositoryWithModules();
       modules.history.rejects();
       modules.apply.resolves(undefined);
@@ -474,7 +474,7 @@ describe('Modules', () => {
       ]);
     });
 
-    it('Should mark modules as applied after application', async () => {
+    it('should mark modules as applied after application', async () => {
       const modules = repositoryWithModules();
       modules.apply.resolves(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -489,7 +489,7 @@ describe('Modules', () => {
   });
 
   describe('Properties preload', () => {
-    it('Should load properties from project', async () => {
+    it('should load properties from project', async () => {
       const modules = repositoryWithModules();
       modules.history.resolves(defaultProjectHistory());
       const wrapper = wrap({ modules });
@@ -514,7 +514,7 @@ describe('Modules', () => {
   });
 
   describe('Filtering', () => {
-    it('Should filter modules with one matching slug module', async () => {
+    it('should filter modules with one matching slug module', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -529,7 +529,7 @@ describe('Modules', () => {
       expect(modulesCountText).toContain('2');
     });
 
-    it('Should filter modules with one matching description module', async () => {
+    it('should filter modules with one matching description module', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -540,7 +540,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).exists()).toBe(true);
     });
 
-    it('Should filter modules with one matching tag module', async () => {
+    it('should filter modules with one matching tag module', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -551,7 +551,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).exists()).toBe(true);
     });
 
-    it('Should filter modules with multiple words matching', async () => {
+    it('should filter modules with multiple words matching', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -562,7 +562,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).exists()).toBe(true);
     });
 
-    it('Should filter modules with no maching module', async () => {
+    it('should filter modules with no maching module', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -596,7 +596,7 @@ describe('Modules', () => {
       otherTags.forEach(other => expect(wrapper.find(wrappedElement(`module-${other}-slug-application-button`)).exists()).toBe(false));
     });
 
-    it('Should filter modules with tag filter', async () => {
+    it('should filter modules with tag filter', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -608,7 +608,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('server-tag-filter')).classes()).toEqual(['jhipster-tag-filter', 'selected']);
     });
 
-    it('Should filter modules with tag and search filter', async () => {
+    it('should filter modules with tag and search filter', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -620,7 +620,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).exists()).toBe(true);
     });
 
-    it('Should unselect modules tag filter', async () => {
+    it('should unselect modules tag filter', async () => {
       const modules = repositoryWithModules();
       const wrapper = await filledModuleForm(modules);
 
@@ -636,7 +636,7 @@ describe('Modules', () => {
   });
 
   describe('Formatting', () => {
-    it('Should disable applications during project formatting', async () => {
+    it('should disable applications during project formatting', async () => {
       const modules = repositoryWithModules();
       modules.format.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = await filledModuleForm(modules);
@@ -647,7 +647,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should enable applications after project formatting', async () => {
+    it('should enable applications after project formatting', async () => {
       const modules = repositoryWithModules();
       modules.format.resolves(undefined);
       const wrapper = await filledModuleForm(modules);
@@ -661,7 +661,7 @@ describe('Modules', () => {
   });
 
   describe('Download', () => {
-    it('Should disable applications during download', async () => {
+    it('should disable applications during download', async () => {
       const modules = repositoryWithModules();
       modules.download.returns(new Promise(resolve => setTimeout(resolve, 500)));
       const wrapper = await filledModuleForm(modules);
@@ -672,7 +672,7 @@ describe('Modules', () => {
       expect(wrapper.find(wrappedElement('module-spring-cucumber-application-button')).attributes('disabled')).toBeDefined();
     });
 
-    it('Should enable applications after download', async () => {
+    it('should enable applications after download', async () => {
       const modules = repositoryWithModules();
       modules.download.resolves(undefined);
       const wrapper = await filledModuleForm(modules);

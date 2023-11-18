@@ -2,7 +2,7 @@ package tech.jhipster.lite.statistic.domain.criteria;
 
 import java.time.Instant;
 import java.util.Optional;
-import tech.jhipster.lite.generator.JHLiteModuleSlug;
+import tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug;
 
 /**
  * Criteria class for {@link tech.jhipster.lite.statistic.domain.Statistics}.

@@ -41,7 +41,7 @@ would like to implement a new feature then consider what kind of change it is:
 
 ## <a name="setup"></a> Generator development setup
 
-JHipster Lite is a Spring Boot + Vue3 project, using Java 17.
+JHipster Lite is a Spring Boot + Vue3 project, using Java 21.
 
 Here are the most important steps.
 
@@ -49,18 +49,18 @@ Here are the most important steps.
 
 #### Java
 
-You need to have [Java 17](https://openjdk.java.net/projects/jdk/17/) :
+You need to have [Java 21](https://openjdk.java.net/projects/jdk/21/):
 
 ```
 $ java -version
-openjdk version "17.0.6" 2023-01-17
-OpenJDK Runtime Environment (build 17.0.6+10-Ubuntu-0ubuntu122.04)
-OpenJDK 64-Bit Server VM (build 17.0.6+10-Ubuntu-0ubuntu122.04, mixed mode, sharing)
+openjdk version "21" 2023-09-19
+OpenJDK Runtime Environment (build 21+35-nixos)
+OpenJDK 64-Bit Server VM (build 21+35-nixos, mixed mode, sharing)
 ```
 
 ```
 $ javac -version
-javac 17.0.1
+javac 21
 ```
 
 #### Node.js and NPM

@@ -40,11 +40,6 @@ public final class JHipsterLandscapeFeature implements JHipsterLandscapeElement 
   }
 
   @Override
-  public JHipsterLandscapeElementType type() {
-    return JHipsterLandscapeElementType.FEATURE;
-  }
-
-  @Override
   public JHipsterFeatureSlug slug() {
     return slug;
   }

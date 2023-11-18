@@ -9,6 +9,6 @@ module.exports = {
   rules: {
     quotes: ['error', 'single', { avoidEscape: true }],
     '@typescript-eslint/no-unused-vars': ['error'],
-    'prettier/prettier': ['error'],
+    'prettier/prettier': ['error', { singleQuote: true }],
   },
 };

@@ -4,7 +4,7 @@ import { dataSelector } from '../support/selector';
 describe('Landscape', () => {
   beforeEach(() => cy.intercept({ path: '/api/project-folders' }, { body: '/tmp/jhlite/1234' }));
 
-  it('Should change theme after toggle switch theme button', () => {
+  it('should change theme after toggle switch theme button', () => {
     cy.visit('/landscape', {
       // see https://www.cypress.io/blog/2019/12/13/test-your-web-app-in-dark-mode/
       onBeforeLoad(win) {
@@ -26,14 +26,14 @@ describe('Landscape', () => {
     cy.get('[aria-label="dark-theme"]').should('exist');
   });
 
-  it('Should display landscape as default page', () => {
+  it('should display landscape as default page', () => {
     cy.intercept({ path: '/api/modules-landscape' }, { fixture: 'landscape.json' });
     cy.visit('/');
 
     cy.url().should('include', '/landscape');
   });
 
-  it('Should apply modules using WebServices', () => {
+  it('should apply modules using WebServices', () => {
     const result = interceptForever({ path: '/api/modules-landscape' }, { fixture: 'landscape.json' });
 
     cy.intercept({

@@ -18,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 import tech.jhipster.lite.IntegrationTest;
-import tech.jhipster.lite.generator.JHLiteModuleSlug;
+import tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug;
 import tech.jhipster.lite.statistic.domain.AppliedModule;
 import tech.jhipster.lite.statistic.domain.StatisticsRepository;
 import tech.jhipster.lite.statistic.domain.criteria.StatisticsCriteria;

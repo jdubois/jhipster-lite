@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 
 describe('Landscape', () => {
   describe('Reset applied modules', () => {
-    it('Should ignore unknown modules', () => {
+    it('should ignore unknown modules', () => {
       const landscape = defaultLandscape().resetAppliedModules([moduleSlug('init'), moduleSlug('unknown')]);
 
       expect(landscape.isSelected(moduleSlug('init'))).toBe(true);
@@ -15,7 +15,7 @@ describe('Landscape', () => {
       expect(landscape.isApplied(moduleSlug('unknown'))).toBe(false);
     });
 
-    it('Should be applied for newly applied module', () => {
+    it('should be applied for newly applied module', () => {
       const landscape = defaultLandscape().resetAppliedModules([moduleSlug('init')]);
 
       expect(landscape.isApplied(moduleSlug('init'))).toBe(true);
@@ -25,7 +25,7 @@ describe('Landscape', () => {
       expect(landscape.selectedModules()).toEqual([moduleSlug('init')]);
     });
 
-    it('Should not be applied for previously applied module', () => {
+    it('should not be applied for previously applied module', () => {
       const landscape = defaultLandscape()
         .resetAppliedModules([moduleSlug('init')])
         .resetAppliedModules([moduleSlug('vue')]);
@@ -39,13 +39,13 @@ describe('Landscape', () => {
   });
 
   describe('Apply modules', () => {
-    it('Should ignore unknown modules', () => {
+    it('should ignore unknown modules', () => {
       const landscape = defaultLandscape().appliedModules([moduleSlug('unknown')]);
 
       expect(landscape.isApplied(moduleSlug('unknown'))).toBe(false);
     });
 
-    it('Should mark applied modules as applied', () => {
+    it('should mark applied modules as applied', () => {
       const landscape = defaultLandscape()
         .resetAppliedModules([moduleSlug('init')])
         .appliedModules([moduleSlug('vue')]);
@@ -59,19 +59,19 @@ describe('Landscape', () => {
   });
 
   describe('Selection', () => {
-    it('Should not select unknown module', () => {
+    it('should not select unknown module', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('unknown'));
 
       expect(landscape.isSelected(moduleSlug('unknown'))).toBe(false);
     });
 
-    it('Should not select not selectable module', () => {
+    it('should not select not selectable module', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('java-base'));
 
       expect(landscape.isSelected(moduleSlug('java-base'))).toBe(false);
     });
 
-    it('Should select modules', () => {
+    it('should select modules', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('vue'));
 
       expect(landscape.isSelected(moduleSlug('init'))).toBe(true);
@@ -83,13 +83,13 @@ describe('Landscape', () => {
       expect(landscape.selectedModules()).toEqual([moduleSlug('vue'), moduleSlug('init')]);
     });
 
-    it('Should not select features', () => {
+    it('should not select features', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('maven')).toggle(moduleSlug('java-base'));
 
       expect(landscape.selectedModules()).not.toContainEqual(moduleSlug('java-build-tools'));
     });
 
-    it('Should switch selected module in feature', () => {
+    it('should switch selected module in feature', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('maven')).toggle(moduleSlug('gradle'));
 
       expect(landscape.isSelected(moduleSlug('gradle'))).toBe(true);
@@ -98,13 +98,13 @@ describe('Landscape', () => {
   });
 
   describe('Unselection', () => {
-    it('Should not unselect unknown module', () => {
+    it('should not unselect unknown module', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('unknown'));
 
       expect(landscape.isSelected(moduleSlug('unknown'))).toBe(false);
     });
 
-    it('Should unselect selected module', () => {
+    it('should unselect selected module', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('maven')).toggle(moduleSlug('java-base')).toggle(moduleSlug('maven'));
 
       expect(landscape.isSelected(moduleSlug('maven'))).toBe(false);
@@ -114,33 +114,33 @@ describe('Landscape', () => {
   });
 
   describe('Selection tree', () => {
-    it('Should get empty selection tree for unknown module', () => {
+    it('should get empty selection tree for unknown module', () => {
       const selectionTree = defaultLandscape().selectionTreeFor(moduleSlug('unknown'));
 
       expect(selectionTree).toEqual(LandscapeSelectionTree.EMPTY);
     });
 
-    it('Should get empty selection tree for root module', () => {
+    it('should get empty selection tree for root module', () => {
       const selectionTree = defaultLandscape().selectionTreeFor(moduleSlug('init'));
 
       expect(selectionTree.elements).toEqual([selectableModule('init')]);
     });
 
-    it('Should get selection tree with one selectable module', () => {
+    it('should get selection tree with one selectable module', () => {
       const selectionTree = defaultLandscape().selectionTreeFor(moduleSlug('vue'));
 
       expect(selectionTree.elements).toEqual([selectableModule('vue'), selectableModule('init')]);
       expect(selectionTree.isSelectable()).toBe(true);
     });
 
-    it('Should get selection tree with one not selectable feature', () => {
+    it('should get selection tree with one not selectable feature', () => {
       const selectionTree = defaultLandscape().selectionTreeFor(moduleSlug('java-base'));
 
       expect(selectionTree.elements).toEqual([notSelectableModule('java-base'), notSelectableFeature('java-build-tools')]);
       expect(selectionTree.isSelectable()).toBe(false);
     });
 
-    it('Should get selection tree with selected module', () => {
+    it('should get selection tree with selected module', () => {
       const selectionTree = defaultLandscape().toggle(moduleSlug('maven')).selectionTreeFor(moduleSlug('java-base'));
 
       expect(selectionTree.elements).toEqual([
@@ -152,7 +152,7 @@ describe('Landscape', () => {
       expect(selectionTree.isSelectable()).toBe(true);
     });
 
-    it('Should get selection tree with dependency to feature with one module', () => {
+    it('should get selection tree with dependency to feature with one module', () => {
       const selectionTree = defaultLandscape().toggle(moduleSlug('maven')).selectionTreeFor(moduleSlug('liquibase'));
 
       expect(selectionTree.elements).toContainEqual(selectableFeature('jpa'));
@@ -161,7 +161,7 @@ describe('Landscape', () => {
       expect(selectionTree.isSelectable()).toBe(true);
     });
 
-    it('Should get selection tree with dependency to feature with incompatible selected module', () => {
+    it('should get selection tree with dependency to feature with incompatible selected module', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('maven')).toggle(moduleSlug('gitlab-maven'));
 
       expect(landscape.isSelectable(moduleSlug('maven'))).toBe(true);
@@ -178,7 +178,7 @@ describe('Landscape', () => {
       expect(gitlabGradleSelectionTree.isSelectable()).toBe(false);
     });
 
-    it('Should get selection tree with disabled incompatible module dependencies', () => {
+    it('should get selection tree with disabled incompatible module dependencies', () => {
       const landscape = defaultLandscape().toggle(moduleSlug('maven'));
       const selectionTree = landscape.selectionTreeFor(moduleSlug('gradle'));
 
@@ -188,7 +188,7 @@ describe('Landscape', () => {
       expect(selectionTree.isSelectable()).toBe(true);
     });
 
-    it('Should get not selectable feature for applied module in feature', () => {
+    it('should get not selectable feature for applied module in feature', () => {
       const landscape = defaultLandscape().appliedModules([moduleSlug('maven')]);
       const selectionTree = landscape.selectionTreeFor(moduleSlug('gradle'));
 
@@ -200,25 +200,25 @@ describe('Landscape', () => {
   });
 
   describe('Unselection tree', () => {
-    it('Should get empty unselection tree for unknown module', () => {
+    it('should get empty unselection tree for unknown module', () => {
       const unselectionTree = defaultLandscape().unselectionTreeFor(moduleSlug('unknown'));
 
       expect(unselectionTree.elements).toEqual([]);
     });
 
-    it('Should get empty unselection tree for not selected module', () => {
+    it('should get empty unselection tree for not selected module', () => {
       const unselectionTree = defaultLandscape().unselectionTreeFor(moduleSlug('init'));
 
       expect(unselectionTree.elements).toEqual([]);
     });
 
-    it('Should get unselection tree for single selected module', () => {
+    it('should get unselection tree for single selected module', () => {
       const unselectionTree = defaultLandscape().toggle(moduleSlug('init')).unselectionTreeFor(moduleSlug('init'));
 
       expect(unselectionTree.elements).toEqual([moduleSlug('init')]);
     });
 
-    it('Should get unselection of other selected module in feature', () => {
+    it('should get unselection of other selected module in feature', () => {
       const unselectionTree = defaultLandscape()
         .toggle(moduleSlug('maven'))
         .toggle(moduleSlug('jpa'))
@@ -227,7 +227,7 @@ describe('Landscape', () => {
       expect(unselectionTree.elements).toEqual([moduleSlug('maven')]);
     });
 
-    it('Should get unselection tree of module not in a feature', () => {
+    it('should get unselection tree of module not in a feature', () => {
       const unselectionTree = defaultLandscape()
         .toggle(moduleSlug('maven'))
         .toggle(moduleSlug('spring-boot'))
@@ -241,7 +241,7 @@ describe('Landscape', () => {
       ]);
     });
 
-    it('Should get unselection tree of selected module in feature', () => {
+    it('should get unselection tree of selected module in feature', () => {
       const unselectionTree = defaultLandscape()
         .toggle(moduleSlug('maven'))
         .toggle(moduleSlug('postgresql'))
@@ -258,25 +258,25 @@ describe('Landscape', () => {
   });
 
   describe('Selectable', () => {
-    it('Should not be selectable for unknown module', () => {
+    it('should not be selectable for unknown module', () => {
       expect(defaultLandscape().isSelectable(moduleSlug('unknown'))).toBe(false);
     });
 
-    it('Should be selectable for selectable module', () => {
+    it('should be selectable for selectable module', () => {
       expect(defaultLandscape().isSelectable(moduleSlug('init'))).toBe(true);
     });
 
-    it('Should not be selectable for not selectable module', () => {
+    it('should not be selectable for not selectable module', () => {
       expect(defaultLandscape().isSelectable(moduleSlug('java-base'))).toBe(false);
     });
   });
 
   describe('Selected module properties', () => {
-    it('Should not have any selected properties without selected module', () => {
+    it('should not have any selected properties without selected module', () => {
       expect(defaultLandscape().selectedModulesProperties()).toEqual([]);
     });
 
-    it('Should get selected module properties', () => {
+    it('should get selected module properties', () => {
       const properties = defaultLandscape()
         .toggle(moduleSlug('init'))
         .toggle(moduleSlug('infinitest'))

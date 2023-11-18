@@ -1,7 +1,7 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.neo4jmigrations.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.NEO4J;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.NEO4J_MIGRATIONS;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.NEO4J;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.NEO4J_MIGRATIONS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

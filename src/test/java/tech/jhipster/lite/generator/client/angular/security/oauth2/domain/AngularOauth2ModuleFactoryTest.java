@@ -18,14 +18,14 @@ class AngularOauth2ModuleFactoryTest {
   void shouldBuildModuleWithEmptyAngularFile() {
     assertAngularOAuthModule(emptyAngularJsonFile())
       .hasFile("angular.json")
-      .containing("\"allowedCommonJsDependencies\": [\"keycloak-js\"]");
+      .containing("\"allowedCommonJsDependencies\": [\"base64-js\", \"js-sha256\", \"keycloak-js\"]");
   }
 
   @Test
   void shouldBuildModuleWithAngularFileWithAllowedDependencies() {
     assertAngularOAuthModule(angularJsonFile())
       .hasFile("angular.json")
-      .containing("\"allowedCommonJsDependencies\": [\"dummy.js\", \"keycloak-js\"]");
+      .containing("\"allowedCommonJsDependencies\": [\"dummy.js\", \"base64-js\", \"js-sha256\", \"keycloak-js\"]");
   }
 
   private static JHipsterModuleAsserter assertAngularOAuthModule(ModuleFile angularJson) {

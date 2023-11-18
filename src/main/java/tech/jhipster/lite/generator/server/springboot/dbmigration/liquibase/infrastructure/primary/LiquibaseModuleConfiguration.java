@@ -1,9 +1,9 @@
 package tech.jhipster.lite.generator.server.springboot.dbmigration.liquibase.infrastructure.primary;
 
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.DATABASE_MIGRATION;
-import static tech.jhipster.lite.generator.JHLiteFeatureSlug.JPA_PERSISTENCE;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.LIQUIBASE;
-import static tech.jhipster.lite.generator.JHLiteModuleSlug.LOGS_SPY;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.DATABASE_MIGRATION;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteFeatureSlug.JPA_PERSISTENCE;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.LIQUIBASE;
+import static tech.jhipster.lite.generator.slug.domain.JHLiteModuleSlug.LOGS_SPY;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

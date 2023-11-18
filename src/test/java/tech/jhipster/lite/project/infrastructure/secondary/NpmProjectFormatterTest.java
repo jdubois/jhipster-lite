@@ -1,9 +1,8 @@
 package tech.jhipster.lite.project.infrastructure.secondary;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,11 +40,11 @@ class NpmProjectFormatterTest {
     Files.copy(Paths.get("src/test/resources/projects/files/package.json"), path.resolve("package.json"));
 
     Path jsonFile = path.resolve("file.json");
-    Files.write(
+    Files.writeString(
       jsonFile,
       """
       {"key":"value"}
-      """.getBytes(StandardCharsets.UTF_8)
+      """
     );
 
     return jsonFile;

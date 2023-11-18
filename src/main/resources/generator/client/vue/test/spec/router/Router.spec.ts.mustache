@@ -16,7 +16,7 @@ const wrap = () => {
 };
 
 describe('Router', () => {
-  it('Should redirect to App by default', async () => {
+  it('should redirect to App by default', async () => {
     wrap();
     await router.push('/');
     await wrapper.vm.$nextTick();
@@ -24,9 +24,9 @@ describe('Router', () => {
     expect(wrapper.findComponent(AppVue)).toBeTruthy();
   });
 
-  it('Should go to AppVue', async () => {
+  it('should go to AppVue', async () => {
     wrap();
-    await router.push('/app');
+    await router.push('/home');
     await wrapper.vm.$nextTick();
 
     expect(wrapper.findComponent(AppVue)).toBeTruthy();

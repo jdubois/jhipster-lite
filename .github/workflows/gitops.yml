@@ -32,6 +32,7 @@ jobs:
       - name: Build a Java project using Maven
         uses: microsoft/nubesgen-actions/gitops-build-java-maven@v0.13.0
         with:
+          java_version: 21
           package_path: '${{ github.workspace }}/target/*-SNAPSHOT.jar'
   deploy:
     needs: [manage-infrastructure, build]

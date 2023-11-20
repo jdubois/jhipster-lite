@@ -29,9 +29,9 @@ variable "azure_storage_account_key" {
   description = "The access key of the Azure Storage account"
 }
 
-variable "azure_storage_blob_endpoint" {
+variable "azure_storage_share_name" {
   type        = string
-  description = "The blob endpoint URL of the Azure Storage account"
+  description = "The name of the Azure Storage Share to use"
 }
 
 variable "custom_domain_name" {

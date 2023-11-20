@@ -9,7 +9,7 @@ output "azurerm_storage_account_key" {
   description = "The Azure Blob storage access key."
 }
 
-output "azurerm_storage_blob_endpoint" {
-  value       = azurerm_storage_account.storage-file.primary_blob_endpoint
+output "azurerm_storage_share_name" {
+  value       = azurerm_storage_account.storage-file.name
   description = "The Azure Blob storage endpoint."
 }

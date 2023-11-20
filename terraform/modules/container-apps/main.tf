@@ -41,10 +41,19 @@ resource "azurecaf_name" "application" {
 }
 
 resource "azurerm_container_app_environment_certificate" "application" {
-  name                         = "nubesgen-dev-container-certificate"
+  name                         = "jhipster-lite-container-certificate"
   container_app_environment_id = azurerm_container_app_environment.application.id
   certificate_blob_base64      = var.container_certificate
   certificate_password         = var.container_certificate_password
+}
+
+resource "azurerm_container_app_environment_storage" "application" {
+  name                         = "jhipster-lite-container-storage"
+  container_app_environment_id = azurerm_container_app_environment.application.id
+  account_name                 = var.azure_storage_account_name
+  share_name                   = var.azure_storage_share_name
+  access_key                   = var.azure_storage_account_key
+  access_mode                  = "ReadWrite"
 }
 
 resource "azurerm_container_app" "application" {
@@ -72,11 +81,6 @@ resource "azurerm_container_app" "application" {
     }
   }
 
-  secret {
-    name  = "azure-storage-account-key"
-    value = var.azure_storage_account_key
-  }
-
   template {
     container {
       name   = azurecaf_name.application.result
@@ -84,22 +88,20 @@ resource "azurerm_container_app" "application" {
       cpu    = 0.25
       memory = "0.5Gi"
       env {
-        name  = "AZURE_STORAGE_ACCOUNT_NAME"
-        value = var.azure_storage_account_name
-      }
-      env {
-        name  = "AZURE_STORAGE_BLOB_ENDPOINT"
-        value = var.azure_storage_blob_endpoint
-      }
-      env {
-        name        = "AZURE_STORAGE_ACCOUNT_KEY"
-        secret_name = "azure-storage-account-key"
-      }
-      env {
         name  = "APPLICATION_FORCED_PROJECT_FOLDER"
         value = "/jhipster/jhipster-lite"
       }
+      volume_mounts {
+        name = "jhipstervolume"
+        path = "/jhipster"
+      }
     }
     min_replicas = 1
+  }
+
+  volume {
+    name = "jhipstervolume"
+    storage_name = var.azure_storage_account_name
+    storageType = "AzureFile"
   }
 }

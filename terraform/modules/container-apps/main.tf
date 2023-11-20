@@ -91,6 +91,10 @@ resource "azurerm_container_app" "application" {
         name  = "APPLICATION_FORCED_PROJECT_FOLDER"
         value = "/jhipster/jhipster-lite"
       }
+      env {
+        name  = "SPRING_PROFILES_ACTIVE"
+        value = "cloud"
+      }
       volume_mounts {
         name = "jhipstervolume"
         path = "/jhipster"

@@ -35,7 +35,7 @@ resource "azurerm_resource_group" "main" {
     "terraform"        = "true"
     "environment"      = local.environment
     "application-name" = var.application_name
-    "nubesgen-version" = "0.11.5"
+    "nubesgen-version" = "0.13.0"
 
     // Name of the Azure Storage Account that stores the Terraform state
     "terraform_storage_account" = var.terraform_storage_account
@@ -43,25 +43,18 @@ resource "azurerm_resource_group" "main" {
 }
 
 module "application" {
-  source           = "./modules/app-service"
+  source           = "./modules/container-apps"
   resource_group   = azurerm_resource_group.main.name
   application_name = var.application_name
   environment      = local.environment
   location         = var.location
-
-  azure_application_insights_instrumentation_key = module.application-insights.azure_application_insights_instrumentation_key
 
   azure_storage_account_name  = module.storage-file.azurerm_storage_account_name
   azure_storage_blob_endpoint = module.storage-file.azurerm_storage_blob_endpoint
   azure_storage_account_key   = module.storage-file.azurerm_storage_account_key
-}
-
-module "application-insights" {
-  source           = "./modules/application-insights"
-  resource_group   = azurerm_resource_group.main.name
-  application_name = var.application_name
-  environment      = local.environment
-  location         = var.location
+  custom_domain_name             = var.custom_domain_name
+  container_certificate          = var.container_certificate
+  container_certificate_password = var.container_certificate_password
 }
 
 module "storage-file" {

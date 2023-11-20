@@ -21,3 +21,20 @@ variable "location" {
   description = "The Azure region where all resources in this example should be created"
   default     = "westeurope"
 }
+
+variable "custom_domain_name" {
+  type        = string
+  description = "The domain name for Azure Container Apps"
+}
+
+variable "container_certificate" {
+  type        = string
+  sensitive   = true
+  description = "The domain certificate for Azure Container Apps"
+}
+
+variable "container_certificate_password" {
+  type        = string
+  sensitive   = true
+  description = "The password for the domain certificate for Azure Container Apps"
+}

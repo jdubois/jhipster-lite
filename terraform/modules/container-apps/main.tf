@@ -99,7 +99,7 @@ resource "azurerm_container_app" "application" {
     min_replicas = 1
     volume {
       name = "jhipstervolume"
-      storage_name = var.azure_storage_account_name
+      storage_name = azurerm_container_app_environment_storage.application.name
       storage_type = "AzureFile"
     }
   }

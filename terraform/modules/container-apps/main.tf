@@ -100,7 +100,7 @@ resource "azurerm_container_app" "application" {
     volume {
       name = "jhipstervolume"
       storage_name = var.azure_storage_account_name
-      storageType = "AzureFile"
+      storage_type = "AzureFile"
     }
   }
 }

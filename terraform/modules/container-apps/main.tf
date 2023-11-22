@@ -87,7 +87,7 @@ resource "azurerm_container_app" "application" {
     container {
 
       name   = azurecaf_name.application.result
-      image  = "docker.io/jdubois/jhipster-lite/jhipster-lite-native:latest"
+      image  = "jdubois/jhipster-lite-native:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }

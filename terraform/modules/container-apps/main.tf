@@ -59,8 +59,15 @@ resource "azurerm_container_app" "application" {
     ]
   }
 
+  secret {
+    name  = "docker_hub_password"
+    value = var.docker_hub_password
+  }
+
   registry {
-    server = "docker.io"
+    server               = "docker.io"
+    username             = var.docker_hub_username
+    password_secret_name = "docker_hub_password"
   }
 
   ingress {

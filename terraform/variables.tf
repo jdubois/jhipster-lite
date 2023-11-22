@@ -38,3 +38,15 @@ variable "container_certificate_password" {
   sensitive   = true
   description = "The password for the domain certificate for Azure Container Apps"
 }
+
+variable "docker_hub_username" {
+  type        = string
+  sensitive   = true
+  description = "The Docker Hub username"
+}
+
+variable "docker_hub_password" {
+  type        = string
+  sensitive   = true
+  description = "The Docker Hub password"
+}

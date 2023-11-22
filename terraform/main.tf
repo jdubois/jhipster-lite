@@ -52,4 +52,7 @@ module "application" {
   custom_domain_name             = var.custom_domain_name
   container_certificate          = var.container_certificate
   container_certificate_password = var.container_certificate_password
+
+  docker_hub_username = var.docker_hub_username
+  docker_hub_password = var.docker_hub_password
 }

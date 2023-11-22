@@ -59,6 +59,10 @@ resource "azurerm_container_app" "application" {
     ]
   }
 
+  registry {
+    server = "docker.io"
+  }
+
   ingress {
     external_enabled = true
     target_port      = 7471
@@ -75,7 +79,7 @@ resource "azurerm_container_app" "application" {
   template {
     container {
       name   = azurecaf_name.application.result
-      image  = "registry.hub.docker.com/library/jdubois/jhipster-lite/jhipster-lite-native:latest"
+      image  = "jdubois/jhipster-lite/jhipster-lite-native:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }

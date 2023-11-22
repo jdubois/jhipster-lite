@@ -49,18 +49,7 @@ module "application" {
   environment      = local.environment
   location         = var.location
 
-  azure_storage_account_name     = module.storage-file.azurerm_storage_account_name
-  azure_storage_share_name       = module.storage-file.azurerm_storage_share_name
-  azure_storage_account_key      = module.storage-file.azurerm_storage_account_key
   custom_domain_name             = var.custom_domain_name
   container_certificate          = var.container_certificate
   container_certificate_password = var.container_certificate_password
-}
-
-module "storage-file" {
-  source           = "./modules/storage-file"
-  resource_group   = azurerm_resource_group.main.name
-  application_name = var.application_name
-  environment      = local.environment
-  location         = var.location
 }

@@ -19,21 +19,6 @@ variable "location" {
   description = "The Azure region where all resources in this example should be created"
 }
 
-variable "azure_storage_account_name" {
-  type        = string
-  description = "The name of the Azure Storage account"
-}
-
-variable "azure_storage_account_key" {
-  type        = string
-  description = "The access key of the Azure Storage account"
-}
-
-variable "azure_storage_share_name" {
-  type        = string
-  description = "The name of the Azure Storage Share to use"
-}
-
 variable "custom_domain_name" {
   type        = string
   description = "The domain name for Azure Container Apps"

@@ -47,15 +47,6 @@ resource "azurerm_container_app_environment_certificate" "application" {
   certificate_password         = var.container_certificate_password
 }
 
-resource "azurerm_container_app_environment_storage" "application" {
-  name                         = "jhipster-lite-container-storage"
-  container_app_environment_id = azurerm_container_app_environment.application.id
-  account_name                 = var.azure_storage_account_name
-  share_name                   = var.azure_storage_share_name
-  access_key                   = var.azure_storage_account_key
-  access_mode                  = "ReadWrite"
-}
-
 resource "azurerm_container_app" "application" {
   name                         = azurecaf_name.application.result
   container_app_environment_id = azurerm_container_app_environment.application.id
@@ -84,27 +75,10 @@ resource "azurerm_container_app" "application" {
   template {
     container {
       name   = azurecaf_name.application.result
-      image  = "ghcr.io/jdubois/jhipster-lite/jhipster-lite-native:main"
+      image  = "jdubois/jhipster-lite/jhipster-lite-native:latest"
       cpu    = 0.25
       memory = "0.5Gi"
-      env {
-        name  = "APPLICATION_FORCED_PROJECT_FOLDER"
-        value = "/jhipster/jhipster-lite"
-      }
-      env {
-        name  = "SPRING_PROFILES_ACTIVE"
-        value = "cloud"
-      }
-      volume_mounts {
-        name = "jhipstervolume"
-        path = "/jhipster"
-      }
     }
     min_replicas = 1
-    volume {
-      name = "jhipstervolume"
-      storage_name = azurerm_container_app_environment_storage.application.name
-      storage_type = "AzureFile"
-    }
   }
 }
